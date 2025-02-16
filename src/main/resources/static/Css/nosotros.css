@@ -1,0 +1,47 @@
+.contenedor{
+    display: flex;
+}
+
+/* header */
+.top-bar{
+    width: 14rem;
+    display: flex;
+}
+/* fin header */
+
+/*  main */
+main{
+    display: inline;
+    position: relative;
+}
+
+.container{
+    margin-top: 0 !important;
+    width: 100%;
+}
+
+.cuerpo-principal{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.cuerpo-principal img{
+    margin-top: 50px;
+}
+
+.Workwise{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 10px;
+    color: #000000;
+}
+
+.Resumen{
+    margin-top: 0;
+}
+
+/* fin main */
+
+

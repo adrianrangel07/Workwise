@@ -1,0 +1,83 @@
+/* oferta.css */
+
+/* Fondo con gradiente */
+body {
+    background: linear-gradient(to right, #0a1128, #4b6cb7); /* Gradiente de fondo */
+    color: #fff; /* Color de texto blanco */
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* Estilo del contenedor principal */
+.container {
+    max-width: 600px; /* Limitar el ancho del formulario */
+    max-height: 850px;
+    margin: 0 auto; /* Centrar el contenedor */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con opacidad */
+}
+
+/* Estilo del título */
+h1 {
+    color: #0a1128; /* Color del texto del título */
+    margin-bottom: 20px; /* Margen inferior */
+}
+
+/* Estilo de los botones */
+.btn {
+    background-color: #0a1128; /* Color de fondo del botón */
+    border: none; /* Sin borde */
+    transition: background-color 0.3s; /* Transición suave */
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Color de fondo al pasar el ratón */
+}
+
+/* boton regreso */
+.back{
+    float: right;
+    margin: 7px;
+    font-size: 30px;
+    transition: all 0.2s ease;
+}
+
+.back:hover{
+    transform: scale(1,1);
+}
+/* fin boton regreso */
+
+/* Estilo de los campos de entrada */
+input.form-control, 
+textarea.form-control, 
+select.form-select {
+    border: 1px solid #ced4da; /* Borde del campo */
+    border-radius: 4px; /* Bordes redondeados */
+}
+
+/* Estilo al enfocar los campos de entrada */
+input.form-control:focus, 
+textarea.form-control:focus, 
+select.form-select:focus {
+    border-color: #0a1128; /* Color del borde al enfocar */
+    box-shadow: 0 0 5px rgba(10, 17, 40, 0.5); /* Sombra al enfocar */
+}
+
+.salary-buttons button.active,
+.job-type-buttons button.active,
+.duration-buttons button.active {
+    background-color: #007bff; /* Color de fondo para los botones activos */
+    color: white; /* Color del texto para los botones activos */
+}
+
+.salary-buttons button,
+.job-type-buttons button,
+.duration-buttons button {
+    margin-right: 10px; /* Espacio entre botones */
+}
+
+

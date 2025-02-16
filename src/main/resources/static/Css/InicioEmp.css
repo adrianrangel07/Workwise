@@ -1,0 +1,626 @@
+* {
+    font-family: Arial, sans-serif;
+
+}
+
+.dropdown-menu.show {
+    display: block;
+    /* Mostrar el menú cuando se activa */
+}
+
+#filtersDropdown {
+    background-color: transparent;
+    /* barra desplegable dentro de la barra lateral de navegacion */
+}
+
+.filter-container {
+    padding: 15px;
+    /* Padding interno */
+    background-color: transparent;
+}
+
+#navbar-toggler {
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: middle;
+    color: #000000;
+    margin-right: 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+}
+
+#filtersToggle {
+    color: #000000;
+    /* Color del texto más oscuro */
+}
+
+#navbar-toggler {
+    z-index: 1000;
+    display: block;
+}
+
+.navbar {
+    background-color: #333;
+    padding: 15px;
+    color: white;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+#menu-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    right: 0;
+}
+
+#menu-toggle {
+    z-index: 1000;
+}
+
+#btn-menu {
+    display: none;
+    cursor: pointer;
+}
+
+/* filtro */
+#container-menu {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    right: 0;
+    transition: all 500ms ease;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+}
+
+#btn-menu:checked~.container-menu {
+    opacity: 1;
+    visibility: visible;
+}
+
+#cont-menu {
+    width: 100%;
+    max-width: 250px;
+    background: #1c1c1c;
+    height: 100vh;
+    position: relative;
+    float: right;
+    right: 0;
+    z-index: 10000;
+    transition: all 500ms ease;
+    /* Empieza fuera de la vista a la derecha */
+}
+
+#btn-menu:checked~.container-menu .cont-menu {
+    transform: translateX(0%);
+    /* Moverlo a la vista */
+}
+
+.cont-menu nav {
+    transform: translateY(15%);
+}
+
+.cont-menu nav div {
+    display: block;
+    text-decoration: none;
+    color: #c7c7c7;
+    border-left: 5px solid transparent;
+    transition: all 400ms ease;
+}
+
+/* fin filtro */
+
+.back {
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* tarjetas de ofertas de empleo  */
+.card {
+    border: 1px solid #ddd;
+    /* Bordes de las tarjetas */
+    border-radius: 4px;
+    /* Bordes redondeados */
+    padding: 15px;
+    /* Padding interno */
+    margin-bottom: 20px;
+    /* Espacio entre las tarjetas */
+    transition: box-shadow 0.3s;
+    /* Efecto de transición */
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Sombra al pasar el ratón */
+}
+
+.navbar {
+    background-color: #0a1128;
+    /* barra superior */
+}
+
+.offcanvas {
+    background-color: #0a1128;
+    /* barra de navegacion */
+}
+
+.letras {
+    color: #ffffff;
+}
+
+.nav-rp {
+    border-radius: 8px;
+    /* el bordeado de las opciones de inicio de sesesion y registrarse */
+    width: 100%;
+}
+
+nav-rp:hover {
+    color: #001f54;
+    background-color: #ffffff;
+    border-radius: 8px;
+}
+
+#logo {
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+#logo:hover {
+    transform: scale(1.1);
+}
+
+.form {
+    /*barra de busqueda */
+    width: 300px;
+    background: transparent;
+    border-radius: 0;
+    border-bottom: 1px solid #ffffff;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.form::placeholder {
+    color: #ffffff;
+}
+
+.barra_busqueda_responsive {
+    display: none;
+}
+
+.offer-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Contenedor principal que envuelve las tarjetas */
+.offer-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Estilo general de las tarjetas */
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: calc(25% - 40px);
+    /* 25% del ancho para 4 tarjetas y resta espacio para el gap */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Estilo al hacer hover sobre las tarjetas */
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Título de la oferta */
+.offer-content h3 {
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+/* Descripción de la oferta */
+.offer-content p {
+    color: #666;
+    font-size: 1em;
+    margin-bottom: 10px;
+}
+
+/* Información oculta que se mostrará al hacer clic */
+.hidden-info {
+    display: none;
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #444;
+}
+
+/* Estilos específicos para las etiquetas dentro de la información oculta */
+.hidden-info p {
+    margin: 5px 0;
+}
+
+/* Responsivo: 2 tarjetas en filas horizontales en pantallas pequeñas */
+@media (max-width: 768px) {
+    .card {
+        width: calc(50% - 40px);
+        /* 50% para 2 tarjetas en pantallas pequeñas */
+    }
+}
+
+/* Responsivo: 1 tarjeta por fila en pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .card {
+        width: calc(100% - 40px);
+        /* 100% para 1 tarjeta en pantallas muy pequeñas */
+    }
+}
+
+/* Diseño general de las tarjetas */
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: calc(25% - 40px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Botón para postularse */
+.apply-btn-modal {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.apply-btn-modal:hover {
+    background-color: #218838;
+}
+
+.container-pos {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Diseño del modal */
+.modal {
+    display: none;
+    /* Oculto por defecto */
+    position: fixed;
+    z-index: 1000;
+    /* Siempre al frente */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    /* Agregar transición de visibilidad y opacidad */
+}
+
+/* Estilo del contenido del modal */
+#modal-content {
+    width: 700px;
+    /* Aumento del tamaño */
+    max-width: 90%;
+    padding: 30px;
+    /* Espaciado adicional dentro del modal */
+    border-radius: 15px;
+    /* Bordes más suaves */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    /* Sombra más suave */
+    background: #f9f9f9;
+    /* Fondo suave */
+    transition: transform 0.3s ease;
+    /* Transición más suave */
+}
+
+
+/* Cuando el modal se muestre */
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Ajustar el contenido para pantallas pequeñas */
+@media (max-width: 768px) {
+    #modal-content {
+        width: 80%;
+        /* Hacer el contenido más pequeño en pantallas pequeñas */
+    }
+}
+
+/* Estilos para el botón de cerrar */
+.container-span {
+    display: flex;
+    text-align: right;
+    width: 100%;
+    flex-direction: row-reverse;
+    align-items: center;
+    height: 30px;
+}
+
+.close-btn {
+    font-size: 50px;
+    cursor: pointer;
+    color: #333;
+}
+
+.close-btn:hover {
+    color: red;
+}
+
+.glyphicon {
+    margin-right: 5px;
+}
+
+.thumbnail {
+    margin-bottom: 20px;
+    padding: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.item.list-group-item {
+    float: none;
+    width: 100%;
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+
+.item.list-group-item:nth-of-type(odd):hover,
+.item.list-group-item:hover {
+    background: #428bca;
+}
+
+.item.list-group-item .list-group-image {
+    margin-right: 10px;
+}
+
+.item.list-group-item .thumbnail {
+    margin-bottom: 0px;
+}
+
+.item.list-group-item .caption {
+    padding: 9px 9px 0px 9px;
+}
+
+.item.list-group-item:nth-of-type(odd) {
+    background: #eeeeee;
+}
+
+.item.list-group-item:before,
+.item.list-group-item:after {
+    display: table;
+    content: " ";
+}
+
+.item.list-group-item img {
+    float: left;
+}
+
+.item.list-group-item:after {
+    clear: both;
+}
+
+.list-group-item-text {
+    margin: 0 0 11px;
+}
+
+.glyphicon {
+    margin-right: 5px;
+}
+
+.thumbnail {
+    margin-bottom: 20px;
+    padding: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.list-group-item-text {
+    margin: 0 0 11px;
+}
+
+#edit-form {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    /* Bordes más redondeados */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-family: 'Arial', sans-serif;
+    transition: all 0.3s ease;
+}
+
+#edit-form:hover {
+    transform: translateY(-5px);
+    /* Efecto flotante */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    /* Sombra más pronunciada */
+}
+
+#edit-form input,
+#edit-form textarea {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    /* Bordes redondeados */
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    /* Transición suave */
+}
+
+#edit-form input:focus,
+#edit-form textarea:focus {
+    border-color: #007bff;
+    /* Azul al hacer foco */
+    outline: none;
+}
+
+#edit-title {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#edit-form textarea {
+    resize: vertical;
+    min-height: 120px;
+    /* Más espacio para texto */
+}
+
+#save-button {
+    padding: 8px;
+    background-color: #007bff;
+    /* Azul más vivo */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#save-button:hover {
+    background-color: #0056b3;
+    /* Azul oscuro al pasar el ratón */
+    transform: scale(1.05);
+    /* Sutil aumento de tamaño */
+}
+
+
+#cancel-button {
+    padding: 8px;
+    background-color: #ff0000;
+    /* Azul más vivo */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#cancel-button:hover {
+    background-color: #ff0000;
+    /* Azul oscuro al pasar el ratón */
+    transform: scale(1.05);
+    /* Sutil aumento de tamaño */
+}
+
+
+#edit-form input::placeholder,
+#edit-form textarea::placeholder {
+    color: #888;
+    font-style: italic;
+}
+
+
+.custom-footer {
+    margin-top: auto;
+    background: linear-gradient(90deg, #310632, #310632);
+    color: white;
+    padding: 20px 0;
+}
+
+.custom-footer .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    /* Asegura que no se estire demasiado */
+    margin: 0 auto;
+}
+
+.custom-footer .footer-left,
+.custom-footer .footer-center,
+.custom-footer .footer-right {
+    flex: 1;
+    /* Permite que cada columna ocupe un tercio del ancho */
+}
+
+.custom-footer .footer-left,
+.custom-footer .footer-center {
+    text-align: left;
+    /* Alineación de texto a la izquierda */
+}
+
+.custom-footer .footer-center {
+    text-align: center;
+    /* Alineación centrada para el texto */
+}
+
+.custom-footer .footer-right {
+    text-align: right;
+    /* Alineación de texto a la derecha */
+}
+
+/* Ajuste para los íconos de redes sociales */
+.custom-footer .footer-right a {
+    margin: 0 10px;
+}
+
+.custom-footer .footer-right img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s ease;
+    /* Efecto de hover */
+}
+
+.custom-footer .footer-right img:hover {
+    transform: scale(1.1);
+    /* Efecto de ampliación */
+}
+
+/* Hacer que el footer sea fijo al final */
+.sticky-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}

@@ -1,0 +1,33 @@
+.back{
+    float: right;
+    margin: 7px;
+    font-size: 30px;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.back_a{
+    transition: all 0.2s ease;
+}
+
+.back_a:hover{
+    transform: scale(1,1);
+}
+
+body{
+    background-color: #3182CE;
+}
+
+.img_emp{
+    width: 100%;
+}
+
+#logo {
+    width: 150px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+#logo:hover {
+    transform: scale(1.1);
+}

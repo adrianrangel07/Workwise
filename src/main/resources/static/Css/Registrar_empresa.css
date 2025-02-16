@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* boton regreso */
+.back{
+    float: right;
+    margin: 7px;
+    font-size: 30px;
+    transition: all 0.2s ease;
+}
+
+.back:hover{
+    transform: scale(1,1);
+}
+/* fin boton regreso */
+
+#select{
+    text-align: end;
+    border-color: black;
+}
+
+#btn-register {
+    background-color: #fec785;
+    color: black; 
+    padding: 12px 30px; 
+    font-size: 16px; 
+    border: none;
+    border-radius: 8px;
+    cursor: pointer; 
+    display: block; 
+    margin: 20px auto; 
+    text-align: center; 
+    width: 80%; 
+    transition: background-color 0.3s ease; 
+}
+
+
+#btn-register:hover {
+    background-color: #f09c36; 
+}
+
+body{
+    background-color: #feead1 !important;
+}
+
+#logo {
+    width: 150px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+#logo:hover {
+    transform: scale(1.1);
+}
+

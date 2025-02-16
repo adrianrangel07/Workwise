@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workwise Navigator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="website icon" href="../imagenes/wknlogo2.png">
+    <link rel="stylesheet" href="../CSS/login.css">
+    <link rel="stylesheet" href="../CSS/normalize.css">
+    <link rel="stylesheet" href="../CSS/contraseña_olvidada_emp.css">
+</head>
+<body>
+    <header>
+        <nav class="top-bar">
+			<a href="/"><img src="../Imagenes/wknname.png" alt="Logo" id="logo" class="logo"></a>
+            <ul class="nav-menu">
+                <li class="nav-menu-item">
+                    <a th:href="@{/login_empresa}">Iniciar sesion</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="login-form">
+            <div class="image-container">
+                <img src="../imagenes/Logo_empresa.png" alt="Imagen de encabezado">
+            </div>
+            <h1>Recuperar Contraseña</h1>
+            <form th:action="@{/login_empresa}" method="post">
+                <input class="submit" type="email" placeholder="Correo electrónico" required>
+                <div id="captcha-box">
+                    <div id="captcha"></div>
+                </div>
+                <input type="text" placeholder="Captcha" required>
+                <br>
+                <button type="submit" class="submit">Enviar</button>
+            </form>
+        </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script>
+        // Función para generar un captcha aleatorio
+        function generateCaptcha() {
+            var captcha = "";
+            var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+            for (var i = 0; i < 6; i++) {
+                captcha += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+
+            return captcha;
+        }
+
+        // Generar el captcha al cargar la página
+        document.getElementById("captcha").innerText = generateCaptcha();
+    </script>
+</body>
+
+</html>

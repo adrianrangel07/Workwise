@@ -1,0 +1,57 @@
+#powerBi{
+    border: none;
+    text-decoration: none;
+    width: 100vw;
+    height: 100vh;
+
+}
+
+.contenedor{
+    display: flex;
+}
+
+/* header */
+.top-bar{
+    width: 14rem;
+    display: flex;
+}
+/* fin header */
+
+/*  main */
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.container{
+    margin-top: 0 !important;
+    width: 100%;
+}
+
+.cuerpo-principal{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.cuerpo-principal img{
+    margin-top: 50px;
+}
+
+.Workwise{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 50px;
+    color: #000000;
+}
+
+.Resumen{
+    margin-top: 0;
+}
+
+/* fin main */
+
+
