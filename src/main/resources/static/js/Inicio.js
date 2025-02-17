@@ -10,32 +10,35 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalTitle = document.getElementById('modal-title');
     const modalDescription = document.getElementById('modal-description');
     const modalSalary = document.getElementById('modal-salary');
+    const modalCurrency = document.getElementById('modal-currency');    
     const modalDuration = document.getElementById('modal-duration');
     const modalPeriod = document.getElementById('modal-period');
     const modalType = document.getElementById('modal-type');
     const modalModalidad = document.getElementById('modal-modalidad');
-    const modalTypeContract = document.getElementById('modal-typeContract')
+    const modalTypeContract = document.getElementById('modal-typeContract');
     const modalEmpresa = document.getElementById('modal-empresa');
-
-    
 
     // Función para abrir el modal
     const openModal = (card) => {
+        
         // Obtener los datos de la tarjeta
         const title = card.querySelector('h3').innerText;
         const description = card.querySelector('p').innerText;
         const salary = card.querySelector('.salario span').innerText;
+        const currency = card.querySelector('.moneda span').innerText;        
         const duration = card.querySelector('.duracion span').innerText;
         const period = card.querySelector('.periodo span').innerText;
         const type = card.querySelector('.tipo_empleo span').innerText;
         const modalidad = card.querySelector('.modalidad span').innerText;
         const typeContract = card.querySelector('.tipo_contrato span').innerText;
         const empresa = card.querySelector('.empresa span').innerText;
+        
 
         // Llenar el modal con los datos de la tarjeta
         modalTitle.innerText = title;
         modalDescription.innerText = description;
         modalSalary.innerHTML = `<strong>Salario:</strong> ${salary}`;
+        modalCurrency.innerHTML = `<strong>moneda:</strong> ${currency}`;
         modalDuration.innerHTML = `<strong>Duración:</strong> ${duration}`;
         modalPeriod.innerHTML = `<strong>Periodo:</strong> ${period}`;
         modalType.innerHTML = `<strong>Tipo de empleo:</strong> ${type}`;

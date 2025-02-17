@@ -155,9 +155,12 @@
                             <div class="hidden-info">
                                 <p class="salario"><strong>Salary:</strong> <span th:text="${Oferta.salario}"></span>
                                 </p>
+                                <p class="moneda"><Strong>Currency:</Strong> <span th:text="${Oferta.moneda}"></span>
+                                </p>
                                 <p class="duracion"><strong>Duration:</strong> <span
                                         th:text="${Oferta.duracion}"></span></p>
-                                <p class="periodo"><strong>Period:</strong> <span th:text="${Oferta.periodo}"></span>
+                                <p 
+                                class="periodo"><strong>Period:</strong> <span th:text="${Oferta.periodo}"></span>
                                 </p>
                                 <p class="tipo_empleo"><strong>Type of employment:</strong> <span
                                         th:text="${Oferta.tipo_empleo}"></span></p>
@@ -165,6 +168,7 @@
                                 </p>
                                 <p class="tipo_contrato"><strong>Type of contract:</strong> <span
                                         th:text="${Oferta.tipo_contrato}"></span></p>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -180,6 +184,7 @@
                         <div class="modal-body">
                             <p id="modal-description"></p>
                             <span id="modal-salary"></span></p>
+                            <span id="modal-currency"></span></p>
                             <span id="modal-duration"></span></p>
                             <span id="modal-period"></span></p>
                             <span id="modal-modalidad"></span></p>

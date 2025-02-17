@@ -63,12 +63,23 @@ public class PersonaController {
 
     @GetMapping("/login/personas")
     public String iniciar_sesion() {
-        return "html/inicio_sesion_persona";
+        return "html/persona/inicio_sesion";
     }
 
     @PostMapping("/login/personas")
     public String iniciarSesion(HttpSession session, Model model, @RequestParam String email,
             @RequestParam String contraseña) {
+
+         // Datos quemados
+        String emailQuemado = "admin@gmail.com";
+        String contraseñaQuemada = "admin123";
+        
+        if (email.equals(emailQuemado) && contraseña.equals(contraseñaQuemada)) {
+        session.setAttribute("email", email);
+        session.setAttribute("usuarioId", 1L); // ID de usuario quemado
+        return "redirect:/personas/pagina_principal";
+        }
+
 
         Personas persona = user.findByEmailAndContraseña(email, contraseña);
         if (persona != null) {

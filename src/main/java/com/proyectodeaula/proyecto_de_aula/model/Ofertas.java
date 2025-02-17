@@ -47,7 +47,7 @@ public class Ofertas {
     @Column(name = "Salario", columnDefinition = "int", nullable = false)
     int salario;
 
-    @Column(name = "Moneda", columnDefinition = "Varchar(10)", nullable = false) 
+    @Column(name = "Moneda", columnDefinition = "Varchar(45)", nullable = false) 
     String moneda;
 
     @Column(name = "Periodo", columnDefinition = "Varchar(45)", nullable = false)

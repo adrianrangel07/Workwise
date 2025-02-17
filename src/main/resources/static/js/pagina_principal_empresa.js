@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalTitle = document.getElementById('modal-title');
     const modalDescription = document.getElementById('modal-description');
     const modalSalary = document.getElementById('modal-salary');
+    const modalCurrency = document.getElementById('modal-currency');    
     const modalDuration = document.getElementById('modal-duration');
     const modalPeriod = document.getElementById('modal-period');
     const modalType = document.getElementById('modal-type');
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const title = card.querySelector('h3').innerText;
         const description = card.querySelector('p').innerText;
         const salary = card.querySelector('.salario span').innerText;
+        const currency = card.querySelector('.moneda span').innerText;        
         const duration = card.querySelector('.duracion span').innerText;
         const period = card.querySelector('.periodo span').innerText;
         const type = card.querySelector('.tipo_empleo span').innerText;
@@ -36,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
         modalTitle.innerText = title;
         modalDescription.innerText = description;
         modalSalary.innerHTML = `<strong>Salario:</strong> ${salary}`;
+        modalCurrency.innerHTML = `<strong>Moneda:</strong> ${currency}`;
         modalDuration.innerHTML = `<strong>Duración:</strong> ${duration}`;
         modalPeriod.innerHTML = `<strong>Periodo:</strong> ${period}`;
         modalType.innerHTML = `<strong>Tipo de empleo:</strong> ${type}`;
@@ -74,11 +77,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalTitle = document.getElementById('modal-title');
     const modalDescription = document.getElementById('modal-description');
     const modalSalary = document.getElementById('modal-salary');
+    const modalCurrency = document.getElementById('modal-currency');  
     const modalDuration = document.getElementById('modal-duration');
     const modalPeriod = document.getElementById('modal-period');
     const modalType = document.getElementById('modal-type');
     const modalModalidad = document.getElementById('modal-modalidad');
     const modalTypeContract = document.getElementById('modal-typeContract');
+      
 
     const editForm = document.getElementById('edit-form');
     const editButton = document.getElementById('edit-button');
@@ -89,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const editTitle = document.getElementById('edit-title');
     const editDescription = document.getElementById('edit-description');
+    const editCurrency = document.getElementById('edit-currency');
     const editSalary = document.getElementById('edit-salary');
     const editDuration = document.getElementById('edit-duration');
     const editPeriod = document.getElementById('edit-period');
@@ -106,6 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
         modalTitle.innerText = card.querySelector('h3').innerText;
         modalDescription.innerText = card.querySelector('p').innerText;
         modalSalary.innerHTML = `<strong>Salario:</strong> ${card.querySelector('.salario span').innerText}`;
+        modalCurrency.innerHTML = `<strong>Moneda:</strong> ${card.querySelector('.moneda span').innerText}`;
         modalDuration.innerHTML = `<strong>Duración:</strong> ${card.querySelector('.duracion span').innerText}`;
         modalPeriod.innerHTML = `<strong>Periodo:</strong> ${card.querySelector('.periodo span').innerText}`;
         modalType.innerHTML = `<strong>Tipo de empleo:</strong> ${card.querySelector('.tipo_empleo span').innerText}`;
@@ -145,24 +152,27 @@ document.addEventListener('DOMContentLoaded', function () {
         modalTitle.style.display = 'none';
         modalDescription.style.display = 'none';
         modalSalary.style.display = 'none';
+        modalCurrency.style.display = 'none';
         modalDuration.style.display = 'none';
         modalPeriod.style.display = 'none';
         modalType.style.display = 'none';
         modalModalidad.style.display = 'none';
         modalTypeContract.style.display = 'none';
-
+        
         // Mostrar el formulario de edición
         editForm.style.display = 'block';
     
-        // Pre-llenar el formulario con los datos actuales (usando .textContent para evitar problemas con espacios en blanco)
+        // Pre-llenar el formulario con los datos actuales 
         editTitle.value = modalTitle.textContent.trim();
         editDescription.value = modalDescription.textContent.trim();
         editSalary.value = modalSalary.textContent.replace('Salario: ', '').trim();
+        editCurrency.value = modalCurrency.textContent.replace('Moneda: ', '').trim();
         editDuration.value = modalDuration.textContent.replace('Duración: ', '').trim();
         editPeriod.value = modalPeriod.textContent.replace('Periodo: ', '').trim();
         editModalidad.value = modalModalidad.textContent.replace('Modalidad: ', '').trim();
         editType.value = modalType.textContent.replace('Tipo de empleo: ', '').trim();
         editTypeContract.value = modalTypeContract.textContent.replace('Tipo de contrato: ', '').trim();
+
         
     });
 
@@ -173,6 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
             titulo_puesto: editTitle.value,
             descripcion: editDescription.value,
             salario: parseInt(editSalary.value),
+            moneda: editCurrency.value,
             duracion: editDuration.value,
             periodo: editPeriod.value,
             modalidad: editModalidad.value,

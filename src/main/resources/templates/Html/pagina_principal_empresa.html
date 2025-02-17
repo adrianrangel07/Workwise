@@ -122,6 +122,8 @@
                             <div class="hidden-info">
                                 <p class="salario"><strong>Salary:</strong> <span th:text="${Oferta.salario}"></span>
                                 </p>
+                                <p class="moneda"><Strong>Currency:</Strong> <span th:text="${Oferta.moneda}"></span>
+                                </p>
                                 <p class="duracion"><strong>Duration:</strong> <span
                                         th:text="${Oferta.duracion}"></span>
                                 </p>
@@ -150,11 +152,13 @@
                 <h3 id="modal-title"></h3>
                 <p id="modal-description"></p>
                 <p id="modal-salary"></p>
+                <p id="modal-currency"></p>
                 <p id="modal-duration"></p>
                 <p id="modal-period"></p>
                 <p id="modal-modalidad"></p>
                 <p id="modal-type"></p>
                 <p id="modal-typeContract"></p>
+                
                 
                 <div id="postCount">
                     <p id="modal-postulaciones">Postulaciones: <span id="postulaciones-count">0</span></p>

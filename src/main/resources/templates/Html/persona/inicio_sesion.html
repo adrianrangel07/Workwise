@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>Login users</title>
+        <link rel="website icon" href="../Imagenes/wknLogo2.png">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+        <link rel="stylesheet" href="../Css/general/bootstrap.min.css">
+        <link rel="stylesheet" href="../Css/general/Grid-and-List-view-V10-style.css">
+        <link rel="stylesheet" href="../Css/general/Grid-and-List-view-V10.css">
+        <link rel="stylesheet" href="../Css/general/Nunito.css">
+        <link rel="stylesheet" href="../Css/general/styles.min.css">
+        <link rel="stylesheet" href="../Css/persona/inicio_sesion.css">
+    </head>
+    
+<body>
+    <div class="logo">
+        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" th:href="@{/}">
+            <img id="logo" src="../Imagenes/wknblack.png" width="61" height="58" style="width: 60px; height: 60px; margin: 10px;">
+        </a>
+    </div>
+    <div class="contenedor">
+        <div class="card">
+            <p>Sing in</p>
+            <div class="formulario">
+                <form class="user" th:action="@{/login/personas}" th:object="${Usuario}" method="post">
+                    <div class="mb-3">
+                        <input class="form-control form-control-user" type="email"
+                        id="InputEmail" aria-describedby="emailHelp"
+                        placeholder="Enter Email Address..." name="email">
+                        <label for="InputEmail">Email</label>
+                    </div>
+                    <div class="mb-3">
+                        <input class="form-control form-control-user" type="password"
+                        id="password" placeholder="Password" name="contraseña">
+                    </div>
+                    <label for="password">Password</label>
+                    <div class="mb-3">
+                    </div>
+                    <button class="btn btn-primary d-block btn-user w-100" type="submit" id="validar" onclick="validar">
+                        Login
+                    </button>
+                </form>       
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -65,6 +65,7 @@ public class OfertaService implements IofertaService {
             existingOffer.setTitulo_puesto(updatedOffer.getTitulo_puesto());
             existingOffer.setDescripcion(updatedOffer.getDescripcion());
             existingOffer.setSalario(updatedOffer.getSalario());
+            existingOffer.setMoneda(updatedOffer.getMoneda());
             existingOffer.setDuracion(updatedOffer.getDuracion());
             existingOffer.setPeriodo(updatedOffer.getPeriodo());
             existingOffer.setModalidad(updatedOffer.getModalidad());

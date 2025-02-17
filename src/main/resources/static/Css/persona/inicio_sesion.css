@@ -1,0 +1,78 @@
+html, body {
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* logo */
+
+.logo{
+    display: flex;
+    z-index: 50;
+    position: absolute;
+}
+
+.contenedor{
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100; 
+}
+
+
+/* tarjeta donde se esta el inicio de sesion */
+.card{
+    display: flex;
+    justify-content: start;
+    width: 20vw;
+    height: 40vh;
+    border: 2px solid #0a1128;
+}
+
+.card p{
+    font-size: 30px;
+    color:#0a1128;
+    font-weight: bold; /* Hace el texto más grueso */
+}
+
+.formulario{
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;   
+}
+
+.formulario input{
+    font-size: 1.8rem;
+    line-height: 1.33333;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.9);
+    position: relative;
+    z-index: 1;
+    height: 52px;
+    padding: 28px 12px 6px;
+    color: var(--color-text, rgba(0, 0, 0, 0.9)) !important;
+    border-radius: 4px !important;
+}
+
+.formulario label{
+    font-size: 1.8rem;
+    line-height: 1.33333;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 14px 0 0 12px;
+    margin: 0;
+    -webkit-transition: .2s all;
+    transition: .2s all;
+}
