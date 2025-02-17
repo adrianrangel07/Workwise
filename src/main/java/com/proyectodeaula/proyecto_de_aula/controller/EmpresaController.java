@@ -1,5 +1,9 @@
 package com.proyectodeaula.proyecto_de_aula.controller;
 
+import java.io.IOException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.proyectodeaula.proyecto_de_aula.interfaceService.IofertaService;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Empresas.Interfaz_Emp;
@@ -20,6 +25,8 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping
 public class EmpresaController {
+
+    private static final Logger logger = LoggerFactory.getLogger(EmpresaController.class);
 
     // Inyección de dependencias para acceder a los servicios y repositorios
     @Autowired
@@ -64,7 +71,7 @@ public class EmpresaController {
             session.setAttribute("empresa", empresa);
             session.setAttribute("usuarioId", empresa.getId());
             return "redirect:/empresas/pagina_principal";
-        } 
+        }
         model.addAttribute("error", "Credenciales incorrectas o empresa no encontrada");
         return "redirect:/datos_incorrectaemp";
     }
@@ -104,8 +111,8 @@ public class EmpresaController {
     // Actualiza el perfil de la empresa
     @PostMapping("/actualizar/empresa")
     public String actualizarPerfil(@RequestParam String nombreEmp, @RequestParam String direccion,
-                                   @RequestParam String contraseña, @RequestParam String razonSocial,
-                                   HttpSession session, Model model) {
+            @RequestParam String contraseña, @RequestParam String razonSocial,
+            HttpSession session, Model model) {
         // Verifica si la sesión sigue activa
         String email = (String) session.getAttribute("email");
         if (email == null) {
@@ -122,11 +129,19 @@ public class EmpresaController {
 
         try {
             // Actualiza los datos de la empresa si no están vacíos
-            if (!nombreEmp.isEmpty()) empresa.setNombreEmp(nombreEmp);
-            if (!direccion.isEmpty()) empresa.setDireccion(direccion);
-            if (!contraseña.isEmpty()) empresa.setContraseña(contraseña);
-            if (!razonSocial.isEmpty()) empresa.setRazon_social(razonSocial);
-            
+            if (!nombreEmp.isEmpty()) {
+                empresa.setNombreEmp(nombreEmp);
+            }
+            if (!direccion.isEmpty()) {
+                empresa.setDireccion(direccion);
+            }
+            if (!contraseña.isEmpty()) {
+                empresa.setContraseña(contraseña);
+            }
+            if (!razonSocial.isEmpty()) {
+                empresa.setRazon_social(razonSocial);
+            }
+
             // Guarda los cambios en la base de datos
             empresaService.actualizarPerfil(empresa);
             return "redirect:/perfil/empresa";
@@ -136,9 +151,39 @@ public class EmpresaController {
         }
     }
 
+    @PostMapping("/empresas/upload/photo")
+    public String uploadPhoto(@RequestParam("file") MultipartFile file, HttpSession session) {
+        String email = (String) session.getAttribute("email");
+        Empresas empresa = empresaService.findByEmail(email);
+        if (empresa != null) {
+            try {
+                empresa.setFoto(file.getBytes());
+                uEmp.save(empresa);
+            } catch (IOException e) {
+                logger.error("Error al subir la foto", e);
+            }
+        }
+        return "redirect:/perfil/empresa";
+    }
+
     // Muestra la vista de estadísticas de empresas
     @GetMapping("/Estadisticas/empresas")
     public String mostrarEstadisticas() {
         return "html/Estadisticas_empresas";
+    }
+
+    @GetMapping("/empresas/oferta") // para ver las ofertas postuladas
+        public String oferta() {
+        return "html/Oferta";
+    }
+
+    @GetMapping("/Contraseña-olvidada-empresa") // cuando quieren recuperar la contraseña de la cuenta de empresa
+        public String olvidar_emp() {
+        return "html/contraseña_olvidada_emp";
+    }
+
+    @GetMapping("/empresas/published offers") // cuando quieren recuperar la contraseña de la cuenta de empresa
+        public String recuperar_emp() {
+        return "html/ofertas-publicadas";
     }
 }

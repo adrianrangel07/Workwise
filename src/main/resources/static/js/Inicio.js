@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalType = document.getElementById('modal-type');
     const modalModalidad = document.getElementById('modal-modalidad');
     const modalTypeContract = document.getElementById('modal-typeContract')
+    const modalEmpresa = document.getElementById('modal-empresa');
+
+    
 
     // Función para abrir el modal
     const openModal = (card) => {
@@ -27,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const type = card.querySelector('.tipo_empleo span').innerText;
         const modalidad = card.querySelector('.modalidad span').innerText;
         const typeContract = card.querySelector('.tipo_contrato span').innerText;
+        const empresa = card.querySelector('.empresa span').innerText;
 
         // Llenar el modal con los datos de la tarjeta
         modalTitle.innerText = title;
@@ -37,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
         modalType.innerHTML = `<strong>Tipo de empleo:</strong> ${type}`;
         modalModalidad.innerHTML = `<strong>Modalidad:</strong> ${modalidad}`;
         modalTypeContract.innerHTML = `<strong>tipo de contrato:</strong> ${typeContract}`;
+        modalEmpresa.innerHTML = `<strong>Empresa:</strong> ${empresa}`;
 
         // Mostrar el modal
         modal.style.display = 'flex';

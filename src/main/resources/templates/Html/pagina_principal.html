@@ -153,6 +153,8 @@
                             <h3 th:text="${Oferta.titulo_puesto}"></h3>
                             <p th:text="${Oferta.descripcion}"></p>
                             <div class="hidden-info">
+                                <p class="empresa"><strong>Empresa:</strong> <span
+                                        th:text="${Oferta.empresa.nombreEmp}"></span></p>
                                 <p class="salario"><strong>Salary:</strong> <span th:text="${Oferta.salario}"></span>
                                 </p>
                                 <p class="duracion"><strong>Duration:</strong> <span
@@ -163,12 +165,11 @@
                                 <p class="tipo_empleo"><strong>Type of employment:</strong> <span
                                         th:text="${Oferta.tipo_empleo}"></span>
                                 </p>
-                                <p class="modalidad"><strong>mode:</strong> <span
-                                        th:text="${Oferta.modalidad}"></span>
+                                <p class="modalidad"><strong>mode:</strong> <span th:text="${Oferta.modalidad}"></span>
                                 </p>
                                 <p class="tipo_contrato"><strong>Type of contract:</strong> <span
                                         th:text="${Oferta.tipo_contrato}"></span>
-                                </p>             
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -189,6 +190,8 @@
                             <span id="modal-modalidad"></span></p>
                             <span id="modal-type"></span></p>
                             <span id="modal-typeContract"></span></p>
+                            <br>
+                            <p id="modal-empresa"></p>
                         </div>
                         <div class="modal-footer">
                             <button class="apply-btn-modal" id="postularseBtn">Apply</button>
@@ -208,22 +211,22 @@
                         </div>
                         <div class="footer-right">
                             <a href="https://facebook.com" target="_blank" class="mx-3">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" 
-                                     alt="Facebook" width="30" height="30">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+                                    alt="Facebook" width="30" height="30">
                             </a>
                             <a href="https://instagram.com" target="_blank" class="mx-3">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" 
-                                     alt="Instagram" width="30" height="30">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+                                    alt="Instagram" width="30" height="30">
                             </a>
                             <a href="https://www.tiktok.com" target="_blank" class="mx-3">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/TikTok_Logo.svg" 
-                                     alt="TikTok" width="30" height="30">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/TikTok_Logo.svg"
+                                    alt="TikTok" width="30" height="30">
                             </a>
                         </div>
                     </div>
                 </div>
             </footer>
-            
+
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
 

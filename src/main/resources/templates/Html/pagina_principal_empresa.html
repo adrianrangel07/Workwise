@@ -40,6 +40,9 @@
                     <li class="nav-item"><a class="nav-link" th:href="@{/empresas/oferta}">
                             <i class="fas fa-plus-circle"></i><span>Create offer</span></a>
                     </li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/empresas/published offers}">
+                        <i class="fas fa-check-circle"></i><span>Listed offers</span></a>
+                </li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/Estadisticas/empresas}">
                             <i class="fas fa-chart-bar"></i><span>Statistics</span></a>
                     </li>
@@ -161,6 +164,7 @@
                 <div class="modal-buttons">
                     <button id="edit-button" class="btn btn-primary">Edit</button>
                     <button id="delete-button" class="btn btn-danger">Delete</button>
+                    <button id="info-button" class="btn btn-success" th:onclick="'window.location.href=\'' + @{/empresas/published offers} + '\''">More</button>
                 </div>
 
                 <div id="edit-form" style="display: none;">
@@ -231,6 +235,8 @@
             </div>
         </div>
     </div>
+
+
     <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer">
         <div class="container">
             <div class="footer-content">

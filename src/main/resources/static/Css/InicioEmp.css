@@ -624,3 +624,14 @@ nav-rp:hover {
     bottom: 0;
     width: 100%;
 }
+
+/* longitud de la descripcion de la oferta */
+.offer-content p {
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* Número de líneas a mostrar */
+    line-clamp: 1; /* Número de líneas a mostrar */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 4.5em; /* Ajustar según el número de líneas */
+}

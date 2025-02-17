@@ -8,6 +8,10 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,7 +68,8 @@ public class PersonaController {
 
     @PostMapping("/login/personas")
     public String iniciarSesion(HttpSession session, Model model, @RequestParam String email,
-                                @RequestParam String contraseña) {
+            @RequestParam String contraseña) {
+
         Personas persona = user.findByEmailAndContraseña(email, contraseña);
         if (persona != null) {
             session.setAttribute("email", email);
@@ -102,8 +107,8 @@ public class PersonaController {
 
     @PostMapping("/actualizar")
     public String actualizarPerfil(@RequestParam String nombre, @RequestParam String apellido,
-                                   @RequestParam String contraseña, @RequestParam String genero,
-                                   HttpSession session, Model model) {
+            @RequestParam String contraseña, @RequestParam String genero,
+            HttpSession session, Model model) {
         try {
             String email = (String) session.getAttribute("email");
             if (email == null) {
@@ -115,10 +120,18 @@ public class PersonaController {
                 model.addAttribute("error", "Usuario no encontrado.");
                 return "html/error";
             }
-            if (nombre != null && !nombre.isEmpty()) persona.setNombre(nombre);
-            if (apellido != null && !apellido.isEmpty()) persona.setApellido(apellido);
-            if (contraseña != null && !contraseña.isEmpty()) persona.setContraseña(contraseña);
-            if (genero != null && !genero.isEmpty()) persona.setGenero(genero);
+            if (nombre != null && !nombre.isEmpty()) {
+                persona.setNombre(nombre);
+            }
+            if (apellido != null && !apellido.isEmpty()) {
+                persona.setApellido(apellido);
+            }
+            if (contraseña != null && !contraseña.isEmpty()) {
+                persona.setContraseña(contraseña);
+            }
+            if (genero != null && !genero.isEmpty()) {
+                persona.setGenero(genero);
+            }
             personaService.actualizarPerfil(persona);
             model.addAttribute("success", "Perfil actualizado con éxito");
             return "redirect:/perfil/persona";
@@ -145,32 +158,49 @@ public class PersonaController {
     }
 
     @PostMapping("/uploadHDV")
-public String uploadHDV(@RequestParam("file") MultipartFile file, Model model, HttpSession session) {
-    try {
-        if (file.isEmpty() || !Objects.equals(file.getContentType(), "application/pdf")) {
-            model.addAttribute("error", "Por favor, seleccione un archivo PDF válido.");
-            return "redirect:/perfil/persona";
-        }
+    public String uploadHDV(@RequestParam("file") MultipartFile file, Model model, HttpSession session) {
+        try {
+            if (file.isEmpty() || !Objects.equals(file.getContentType(), "application/pdf")) {
+                model.addAttribute("error", "Por favor, seleccione un archivo PDF válido.");
+                return "redirect:/perfil/persona";
+            }
 
+            String email = (String) session.getAttribute("email");
+            Personas persona = personaService.findByEmail(email);
+
+            if (persona == null) {
+                model.addAttribute("error", "Usuario no encontrado.");
+                return "html/error";
+            }
+
+            persona.setCv(file.getBytes());
+            personaService.actualizarPerfil(persona);
+            model.addAttribute("success", "PDF cargado con éxito.");
+            return "redirect:/perfil/persona";
+
+        } catch (Exception e) {
+            logger.error("Error al cargar el PDF", e);
+            model.addAttribute("error", "Error al cargar el PDF: " + e.getMessage());
+            return "html/error";
+        }
+    }
+    
+    @GetMapping("/perfil/verHDV")
+    public ResponseEntity<byte[]> verHDV(HttpSession session) {
         String email = (String) session.getAttribute("email");
         Personas persona = personaService.findByEmail(email);
 
-        if (persona == null) {
-            model.addAttribute("error", "Usuario no encontrado.");
-            return "html/error";
+        if (persona == null || persona.getCv() == null) {
+            return ResponseEntity.notFound().build();
         }
 
-        persona.setCv(file.getBytes());
-        personaService.actualizarPerfil(persona);
-        model.addAttribute("success", "PDF cargado con éxito.");
-        return "redirect:/perfil/persona";
+        // Crear encabezados para el contenido PDF
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDisposition(ContentDisposition.inline().filename("HDV.pdf").build());
 
-    } catch (Exception e) {
-        logger.error("Error al cargar el PDF", e);
-        model.addAttribute("error", "Error al cargar el PDF: " + e.getMessage());
-        return "html/error";
+        return ResponseEntity.ok().headers(headers).body(persona.getCv());
     }
-}
 
     @PostMapping("/eliminarHDV")
     public String eliminarHojaDeVida(HttpSession session, Model model) {
@@ -189,7 +219,6 @@ public String uploadHDV(@RequestParam("file") MultipartFile file, Model model, H
             return "html/error";
         }
     }
-    
 
     // metodo para actualizar el perfil
     @GetMapping("/update/perfil")

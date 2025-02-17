@@ -100,7 +100,7 @@
                                         <button id="changePhotoBtn" class="btn btn-primary btn-sm">Change Photo</button>
 
                                         <!-- Formulario para subir la foto -->
-                                        <form id="uploadForm" action="/upload/photo" method="post"
+                                        <form id="uploadForm" action="/empresas/upload/photo" method="post"
                                             enctype="multipart/form-data" style="display:none;">
                                             <input type="hidden" name="id" value="${persona.id}">
                                             <input type="file" name="file" required>
@@ -229,8 +229,6 @@
         <script src="../js/General/theme.js"></script>
         <script src="../js/perfil_emp.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
 </body>
 
 </html>

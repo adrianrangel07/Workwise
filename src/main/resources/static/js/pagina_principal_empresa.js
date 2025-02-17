@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Mostrar el modal
         modal.style.display = 'flex';
+
     };
 
     // Agregar evento 'click' a cada tarjeta para abrir el modal
@@ -84,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const saveButton = document.getElementById('save-button');
     const deleteButton = document.getElementById('delete-button');
     const postCount = document.getElementById('postCount');
+    const infoButton = document.getElementById('info-button');
 
     const editTitle = document.getElementById('edit-title');
     const editDescription = document.getElementById('edit-description');
@@ -134,7 +136,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     editButton.addEventListener('click', function () {
-        // Mostrar el formulario de edición y ocultar la vista original
+        
+        // Ocultar botones de editar y eliminar
+        editButton.style.display = 'none';
+        deleteButton.style.display = 'none';
+        postCount.style.display = 'none';
+        infoButton.style.display = 'none';
         modalTitle.style.display = 'none';
         modalDescription.style.display = 'none';
         modalSalary.style.display = 'none';
@@ -143,21 +150,20 @@ document.addEventListener('DOMContentLoaded', function () {
         modalType.style.display = 'none';
         modalModalidad.style.display = 'none';
         modalTypeContract.style.display = 'none';
-        editButton.style.display = 'none';
-        deleteButton.style.display = 'none';
-        postCount.style.display = 'none';
 
-        // Pre-llenar el formulario con los datos actuales
-        editTitle.value = modalTitle.textContent;
-        editDescription.value = modalDescription.textContent;
-        editSalary.value = modalSalary.textContent.replace('Salario: ', '');
-        editDuration.value = modalDuration.textContent.replace('Duración: ', '');
-        editPeriod.value = modalPeriod.textContent.replace('Periodo: ', '');
-        editModalidad.value = modalModalidad.textContent.replace('Modalidad: ', '');
-        editType.value = modalType.textContent.replace('Tipo de empleo: ', '');
-        editTypeContract.value = modalTypeContract.textContent.replace('Tipo de contrato: ', '');
-
+        // Mostrar el formulario de edición
         editForm.style.display = 'block';
+    
+        // Pre-llenar el formulario con los datos actuales (usando .textContent para evitar problemas con espacios en blanco)
+        editTitle.value = modalTitle.textContent.trim();
+        editDescription.value = modalDescription.textContent.trim();
+        editSalary.value = modalSalary.textContent.replace('Salario: ', '').trim();
+        editDuration.value = modalDuration.textContent.replace('Duración: ', '').trim();
+        editPeriod.value = modalPeriod.textContent.replace('Periodo: ', '').trim();
+        editModalidad.value = modalModalidad.textContent.replace('Modalidad: ', '').trim();
+        editType.value = modalType.textContent.replace('Tipo de empleo: ', '').trim();
+        editTypeContract.value = modalTypeContract.textContent.replace('Tipo de contrato: ', '').trim();
+        
     });
 
     // Guardar los cambios
