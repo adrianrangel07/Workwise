@@ -10,13 +10,25 @@ html, body {
 }
 
 /* logo */
-
-.logo{
+.container-logo{
     display: flex;
     z-index: 50;
+    margin: 15px;
     position: absolute;
+    cursor: pointer;
+    transition: transform 0.3s;
 }
 
+.container-logo:hover {
+    transform: scale(1.1);
+}
+
+.logo{
+    height: 80px;
+    width: 80px;
+}
+
+/* contenedor */
 .contenedor{
     width: 100vw;
     height: 100vh;
@@ -32,10 +44,14 @@ html, body {
 .card{
     display: flex;
     justify-content: start;
-    width: 20vw;
-    height: 40vh;
-    border: 2px solid #0a1128;
+    width: 100%;
+    max-width: 350px;
+    height: 100%;
+    max-height: 400px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);;
 }
+
 
 .card p{
     font-size: 30px;
@@ -44,35 +60,74 @@ html, body {
 }
 
 .formulario{
-    margin-top: 50px;
+    margin-top: 80px;
     display: flex;
     align-items: center;
     justify-content: center;   
 }
 
-.formulario input{
-    font-size: 1.8rem;
-    line-height: 1.33333;
-    font-weight: 400;
-    color: rgba(0, 0, 0, 0.9);
+.mb-3 {
     position: relative;
-    z-index: 1;
-    height: 52px;
-    padding: 28px 12px 6px;
-    color: var(--color-text, rgba(0, 0, 0, 0.9)) !important;
-    border-radius: 4px !important;
 }
 
-.formulario label{
+.mb-3 input{
+    display: flex;
+    width: 100%;
+    max-width: 90vw;
     font-size: 1.8rem;
     line-height: 1.33333;
     font-weight: 400;
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(0, 0, 0, 0.9) !important;
+    height: 52px;
+    padding: 0px 15px !important;
+    border-radius: 6px !important;
+}
+
+.mb-3 label{
     position: absolute;
+    padding: 3px !important;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: rgba(0, 0, 0, 0.9) ;
+    font-size: 19px;
+    pointer-events: none;
+    transition: .3s;
+}
+
+.mb-3 input:focus{
+    border: 2px solid #0a1128;
+    box-shadow: none;
+}
+
+.mb-3 input:focus ~ label,
+.mb-3 input:valid ~ label{
     top: 0;
-    left: 0;
-    padding: 14px 0 0 12px;
-    margin: 0;
-    -webkit-transition: .2s all;
-    transition: .2s all;
+    font-size: 16px;
+    padding: 0 15px;
+    background: #fff;
+}
+
+/* responsive */
+
+@media (max-width: 600px) {
+    .card {
+        max-width: 90%;
+        box-shadow: none;
+    }
+    .container-logo{
+        width: 100px;
+        display: block;
+        position: sticky;
+        left: 1px;
+        margin: 5px;
+    }
+    .logo{
+        margin: 5px;
+        height: 60px;
+        width: 60px;
+    }
+    .contenedor{
+        align-items: flex-start;
+    }
 }
