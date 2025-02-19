@@ -52,18 +52,18 @@ public class PersonaController {
     public String agregar(Model model) {
         Personas persona = new Personas();
         model.addAttribute("new_persona", persona);
-        return "html/Registrar_persona";
+        return "html/persona/Registrar_persona";
     }
 
     @PostMapping("/Register/personas")
     public String save(@ModelAttribute("new_persona") Personas persona, Model model) {
         per.save(persona);
-        return "html/inicio_sesion_persona";
+        return "html/persona/inicio_sesion_persona";
     }
 
     @GetMapping("/login/personas")
     public String iniciar_sesion() {
-        return "html/persona/inicio_sesion";
+        return "html/persona/inicio_sesion_persona";
     }
 
     @PostMapping("/login/personas")
@@ -99,7 +99,7 @@ public class PersonaController {
             Personas persona = personaService.findByEmail(email);
             if (persona == null) {
                 model.addAttribute("error", "Persona no encontrada.");
-                return "html/error";
+                return "html/persona/error";
             }
             List<Postulacion> postulaciones = postulacionService.obtenerPostulacionesPorUsuario(persona.getId());
             model.addAttribute("postulaciones", postulaciones);
@@ -110,7 +110,7 @@ public class PersonaController {
                 model.addAttribute("base64Image", "");
             }
             model.addAttribute("persona", persona);
-            return "html/Mi_perfil";
+            return "html/persona/Mi_perfil";
         } else {
             return "redirect:/login/personas";
         }
@@ -246,7 +246,7 @@ public class PersonaController {
 
     @GetMapping("/datos_incorrectos") // ruta para cuando se equivoquen al iniciar sesion
     public String contraseña_incorrecta() {
-        return "html/contraseña_incorrectauser";
+        return "html/persona/contraseña_incorrectauser";
     }
 
     @GetMapping("/Estadisticas") // ruta para llevarlo a estadisticas sobre lo que podemos mostrar
@@ -256,17 +256,17 @@ public class PersonaController {
 
     @GetMapping("/Estadisticas/personas") // ruta para llevarlo a estadisticas sobre lo que podemos mostrar
     public String estadistica_persona() {
-        return "html/Estadisticas_persona";
+        return "html/persona/Estadisticas_persona";
     }
 
     @GetMapping("/Contraseña-olvidada") // ruta para cuando quieren volver a recordar la contraseña
     public String olvidar() {
-        return "html/contraseña_olvidada_per";
+        return "html/persona/contraseña_olvidada_per";
     }
 
     @GetMapping("/configuracion/persona") // ruta para configuracion de las personas
     public String configuracion() {
-        return "html/Configuracion";
+        return "hhtml/persona/Configuracion";
     }
 
 }
