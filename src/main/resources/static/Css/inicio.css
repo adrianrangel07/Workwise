@@ -591,6 +591,20 @@ nav-rp:hover {
     margin-top: 10px;
 }
 
+/* estilo para barra de busqueda */
+#termino {
+    border: 2px solid black !important; /* Borde negro */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 5px 10px; /* Espaciado interno */
+    height: 38px; /* Tamaño del input */
+}
+
+#formBusqueda .btn {
+    padding: 4px 8px !important; /* Reducir tamaño del botón */
+    font-size: 14px !important; /* Reducir tamaño del icono */
+    height: 38px !important; /* Ajustar altura */
+    width: 38px !important;
+}
 
   
     
