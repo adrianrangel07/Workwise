@@ -194,3 +194,11 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".salario span").forEach(function (element) {
+        let value = element.textContent.trim();
+        if (!isNaN(value) && value !== "") {
+            element.textContent = Number(value).toLocaleString("es-CO");
+        }
+    });
+});

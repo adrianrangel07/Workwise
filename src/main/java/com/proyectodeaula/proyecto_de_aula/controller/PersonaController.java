@@ -4,18 +4,21 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,6 +51,9 @@ public class PersonaController {
     @Autowired
     private PostulacionService postulacionService;
 
+    @Autowired
+    private Interfaz_Per personaRepository;
+
     @GetMapping("/Register/personas")
     public String agregar(Model model) {
         Personas persona = new Personas();
@@ -70,16 +76,15 @@ public class PersonaController {
     public String iniciarSesion(HttpSession session, Model model, @RequestParam String email,
             @RequestParam String contraseña) {
 
-         // Datos quemados
+        // Datos quemados
         String emailQuemado = "admin@gmail.com";
         String contraseñaQuemada = "admin123";
-        
-        if (email.equals(emailQuemado) && contraseña.equals(contraseñaQuemada)) {
-        session.setAttribute("email", email);
-        session.setAttribute("usuarioId", 1L); // ID de usuario quemado
-        return "redirect:/personas/pagina_principal";
-        }
 
+        if (email.equals(emailQuemado) && contraseña.equals(contraseñaQuemada)) {
+            session.setAttribute("email", email);
+            session.setAttribute("usuarioId", 1L);
+            return "redirect:/personas/pagina_principal";
+        }
 
         Personas persona = user.findByEmailAndContraseña(email, contraseña);
         if (persona != null) {
@@ -88,7 +93,7 @@ public class PersonaController {
             return "redirect:/personas/pagina_principal";
         } else {
             model.addAttribute("error", "Credenciales incorrectas");
-            return "redirect:/datos_incorrectos";
+            return "redirect:/login/personas?error=true";
         }
     }
 
@@ -168,6 +173,21 @@ public class PersonaController {
         return "redirect:/perfil/persona";
     }
 
+    //mostrar la imagen al lado del perfil
+    @GetMapping("/imagen/{id}")
+    public ResponseEntity<byte[]> obtenerImagen(@PathVariable Long id) {
+        Optional<Personas> persona = personaRepository.findById(id);
+
+        if (persona.isPresent() && persona.get().getFoto() != null) {
+            byte[] imagen = persona.get().getFoto();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG); // Ajusta según el formato guardado
+            return new ResponseEntity<>(imagen, headers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("/uploadHDV")
     public String uploadHDV(@RequestParam("file") MultipartFile file, Model model, HttpSession session) {
         try {
@@ -195,7 +215,7 @@ public class PersonaController {
             return "html/error";
         }
     }
-    
+
     @GetMapping("/perfil/verHDV")
     public ResponseEntity<byte[]> verHDV(HttpSession session) {
         String email = (String) session.getAttribute("email");

@@ -581,6 +581,15 @@ nav-rp:hover {
     max-height: 4.5em; /* Ajustar según el número de líneas */
 }
 
+.applied-box {
+    background-color: yellow;
+    color: black;
+    padding: 8px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+}
 
 
   

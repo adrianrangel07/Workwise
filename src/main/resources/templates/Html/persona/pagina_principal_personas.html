@@ -49,13 +49,13 @@
                 <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light"
                     style="background: var(--bs-body-bg);">
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3"
-                            id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
+                            id="sidebarToggleTop" type="button"><i class="fas fa-bars" ></i></button>
                         <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search"
                             id="formBusqueda">
                             <div class="input-group"
                                 style="text-align: center;margin: 500px;border-color: var(--bs-emphasis-color);">
                                 <input id="termino" name="termino" class=" bg-light form-control border-0 small"
-                                    type="text" placeholder="Search for ...">
+                                    type="text" placeholder="Search for ..." >
                                 <button class="btn btn-primary py-0" type="submit" style="background: #0a1128;">
                                     <i class="fas fa-search"></i>
                                 </button>
@@ -69,20 +69,22 @@
                             </div>
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
-                                        aria-expanded="false" data-bs-toggle="dropdown" href="#"><span
-                                            class="d-none d-lg-inline me-2 text-gray-600 small"
-                                            id="usuario">Account</span><data value="${persona.id}"></data></a>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a
-                                            class="dropdown-item" th:href="@{/perfil/persona}"><i
-                                                class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a>
-                                        <div class="dropdown-divider"></div><a class="dropdown-item" href="#"
-                                            id="logout" onclick="cerrarSesion(event)">
+                                <div class="nav-item dropdown no-arrow" id="usuario-container">
+                                    <img id="user-avatar" th:src="@{/imagen/{id}(id=${persona.id})}" alt="Profile">
+                                    <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
+                                        <span id="usuario" th:text="${persona.nombre}">Account</span>
+                                    </a>
+                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                                        <a class="dropdown-item" th:href="@{/perfil/persona}">
+                                            <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#" id="logout" onclick="cerrarSesion(event)">
                                             <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>Logout
                                         </a>
                                     </div>
                                 </div>
-                            </li>
+                            </li>  
                         </ul>
                     </div>
                 </nav>
@@ -147,52 +149,64 @@
                     <input type="hidden" id="usuarioId" th:value="${usuarioId}">
                 </div>
 
-                <div class="offer-container">
-                    <div th:each="Oferta:${Ofertas}" class="card">
-                        <div class="offer-content" th:data-id="${Oferta.id}">
-                            <h3 th:text="${Oferta.titulo_puesto}"></h3>
-                            <p th:text="${Oferta.descripcion}"></p>
-                            <div class="hidden-info">
-                                <p class="salario"><strong>Salary:</strong> <span th:text="${Oferta.salario}"></span>
-                                </p>
-                                <p class="moneda"><Strong>Currency:</Strong> <span th:text="${Oferta.moneda}"></span>
-                                </p>
-                                <p class="duracion"><strong>Duration:</strong> <span
-                                        th:text="${Oferta.duracion}"></span></p>
-                                <p 
-                                class="periodo"><strong>Period:</strong> <span th:text="${Oferta.periodo}"></span>
-                                </p>
-                                <p class="tipo_empleo"><strong>Type of employment:</strong> <span
-                                        th:text="${Oferta.tipo_empleo}"></span></p>
-                                <p class="modalidad"><strong>Mode:</strong> <span th:text="${Oferta.modalidad}"></span>
-                                </p>
-                                <p class="tipo_contrato"><strong>Type of contract:</strong> <span
-                                        th:text="${Oferta.tipo_contrato}"></span></p>
-                                </p>
+
+                <div class="content-area flex-grow-1 p-3">
+                    <div class="offer-container">
+                        <div th:each="Oferta:${Ofertas}" class="card">
+                            <div class="offer-content" th:attr="data-id=${Oferta.id}">
+                                <h3 th:text="${Oferta.titulo_puesto}"></h3>
+                                <p th:text="${Oferta.descripcion}"></p>
+                                <div class="hidden-info">
+                                    <p class="empresa"><strong>Empresa:</strong> <span
+                                            th:text="${Oferta.empresa.nombreEmp}"></span></p>
+                                    <p class="salario"><strong>Salary:</strong> <span
+                                            th:text="${Oferta.salario}"></span>
+                                    </p>
+                                    <p class="moneda"><Strong>Currency:</Strong> <span
+                                            th:text="${Oferta.moneda}"></span>
+                                    </p>
+                                    <p class="duracion"><strong>Duration:</strong> <span
+                                            th:text="${Oferta.duracion}"></span>
+                                    </p>
+                                    <p class="periodo"><strong>Period:</strong> <span
+                                            th:text="${Oferta.periodo}"></span>
+                                    </p>
+                                    <p class="tipo_empleo"><strong>Type of employment:</strong> <span
+                                            th:text="${Oferta.tipo_empleo}"></span>
+                                    </p>
+                                    <p class="modalidad"><strong>mode:</strong> <span
+                                            th:text="${Oferta.modalidad}"></span>
+                                    </p>
+                                    <p class="tipo_contrato"><strong>Type of contract:</strong> <span
+                                            th:text="${Oferta.tipo_contrato}"></span>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Modal que se mostrará al hacer clic en una tarjeta -->
-                <div id="modal" class="modal">
-                    <div class="modal-content" id="modal-content">
-                        <div class="modal-header">
-                            <h3 id="modal-title"></h3>
-                            <span class="close-btn" id="close-btn">&times;</span>
-                        </div>
-                        <div class="modal-body">
-                            <p id="modal-description"></p>
-                            <span id="modal-salary"></span></p>
-                            <span id="modal-currency"></span></p>
-                            <span id="modal-duration"></span></p>
-                            <span id="modal-period"></span></p>
-                            <span id="modal-modalidad"></span></p>
-                            <span id="modal-type"></span></p>
-                            <span id="modal-typeContract"></span></p>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="apply-btn-modal" id="postularseBtn">Apply</button>
+                    <!-- Modal que se mostrará al hacer clic en una tarjeta -->
+                    <div id="modal" class="modal">
+                        <div class="modal-content" id="modal-content">
+                            <div class="modal-header">
+                                <h3 id="modal-title"></h3>
+                                <span class="close-btn" id="close-btn">&times;</span>
+                            </div>
+                            <div class="modal-body">
+                                <p id="modal-description"></p>
+                                <span id="modal-salary"></span></p>
+                                <span id="modal-currency"></span></p>
+                                <span id="modal-duration"></span></p>
+                                <span id="modal-period"></span></p>
+                                <span id="modal-modalidad"></span></p>
+                                <span id="modal-type"></span></p>
+                                <span id="modal-typeContract"></span></p>
+                                <br>
+                                <p id="modal-empresa"></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="apply-btn-modal" id="postularseBtn">Apply</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -235,6 +249,7 @@
         <script src="../js/General/theme.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="../js/Inicio_persona.js"></script>
+
 
 </body>
 

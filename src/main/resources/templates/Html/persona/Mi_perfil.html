@@ -228,6 +228,9 @@
                                                     <div class="offer-content" data-id="${postulacion.ofertas.id}">
                                                         <h3 th:text="${postulacion.ofertas.titulo_puesto}"></h3>
                                                         <p th:text="${postulacion.ofertas.descripcion}"></p>
+                                                        <p class="estado"><strong>Application Status:</strong> 
+                                                            <span class="badge bg-warning text-dark" th:text="${postulacion.estado}"></span>
+                                                        </p>
                                                         <div class="hidden-info">
                                                             <p class="salario"><strong>Salary:</strong> <span
                                                                     th:text="${postulacion.ofertas.salario}"></span></p>

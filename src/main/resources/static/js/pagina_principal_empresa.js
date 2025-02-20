@@ -427,3 +427,13 @@ function mostrarPostulaciones(idOferta) {
             document.getElementById('postulaciones-count').innerText = 'Error al obtener postulaciones';
         });
 }
+
+// Formatear los salarios al cargar la página
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".salario span").forEach(function (element) {
+        let value = element.textContent.trim();
+        if (!isNaN(value) && value !== "") {
+            element.textContent = Number(value).toLocaleString("es-CO");
+        }
+    });
+});

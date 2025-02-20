@@ -2,6 +2,7 @@ package com.proyectodeaula.proyecto_de_aula.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,9 +12,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
-
-import java.util.Optional;
 
 import com.proyectodeaula.proyecto_de_aula.interfaces.Ofertas.OfertasRepository;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Personas.Interfaz_Per;
@@ -69,6 +67,7 @@ public class PostulacionController {
         Postulacion postulacion = new Postulacion();
         postulacion.setOfertas(oferta);
         postulacion.setPersonas(persona);
+        postulacion.setEstado("Pendiente");
         postulacion.setN_personas(1);
         postulacionRepository.save(postulacion);
 

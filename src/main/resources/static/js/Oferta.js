@@ -48,3 +48,16 @@ document.getElementById('jobOfferForm').addEventListener('submit', function (eve
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const salarioInput = document.getElementById("salario");
+
+    if (salarioInput) {
+        salarioInput.addEventListener("input", function () {
+            let value = this.value.replace(/,/g, ''); // Elimina comas previas
+            if (!isNaN(value) && value !== "") {
+                this.value = Number(value).toLocaleString("en-US"); // Formatea con comas
+            }
+        });
+    }
+});

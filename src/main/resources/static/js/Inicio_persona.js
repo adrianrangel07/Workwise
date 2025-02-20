@@ -1,36 +1,37 @@
+
 document.addEventListener('DOMContentLoaded', function () {
     // Seleccionar todas las tarjetas
     const cards = document.querySelectorAll('.offer-content');
     const modal = document.getElementById('modal');
     const closeModalBtn = document.querySelector('.close-btn');
 
-     // Elementos del modal
-     const modalTitle = document.getElementById('modal-title');
-     const modalDescription = document.getElementById('modal-description');
-     const modalSalary = document.getElementById('modal-salary');
-     const modalCurrency = document.getElementById('modal-currency');    
-     const modalDuration = document.getElementById('modal-duration');
-     const modalPeriod = document.getElementById('modal-period');
-     const modalType = document.getElementById('modal-type');
-     const modalModalidad = document.getElementById('modal-modalidad');
-     const modalTypeContract = document.getElementById('modal-typeContract');
+    // Elementos del modal
+    const modalTitle = document.getElementById('modal-title');
+    const modalDescription = document.getElementById('modal-description');
+    const modalSalary = document.getElementById('modal-salary');
+    const modalCurrency = document.getElementById('modal-currency');    
+    const modalDuration = document.getElementById('modal-duration');
+    const modalPeriod = document.getElementById('modal-period');
+    const modalType = document.getElementById('modal-type');
+    const modalModalidad = document.getElementById('modal-modalidad');
+    const modalTypeContract = document.getElementById('modal-typeContract');
+    const modalEmpresa = document.getElementById('modal-empresa');
 
     // Función para abrir el modal
     const openModal = (card) => {
-         // Obtener los datos de la tarjeta
-         const title = card.querySelector('h3').innerText;
-         const description = card.querySelector('p').innerText;
-         const salary = card.querySelector('.salario span').innerText;
-         const currency = card.querySelector('.moneda span').innerText;        
-         const duration = card.querySelector('.duracion span').innerText;
-         const period = card.querySelector('.periodo span').innerText;
-         const type = card.querySelector('.tipo_empleo span').innerText;
-         const modalidad = card.querySelector('.modalidad span').innerText;
-         const typeContract = card.querySelector('.tipo_contrato span').innerText;
-         
-
-        // Obtener el id de la oferta
-        const ofertaId = card.getAttribute('data-id'); // Aquí se obtiene el ID del atributo data-id
+        
+        // Obtener los datos de la tarjeta
+        const title = card.querySelector('h3').innerText;
+        const description = card.querySelector('p').innerText;
+        const salary = card.querySelector('.salario span').innerText;
+        const currency = card.querySelector('.moneda span').innerText;        
+        const duration = card.querySelector('.duracion span').innerText;
+        const period = card.querySelector('.periodo span').innerText;
+        const type = card.querySelector('.tipo_empleo span').innerText;
+        const modalidad = card.querySelector('.modalidad span').innerText;
+        const typeContract = card.querySelector('.tipo_contrato span').innerText;
+        const empresa = card.querySelector('.empresa span').innerText;
+        
 
         // Llenar el modal con los datos de la tarjeta
         modalTitle.innerText = title;
@@ -42,13 +43,14 @@ document.addEventListener('DOMContentLoaded', function () {
         modalType.innerHTML = `<strong>Tipo de empleo:</strong> ${type}`;
         modalModalidad.innerHTML = `<strong>Modalidad:</strong> ${modalidad}`;
         modalTypeContract.innerHTML = `<strong>tipo de contrato:</strong> ${typeContract}`;
+        modalEmpresa.innerHTML = `<strong>Empresa:</strong> ${empresa}`;
 
-        // Asignar el ID de la oferta al botón de postulación (de forma segura)
-        const postularseBtn = document.getElementById('postularseBtn');
-        if (postularseBtn) {
-            postularseBtn.setAttribute('data-oferta-id', ofertaId); // Usamos 'data-oferta-id' para evitar problemas con el atributo 'ofertaId'
-        }
 
+        const ofertaId = card.getAttribute("data-id"); // Obtener ID de la oferta
+        postularseBtn.setAttribute("data-oferta-id", ofertaId); // Asignarlo al botón
+    
+        // Verifica si se asignó correctamente
+        console.log("ID de la oferta en el botón:", postularseBtn.getAttribute("data-oferta-id"));
         // Mostrar el modal
         modal.style.display = 'flex';
     };
@@ -71,14 +73,14 @@ document.addEventListener('DOMContentLoaded', function () {
             modal.style.display = 'none';
         }
     });
-
 });
 
+
+//boton postularse 
 const postularseBtn = document.getElementById('postularseBtn');
 postularseBtn.addEventListener("click", function () {
     // Obtener el ID de la oferta desde el botón
-    const ofertaId = postularseBtn.getAttribute('data-oferta-id');
-
+    const ofertaId = parseInt(postularseBtn.getAttribute('data-oferta-id'), 10);
     // Obtener el usuarioId desde el campo oculto
     const usuarioId = document.getElementById('usuarioId').value;
 
@@ -269,4 +271,45 @@ function cerrarSesion(event) {
         }
     });
 }
+
+//codigo que hace que aparezca la foto de perfil 
+document.addEventListener("DOMContentLoaded", function () {
+    // Obtener datos del usuario desde el HTML
+    const usuarioNombre = document.getElementById("usuario");
+    const userAvatar = document.getElementById("user-avatar");
+
+    // Si hay una foto en localStorage, usarla
+    if (localStorage.getItem("fotoPerfil")) {
+        userAvatar.src = localStorage.getItem("fotoPerfil");
+    }
+
+    // Evento para actualizar la foto cuando el usuario la cambia
+    function actualizarFotoPerfil(nuevaFoto) {
+        userAvatar.src = nuevaFoto;
+        localStorage.setItem("fotoPerfil", nuevaFoto); // Guardar en localStorage
+    }
+
+    // Simulación: si el usuario sube una nueva imagen
+    document.getElementById("subirFoto").addEventListener("change", function (event) {
+        const archivo = event.target.files[0];
+        if (archivo) {
+            const lector = new FileReader();
+            lector.onload = function (e) {
+                actualizarFotoPerfil(e.target.result);
+            };
+            lector.readAsDataURL(archivo);
+        }
+    });
+});
+
+//codigo que hace que aparezca el salario con comas
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".salario span").forEach(function (element) {
+        let value = element.textContent.trim();
+        if (!isNaN(value) && value !== "") {
+            element.textContent = Number(value).toLocaleString("es-CO");
+        }
+    });
+});
+
 
