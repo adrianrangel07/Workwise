@@ -313,3 +313,20 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Verifica si ya se mostró la notificación en esta sesión
+    if (!sessionStorage.getItem("loginNotificationShown")) {
+        Swal.fire({
+            title: "¡Bienvenido!",
+            text: "Has iniciado sesión correctamente.",
+            icon: "success",
+            confirmButtonText: "Aceptar"
+        });
+
+        // Marca la notificación como mostrada
+        sessionStorage.setItem("loginNotificationShown", "true");
+    }
+});
+
+

@@ -12,7 +12,9 @@ document.getElementById('btn-register').addEventListener('click', function (even
             title: '¡Error!',
             text: 'Las contraseñas no coinciden. Por favor, verifica.'
         }).then(() => {
-            location.reload();
+            password.value = "";
+            confirmPassword.value = "";
+            //location.reload();
         });
         event.preventDefault(); // Evita que el formulario se envíe
     }
@@ -53,12 +55,16 @@ document.getElementById("registerForm").addEventListener("submit", function(even
             text: 'Debes tener al menos 18 años para registrarte.',
             confirmButtonText: 'Entendido'
         }).then(() => {
-            // Opcional: Recargar la página para limpiar el formulario
             window.location.reload();
         });
     }
 });
 
 
+//script para el tip, que se vea bien 
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl);
+});
 
 

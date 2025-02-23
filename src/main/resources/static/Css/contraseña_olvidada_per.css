@@ -1,71 +1,155 @@
-#captcha-box {
-    border: 1px solid #635f5f;
-    padding: 5px;
-    display: inline-block;
-    margin-top: 10px;
-    border-radius: 8px;
+html, body {
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #ece9e6, #ffffff);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
     margin: 0;
-    padding: 0;
 }
 
-.top-bar {
+/* Logo */
+.container-logo {
     display: flex;
-    justify-content: space-between;
-    align-items: center;                    /* barra superior de navegacion */
-    background-color:#0a1128;
-    color: white;
-    padding: 10px;
-    height: 44px;
-}
-.nav-menu{
-    display: flex;
-    margin-right: 0px;              /* las opciones de registro y empresa*/
-    list-style: none;
-    line-height: 14px;
-}
-
-.nav-menu-item{
-    font-size: 17px;
-    margin: 0 15px; 
-    width: max-content;
-    height: 10px;
-}
-
-.nav-menu-item a{
-    text-decoration: none;
-    color: #ffffff;
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.nav-menu-item a:hover{
-    background-color: #ffffff;
-    color: #0a1128;
-    height: 40px;
-    transition: 0.4s;
-}
-
-#logo {
-    width: 150px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
     cursor: pointer;
-    transition: transform 0.3s;
+    transition: all .3s;
+    z-index: 50;
 }
 
-#logo:hover {
+.container-logo:hover {
     transform: scale(1.1);
 }
 
-.h1{
-    background: linear-gradient(90deg, #034078, #000);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+.logo {
+    height: 80px;
+    width: 80px;
 }
 
-.submit{
-    user-select: none;
+/* Botón de retroceso */
+.container-back {
+    position: absolute;
+    top: 15px;
+    left: 100px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.container-back:hover {
+    transform: scale(1.2);
+}
+
+.back {
+    color: #0a1128;
+    font-size: 30px;
+    text-decoration: none;
+}
+
+/* Contenedor principal */
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    position: relative;
+}
+
+.container h2 {
+    font-size: 24px;
+    color: #0a1128;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Estilos de los inputs */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+input:focus {
+    border-color: #0a1128;
+    outline: none;
+}
+
+/* Botón */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background-color: #0a1128;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #05070f;
+}
+
+/* Captcha */
+.captcha-box {
+    font-size: 18px;
+    font-weight: bold;
+    background: #f3f3f3;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: center;
+    border-radius: 8px;
+}
+
+/* Ajuste responsive */
+@media (max-width: 600px) {
+    .container {
+        max-width: 100%;
+        box-shadow: none;
+        padding: 20px;
+    }
+
+    .container-logo {
+        width: 100px;
+        display: block;
+        position: sticky;
+        left: 1px;
+        margin: 5px;
+    }
+
+    .logo {
+        margin: 5px;
+        height: 60px;
+        width: 60px;
+    }
+
+    .container-back {
+        left: 80px;
+        top: 15px;
+    }
 }

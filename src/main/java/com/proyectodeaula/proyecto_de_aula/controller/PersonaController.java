@@ -3,6 +3,7 @@ package com.proyectodeaula.proyecto_de_aula.controller;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -173,7 +175,7 @@ public class PersonaController {
         return "redirect:/perfil/persona";
     }
 
-    //mostrar la imagen al lado del perfil
+    // mostrar la imagen al lado del perfil
     @GetMapping("/imagen/{id}")
     public ResponseEntity<byte[]> obtenerImagen(@PathVariable Long id) {
         Optional<Personas> persona = personaRepository.findById(id);
@@ -251,17 +253,36 @@ public class PersonaController {
         }
     }
 
-    // metodo para actualizar el perfil
-    @GetMapping("/update/perfil")
-    public String mostrarPerfil(@RequestParam String email, Model model) {
-        Personas usuario = personaService.findByEmail(email);
-        model.addAttribute("usuario", usuario);
-        return "Html/update_per";
+    @PostMapping("/verificar-correo")
+    public ResponseEntity<String> verificarCorreo(@RequestBody Map<String, String> requestData) {
+        String email = requestData.get("email");
+        Personas persona = personaService.findByEmail(email);
+
+        if (persona == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("NO_REGISTRADO");
+        }
+
+        return ResponseEntity.ok("Correo verificado. Ahora puede cambiar su contraseña.");
+    }
+
+    @PostMapping("/cambiar-contraseña")
+    public ResponseEntity<String> cambiarContraseña(@RequestBody Map<String, String> requestData) throws Exception {
+        String email = requestData.get("email");
+        String nuevaContraseña = requestData.get("nuevaContraseña");
+
+        Personas persona = personaService.findByEmail(email);
+        if (persona == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERROR");
+        }
+
+        persona.setContraseña(nuevaContraseña); // Debería usarse hashing aquí
+        personaService.actualizarPerfil(persona);
+        return ResponseEntity.ok("OK");
     }
 
     @GetMapping("/Nosotros") // ruta para enviar a nosotros (informacion sobre la pagina )
     public String Nosotros() {
-        return "Html/Nosotros";
+        return "Html/persona/Nosotros";
     }
 
     @GetMapping("/datos_incorrectos") // ruta para cuando se equivoquen al iniciar sesion
@@ -271,7 +292,7 @@ public class PersonaController {
 
     @GetMapping("/Estadisticas") // ruta para llevarlo a estadisticas sobre lo que podemos mostrar
     public String estadistica() {
-        return "Html/Estadisticas";
+        return "Html/persona/Estadisticas";
     }
 
     @GetMapping("/Estadisticas/personas") // ruta para llevarlo a estadisticas sobre lo que podemos mostrar

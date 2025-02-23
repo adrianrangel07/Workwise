@@ -73,7 +73,7 @@ public class EmpresaController {
             return "redirect:/empresas/pagina_principal";
         }
         model.addAttribute("error", "Credenciales incorrectas o empresa no encontrada");
-        return "redirect:/datos_incorrectaemp";
+        return "redirect:/login/Empresa?error=true";
     }
 
     // Muestra la página principal de la empresa después del inicio de sesión
@@ -88,12 +88,6 @@ public class EmpresaController {
         return "redirect:/login/Empresa";
     }
 
-    // Muestra la página de error en caso de credenciales incorrectas
-    @GetMapping("/datos_incorrectaemp")
-    public String mostrarErrorLogin() {
-        return "Html/contraseña_incorrectaemp";
-    }
-
     // Muestra el perfil de la empresa
     @GetMapping("/perfil/empresa")
     public String mostrarPerfil(Model model, HttpSession session) {
@@ -105,7 +99,7 @@ public class EmpresaController {
             return "Html/error";
         }
         model.addAttribute("empresa", empresa);
-        return "Html/Mi_perfilemp";
+        return "Html/Empresa/Mi_perfilemp";
     }
 
     // Actualiza el perfil de la empresa
@@ -169,21 +163,21 @@ public class EmpresaController {
     // Muestra la vista de estadísticas de empresas
     @GetMapping("/Estadisticas/empresas")
     public String mostrarEstadisticas() {
-        return "Html/Estadisticas_empresas";
+        return "Html/Empresa/Estadisticas_empresas";
     }
 
     @GetMapping("/empresas/oferta") // para ver las ofertas postuladas
         public String oferta() {
-        return "Html/Oferta";
+        return "Html/Empresa/Oferta";
     }
 
     @GetMapping("/Contraseña-olvidada-empresa") // cuando quieren recuperar la contraseña de la cuenta de empresa
         public String olvidar_emp() {
-        return "Html/contraseña_olvidada_emp";
+        return "Html/Empresa/contraseña_olvidada_emp";
     }
 
-    @GetMapping("/empresas/published offers") // cuando quieren recuperar la contraseña de la cuenta de empresa
+    @GetMapping("/empresas/published offers") // para ver las ofertas publicadas
         public String recuperar_emp() {
-        return "Html/ofertas-publicadas";
+        return "Html/Empresa/ofertas-publicadas";
     }
 }
