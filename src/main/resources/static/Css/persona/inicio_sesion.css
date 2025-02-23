@@ -132,7 +132,8 @@ html, body {
     background: #fff;
 }
 
-.mb-3 span{
+.show-password{
+    all: unset;
     display: inline-block;
     position: absolute;
     padding: 0 8px !important;
@@ -145,7 +146,7 @@ html, body {
     z-index: 100;
 }
 
-.mb-3 span:hover{
+.show-password:hover{
     background-color: #cecfcf;
     padding: 0 8px !important;
     border-radius: 10px;

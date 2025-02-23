@@ -1,60 +1,69 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+html, body {
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* boton regreso */
-.back{
-    float: right;
-    margin: 7px;
-    font-size: 30px;
-    transition: all 0.2s ease;
-}
-
-.back:hover{
-    transform: scale(1,1);
-}
-/* fin boton regreso */
-
-#select{
-    text-align: end;
-    border-color: black;
-}
-
-#btn-register {
-    background-color: #fec785;
-    color: black; 
-    padding: 12px 30px; 
-    font-size: 16px; 
-    border: none;
-    border-radius: 8px;
-    cursor: pointer; 
-    display: block; 
-    margin: 20px auto; 
-    text-align: center; 
-    width: 80%; 
-    transition: background-color 0.3s ease; 
-}
-
-
-#btn-register:hover {
-    background-color: #f09c36; 
-}
-
-#body{
-    background-color: #feead1;
-}
-
-#logo {
-    width: 150px;
+/* aqui empieza el logo */
+.container-logo{
+    display: flex;
+    z-index: 50;
+    margin: 15px;
+    position: absolute;
     cursor: pointer;
-    transition: transform 0.3s;
+    transition: all .3s;
 }
 
-#logo:hover {
+.container-logo:hover {
     transform: scale(1.1);
+}
+
+.logo{
+    height: 80px;
+    width: 80px;
+}
+
+/* aqui empieza el contenedor */
+.contenedor{
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100; 
+}
+
+/* empieza la tarjeta */
+.card{
+    display: flex;
+    justify-content: start;
+    width: 100%;
+    max-width: 550px;
+    height: 100%;
+    max-height: 370px;
+    border: none;
+    box-shadow: 0 4px 12px 4px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+}
+
+
+.card h1{
+    font-size: 30px;
+    color:#0a1128;
+    font-weight: bold; /* Hace el texto más grueso */
+}
+
+.formulario{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;   
 }
 
