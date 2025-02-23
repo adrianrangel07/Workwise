@@ -45,7 +45,7 @@ public class EmpresaController {
     @GetMapping("/Registrar/Empresa")
     public String mostrarFormularioRegistro(Model model) {
         model.addAttribute("empresa", new Empresas());
-        return "Html/Registrar_empresa";
+        return "Html/Empresa/Registrar_empresa";
     }
 
     // Registra una nueva empresa en la base de datos
@@ -58,7 +58,7 @@ public class EmpresaController {
     // Muestra la página de inicio de sesión para empresas
     @GetMapping("/login/Empresa")
     public String mostrarLoginEmpresa() {
-        return "Html/inicio_sesion_empresa";
+        return "Html/Empresa/inicio_sesion_empresa";
     }
 
     // Procesa el inicio de sesión de una empresa
@@ -83,7 +83,7 @@ public class EmpresaController {
         if (empresa != null) {
             model.addAttribute("Ofertas", ofertaService.listarOfertasPorEmpresa(empresa));
             model.addAttribute("nombreEmpresa", empresa.getNombreEmp());
-            return "Html/pagina_principal_empresa";
+            return "Html/Empresa/pagina_principal_empresa";
         }
         return "redirect:/login/Empresa";
     }
