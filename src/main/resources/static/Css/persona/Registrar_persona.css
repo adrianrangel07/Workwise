@@ -141,6 +141,7 @@ html, body {
 
 .mb-3 input:focus ~ label,
 .mb-3 input:not(:placeholder-shown) ~ label{
+    border: 2px solid #0a1128;
     top: 0;
     font-size: 16px;
     padding: 0 15px;
