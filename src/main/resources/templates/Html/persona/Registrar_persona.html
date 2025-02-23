@@ -1,4 +1,20 @@
 <!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>Login users</title>
+        <link rel="icon" type="image/png" href="../Imagenes/wknlogo2.png">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+        <link rel="stylesheet" href="../Css/general/bootstrap.min.css">
+        <link rel="stylesheet" href="../Css/general/Grid-and-List-view-V10-style.css">
+        <link rel="stylesheet" href="../Css/general/Grid-and-List-view-V10.css">
+        <link rel="stylesheet" href="../Css/general/Nunito.css">
+        <link rel="stylesheet" href="../Css/general/styles.min.css">
+        <link rel="stylesheet" href="../CSS/persona/Registrar_persona.css">
+    </head>
+<body>
+    <div class="container-logo">
 <html lang="es" xmlns:th="https://www.thymeleaf.org">
 
 <head>
@@ -22,48 +38,66 @@
 <body id="body">
     <div style="display: flex;">
         <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" th:href="@{/}">
-            <img id="logo" src="../Imagenes/wknblack.png" width="61" height="58" style="width: 60px; height: 60px; margin: 10px;">
+            <img class="logo" id="logo" src="../Imagenes/wknblack.png">
         </a>
     </div>
-    <div class="container">
-        <div class="card shadow-lg o-hidden border-0 my-5">
-            <div class="card-body p-0">
-                <div class="row">
-                    <div class="col-lg-5 d-none d-lg-flex">
-                        <div class="flex-grow-1 bg-register-image" style="display: flex;">
-                            <img src="../Imagenes/imagen_registro_persona.jpg" alt="" style="margin: auto; width: 512px;">
-                        </div>
+    <div class="contenedor">
+        <div class="card">
+            <form id="registerForm" th:action="@{/Register/personas}" method="post" class="user">
+                <div class="row mb-3">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <input class="form-control form-control-user" type="text" id="nombre"
+                            placeholder="First Name" name="nombre" required>
                     </div>
-                    <div class="col-lg-7">
-                        <a th:href="@{/}" class="back_a">
-                            <i class="fas fa-arrow-left back"></i>
-                        </a>
-                        <div class="p-5">
-                            <div class="text-center">
-                                <h4 class="text-dark mb-4">Create an Account!</h4>
-                            </div>
-                            <form id="registerForm" th:action="@{/Register/personas}" method="post" class="user">
-                                <div class="row mb-3">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input class="form-control form-control-user" type="text" id="nombre"
-                                            placeholder="First Name" name="nombre" required>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input class="form-control form-control-user" type="text"
-                                            placeholder="Last Name" id="apellido" name="apellido" required>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <input class="form-control form-control-user" type="email"
-                                        aria-describedby="emailHelp" placeholder="Email Address" id="email" name="email"
-                                        required>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input class="form-control form-control-user" type="password"
-                                            placeholder="Password" id="password" name="contraseña" minlength="6" maxlength="45" required>
-                                    </div>
+                    <div class="col-sm-6">
+                        <input class="form-control form-control-user" type="text"
+                            placeholder="Last Name" id="apellido" name="apellido" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <input class="form-control form-control-user" type="email"
+                        aria-describedby="emailHelp" placeholder="Email Address" id="email" name="email"
+                        required>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <input class="form-control form-control-user" type="password"
+                            placeholder="Password" id="password" name="contraseña" minlength="6" maxlength="45" required>
+                    </div>
 
+                    <div class="col-sm-6">
+                        <input class="form-control form-control-user" type="password"
+                            placeholder="Repeat Password" id="confirm-password" name="confirm-password" minlength="6" maxlength="45"
+                            required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-6">
+                        <input class="form-control form-control-user" type="text" placeholder="DNI"
+                            id="cedula" name="identificacion" minlength="7" maxlength="10" required>
+                    </div>
+                    <div id="select" class="col-sm-6 mb-3 mb-sm-0">
+                        <select id="tipo-identificacion" name="tipoIdentificacion"
+                            class="form-control form-control-btn" required>
+                            <option value="cc">Cédula de Ciudadanía</option>
+                            <option value="ce">Cédula de Extranjería</option>
+                            <option value="rc">Registro Civil</option>
+                            <option value="dni">Documento de Identidad</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <input class="form-control form-control-user" type="date"
+                            placeholder="birthdate" id="fecha" name="fecha_nacimiento" required>
+                    </div>
+                    <div id="select-genero" class="col-sm-6 ">
+                        <select name="genero" id="genero" class="form-control form-control-btn">
+                            <option value="Choose">Choose your gener...</option>
+                            <option value="Female">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="No-espefic">Prefer not to say</option>
+                        </select>
                                     <div class="col-sm-6">
                                         <input class="form-control form-control-user" type="password"
                                             placeholder="Repeat Password" id="confirm-password" name="confirm-password" minlength="6" maxlength="45"
@@ -110,7 +144,13 @@
                         </form>
                     </div>
                 </div>
-            </div>
+                <div class="submit">
+                    <button id="btn-register" type="submit">Register</button>
+                </div>
+                <div class="text-center"><a class="small" th:href="@{/login/personas}">Already have an
+                        account? Login!</a>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -123,5 +163,4 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 </body>
-
 </html>
