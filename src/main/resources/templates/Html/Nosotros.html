@@ -18,15 +18,15 @@
 </head>
 
 <body>
+    <button class="toggle-menu" onclick="toggleSidebar()">☰ Menú</button>
     <div class="contenedor">
         <header class="top-bar">
-            <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark"
-                style="background: #0a1128;">
-                <div class="container-fluid d-flex flex-column p-0"><a
-                        class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
-                        th:href="@{/}"><img src="../Imagenes/working wise 32x32 white.png" width="61" height="58"
+            <nav class="navbar align-items-start sidebar sidebar-dark accordion  p-0 navbar-dark">
+                <div class="container-fluid d-flex flex-column p-0">
+                    <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
+                        th:href="@{/}">
+                        <img src="../Imagenes/working wise 32x32 white.png" width="61" height="58"
                             style="width: 50px;height: 50px;">
-                        <div class="sidebar-brand-icon rotate-n-15"></div>
                         <div class="sidebar-brand-text mx-3"><span>Workwise</span></div>
                     </a>
                     <hr class="sidebar-divider my-0">
@@ -42,11 +42,8 @@
                         <li class="nav-item"><a class="nav-link active" th:href="@{/Nosotros}"><i
                                     class="fas fa-users"></i><span>About Us</span></a></li>
                         <li class="nav-item"><a class="nav-link" th:href="@{/login/Empresa}"><i
-                                    class="fas fa-building"></i><span>Do you have a company? </span></a></li>
-
+                                    class="fas fa-building"></i><span>Do you have a company?</span></a></li>
                     </ul>
-                    <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0"
-                            id="sidebarToggle" type="button"></button></div>
                 </div>
             </nav>
         </header>
@@ -128,6 +125,37 @@
             </div>
         </main>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuToggle = document.querySelector(".toggle-menu");
+            const sidebar = document.querySelector(".top-bar");
+
+            menuToggle.addEventListener("click", function (event) {
+                event.stopPropagation(); // Evita que el clic se propague y cierre inmediatamente el menú
+                sidebar.classList.toggle("active");
+
+                // Mostrar u ocultar el botón correctamente
+                if (sidebar.classList.contains("active")) {
+                    menuToggle.style.opacity = "0"; // Oculta visualmente el botón
+                    menuToggle.style.pointerEvents = "none"; // Desactiva clics en el botón
+                } else {
+                    menuToggle.style.opacity = "1"; // Vuelve a mostrar el botón
+                    menuToggle.style.pointerEvents = "auto"; // Reactiva los clics
+                }
+            });
+
+            // Cerrar el menú si se hace clic fuera de él
+            document.addEventListener("click", function (event) {
+                if (!sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
+                    sidebar.classList.remove("active");
+                    menuToggle.style.opacity = "1";
+                    menuToggle.style.pointerEvents = "auto";
+                }
+            });
+        });
+
+
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/General/Grid-and-List-view-V10-script.js"></script>
     <script src="../js/General/script.min.js"></script>

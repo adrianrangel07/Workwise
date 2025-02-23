@@ -282,7 +282,7 @@ public class PersonaController {
 
     @GetMapping("/Nosotros") // ruta para enviar a nosotros (informacion sobre la pagina )
     public String Nosotros() {
-        return "Html/persona/Nosotros";
+        return "Html/Nosotros";
     }
 
     @GetMapping("/datos_incorrectos") // ruta para cuando se equivoquen al iniciar sesion
@@ -292,7 +292,7 @@ public class PersonaController {
 
     @GetMapping("/Estadisticas") // ruta para llevarlo a estadisticas sobre lo que podemos mostrar
     public String estadistica() {
-        return "Html/persona/Estadisticas";
+        return "Html/Estadisticas";
     }
 
     @GetMapping("/Estadisticas/personas") // ruta para llevarlo a estadisticas sobre lo que podemos mostrar
