@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recuperar Contraseña</title>
-    <link rel="stylesheet" href="../Css/contraseña_olvidada_per.css">
+    <link rel="stylesheet" href="../Css/persona/contraseña_olvidada_per.css">
     <link rel="icon" type="image/png" href="../Imagenes/wknlogo2.png">
 
 </head>
@@ -29,6 +29,8 @@
             <div class="captcha-box" id="captchaText"></div>
             <input type="text" id="captchaInput" placeholder="Ingrese el captcha" required>
             <button type="button" onclick="validarCaptcha()">Verificar</button>
+            <button type="button" onclick="window.location.href='/login/personas'" class="btn-cancel">Cancelar</button>
+
         </form>
         <br>
         <br>
@@ -39,7 +41,9 @@
             <label for="repetirContraseña">Repetir Contraseña:</label>
             <input type="password" id="repetirContraseña" required>
 
-            <button type="button" onclick="cambiarContraseña()">Cambiar Contraseña</button>
+            <button type="button" onclick="cambiarContraseña()" class="btn-validate">Cambiar Contraseña</button>
+            <button type="button" onclick="window.location.href='/login/personas'" class="btn-cancel">Cancelar</button>
+
         </form>
 
     </div>

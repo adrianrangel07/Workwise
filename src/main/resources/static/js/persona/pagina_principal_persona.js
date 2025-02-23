@@ -199,7 +199,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-//no borrar
 //funcion para aplicar filtros
 function applyFilters() {
     // Cerrar la barra lateral de filtros desmarcando el checkbox
