@@ -300,9 +300,9 @@ public class PersonaController {
         return "Html/persona/Estadisticas_persona";
     }
 
-    @GetMapping("/Contraseña-olvidada") // ruta para cuando quieren volver a recordar la contraseña
+    @GetMapping("/Contrasena-olvidada") // ruta para cuando quieren volver a recordar la contraseña
     public String olvidar() {
-        return "Html/persona/contraseña_olvidada_per";
+        return "Html/persona/contrasena_olvidada_per";
     }
 
     @GetMapping("/configuracion/persona") // ruta para configuracion de las personas
