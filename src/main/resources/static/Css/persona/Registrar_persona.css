@@ -41,13 +41,31 @@ html, body {
 }
 
 /* empieza la tarjeta */
+
+.head-card{
+    display: flex;
+    justify-content: space-between;
+}
+
+.back{
+    margin: 7px;
+    font-size: 30px;
+    color: #0a1128;
+}
+
+.container-back{
+    transition: all .3s;
+}
+
+.container-back:hover{
+    transform: scale(1.2);
+}
+
 .card{
     display: flex;
     justify-content: start;
     width: 100%;
     max-width: 550px;
-    height: 100%;
-    max-height: 370px;
     border: none;
     box-shadow: 0 4px 12px 4px rgba(0, 0, 0, 0.15);
     padding: 20px;
@@ -67,8 +85,77 @@ html, body {
     justify-content: center;   
 }
 
+.formulario form{
+    width: 100%;
+}
+
+.contenedor-input{
+    width: 50% !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.mb-3 {
+    position: relative;
+    width: 100% !important;
+}
+
+.mb-3 input{
+    width: 100%;
+    font-size: 1.8rem;
+    line-height: 1.33333;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.9) !important;
+    height: 52px;
+    padding: 0px 15px !important;
+    border-radius: 6px !important;
+}
+
+.mb-3 select{
+    width: 100%;
+    line-height: 1.33333;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.9) !important;
+    height: 52px;
+    padding: 0px 15px !important;
+    border-radius: 6px !important;
+}
+
+.mb-3 label{
+    position: absolute;
+    padding: 3px !important;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: rgba(0, 0, 0, 0.9) ;
+    font-size: 15px;
+    pointer-events: none;
+    transition: .3s;
+}
+
+.mb-3 input:focus{
+    border: 2px solid #0a1128;
+    box-shadow: 0 4px 12px 4px rgba(46, 45, 45, 0.15);
+}
+
+.mb-3 input:focus ~ label,
+.mb-3 input:not(:placeholder-shown) ~ label{
+    border: 2px solid #0a1128;
+    top: 0;
+    font-size: 16px;
+    padding: 0 15px;
+    background: #fff;
+}
+
 /*personalizar fecha de cum pleaños*/
-input[type="date"] {
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color: #0a1128;
+    filter: invert(0.5);
+    cursor: pointer;
+}
+
+/* input[type="date"] {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -80,10 +167,17 @@ input[type="date"] {
     cursor: pointer;
     outline: none;
     width: 100%;
-  }
+}
 
-  input[type="date"]:focus {
+input[type="date"]:focus {
     border-color: #007bff;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-  }
+} */
+
+.register{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
 
