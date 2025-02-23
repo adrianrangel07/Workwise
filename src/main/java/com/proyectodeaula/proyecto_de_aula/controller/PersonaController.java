@@ -58,18 +58,18 @@ public class PersonaController {
     public String agregar(Model model) {
         Personas persona = new Personas();
         model.addAttribute("new_persona", persona);
-        return "html/persona/Registrar_persona";
+        return "Html/persona/Registrar_persona";
     }
 
     @PostMapping("/Register/personas")
     public String save(@ModelAttribute("new_persona") Personas persona, Model model) {
         per.save(persona);
-        return "html/persona/inicio_sesion_persona";
+        return "Html/persona/inicio_sesion_persona";
     }
 
     @GetMapping("/login/personas")
     public String iniciar_sesion() {
-        return "html/persona/inicio_sesion_persona";
+        return "Html/persona/inicio_sesion_persona";
     }
 
     @PostMapping("/login/personas")
@@ -104,7 +104,7 @@ public class PersonaController {
             Personas persona = personaService.findByEmail(email);
             if (persona == null) {
                 model.addAttribute("error", "Persona no encontrada.");
-                return "html/persona/error";
+                return "Html/persona/error";
             }
             List<Postulacion> postulaciones = postulacionService.obtenerPostulacionesPorUsuario(persona.getId());
             model.addAttribute("postulaciones", postulaciones);
@@ -115,7 +115,7 @@ public class PersonaController {
                 model.addAttribute("base64Image", "");
             }
             model.addAttribute("persona", persona);
-            return "html/persona/Mi_perfil";
+            return "Html/persona/Mi_perfil";
         } else {
             return "redirect:/login/personas";
         }
@@ -134,7 +134,7 @@ public class PersonaController {
             Personas persona = personaService.findByEmail(email);
             if (persona == null) {
                 model.addAttribute("error", "Usuario no encontrado.");
-                return "html/error";
+                return "Html/error";
             }
             if (nombre != null && !nombre.isEmpty()) {
                 persona.setNombre(nombre);
@@ -154,7 +154,7 @@ public class PersonaController {
         } catch (Exception e) {
             logger.error("Error al actualizar el perfil", e);
             model.addAttribute("error", "Error al actualizar el perfil: " + e.getMessage());
-            return "html/error";
+            return "Html/error";
         }
     }
 
@@ -201,7 +201,7 @@ public class PersonaController {
 
             if (persona == null) {
                 model.addAttribute("error", "Usuario no encontrado.");
-                return "html/error";
+                return "Html/error";
             }
 
             persona.setCv(file.getBytes());
@@ -212,7 +212,7 @@ public class PersonaController {
         } catch (Exception e) {
             logger.error("Error al cargar el PDF", e);
             model.addAttribute("error", "Error al cargar el PDF: " + e.getMessage());
-            return "html/error";
+            return "Html/error";
         }
     }
 
@@ -247,7 +247,7 @@ public class PersonaController {
         } catch (Exception e) {
             logger.error("Error al eliminar la hoja de vida", e);
             model.addAttribute("error", "Error al eliminar la hoja de vida: " + e.getMessage());
-            return "html/error";
+            return "Html/error";
         }
     }
 
@@ -256,37 +256,37 @@ public class PersonaController {
     public String mostrarPerfil(@RequestParam String email, Model model) {
         Personas usuario = personaService.findByEmail(email);
         model.addAttribute("usuario", usuario);
-        return "html/update_per";
+        return "Html/update_per";
     }
 
     @GetMapping("/Nosotros") // ruta para enviar a nosotros (informacion sobre la pagina )
     public String Nosotros() {
-        return "html/Nosotros";
+        return "Html/Nosotros";
     }
 
     @GetMapping("/datos_incorrectos") // ruta para cuando se equivoquen al iniciar sesion
     public String contraseña_incorrecta() {
-        return "html/persona/contraseña_incorrectauser";
+        return "Html/persona/contraseña_incorrectauser";
     }
 
     @GetMapping("/Estadisticas") // ruta para llevarlo a estadisticas sobre lo que podemos mostrar
     public String estadistica() {
-        return "html/Estadisticas";
+        return "Html/Estadisticas";
     }
 
     @GetMapping("/Estadisticas/personas") // ruta para llevarlo a estadisticas sobre lo que podemos mostrar
     public String estadistica_persona() {
-        return "html/persona/Estadisticas_persona";
+        return "Html/persona/Estadisticas_persona";
     }
 
     @GetMapping("/Contraseña-olvidada") // ruta para cuando quieren volver a recordar la contraseña
     public String olvidar() {
-        return "html/persona/contraseña_olvidada_per";
+        return "Html/persona/contraseña_olvidada_per";
     }
 
     @GetMapping("/configuracion/persona") // ruta para configuracion de las personas
     public String configuracion() {
-        return "hhtml/persona/Configuracion";
+        return "Html/persona/Configuracion";
     }
 
 }

@@ -45,7 +45,7 @@ public class EmpresaController {
     @GetMapping("/Registrar/Empresa")
     public String mostrarFormularioRegistro(Model model) {
         model.addAttribute("empresa", new Empresas());
-        return "html/Registrar_empresa";
+        return "Html/Registrar_empresa";
     }
 
     // Registra una nueva empresa en la base de datos
@@ -58,7 +58,7 @@ public class EmpresaController {
     // Muestra la página de inicio de sesión para empresas
     @GetMapping("/login/Empresa")
     public String mostrarLoginEmpresa() {
-        return "html/inicio_sesion_empresa";
+        return "Html/inicio_sesion_empresa";
     }
 
     // Procesa el inicio de sesión de una empresa
@@ -83,7 +83,7 @@ public class EmpresaController {
         if (empresa != null) {
             model.addAttribute("Ofertas", ofertaService.listarOfertasPorEmpresa(empresa));
             model.addAttribute("nombreEmpresa", empresa.getNombreEmp());
-            return "html/pagina_principal_empresa";
+            return "Html/pagina_principal_empresa";
         }
         return "redirect:/login/Empresa";
     }
@@ -91,7 +91,7 @@ public class EmpresaController {
     // Muestra la página de error en caso de credenciales incorrectas
     @GetMapping("/datos_incorrectaemp")
     public String mostrarErrorLogin() {
-        return "html/contraseña_incorrectaemp";
+        return "Html/contraseña_incorrectaemp";
     }
 
     // Muestra el perfil de la empresa
@@ -102,10 +102,10 @@ public class EmpresaController {
 
         if (empresa == null) {
             model.addAttribute("error", "Empresa no encontrada.");
-            return "html/error";
+            return "Html/error";
         }
         model.addAttribute("empresa", empresa);
-        return "html/Mi_perfilemp";
+        return "Html/Mi_perfilemp";
     }
 
     // Actualiza el perfil de la empresa
@@ -124,7 +124,7 @@ public class EmpresaController {
         Empresas empresa = empresaService.findByEmail(email);
         if (empresa == null) {
             model.addAttribute("error", "Empresa no encontrada.");
-            return "html/error";
+            return "Html/error";
         }
 
         try {
@@ -147,7 +147,7 @@ public class EmpresaController {
             return "redirect:/perfil/empresa";
         } catch (Exception e) {
             model.addAttribute("error", "Error al actualizar el perfil: " + e.getMessage());
-            return "html/error";
+            return "Html/error";
         }
     }
 
@@ -169,21 +169,21 @@ public class EmpresaController {
     // Muestra la vista de estadísticas de empresas
     @GetMapping("/Estadisticas/empresas")
     public String mostrarEstadisticas() {
-        return "html/Estadisticas_empresas";
+        return "Html/Estadisticas_empresas";
     }
 
     @GetMapping("/empresas/oferta") // para ver las ofertas postuladas
         public String oferta() {
-        return "html/Oferta";
+        return "Html/Oferta";
     }
 
     @GetMapping("/Contraseña-olvidada-empresa") // cuando quieren recuperar la contraseña de la cuenta de empresa
         public String olvidar_emp() {
-        return "html/contraseña_olvidada_emp";
+        return "Html/contraseña_olvidada_emp";
     }
 
     @GetMapping("/empresas/published offers") // cuando quieren recuperar la contraseña de la cuenta de empresa
         public String recuperar_emp() {
-        return "html/ofertas-publicadas";
+        return "Html/ofertas-publicadas";
     }
 }
