@@ -49,13 +49,13 @@
                 <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light"
                     style="background: var(--bs-body-bg);">
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3"
-                            id="sidebarToggleTop" type="button"><i class="fas fa-bars" ></i></button>
+                            id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
                         <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search"
                             id="formBusqueda">
                             <div class="input-group"
                                 style="text-align: center;margin: 500px;border-color: var(--bs-emphasis-color);">
                                 <input id="termino" name="termino" class=" bg-light form-control border-0 small"
-                                    type="text" placeholder="Search for ..." >
+                                    type="text" placeholder="Search for ...">
                                 <button class="btn btn-primary py-0" type="submit" style="background: #0a1128;">
                                     <i class="fas fa-search"></i>
                                 </button>
@@ -67,11 +67,24 @@
                                     <i class="fa fa-filter"></i>
                                 </label>
                             </div>
+                            <div id="notificaciones-icono">
+                                <button style="background: none; border: none;">
+                                    🔔 <span id="contador-notificaciones"
+                                        style="color: red; font-weight: bold;">0</span>
+                                </button>
+                            </div>
+
+                            <!-- Modal de Notificaciones -->
+                            <div id="notificaciones-modal" style="display: none;">
+                                <h3>Notificaciones</h3>
+                                <ul id="lista-notificaciones"></ul>
+                            </div>
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow" id="usuario-container">
                                     <img id="user-avatar" th:src="@{/imagen/{id}(id=${persona.id})}" alt="Profile">
-                                    <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
+                                    <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
+                                        href="#">
                                         <span id="usuario" th:text="${persona.nombre}">Account</span>
                                     </a>
                                     <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
@@ -90,7 +103,7 @@
                                         </a>
                                     </div>
                                 </div>
-                            </li>  
+                            </li>
                         </ul>
                     </div>
                 </nav>
@@ -255,8 +268,57 @@
         <script src="../js/General/theme.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="../js/persona/pagina_principal_persona.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
+        <script>
+            $(document).ready(function () {
+                function cargarNotificaciones() {
+                    let usuarioId = $("#usuarioId").val(); // Obtener el ID del usuario
+                    if (!usuarioId) return;
+
+                    $.ajax({
+                        url: "/api/notificaciones/" + usuarioId,
+                        method: "GET",
+                        success: function (data) {
+                            let contador = $("#contador-notificaciones");
+                            let lista = $("#lista-notificaciones");
+
+                            lista.empty();
+                            contador.text(data.length);
+
+                            data.forEach(notif => {
+                                lista.append("<li>" + notif.mensaje + "</li>");
+                            });
+
+                            if (data.length > 0) {
+                                $("#notificaciones-icono").addClass("hay-notificaciones");
+                            } else {
+                                $("#notificaciones-icono").removeClass("hay-notificaciones");
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error cargando notificaciones:", error);
+                        }
+                    });
+                }
+
+                // Cargar notificaciones cada 15 segundos para evitar sobrecarga
+                setInterval(cargarNotificaciones, 15000);
+                cargarNotificaciones();
+
+                $("#notificaciones-icono").click(function () {
+                    $("#notificaciones-modal").toggle();
+                    let usuarioId = $("#usuarioId").val();
+                    if (!usuarioId) return;
+
+                    $.post("/api/notificaciones/" + usuarioId + "/leer", function () {
+                        $("#contador-notificaciones").text("0");
+                    });
+                });
+            });
+
+        </script>
 </body>
 
 </html>
