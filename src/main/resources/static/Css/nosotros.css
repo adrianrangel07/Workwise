@@ -1,47 +1,210 @@
-.contenedor{
-    display: flex;
+/* Fuente y colores generales */
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #f4f7fc;
+    color: #333;
+    margin: 0;
+    padding: 0;
 }
 
-/* header */
-.top-bar{
-    width: 14rem;
+/* Contenedor principal que incluye la barra lateral y el contenido */
+.contenedor {
     display: flex;
+    justify-content: center; 
+    align-items: center; 
+    min-height: 100vh;
+    margin-left: 250px; 
 }
-/* fin header */
 
-/*  main */
-main{
-    display: inline;
+/* Barra lateral */
+.top-bar {
+    width: 250px;
+    min-height: 100vh;
+    background: #0a1128;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    z-index: 1000; 
+    transition: all 0.3s ease-in-out;
+}
+
+/* Contenido principal */
+main {
+    flex-grow: 1;
+    max-width: 900px; 
+    margin: 0 auto; 
+    padding: 40px;
     position: relative;
+    z-index: 1;
+}   
+
+/* Ajuste para el cuerpo del contenido */
+.cuerpo-principal {
+    max-width: 900px;
+    margin: auto;
+    padding: 40px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
 }
 
-.container{
-    margin-top: 0 !important;
-    width: 100%;
+.cuerpo-principal:hover {
+    transform: scale(1.02);
 }
 
-.cuerpo-principal{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+/* Secciones */
+.Workwise {
+    margin-bottom: 40px;
+    text-align: center;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.cuerpo-principal img{
-    margin-top: 50px;
+.Workwise:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.Workwise{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 10px;
-    color: #000000;
+/* Titulares */
+.Workwise h1 {
+    font-size: 28px;
+    color: #0a1128;
+    margin-bottom: 15px;
+    font-weight: bold;
 }
 
-.Resumen{
-    margin-top: 0;
+/* Párrafos */
+.Workwise p, .Workwise li {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #444;
 }
 
-/* fin main */
+/* Imagen */
+.cuerpo-principal img {
+    display: block;
+    margin: 20px auto;
+    width: 100px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.cuerpo-principal img:hover {
+    transform: rotate(10deg);
+}
+
+.close-menu {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1050; /* Asegura que esté sobre los elementos */
+}
 
 
+
+/* Responsividad */
+@media (max-width: 1024px) {
+    .top-bar {
+        width: 220px;
+    }
+    main {
+        margin-left: 220px;
+    }
+}
+
+/* Para dispositivos pequeños */
+@media (max-width: 768px) {
+    .contenedor {
+        margin-left: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .top-bar {
+        position: fixed;
+        top: 0;
+        left: -250px; /* Oculta la barra lateral */
+        width: 250px;
+        height: 100vh;
+        background: #0a1128;
+        transition: left 0.3s ease-in-out;
+    }
+
+    
+    .top-bar.active ~ .toggle-menu {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .top-bar.active {
+        left: 0; /* Muestra la barra lateral */
+    }
+
+    .cuerpo-principal {
+        width: 90%;
+        max-width: 600px;
+        padding: 20px;
+        transition: margin-left 0.3s ease-in-out;
+    }
+
+    .top-bar.active ~ .contenedor .cuerpo-principal {
+        margin-left: 0; /* Evita que el contenido se empuje demasiado */
+    }
+
+    .toggle-menu {
+        display: block;
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        background: #0a1128;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        z-index: 1100;
+    }
+
+    .Workwise h1 {
+        font-size: 22px;
+    }
+
+    .Workwise p {
+        font-size: 16px;
+        text-align: justify;
+    }
+}
+
+
+
+
+/* Para dispositivos aún más pequeños */
+@media (max-width: 480px) {
+    .top-bar.active + .toggle-menu {
+        display: none;
+    }
+    .cuerpo-principal {
+        padding: 15px;
+    }
+
+    .Workwise h1 {
+        font-size: 20px;
+    }
+
+    .Workwise p, .Workwise li {
+        font-size: 14px;
+    }
+
+}

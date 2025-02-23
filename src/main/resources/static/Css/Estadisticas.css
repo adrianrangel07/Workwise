@@ -1,10 +1,10 @@
-#powerBi{
-    border: none;
-    text-decoration: none;
-    width: 100vw;
-    height: 100vh;
-
-}
+#powerBi {
+    width: 100%;
+    height: 80vh;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}	
 
 .contenedor{
     display: flex;
@@ -51,6 +51,29 @@ main{
 .Resumen{
     margin-top: 0;
 }
+
+@media (max-width: 768px) {
+    #powerBi {
+        height: 60vh;
+    }
+}
+
+.title-statistics {
+    text-align: center;  /* Centra el texto */
+    font-size: 28px;     /* Ajusta el tamaño de fuente */
+    font-weight: bold;   /* Hace el texto más grueso */
+    margin-bottom: 20px; /* Espacio entre el título y el iframe */
+    color: #0a1128;      /* Color oscuro para resaltar */
+}
+
+#powerBi {
+    width: 100%;   /* Que ocupe todo el ancho disponible */
+    height: 600px; /* Ajusta la altura del iframe */
+    border-radius: 10px; /* Bordes redondeados para mejor apariencia */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para dar efecto flotante */
+}
+
+
 
 /* fin main */
 
