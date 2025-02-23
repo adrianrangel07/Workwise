@@ -58,3 +58,23 @@
     transform: scale(1.1);
 }
 
+/*personalizar fecha de cum pleaños*/
+input[type="date"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+    width: 100%;
+  }
+
+  input[type="date"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+

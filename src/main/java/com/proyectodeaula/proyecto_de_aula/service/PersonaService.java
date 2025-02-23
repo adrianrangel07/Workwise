@@ -50,7 +50,6 @@ public class PersonaService implements IpersonaService {
     }
 
     public void actualizarPerfil(Personas persona) throws Exception {
-        // Busca el usuario en la base de datos por su email
         Personas per = user.findByEmail(persona.getEmail());
         if (per == null) {
             throw new Exception("Usuario no encontrado");

@@ -4,59 +4,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workwise Navigator</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Recuperar Contraseña</title>
+    <link rel="stylesheet" href="../Css/contraseña_olvidada_per.css">
     <link rel="icon" type="image/png" href="../Imagenes/wknlogo2.png">
-    <link rel="stylesheet" href="../CSS/login.css">
-    <link rel="stylesheet" href="../CSS/normalize.css">
-    <link rel="stylesheet" href="../CSS/contraseña_olvidada_per.css">
+
 </head>
 
 <body>
-    <header>
-        <nav class="top-bar">
-            <a href="/"><img src="../Imagenes/wknname.png" alt="Logo" id="logo" class="logo"></a>
-            <ul class="nav-menu">
-                <li class="nav-menu-item">
-                    <a th:href="@{/login_persona}">Iniciar sesion</a>
-                </li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <div class="login-form">
-            <div class="image-container">
-                <img src="../imagenes/imagenperfil.png" alt="Imagen de encabezado">
-            </div>
-            <h1>Recuperar Contraseña</h1>
-            <form th:action="@{/login_persona}" method="post">
-                <input class="submit" type="email" placeholder="Correo electrónico" required>
-                <div id="captcha-box">
-                    <div id="captcha"></div>
-                </div>
-                <input type="text" placeholder="Captcha" required>
-                <br>
-                <button type="submit" class="submit">Enviar</button>
-            </form>
+    <div class="container-logo">
+        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" th:href="@{/}">
+            <img class="logo" id="logo" src="../Imagenes/wknblack.png">
+        </a>
+    </div>
+    <div class="container">
+        <h2>Recuperar Contraseña</h2>
+        <div class="container-back">
+            <a th:href="@{/login/persona}" class="back_a">
+                <i class="fas fa-arrow-left back"></i>
+            </a>
         </div>
-    </main>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
-    <script>
-        // Función para generar un captcha aleatorio
-        function generateCaptcha() {
-            var captcha = "";
-            var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        <form id="passwordForm">
+            <input type="email" id="email" placeholder="Ingrese su correo" required>
 
-            for (var i = 0; i < 6; i++) {
-                captcha += characters.charAt(Math.floor(Math.random() * characters.length));
-            }
+            <div class="captcha-box" id="captchaText"></div>
+            <input type="text" id="captchaInput" placeholder="Ingrese el captcha" required>
+            <button type="button" onclick="validarCaptcha()">Verificar</button>
+        </form>
+        <br>
+        <br>
+        <form id="resetForm" style="display: none;">
+            <label for="nuevaContraseña">Nueva Contraseña:</label>
+            <input type="password" id="nuevaContraseña" required>
 
-            return captcha;
-        }
+            <label for="repetirContraseña">Repetir Contraseña:</label>
+            <input type="password" id="repetirContraseña" required>
 
-        // Generar el captcha al cargar la página
-        document.getElementById("captcha").innerText = generateCaptcha();
-    </script>
+            <button type="button" onclick="cambiarContraseña()">Cambiar Contraseña</button>
+        </form>
+
+    </div>
+
+    <script src="../js/contraseña-olvidada-per.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 
 </html>
