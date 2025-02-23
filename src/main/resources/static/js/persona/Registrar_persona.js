@@ -34,7 +34,7 @@ document.getElementById('registerForm').addEventListener('submit', function (eve
     });
 });
 
-document.getElementById("registerForm").addEventListener("submit", function(event) {
+document.getElementById("registerForm").addEventListener("submit", function (event) {
     const fechaInput = document.getElementById("fecha").value;
     const fechaNacimiento = new Date(fechaInput);
     const hoy = new Date();
@@ -64,7 +64,7 @@ document.getElementById("registerForm").addEventListener("submit", function(even
 //script para el tip, que se vea bien 
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl);
+    return new bootstrap.Tooltip(tooltipTriggerEl);
 });
 
 
