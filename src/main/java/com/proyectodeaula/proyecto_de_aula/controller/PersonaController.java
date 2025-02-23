@@ -265,7 +265,7 @@ public class PersonaController {
         return ResponseEntity.ok("Correo verificado. Ahora puede cambiar su contraseña.");
     }
 
-    @PostMapping("/cambiar-contraseña")
+    @PostMapping("/cambiar-contrasen    a")
     public ResponseEntity<String> cambiarContraseña(@RequestBody Map<String, String> requestData) throws Exception {
         String email = requestData.get("email");
         String nuevaContraseña = requestData.get("nuevaContraseña");
