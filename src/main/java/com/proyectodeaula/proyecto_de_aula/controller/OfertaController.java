@@ -71,7 +71,7 @@ public class OfertaController {
     public String listar_ofertas(Model model) {
         List<Ofertas> Ofertas = offerService.listar_ofertas();
         model.addAttribute("Ofertas", Ofertas);
-        return "html/pagina_principal";
+        return "Html/pagina_principal";
     }
 
     @GetMapping("/buscar_ofertas")
