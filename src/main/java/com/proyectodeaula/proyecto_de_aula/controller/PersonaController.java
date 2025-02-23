@@ -83,17 +83,17 @@ public class PersonaController {
         if (email.equals(emailQuemado) && contraseña.equals(contraseñaQuemada)) {
             session.setAttribute("email", email);
             session.setAttribute("usuarioId", 1L);
-            return "redirect:/personas/pagina_principal";
+            return "redirect:/persona/pagina_principal";
         }
 
         Personas persona = user.findByEmailAndContraseña(email, contraseña);
         if (persona != null) {
             session.setAttribute("email", email);
             session.setAttribute("usuarioId", persona.getId());
-            return "redirect:/personas/pagina_principal";
+            return "redirect:/persona/pagina_principal";
         } else {
             model.addAttribute("error", "Credenciales incorrectas");
-            return "redirect:/login/personas?error=true";
+            return "redirect:/login/persona?error=true";
         }
     }
 
