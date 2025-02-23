@@ -63,7 +63,7 @@ public class OfertaController {
         } else {
             model.addAttribute("persona", new Personas()); // Si no se encuentra, se pasa un objeto vacío
         }
-        return "Html/Persona/pagina_principal_personas"; // Vista de la página principal
+        return "Html/persona/pagina_principal_personas"; // Vista de la página principal
         // Devolvemos la vista "pagina_principal_personas"
     }
 
