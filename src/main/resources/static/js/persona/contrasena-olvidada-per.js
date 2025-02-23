@@ -43,7 +43,7 @@ function validarCaptcha() {
     .catch(() => Swal.fire("Error", "Hubo un problema verificando el correo.", "error"));
 }
 
-function cambiarContraseña() {
+function cambiarContrasena() {
     let nuevaContraseña = document.getElementById("nuevaContraseña").value;
     let repetirContraseña = document.getElementById("repetirContraseña").value;
     let email = document.getElementById("email").value;
@@ -61,7 +61,7 @@ function cambiarContraseña() {
     }
 
     //enviar la contraseña para cambiar
-    fetch("/cambiar-contraseña", {
+    fetch("/cambiar-contrasena", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, nuevaContraseña })
