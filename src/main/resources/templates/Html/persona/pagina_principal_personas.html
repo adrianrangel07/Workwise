@@ -67,22 +67,24 @@
                                     <i class="fa fa-filter"></i>
                                 </label>
                             </div>
+
                             <div id="notificaciones-icono">
                                 <button style="background: none; border: none;">
                                     🔔 <span id="contador-notificaciones"
                                         style="color: red; font-weight: bold;">0</span>
                                 </button>
                             </div>
-
                             <!-- Modal de Notificaciones -->
                             <div id="notificaciones-modal" style="display: none;">
                                 <h3>Notificaciones</h3>
                                 <ul id="lista-notificaciones"></ul>
                             </div>
+
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow" id="usuario-container">
                                     <img id="user-avatar" th:src="@{/imagen/{id}(id=${persona.id})}" alt="Profile">
+                                    <input type="hidden" id="subirFoto" accept="image/*" style="display: block; margin-top: 10px;" >
                                     <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
                                         href="#">
                                         <span id="usuario" th:text="${persona.nombre}">Account</span>
@@ -205,7 +207,7 @@
                     </div>
 
                     <!-- Modal que se mostrará al hacer clic en una tarjeta -->
-                    <div id="modal" class="modal">
+                    <div id="modal" class="modal" style="display: none;">
                         <div class="modal-content" id="modal-content">
                             <div class="modal-header">
                                 <h3 id="modal-title"></h3>
@@ -270,55 +272,6 @@
         <script src="../js/persona/pagina_principal_persona.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
-        <script>
-            $(document).ready(function () {
-                function cargarNotificaciones() {
-                    let usuarioId = $("#usuarioId").val(); // Obtener el ID del usuario
-                    if (!usuarioId) return;
-
-                    $.ajax({
-                        url: "/api/notificaciones/" + usuarioId,
-                        method: "GET",
-                        success: function (data) {
-                            let contador = $("#contador-notificaciones");
-                            let lista = $("#lista-notificaciones");
-
-                            lista.empty();
-                            contador.text(data.length);
-
-                            data.forEach(notif => {
-                                lista.append("<li>" + notif.mensaje + "</li>");
-                            });
-
-                            if (data.length > 0) {
-                                $("#notificaciones-icono").addClass("hay-notificaciones");
-                            } else {
-                                $("#notificaciones-icono").removeClass("hay-notificaciones");
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            console.error("Error cargando notificaciones:", error);
-                        }
-                    });
-                }
-
-                // Cargar notificaciones cada 15 segundos para evitar sobrecarga
-                setInterval(cargarNotificaciones, 15000);
-                cargarNotificaciones();
-
-                $("#notificaciones-icono").click(function () {
-                    $("#notificaciones-modal").toggle();
-                    let usuarioId = $("#usuarioId").val();
-                    if (!usuarioId) return;
-
-                    $.post("/api/notificaciones/" + usuarioId + "/leer", function () {
-                        $("#contador-notificaciones").text("0");
-                    });
-                });
-            });
-
-        </script>
 </body>
 
 </html>

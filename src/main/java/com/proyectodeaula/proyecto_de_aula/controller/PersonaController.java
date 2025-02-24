@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proyectodeaula.proyecto_de_aula.interfaces.Personas.Interfaz_Per;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Personas.Interfaz_Persona;
@@ -106,7 +107,7 @@ public class PersonaController {
             Personas persona = personaService.findByEmail(email);
             if (persona == null) {
                 model.addAttribute("error", "Persona no encontrada.");
-                return "Html/persona/error";
+                return "Html/error";
             }
             List<Postulacion> postulaciones = postulacionService.obtenerPostulacionesPorUsuario(persona.getId());
             model.addAttribute("postulaciones", postulaciones);
@@ -191,32 +192,49 @@ public class PersonaController {
     }
 
     @PostMapping("/uploadHDV")
-    public String uploadHDV(@RequestParam("file") MultipartFile file, Model model, HttpSession session) {
-        try {
-            if (file.isEmpty() || !Objects.equals(file.getContentType(), "application/pdf")) {
-                model.addAttribute("error", "Por favor, seleccione un archivo PDF válido.");
-                return "redirect:/perfil/persona";
-            }
-
-            String email = (String) session.getAttribute("email");
-            Personas persona = personaService.findByEmail(email);
-
-            if (persona == null) {
-                model.addAttribute("error", "Usuario no encontrado.");
-                return "Html/error";
-            }
-
-            persona.setCv(file.getBytes());
-            personaService.actualizarPerfil(persona);
-            model.addAttribute("success", "PDF cargado con éxito.");
+public String uploadHDV(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes,
+        HttpSession session) {
+    try {
+        if (file.isEmpty() || !Objects.equals(file.getContentType(), "application/pdf")) {
+            redirectAttributes.addFlashAttribute("error", "Por favor, seleccione un archivo PDF válido.");
             return "redirect:/perfil/persona";
-
-        } catch (Exception e) {
-            logger.error("Error al cargar el PDF", e);
-            model.addAttribute("error", "Error al cargar el PDF: " + e.getMessage());
-            return "Html/error";
         }
+
+        String email = (String) session.getAttribute("email");
+        if (email == null) {
+            redirectAttributes.addFlashAttribute("error", "Sesión expirada. Inicie sesión nuevamente.");
+            return "redirect:/login";
+        }
+
+        Personas persona = personaService.findByEmail(email);
+        if (persona == null) {
+            redirectAttributes.addFlashAttribute("error", "Usuario no encontrado.");
+            return "redirect:/perfil/persona";
+        }
+
+        // Guardamos el archivo
+        persona.setCv(file.getBytes());
+        personaService.actualizarPerfil(persona);
+
+        // Verificamos si realmente se guardó
+        Personas updatedPersona = personaService.findByEmail(email);
+        if (updatedPersona.getCv() == null) {
+            logger.error("ERROR: El archivo no se guardó en la base de datos.");
+            redirectAttributes.addFlashAttribute("error", "No se pudo guardar el archivo. Intente nuevamente.");
+            return "redirect:/perfil/persona";
+        }
+
+        logger.info("PDF guardado correctamente en la base de datos para el usuario: " + email);
+        redirectAttributes.addFlashAttribute("success", "PDF cargado con éxito.");
+        return "redirect:/perfil/persona";
+
+    } catch (Exception e) {
+        logger.error("Error al cargar el PDF", e);
+        redirectAttributes.addFlashAttribute("error", "Error al cargar el PDF: " + e.getMessage());
+        return "redirect:/perfil/persona";
     }
+}
+
 
     @GetMapping("/perfil/verHDV")
     public ResponseEntity<byte[]> verHDV(HttpSession session) {
@@ -265,7 +283,7 @@ public class PersonaController {
         return ResponseEntity.ok("Correo verificado. Ahora puede cambiar su contraseña.");
     }
 
-    @PostMapping("/cambiar-contrasen    a")
+    @PostMapping("/cambiar-contrasena")
     public ResponseEntity<String> cambiarContraseña(@RequestBody Map<String, String> requestData) throws Exception {
         String email = requestData.get("email");
         String nuevaContraseña = requestData.get("nuevaContraseña");

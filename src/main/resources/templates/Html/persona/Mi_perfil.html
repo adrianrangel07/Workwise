@@ -33,9 +33,9 @@
                     <li class="nav-item"><a class="nav-link " th:href="@{/personas/pagina_principal}"><i
                                 class="fas fa-home"></i><span>Home</span></a></li>
                     <li class="nav-item"><a class="nav-link active" th:href="@{/perfil/persona}"><i
-                                class="far fa-user-circle"></i><span>Profile</span></a></li>                   
+                                class="far fa-user-circle"></i><span>Profile</span></a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/Estadisticas/personas}"><i
-                                class="fas fa-chart-bar"></i><span>Statistics</span></a></li>                   
+                                class="fas fa-chart-bar"></i><span>Statistics</span></a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/login/Empresa}"><i
                                 class="fas fa-building"></i><span>Do you have a company? </span></a></li>
 
@@ -60,19 +60,29 @@
                         <ul class="navbar-nav flex-nowrap ms-auto">
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
-                                        aria-expanded="false" data-bs-toggle="dropdown" href="#"><span
-                                            class="d-none d-lg-inline me-2 text-gray-600 small">Usuario</span></a>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a
-                                            class="dropdown-item" th:href="@{/perfil/persona}"><i
-                                                class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a>
+                                <div class="nav-item dropdown no-arrow" id="usuario-container">
+                                    <img id="user-avatar" th:src="@{/imagen/{id}(id=${persona.id})}" alt="Profile">
+                                    <input type="hidden" id="subirFoto" accept="image/*"
+                                        style="display: block; margin-top: 10px;">
+                                    <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
+                                        href="#">
+                                        <span id="usuario" th:text="${persona.nombre}">Account</span>
+                                    </a>
+                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                                        <a class="dropdown-item" th:href="@{/perfil/persona}">
+                                            <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile
+                                        </a>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;applications
+                                        </a>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Curriculum
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#" id="logout" onclick="cerrarSesion(event)">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>Logout
+                                        </a>
                                     </div>
-                                    <a class="dropdown-item" href="#" id="logout" onclick="cerrarSesion(event)">
-                                        <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>Logout
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;applications
-                                    </a>
                                 </div>
                             </li>
                         </ul>
@@ -113,17 +123,18 @@
                             <!-- Hoja de vida -->
                             <div class="card mb-3">
                                 <div class="card-body text-center shadow">
-                                    <div class="mb-3">                                
-                                        <form action="/uploadHDV" method="post" enctype="multipart/form-data">
-                                            <input type="file" name="file" accept="application/pdf" th:value="${persona.cv}" required />
-                                            <button type="submit">Upload PDF</button>
+                                    <div class="mb-3">
+                                        <form id="uploadFormcv" enctype="multipart/form-data">
+                                            <input type="file" id="fileInput" name="file" accept="application/pdf" required />
+                                            <button type="submit">Subir PDF</button>
                                         </form>
-                                        <div>
-                                            <h3>Curriculum Vitae</h3>
-                                            <iframe src="/perfil/verHDV" width="100%" height="200px"></iframe>
-                                        </div>
+                                        <div id="message"></div>
+                                        
+                                        <h3>Curriculum Vitae</h3>
+                                        <iframe id="pdfViewer" src="/perfil/verHDV" width="100%" height="400px"></iframe>
+                                        
                                         <br>
-                                            <!-- Botón de Eliminar PDF -->
+                                        <!-- Botón de Eliminar PDF -->
                                         <button onclick="eliminarHojaDeVida()">Delete CV</button>
                                     </div>
                                 </div>
@@ -134,7 +145,7 @@
                         <!-- Perfil de la persona  -->
                         <div class="col-lg-8">
                             <div class="row">
-                                <div class="col">                                                                           
+                                <div class="col">
                                     <div class="card shadow mb-3">
                                         <div class="card-header py-3">
                                             <p class="text-primary m-0 fw-bold">User Profile</p>
@@ -171,7 +182,8 @@
                                                     </div>
                                                     <div class="col">
                                                         <div class="mb-3">
-                                                            <label class="form-label" for="last_name"><strong>First Surname</strong></label>
+                                                            <label class="form-label" for="last_name"><strong>First
+                                                                    Surname</strong></label>
                                                             <input class="form-control" type="text" id="last_name"
                                                                 name="apellido" th:value="${persona.apellido}" disabled>
                                                         </div>
@@ -180,8 +192,8 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="mb-3">
-                                                            <label class="form-label"
-                                                                for="birthdate"><strong>Date of Birth</strong></label>
+                                                            <label class="form-label" for="birthdate"><strong>Date of
+                                                                    Birth</strong></label>
                                                             <input class="form-control" type="text" id="birthdate"
                                                                 name="fecha_nacimiento"
                                                                 th:value="${persona.fecha_nacimiento}" disabled>
@@ -206,7 +218,8 @@
                                                     </div>
                                                     <div class="col">
                                                         <div class="mb-3">
-                                                            <button class="btn btn-primary btn-sm" type="submit" id="save_btn" disabled>Save
+                                                            <button class="btn btn-primary btn-sm" type="submit"
+                                                                id="save_btn" disabled>Save
                                                                 changes</button>
                                                         </div>
                                                     </div>
@@ -234,8 +247,9 @@
                                                     <div class="offer-content" data-id="${postulacion.ofertas.id}">
                                                         <h3 th:text="${postulacion.ofertas.titulo_puesto}"></h3>
                                                         <p th:text="${postulacion.ofertas.descripcion}"></p>
-                                                        <p class="estado"><strong>Application Status:</strong> 
-                                                            <span class="badge bg-warning text-dark" th:text="${postulacion.estado}"></span>
+                                                        <p class="estado"><strong>Application Status:</strong>
+                                                            <span class="badge bg-warning text-dark"
+                                                                th:text="${postulacion.estado}"></span>
                                                         </p>
                                                         <div class="hidden-info">
                                                             <p class="salario"><strong>Salary:</strong> <span
@@ -273,35 +287,35 @@
                         </div>
 
                     </div>
-                    
+
                 </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i
                         class="fas fa-angle-up"></i></a>
-                        <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer">
-                            <div class="container">
-                                <div class="footer-content">
-                                    <div class="footer-left">
-                                        <p class="mb-1">PBX: (605) 123-4567 | Email: contacto@workwise.com</p>
-                                    </div>
-                                    <div class="footer-center">
-                                        <p class="mb-1">© 2024 WorkWise. Todos los derechos reservados.</p>
-                                    </div>
-                                    <div class="footer-right">
-                                        <a href="https://facebook.com" target="_blank" class="mx-3">
-                                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
-                                                alt="Facebook" width="30" height="30">
-                                        </a>
-                                        <a href="https://instagram.com" target="_blank" class="mx-3">
-                                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram"
-                                                width="30" height="30">
-                                        </a>
-                                        <a href="https://www.tiktok.com" target="_blank" class="mx-3">
-                                            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/TikTok_Logo.svg" alt="TikTok"
-                                                width="30" height="30">
-                                        </a>
-                                    </div>
-                                </div>
+                <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer">
+                    <div class="container">
+                        <div class="footer-content">
+                            <div class="footer-left">
+                                <p class="mb-1">PBX: (605) 123-4567 | Email: contacto@workwise.com</p>
                             </div>
-                        </footer>
+                            <div class="footer-center">
+                                <p class="mb-1">© 2024 WorkWise. Todos los derechos reservados.</p>
+                            </div>
+                            <div class="footer-right">
+                                <a href="https://facebook.com" target="_blank" class="mx-3">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+                                        alt="Facebook" width="30" height="30">
+                                </a>
+                                <a href="https://instagram.com" target="_blank" class="mx-3">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+                                        alt="Instagram" width="30" height="30">
+                                </a>
+                                <a href="https://www.tiktok.com" target="_blank" class="mx-3">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/TikTok_Logo.svg"
+                                        alt="TikTok" width="30" height="30">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
             </div>
 
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
