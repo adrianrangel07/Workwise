@@ -117,23 +117,19 @@ function eliminarHojaDeVida() {
     fetch('/eliminarHDV', {
         method: 'POST'
     })
-    .then(response => {
-        if (response.ok) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Hoja de Vida',
-                text: '¡Tu hoja de vida ha sido borrada exitosamente!',
-                showConfirmButton: true,
-                confirmButtonText: 'Ok'
-            });
-            // Esperar 2 segundos antes de recargar
+    .then(response => response.text())
+    .then(data => {
+        Swal.fire({
+            icon: data.includes("Error") ? 'error' : 'success',
+            title: 'Hoja de Vida',
+            text: data,
+            showConfirmButton: true,
+            confirmButtonText: 'Ok'
+        });
+        if (!data.includes("Error")) {
             setTimeout(() => {
                 location.reload();
             }, 2000);
-        } else {
-            return response.text().then(errorMessage => {
-                throw new Error(errorMessage);
-            });
         }
     })
     .catch(error => {
@@ -147,6 +143,7 @@ function eliminarHojaDeVida() {
         });
     });
 }
+
 // fin borrar HDV
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -156,41 +153,39 @@ document.addEventListener("DOMContentLoaded", function() {
     const pdfViewer = document.getElementById("pdfViewer");
 
     form.addEventListener("submit", function(event) {
-        event.preventDefault(); // Evita el envío automático
-
+        event.preventDefault();
+    
         const file = fileInput.files[0];
-
+    
         if (!file) {
             messageDiv.innerHTML = "<p style='color: red;'>Por favor, seleccione un archivo.</p>";
             return;
         }
-
+    
         if (file.type !== "application/pdf") {
             messageDiv.innerHTML = "<p style='color: red;'>Solo se permiten archivos PDF.</p>";
             return;
         }
-
-        // Crear objeto FormData para enviar el archivo
+    
         const formData = new FormData();
         formData.append("file", file);
-
+    
         fetch("/uploadHDV", {
             method: "POST",
             body: formData
         })
-        .then(response => {
-            if (response.ok) {
-                messageDiv.innerHTML = "<p style='color: green;'>PDF subido con éxito.</p>";
+        .then(response => response.text())
+        .then(data => {
+            messageDiv.innerHTML = `<p style='color: ${data.includes("Error") ? "red" : "green"};'>${data}</p>`;
+            if (!data.includes("Error")) {
                 setTimeout(() => {
                     pdfViewer.src = "/perfil/verHDV"; // Recargar el visor del PDF
-                    location.reload(); // Recargar la página
                 }, 2000);
-            } else {
-                messageDiv.innerHTML = "<p style='color: red;'>Error al subir el archivo.</p>";
             }
         })
         .catch(error => {
             messageDiv.innerHTML = "<p style='color: red;'>Error: " + error.message + "</p>";
         });
     });
+    
 });

@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proyectodeaula.proyecto_de_aula.interfaces.Personas.Interfaz_Per;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Personas.Interfaz_Persona;
@@ -192,49 +191,32 @@ public class PersonaController {
     }
 
     @PostMapping("/uploadHDV")
-public String uploadHDV(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes,
-        HttpSession session) {
-    try {
-        if (file.isEmpty() || !Objects.equals(file.getContentType(), "application/pdf")) {
-            redirectAttributes.addFlashAttribute("error", "Por favor, seleccione un archivo PDF válido.");
-            return "redirect:/perfil/persona";
+    public ResponseEntity<?> uploadHDV(@RequestParam("file") MultipartFile file, HttpSession session) {
+        try {
+            if (file.isEmpty() || file.getOriginalFilename() == null ||
+                    !Objects.requireNonNull(file.getOriginalFilename()).toLowerCase().endsWith(".pdf")) {
+                return ResponseEntity.badRequest().body("Por favor, seleccione un archivo PDF válido.");
+            }
+
+            String email = (String) session.getAttribute("email");
+            if (email == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body("Sesión expirada. Inicie sesión nuevamente.");
+            }
+
+            Personas persona = personaService.findByEmail(email);
+            if (persona == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado.");
+            }
+
+            persona.setCv(file.getBytes());
+            personaService.actualizarPerfil(persona);
+
+            return ResponseEntity.ok("PDF subido correctamente.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al cargar el PDF.");
         }
-
-        String email = (String) session.getAttribute("email");
-        if (email == null) {
-            redirectAttributes.addFlashAttribute("error", "Sesión expirada. Inicie sesión nuevamente.");
-            return "redirect:/login";
-        }
-
-        Personas persona = personaService.findByEmail(email);
-        if (persona == null) {
-            redirectAttributes.addFlashAttribute("error", "Usuario no encontrado.");
-            return "redirect:/perfil/persona";
-        }
-
-        // Guardamos el archivo
-        persona.setCv(file.getBytes());
-        personaService.actualizarPerfil(persona);
-
-        // Verificamos si realmente se guardó
-        Personas updatedPersona = personaService.findByEmail(email);
-        if (updatedPersona.getCv() == null) {
-            logger.error("ERROR: El archivo no se guardó en la base de datos.");
-            redirectAttributes.addFlashAttribute("error", "No se pudo guardar el archivo. Intente nuevamente.");
-            return "redirect:/perfil/persona";
-        }
-
-        logger.info("PDF guardado correctamente en la base de datos para el usuario: " + email);
-        redirectAttributes.addFlashAttribute("success", "PDF cargado con éxito.");
-        return "redirect:/perfil/persona";
-
-    } catch (Exception e) {
-        logger.error("Error al cargar el PDF", e);
-        redirectAttributes.addFlashAttribute("error", "Error al cargar el PDF: " + e.getMessage());
-        return "redirect:/perfil/persona";
     }
-}
-
 
     @GetMapping("/perfil/verHDV")
     public ResponseEntity<byte[]> verHDV(HttpSession session) {
@@ -254,20 +236,18 @@ public String uploadHDV(@RequestParam("file") MultipartFile file, RedirectAttrib
     }
 
     @PostMapping("/eliminarHDV")
-    public String eliminarHojaDeVida(HttpSession session, Model model) {
+    public ResponseEntity<?> eliminarHojaDeVida(HttpSession session) {
         try {
             String email = (String) session.getAttribute("email");
             if (email == null) {
-                model.addAttribute("error", "Sesión expirada, por favor inicie sesión.");
-                return "redirect:/login/personas";
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body("Sesión expirada. Inicie sesión nuevamente.");
             }
+
             personaService.eliminarHojaDeVida(email);
-            model.addAttribute("success", "Hoja de vida eliminada con éxito.");
-            return "redirect:/perfil/persona";
+            return ResponseEntity.ok("Hoja de vida eliminada correctamente.");
         } catch (Exception e) {
-            logger.error("Error al eliminar la hoja de vida", e);
-            model.addAttribute("error", "Error al eliminar la hoja de vida: " + e.getMessage());
-            return "Html/error";
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar la hoja de vida.");
         }
     }
 

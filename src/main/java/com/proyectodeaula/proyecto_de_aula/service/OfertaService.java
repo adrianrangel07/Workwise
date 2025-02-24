@@ -7,6 +7,7 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.proyectodeaula.proyecto_de_aula.controller.NotificacionSSEController;
 import com.proyectodeaula.proyecto_de_aula.interfaceService.IofertaService;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Ofertas.Interfaz_ofertas;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Ofertas.OfertasRepository;
@@ -21,6 +22,9 @@ public class OfertaService implements IofertaService {
 
     @Autowired
     private OfertasRepository ofertaRepository;
+
+    @Autowired
+    private NotificacionSSEController notificacionSSEController;
 
     @Override
     public List<Ofertas> listar_ofertas() {
@@ -38,6 +42,7 @@ public class OfertaService implements IofertaService {
         Ofertas Usu = oferr.save(O);  // Guardar oferta en la base de datos
         if (Usu != null) {  
             res = 1;
+            notificacionSSEController.enviarNotificacion("Nueva oferta publicada: " + Usu.getTitulo_puesto());
         }
         return res;
     }
