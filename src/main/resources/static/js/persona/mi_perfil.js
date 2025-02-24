@@ -112,7 +112,6 @@ function eliminarPostulacion(button) {
     });
 }
 
-
 // borrar HDV
 function eliminarHojaDeVida() {
     fetch('/eliminarHDV', {
@@ -150,3 +149,48 @@ function eliminarHojaDeVida() {
 }
 // fin borrar HDV
 
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("uploadFormcv");
+    const fileInput = document.getElementById("fileInput");
+    const messageDiv = document.getElementById("message");
+    const pdfViewer = document.getElementById("pdfViewer");
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault(); // Evita el envío automático
+
+        const file = fileInput.files[0];
+
+        if (!file) {
+            messageDiv.innerHTML = "<p style='color: red;'>Por favor, seleccione un archivo.</p>";
+            return;
+        }
+
+        if (file.type !== "application/pdf") {
+            messageDiv.innerHTML = "<p style='color: red;'>Solo se permiten archivos PDF.</p>";
+            return;
+        }
+
+        // Crear objeto FormData para enviar el archivo
+        const formData = new FormData();
+        formData.append("file", file);
+
+        fetch("/uploadHDV", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                messageDiv.innerHTML = "<p style='color: green;'>PDF subido con éxito.</p>";
+                setTimeout(() => {
+                    pdfViewer.src = "/perfil/verHDV"; // Recargar el visor del PDF
+                    location.reload(); // Recargar la página
+                }, 2000);
+            } else {
+                messageDiv.innerHTML = "<p style='color: red;'>Error al subir el archivo.</p>";
+            }
+        })
+        .catch(error => {
+            messageDiv.innerHTML = "<p style='color: red;'>Error: " + error.message + "</p>";
+        });
+    });
+});
