@@ -140,7 +140,7 @@ html, body {
     top: 50%;
     right: 10px;
     transform: translateY(-50%);
-    color: rgba(0, 0, 0, 0.9) ;
+    color:#0a1128;
     font-size: 17px;
     cursor: pointer;
     z-index: 100;
