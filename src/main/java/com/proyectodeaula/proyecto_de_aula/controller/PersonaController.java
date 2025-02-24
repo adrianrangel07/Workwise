@@ -265,7 +265,7 @@ public class PersonaController {
         return ResponseEntity.ok("Correo verificado. Ahora puede cambiar su contraseña.");
     }
 
-    @PostMapping("/cambiar-contraseña")
+    @PostMapping("/cambiar-contrasen    a")
     public ResponseEntity<String> cambiarContraseña(@RequestBody Map<String, String> requestData) throws Exception {
         String email = requestData.get("email");
         String nuevaContraseña = requestData.get("nuevaContraseña");
@@ -300,9 +300,9 @@ public class PersonaController {
         return "Html/persona/Estadisticas_persona";
     }
 
-    @GetMapping("/Contraseña-olvidada") // ruta para cuando quieren volver a recordar la contraseña
+    @GetMapping("/Contrasena-olvidada") // ruta para cuando quieren volver a recordar la contraseña
     public String olvidar() {
-        return "Html/persona/contraseña_olvidada_per";
+        return "Html/persona/contrasena_olvidada_per";
     }
 
     @GetMapping("/configuracion/persona") // ruta para configuracion de las personas

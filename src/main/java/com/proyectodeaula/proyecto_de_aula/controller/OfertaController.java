@@ -25,6 +25,7 @@ import com.proyectodeaula.proyecto_de_aula.interfaces.Personas.Interfaz_Per;
 import com.proyectodeaula.proyecto_de_aula.model.Empresas;
 import com.proyectodeaula.proyecto_de_aula.model.Ofertas;
 import com.proyectodeaula.proyecto_de_aula.model.Personas;
+import com.proyectodeaula.proyecto_de_aula.service.NotificacionServicio;
 import com.proyectodeaula.proyecto_de_aula.service.OfertaService;
 
 import jakarta.servlet.http.HttpSession;
@@ -41,6 +42,10 @@ public class OfertaController {
 
     @Autowired
     private Interfaz_Per personaRepository;
+
+    @Autowired
+    private NotificacionServicio notificacionServicio;
+
 
     @GetMapping("/personas/pagina_principal")
     public String listar_ofertas_1(Model model, HttpSession session) {
@@ -80,6 +85,9 @@ public class OfertaController {
         return offerta.buscarOfertasPorTermino(termino);
     }
 
+    /*
+     * 
+     
     @PostMapping("/guardarOferta")
     public String guardarOferta(@ModelAttribute Ofertas oferta, HttpSession session) {
         Empresas empresa = (Empresas) session.getAttribute("empresa");
@@ -87,6 +95,27 @@ public class OfertaController {
         offerService.save(oferta); // Guarda la oferta usando el servicio
         return "redirect:/empresas/pagina_principal"; // Redirige a la página principal
     }
+*/
+    @PostMapping("/guardarOferta")
+public String guardarOferta(@ModelAttribute Ofertas oferta, HttpSession session) {
+    Empresas empresa = (Empresas) session.getAttribute("empresa");
+
+    if (empresa == null) {
+        return "redirect:/login/empresas"; // Redirige al login si la empresa no está autenticada
+    }
+
+    oferta.setEmpresa(empresa); // Asigna la empresa a la oferta
+    offerService.save(oferta); // Guarda la oferta en la base de datos
+
+    // Enviar notificación a la empresa
+    notificacionServicio.crearNotificacion(
+        "Tu oferta '" + oferta.getTitulo_puesto() + "' ha sido publicada con éxito.", 
+        empresa.getId()
+    );
+
+    return "redirect:/empresas/pagina_principal"; // Redirige a la página principal
+}
+
 
     @DeleteMapping("/offers/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

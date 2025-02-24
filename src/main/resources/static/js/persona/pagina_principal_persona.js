@@ -327,5 +327,3 @@ document.addEventListener("DOMContentLoaded", function() {
         sessionStorage.setItem("loginNotificationShown", "true");
     }
 });
-
-
