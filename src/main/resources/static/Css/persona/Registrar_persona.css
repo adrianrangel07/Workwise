@@ -122,7 +122,7 @@ html, body {
     border-radius: 6px !important;
 }
 
-.mb-3 label{
+.label{
     position: absolute;
     padding: 3px !important;
     top: 50%;
@@ -134,14 +134,30 @@ html, body {
     transition: .3s;
 }
 
+.fecha-button{
+    all: unset;
+}
+
+.fecha{
+    display: inline-block;
+    position: absolute;
+    padding: 0 8px !important;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: rgba(0, 0, 0, 0.9) ;
+    font-size: 17px;
+    cursor: pointer;
+    z-index: 100;
+}
+
 .mb-3 input:focus{
     border: 2px solid #0a1128;
     box-shadow: 0 4px 12px 4px rgba(46, 45, 45, 0.15);
 }
 
-.mb-3 input:focus ~ label,
-.mb-3 input:not(:placeholder-shown) ~ label{
-    border: 2px solid #0a1128;
+.mb-3 input:focus ~ .label,
+.mb-3 input:not(:placeholder-shown) ~ .label{
     top: 0;
     font-size: 16px;
     padding: 0 15px;

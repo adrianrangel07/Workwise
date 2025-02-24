@@ -67,4 +67,11 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl);
 });
 
-
+// script para el calendario
+flatpickr("#fecha", {
+    dateFormat: "d-m-Y",  // Formato personalizado
+    altInput: true,
+    altFormat: "F j, Y",  // Formato visible más amigable
+    locale: "es",         // Idioma en español
+    allowInput: false      // Permitir escribir manualmente
+});
