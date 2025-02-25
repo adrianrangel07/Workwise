@@ -68,10 +68,24 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 });
 
 // script para el calendario
+const fechaInput = document.getElementById("fecha");
+
 flatpickr("#fecha", {
-    dateFormat: "d-m-Y",  // Formato personalizado
+    dateFormat: "Y-m-d",  // Formato personalizado
     altInput: true,
     altFormat: "F j, Y",  // Formato visible más amigable
     locale: "es",         // Idioma en español
-    allowInput: false      // Permitir escribir manualmente
+    allowInput: false,  // Permitir escribir manualmente
+    disableMobile: true, // Usa el selector nativo en móviles
+    onChange: function (selectedDates, dateStr) {
+        if (dateStr) {
+            fechaInput.classList.add("has-value");  // Agregar clase si hay fecha
+        } else {
+            fechaInput.classList.remove("has-value");  // Quitar clase si está vacío
+        }
+    }
+});
+
+document.getElementById("icono-calendario").addEventListener("click", function () {
+    fechaInput._flatpickr.open(); // Abre el calendario
 });

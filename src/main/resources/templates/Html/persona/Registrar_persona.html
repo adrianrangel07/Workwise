@@ -24,13 +24,14 @@
     <div class="contenedor">
         <div class="card">
             <div class="head-card">
-                <h1>Sing up</h1>
+                <h1>Create an Account!</h1>
                 <div class="container-back">
                     <a th:href="@{/}" class="back_a">
                         <i class="fas fa-arrow-left back"></i>
                     </a>
                 </div>
             </div>
+            <p>From the first step to the professional world.</p>
             <div class="formulario">
                 <form id="registerForm" th:action="@{/Register/personas}" method="post" class="user">
                     <div class="row"> <!-- nombre y apellido -->
@@ -93,7 +94,8 @@
                     <div class="row"> <!-- fecha de nacimiento y genero -->
                         <div class="contenedor-input">
                             <div class="col-sm-6 mb-3">
-                                <input class="form-control form-control-user" type="text" placeholder="" id="fecha" name="fecha_nacimiento" required>
+                                <input class="form-control form-control-user" type="text" id="fecha" name="fecha_nacimiento" required>
+                                <label for="fecha" class="fecha-label">F. Nacimiento</label>
                                 <i class="fas fa-calendar-alt fecha" id="icono-calendario"></i>
                             </div>
                         </div>
