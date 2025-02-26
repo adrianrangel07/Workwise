@@ -65,21 +65,12 @@
                             style="background: var(--bs-body-bg);">
                             <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3"
                                     id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
-                                <form
-                                    class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                    <div class="input-group"
-                                        style="text-align: center;margin: 500px;border-color: var(--bs-emphasis-color);">
-                                        <input class="bg-light form-control border-0 small" type="text"
-                                            placeholder="Buscar..."><button class="btn btn-primary py-0" type="button"
-                                            style="background: #0a1128;"><i class="fas fa-search"></i></button>
-                                    </div>
-                                </form>
                                 <ul class="navbar-nav flex-nowrap ms-auto">
                                     <div class="d-none d-sm-block topbar-divider"></div>
                                     <li class="nav-item dropdown no-arrow">
                                         <div class="nav-item dropdown no-arrow" id="empresa-container">
-                                            <img id="empresa-avatar" th:src="@{/imagen/{id}(id=${empresa.id})}"
-                                                alt="Profile">
+                                            <img id="empresa-avatar" th:src="@{/Empresa/imagen/{id}(id=${empresa.id})}"
+                                                alt="Empresa Logo">
                                             <input type="hidden" id="subirFoto" accept="image/*"
                                                 style="display: block; margin-top: 10px;">
                                             <a class="dropdown-toggle nav-link" aria-expanded="false"

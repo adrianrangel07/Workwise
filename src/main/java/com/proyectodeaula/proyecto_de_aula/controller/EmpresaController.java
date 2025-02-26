@@ -1,14 +1,20 @@
 package com.proyectodeaula.proyecto_de_aula.controller;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -106,9 +112,13 @@ public class EmpresaController {
 
     // Actualiza el perfil de la empresa
     @PostMapping("/actualizar/empresa")
-    public String actualizarPerfil(@RequestParam String nombreEmp, @RequestParam String direccion,
-            @RequestParam String contraseña, @RequestParam String razonSocial,
+    public String actualizarPerfil(
+            @RequestParam String nombreEmp,
+            @RequestParam String direccion,
+            @RequestParam String razon_social,
+            @RequestParam String confirmPassword, // Contraseña ingresada para confirmar
             HttpSession session, Model model) {
+
         // Verifica si la sesión sigue activa
         String email = (String) session.getAttribute("email");
         if (email == null) {
@@ -123,6 +133,12 @@ public class EmpresaController {
             return "Html/error";
         }
 
+        // Validar la contraseña ingresada
+        if (!empresa.getContraseña().equals(confirmPassword)) {
+            model.addAttribute("error", "Contraseña incorrecta.");
+            return "Html/error";
+        }
+
         try {
             // Actualiza los datos de la empresa si no están vacíos
             if (!nombreEmp.isEmpty()) {
@@ -131,11 +147,8 @@ public class EmpresaController {
             if (!direccion.isEmpty()) {
                 empresa.setDireccion(direccion);
             }
-            if (!contraseña.isEmpty()) {
-                empresa.setContraseña(contraseña);
-            }
-            if (!razonSocial.isEmpty()) {
-                empresa.setRazon_social(razonSocial);
+            if (!razon_social.isEmpty()) {
+                empresa.setRazon_social(razon_social);
             }
 
             // Guarda los cambios en la base de datos
@@ -162,6 +175,36 @@ public class EmpresaController {
         return "redirect:/perfil/empresa";
     }
 
+    @GetMapping("/empresas/photo")
+    public ResponseEntity<byte[]> getPhoto(HttpSession session) {
+        String email = (String) session.getAttribute("email");
+        Empresas empresa = empresaService.findByEmail(email);
+
+        if (empresa == null || empresa.getFoto() == null) {
+            return ResponseEntity.notFound().build(); // Si no hay foto, retorna 404
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG); // Cambia el tipo si usas PNG u otro formato
+
+        return new ResponseEntity<>(empresa.getFoto(), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/Empresa/imagen/{id}")
+    public ResponseEntity<byte[]> obtenerImagenEmpresa(@PathVariable Long id) {
+        Optional<Empresas> empresa = uEmp.findById(id);
+    
+        if (empresa.isPresent() && empresa.get().getFoto() != null) {
+            byte[] imagen = empresa.get().getFoto();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG); // Ajusta según el formato guardado
+            return new ResponseEntity<>(imagen, headers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    
+
     // Muestra la vista de estadísticas de empresas
     @GetMapping("/Estadisticas/empresas")
     public String mostrarEstadisticas(HttpSession session, Model model) {
@@ -172,7 +215,7 @@ public class EmpresaController {
         }
 
         model.addAttribute("empresa", empresa); // Agregar la empresa al modelo
-        
+
         return "Html/Empresa/Estadisticas_empresas";
     }
 
