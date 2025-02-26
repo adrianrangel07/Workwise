@@ -59,22 +59,72 @@ main{
 }
 
 .title-statistics {
-    text-align: center;  /* Centra el texto */
-    font-size: 28px;     /* Ajusta el tamaño de fuente */
-    font-weight: bold;   /* Hace el texto más grueso */
-    margin-bottom: 20px; /* Espacio entre el título y el iframe */
-    color: #0a1128;      /* Color oscuro para resaltar */
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #0a1128;
 }
 
-#powerBi {
-    width: 100%;   /* Que ocupe todo el ancho disponible */
-    height: 600px; /* Ajusta la altura del iframe */
-    border-radius: 10px; /* Bordes redondeados para mejor apariencia */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para dar efecto flotante */
+#powerBi{
+    margin: auto;
+    padding: auto;
+    margin-bottom: 20px;
+}
+.custom-footer {
+    margin-top: auto;
+    background: linear-gradient(90deg, #0a1128, #001f54);
+    color: white;
+    padding: 20px 0;
 }
 
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
 
+.footer-left, .footer-center, .footer-right {
+    flex: 1;
+}
 
-/* fin main */
+.footer-left {
+    text-align: left; 
+}
+
+.footer-center {
+    text-align: center; 
+}
+
+.footer-right {
+    text-align: right;
+}
+
+.footer-socials a {
+    margin: 0 10px;
+}
+
+.custom-footer a img {
+    transition: transform 0.2s ease;  
+    outline: none; 
+    border: none;  
+}
+
+.custom-footer a img:hover {
+    transform: scale(1.1); 
+    filter: brightness(1.1); 
+}
+
+.custom-footer a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.custom-footer a:hover {
+    color: #4db8ff;
+}
 
 

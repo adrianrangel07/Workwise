@@ -163,7 +163,7 @@ body {
 .sticky-footer{
     bottom: 0;
     position: absolute;
-    width: 85%;
+    width: 100%;
 }
 
 /* Estilos para la foto y el nombre del usuario  */

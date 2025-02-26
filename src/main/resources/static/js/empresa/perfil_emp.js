@@ -1,24 +1,14 @@
-
-const saveButton = document.getElementById('save_btn');
-document.getElementById('change_btn').addEventListener('click', function () {
-    // Selecciona todos los inputs del formulario
-    document.querySelectorAll('input').forEach(input => {
-        input.disabled = false; // Habilita el campo
-        saveButton.disabled = false;
-    });
-});
-
 document.addEventListener('DOMContentLoaded', function () {
     // Mostrar el formulario al hacer clic en "Change Photo"
     document.getElementById('changePhotoBtn').addEventListener('click', function () {
-        document.getElementById('uploadForm').style.display = 'block'; // Muestra el formulario
-        document.getElementById('cancelUploadBtn').style.display = 'inline-block'; // Muestra el botón de cancelar
+        document.getElementById('uploadForm').style.display = 'block';
+        document.getElementById('cancelUploadBtn').style.display = 'inline-block';
     });
 
     // Ocultar el formulario al hacer clic en "Cancel"
     document.getElementById('cancelUploadBtn').addEventListener('click', function () {
-        document.getElementById('uploadForm').style.display = 'none'; // Oculta el formulario
-        document.getElementById('cancelUploadBtn').style.display = 'none'; // Oculta el botón de cancelar
+        document.getElementById('uploadForm').style.display = 'none';
+        document.getElementById('cancelUploadBtn').style.display = 'none';
     });
 
     // Mostrar la nueva imagen al cambiar la foto
@@ -27,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const reader = new FileReader();
 
         reader.onload = function (e) {
-            document.getElementById('profileImage').src = e.target.result; // Muestra la nueva imagen
+            document.getElementById('empresa-avatar').src = e.target.result; // Muestra la nueva imagen
         };
 
         reader.readAsDataURL(file);
@@ -41,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
         Swal.fire({
             icon: 'success',
             title: 'Foto cambiada',
-            text: 'Tu foto de perfil ha sido actualizada exitosamente!',
+            text: 'La foto de la empresa ha sido actualizada exitosamente!',
             showConfirmButton: true,
             confirmButtonText: 'Ok'
         }).then((result) => {
@@ -53,3 +43,35 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+
+
+
+const saveButton = document.getElementById('save_btn');
+document.getElementById('change_btn').addEventListener('click', function () {
+    document.querySelectorAll('input:not([type="email"]):not([type="password"])').forEach(input => {
+        input.disabled = false; // Habilita todos menos email y password
+    });
+    saveButton.disabled = false;
+});
+
+document.getElementById('updateForm').addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevenir el envío
+
+    Swal.fire({
+        title: 'Confirmar cambios',
+        text: 'Ingresa tu contraseña para confirmar:',
+        input: 'password',
+        inputPlaceholder: 'Contraseña',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed && result.value) {
+            document.getElementById('confirmPassword').value = result.value; // Asigna la contraseña ingresada
+            this.submit(); // Envía el formulario
+        }
+    });
+});
