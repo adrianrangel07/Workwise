@@ -15,8 +15,7 @@
     <link rel="stylesheet" href="../Css/persona/pagina_principal_persona.css">
     <link rel="stylesheet" href="../Css/notificaciones.css">
     <link rel="stylesheet" href="https://cdsn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-  
-
+    <link rel="stylesheet" href="../Css/notificaciones.css">
 </head>
 
 <body id="page-top">
@@ -74,7 +73,8 @@
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow" id="usuario-container">
                                     <img id="user-avatar" th:src="@{/imagen/{id}(id=${persona.id})}" alt="Profile">
-                                    <input type="hidden" id="subirFoto" accept="image/*" style="display: block; margin-top: 10px;" >
+                                    <input type="hidden" id="subirFoto" accept="image/*"
+                                        style="display: block; margin-top: 10px;">
                                     <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
                                         href="#">
                                         <span id="usuario" th:text="${persona.nombre}">Account</span>

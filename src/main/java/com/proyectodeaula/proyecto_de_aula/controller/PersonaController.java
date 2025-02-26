@@ -95,7 +95,7 @@ public class PersonaController {
             return "redirect:/personas/pagina_principal";
         } else {
             model.addAttribute("error", "Credenciales incorrectas");
-            return "redirect:/login/persona?error=true";
+            return "redirect:/login/personas?error=true";
         }
     }
 

@@ -31,11 +31,11 @@
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
-    width: 320px; /* Más pequeño */
+    width: 100%;
     max-width: 50%;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     animation: fadeIn 0.3s ease-out;
-    text-align: left; /* Alineado profesional */
+    text-align: left; 
 }
 
 /* Encabezado */
@@ -224,10 +224,9 @@
 }
 
 .offer-container {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
-    justify-content: center;
     padding: 20px;
 }
 
@@ -246,7 +245,6 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: calc(25% - 40px); /* 25% del ancho para 4 tarjetas y resta espacio para el gap */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -281,20 +279,6 @@
 /* Estilos específicos para las etiquetas dentro de la información oculta */
 .hidden-info p {
     margin: 5px 0;
-}
-
-/* Responsivo: 2 tarjetas en filas horizontales en pantallas pequeñas */
-@media (max-width: 768px) {
-    .card {
-        width: calc(50% - 40px); /* 50% para 2 tarjetas en pantallas pequeñas */
-    }
-}
-
-/* Responsivo: 1 tarjeta por fila en pantallas muy pequeñas */
-@media (max-width: 480px) {
-    .card {
-        width: calc(100% - 40px); /* 100% para 1 tarjeta en pantallas muy pequeñas */
-    }
 }
 
 #usuario{
@@ -601,3 +585,65 @@
     width: 38px !important;
 }
 
+/* responsive */
+/* Hacer que la barra lateral se oculte en pantallas pequeñas */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+    #sidebarToggle {
+        display: block;
+    }
+}
+
+/* Ajustar la búsqueda para pantallas pequeñas */
+@media (max-width: 576px) {
+    .navbar-search {
+        width: 100%;
+    }
+    .navbar-search .input-group {
+        flex-direction: column;
+    }
+    .navbar-search input {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}
+
+/* Ajustar las tarjetas de ofertas para que se adapten a móviles */
+@media (max-width: 768px) {
+    .offer-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .card {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+}
+
+/* Optimizar el modal en pantallas pequeñas */
+@media (max-width: 576px) {
+    .modal-content {
+        width: 90%;
+        max-width: 400px;
+    }
+    .modal-body {
+        font-size: 14px;
+    }
+    .apply-btn-modal {
+        width: 100%;
+    }
+}
+
+/* Footer responsive */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    .footer-left, .footer-center, .footer-right {
+        margin-bottom: 10px;
+    }
+}

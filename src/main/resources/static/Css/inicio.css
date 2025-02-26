@@ -252,20 +252,6 @@ nav-rp:hover {
     margin: 5px 0;
 }
 
-/* Responsivo: 2 tarjetas en filas horizontales en pantallas pequeñas */
-@media (max-width: 768px) {
-    .card {
-        width: calc(50% - 40px); /* 50% para 2 tarjetas en pantallas pequeñas */
-    }
-}
-
-/* Responsivo: 1 tarjeta por fila en pantallas muy pequeñas */
-@media (max-width: 480px) {
-    .card {
-        width: calc(100% - 40px); /* 100% para 1 tarjeta en pantallas muy pequeñas */
-    }
-}
-
 /* Diseño general de las tarjetas */
 .card {
     background-color: #fff;
@@ -605,6 +591,69 @@ nav-rp:hover {
     height: 38px !important; /* Ajustar altura */
     width: 38px !important;
 }
+
+/* Hacer que la barra lateral se oculte en pantallas pequeñas */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+    #sidebarToggle {
+        display: block;
+    }
+}
+
+/* Ajustar la búsqueda para pantallas pequeñas */
+@media (max-width: 576px) {
+    .navbar-search {
+        width: 100%;
+    }
+    .navbar-search .input-group {
+        flex-direction: column;
+    }
+    .navbar-search input {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}
+
+/* Ajustar las tarjetas de ofertas para que se adapten a móviles */
+@media (max-width: 768px) {
+    .offer-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .card {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+}
+
+/* Optimizar el modal en pantallas pequeñas */
+@media (max-width: 576px) {
+    .modal-content {
+        width: 90%;
+        max-width: 400px;
+    }
+    .modal-body {
+        font-size: 14px;
+    }
+    .apply-btn-modal {
+        width: 100%;
+    }
+}
+
+/* Footer responsive */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    .footer-left, .footer-center, .footer-right {
+        margin-bottom: 10px;
+    }
+}
+
 
   
     
