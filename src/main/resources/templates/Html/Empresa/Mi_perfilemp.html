@@ -19,8 +19,7 @@
 
 <body id="page-top">
     <div id="wrapper">
-        <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark"
-            style="background: #310632;;">
+        <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark">
             <div class="container-fluid d-flex flex-column p-0"><a
                     class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
                     th:href="@{/empresas/pagina_principal}"><img src="../Imagenes/working wise 32x32 white.png"
@@ -39,6 +38,9 @@
                     </li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/empresas/oferta}">
                             <i class="fas fa-plus-circle"></i><span>Create offer</span></a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/empresas/published-offers}">
+                            <i class="fas fa-check-circle"></i><span>Listed offers</span></a>
                     </li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/Estadisticas/empresas}">
                             <i class="fas fa-chart-bar"></i><span>Statistics</span></a>
@@ -67,14 +69,29 @@
                         <ul class="navbar-nav flex-nowrap ms-auto">
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow">
-                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
-                                        aria-expanded="false" data-bs-toggle="dropdown" href="#"><span
-                                            class="d-none d-lg-inline me-2 text-gray-600 small">Account</span></a>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a
-                                            class="dropdown-item" th:href="@{/perfil/empresa}"><i
-                                                class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a>
-                                        <div class="dropdown-divider"></div><a class="dropdown-item" href="#"
-                                            id="logout" onclick="cerrarSesion(event)">
+                                <div class="nav-item dropdown no-arrow" id="empresa-container">
+                                    <img id="empresa-avatar" th:src="@{/imagen/{id}(id=${empresa.id})}" alt="Profile">
+                                    <input type="hidden" id="subirFoto" accept="image/*"
+                                        style="display: block; margin-top: 10px;">
+                                    <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
+                                        href="#">
+                                        <span id="empresa" th:text="${empresa.nombreEmp}">Account</span>
+                                    </a>
+                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                                        <a class="dropdown-item" th:href="@{/perfil/empresa}">
+                                            <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile
+                                        </a>
+                                        <a class="dropdown-item" href="#">
+                                            <i
+                                                class="fas fa-briefcase fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Published
+                                            Jobs
+                                        </a>
+                                        <a class="dropdown-item" href="#">
+                                            <i
+                                                class="fas fa-chart-line fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Statistics
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#" id="logout" onclick="cerrarSesion(event)">
                                             <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>Logout
                                         </a>
                                     </div>
@@ -149,7 +166,8 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="mb-3">
-                                                            <label class="form-label" for="first_name"><strong>Company Name</strong></label>
+                                                            <label class="form-label" for="first_name"><strong>Company
+                                                                    Name</strong></label>
                                                             <input class="form-control" type="text" id="first_name"
                                                                 name="nombreEmp" th:value="${empresa.nombreEmp}"
                                                                 disabled>
@@ -157,7 +175,8 @@
                                                     </div>
                                                     <div class="col">
                                                         <div class="mb-3">
-                                                            <label class="form-label" for="last_name"><strong>Social Reason</strong></label>
+                                                            <label class="form-label" for="last_name"><strong>Social
+                                                                    Reason</strong></label>
                                                             <input class="form-control" type="text" id="last_name"
                                                                 name="razon_social" th:value="${empresa.razon_social}"
                                                                 disabled>
@@ -175,15 +194,16 @@
                                                 </div>
                                                 <div class="col">
                                                     <div class="mb-3">
-                                                        <button class="btn btn-primary btn-sm" type="button" style="margin-right: 10px;"
-                                                            id="change_btn">Change Settings</button>
+                                                        <button class="btn btn-primary btn-sm" type="button"
+                                                            style="margin-right: 10px;" id="change_btn">Change
+                                                            Settings</button>
                                                         <button class="btn btn-primary btn-sm" type="submit"
-                                                            id="save_btn" disabled>Save changes</button>    
+                                                            id="save_btn" disabled>Save changes</button>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="mb-3">
-                                                        
+
                                                     </div>
                                                 </div>
                                         </div>
@@ -194,7 +214,8 @@
                         </div>
                     </div>
                 </div>
-                <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer">
+                <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer"
+                    style="background-color: #343A40 !important;">
                     <div class="container">
                         <div class="footer-content">
                             <div class="footer-left">

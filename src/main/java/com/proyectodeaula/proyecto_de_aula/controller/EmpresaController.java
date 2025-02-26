@@ -63,7 +63,8 @@ public class EmpresaController {
 
     // Procesa el inicio de sesión de una empresa
     @PostMapping("/login/Empresa")
-    public String iniciarSesion(HttpSession session, Model model, @RequestParam String email, @RequestParam String contraseña) {
+    public String iniciarSesion(HttpSession session, Model model, @RequestParam String email,
+            @RequestParam String contraseña) {
         Empresas empresa = uEmp.findByEmailAndContraseña(email, contraseña);
 
         if (empresa != null) {
@@ -83,6 +84,7 @@ public class EmpresaController {
         if (empresa != null) {
             model.addAttribute("Ofertas", ofertaService.listarOfertasPorEmpresa(empresa));
             model.addAttribute("nombreEmpresa", empresa.getNombreEmp());
+            model.addAttribute("empresa", empresa); // Asegurando que Thymeleaf tenga acceso al objeto empresa
             return "Html/Empresa/pagina_principal_empresa";
         }
         return "redirect:/login/Empresa";
@@ -162,22 +164,38 @@ public class EmpresaController {
 
     // Muestra la vista de estadísticas de empresas
     @GetMapping("/Estadisticas/empresas")
-    public String mostrarEstadisticas() {
+    public String mostrarEstadisticas(HttpSession session, Model model) {
+        Empresas empresa = (Empresas) session.getAttribute("empresa"); // Obtener la empresa desde la sesión
+
+        if (empresa == null) {
+            return "redirect:/login/Empresa"; // Redirigir al login si no hay empresa en sesión
+        }
+
+        model.addAttribute("empresa", empresa); // Agregar la empresa al modelo
+        
         return "Html/Empresa/Estadisticas_empresas";
     }
 
     @GetMapping("/empresas/oferta") // para ver las ofertas postuladas
-        public String oferta() {
+    public String oferta() {
         return "Html/Empresa/Oferta";
     }
 
     @GetMapping("/Contraseña-olvidada-empresa") // cuando quieren recuperar la contraseña de la cuenta de empresa
-        public String olvidar_emp() {
+    public String olvidar_emp() {
         return "Html/Empresa/contraseña_olvidada_emp";
     }
 
-    @GetMapping("/empresas/published offers") // para ver las ofertas publicadas
-        public String recuperar_emp() {
+    @GetMapping("/empresas/published-offers") // Para ver las ofertas publicadas
+    public String publishedoffers(HttpSession session, Model model) {
+        Empresas empresa = (Empresas) session.getAttribute("empresa"); // Obtener la empresa desde la sesión
+
+        if (empresa == null) {
+            return "redirect:/login/Empresa"; // Redirigir al login si no hay empresa en sesión
+        }
+
+        model.addAttribute("empresa", empresa); // Agregar la empresa al modelo
         return "Html/Empresa/ofertas-publicadas";
     }
+
 }
