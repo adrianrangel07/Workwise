@@ -2,6 +2,7 @@ package com.proyectodeaula.proyecto_de_aula.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,11 @@ import com.proyectodeaula.proyecto_de_aula.controller.NotificacionSSEController;
 import com.proyectodeaula.proyecto_de_aula.interfaceService.IofertaService;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Ofertas.Interfaz_ofertas;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Ofertas.OfertasRepository;
+import com.proyectodeaula.proyecto_de_aula.interfaces.postulacion.PostulacionRepository;
 import com.proyectodeaula.proyecto_de_aula.model.Empresas;
 import com.proyectodeaula.proyecto_de_aula.model.Ofertas;
+import com.proyectodeaula.proyecto_de_aula.model.Personas;
+import com.proyectodeaula.proyecto_de_aula.model.Postulacion;
 
 @Service
 public class OfertaService implements IofertaService {
@@ -22,6 +26,9 @@ public class OfertaService implements IofertaService {
 
     @Autowired
     private OfertasRepository ofertaRepository;
+
+    @Autowired
+    private PostulacionRepository postulacionRepository;
 
     @Autowired
     private NotificacionSSEController notificacionSSEController;
@@ -40,7 +47,7 @@ public class OfertaService implements IofertaService {
     public int save(Ofertas O) {
         int res = 0;
         Ofertas Usu = oferr.save(O);  // Guardar oferta en la base de datos
-        if (Usu != null) {  
+        if (Usu != null) {
             res = 1;
             notificacionSSEController.enviarNotificacion("Nueva oferta publicada: " + Usu.getTitulo_puesto());
         }
@@ -96,6 +103,13 @@ public class OfertaService implements IofertaService {
     @Override
     public Ofertas findById(long id) {
         throw new UnsupportedOperationException("Unimplemented method 'findById'");
+    }
+
+    public List<Personas> obtenerPostulantesPorOferta(long idOferta) {
+        List<Postulacion> postulaciones = postulacionRepository.findByOfertasId(idOferta);
+        return postulaciones.stream()
+                .map(Postulacion::getPersonas)
+                .collect(Collectors.toList());
     }
 
 }

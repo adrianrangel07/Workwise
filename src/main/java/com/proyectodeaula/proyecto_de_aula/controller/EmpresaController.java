@@ -193,7 +193,7 @@ public class EmpresaController {
     @GetMapping("/Empresa/imagen/{id}")
     public ResponseEntity<byte[]> obtenerImagenEmpresa(@PathVariable Long id) {
         Optional<Empresas> empresa = uEmp.findById(id);
-    
+
         if (empresa.isPresent() && empresa.get().getFoto() != null) {
             byte[] imagen = empresa.get().getFoto();
             HttpHeaders headers = new HttpHeaders();
@@ -203,7 +203,6 @@ public class EmpresaController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    
 
     // Muestra la vista de estadísticas de empresas
     @GetMapping("/Estadisticas/empresas")
@@ -231,14 +230,14 @@ public class EmpresaController {
 
     @GetMapping("/empresas/published-offers") // Para ver las ofertas publicadas
     public String publishedoffers(HttpSession session, Model model) {
-        Empresas empresa = (Empresas) session.getAttribute("empresa"); // Obtener la empresa desde la sesión
-
-        if (empresa == null) {
-            return "redirect:/login/Empresa"; // Redirigir al login si no hay empresa en sesión
+        Empresas empresa = (Empresas) session.getAttribute("empresa");
+        if (empresa != null) {
+            model.addAttribute("Ofertas", ofertaService.listarOfertasPorEmpresa(empresa));
+            model.addAttribute("nombreEmpresa", empresa.getNombreEmp());
+            model.addAttribute("empresa", empresa); // Asegurando que Thymeleaf tenga acceso al objeto empresa
+            return "Html/Empresa/ofertas-publicadas";
         }
-
-        model.addAttribute("empresa", empresa); // Agregar la empresa al modelo
-        return "Html/Empresa/ofertas-publicadas";
+        return "redirect:/login/Empresa";
     }
 
 }
