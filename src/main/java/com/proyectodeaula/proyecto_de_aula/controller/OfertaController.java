@@ -42,7 +42,6 @@ public class OfertaController {
     @Autowired
     private Interfaz_Per personaRepository;
 
-
     @GetMapping("/personas/pagina_principal")
     public String listar_ofertas_1(Model model, HttpSession session) {
         // Obtén las ofertas desde el servicio
@@ -81,8 +80,6 @@ public class OfertaController {
         return offerta.buscarOfertasPorTermino(termino);
     }
 
-   
-     
     @PostMapping("/guardarOferta")
     public String guardarOferta(@ModelAttribute Ofertas oferta, HttpSession session) {
         Empresas empresa = (Empresas) session.getAttribute("empresa");
@@ -108,6 +105,17 @@ public class OfertaController {
         try {
             int count = offerta.obtenerNumeroPostulaciones(idOferta);
             return ResponseEntity.ok(count);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("/ofertas/{idOferta}/postulaciones")
+    @ResponseBody
+    public ResponseEntity<List<Personas>> obtenerPostulantesPorOferta(@PathVariable long idOferta) {
+        try {
+            List<Personas> postulantes = offerta.obtenerPostulantesPorOferta(idOferta);
+            return ResponseEntity.ok(postulantes);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }

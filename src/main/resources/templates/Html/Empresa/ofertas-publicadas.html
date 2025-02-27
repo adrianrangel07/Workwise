@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../Css/general/Nunito.css">
     <link rel="stylesheet" href="../Css/general/styles.min.css">
     <link rel="stylesheet" href="../Css/empresa/PerfilEmpresa.css">
+    <link rel="stylesheet" href="../Css/empresa/ofertas-publicadas.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
 </head>
@@ -105,39 +106,101 @@
                         </ul>
                     </div>
                 </nav>
-            </div>
-
-            <body>
-
-                    
-
-            </body>
-
-            <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer" style="background-color: #343A40 !important;">
-                <div class="container">
-                    <div class="footer-content">
-                        <div class="footer-left">
-                            <p class="mb-1">PBX: (605) 123-4567 | Email: contacto@workwise.com</p>
+                <main>
+                    <div class="contenedor-horizontal">
+                        <div class="seccion">
+                            <div class="content-area flex-grow-1 p-3">
+                                <div id="resultadoBusqueda"></div>
+                                <div class="offer-container">
+                                    <div th:each="Oferta:${Ofertas}" class="card">
+                                        <div class="offer-content" th:data-id="${Oferta.id}">
+                                            <h3 th:text="${Oferta.titulo_puesto}"></h3>
+                                            <p th:text="${Oferta.descripcion}"></p>
+                                            <div class="hidden-info">
+                                                <p class="salario"><strong>Salary:</strong> <span
+                                                        th:text="${Oferta.salario}"></span>
+                                                </p>
+                                                <p class="moneda"><Strong>Currency:</Strong> <span
+                                                        th:text="${Oferta.moneda}"></span>
+                                                </p>
+                                                <p class="duracion"><strong>Duration:</strong> <span
+                                                        th:text="${Oferta.duracion}"></span>
+                                                </p>
+                                                <p class="periodo"><strong>Period:</strong> <span
+                                                        th:text="${Oferta.periodo}"></span>
+                                                </p>
+                                                <p class="tipo_empleo"><strong>Type of employment:</strong> <span
+                                                        th:text="${Oferta.tipo_empleo}"></span>
+                                                </p>
+                                                <p class="modalidad"><strong>mode:</strong> <span
+                                                        th:text="${Oferta.modalidad}"></span>
+                                                </p>
+                                                <p class="tipo_contrato"><strong>Type of contract:</strong> <span
+                                                        th:text="${Oferta.tipo_contrato}"></span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="footer-center">
-                            <p class="mb-1">© 2024 WorkWise. Todos los derechos reservados.</p>
-                        </div>
-                        <div class="footer-right">
-                            <a href="https://facebook.com" target="_blank" class="mx-3">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
-                                    alt="Facebook" width="30" height="30">
-                            </a>
-                            <a href="https://instagram.com" target="_blank" class="mx-3">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
-                                    alt="Instagram" width="30" height="30">
-                            </a>
-                            <a href="https://www.tiktok.com" target="_blank" class="mx-3">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/TikTok_Logo.svg" alt="TikTok"
-                                    width="30" height="30">
-                            </a>
+                        <div class="seccion">
+                            <div>
+                                <h2>Detalles de la Oferta</h2>
+                            </div>
+                            <div class="seccion" id="detalle-oferta">
+                                <div id="info-oferta">
+                                    <h3 id="detalle-titulo"></h3>
+                                    <p id="detalle-descripcion"></p>
+                                    <p id="detalle-salario"></p>
+                                    <p id="detalle-moneda"></p>
+                                    <p id="detalle-duracion"></p>
+                                    <p id="detalle-periodo"></p>
+                                    <p id="detalle-modalidad"></p>
+                                    <p id="detalle-tipo"></p>
+                                    <p id="detalle-tipoContrato"></p>
+                                </div>
+                                <hr>
+                                <h3>Postulantes:</h3>
+                                <ul id="listaPostulantes"></ul>
+                            </div>
                         </div>
                     </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+
+
+    <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer"
+        style="background-color: #343A40 !important;">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <p class="mb-1">PBX: (605) 123-4567 | Email: contacto@workwise.com</p>
                 </div>
-            </footer>
+                <div class="footer-center">
+                    <p class="mb-1">© 2024 WorkWise. Todos los derechos reservados.</p>
+                </div>
+                <div class="footer-right">
+                    <a href="https://facebook.com" target="_blank" class="mx-3">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+                            alt="Facebook" width="30" height="30">
+                    </a>
+                    <a href="https://instagram.com" target="_blank" class="mx-3">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+                            alt="Instagram" width="30" height="30">
+                    </a>
+                    <a href="https://www.tiktok.com" target="_blank" class="mx-3">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/TikTok_Logo.svg" alt="TikTok"
+                            width="30" height="30">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/empresa/ofertas-publicadas.js"></script>
+</body>
 
 </html>
