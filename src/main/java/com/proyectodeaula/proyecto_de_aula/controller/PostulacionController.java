@@ -1,14 +1,21 @@
 package com.proyectodeaula.proyecto_de_aula.controller;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +28,6 @@ import com.proyectodeaula.proyecto_de_aula.model.Personas;
 import com.proyectodeaula.proyecto_de_aula.model.Postulacion;
 
 // import jakarta.servlet.http.HttpSession;
-
 @Controller
 public class PostulacionController {
 
@@ -97,4 +103,42 @@ public class PostulacionController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/ofertas/{id}/postulaciones")
+    public ResponseEntity<List<Map<String, Object>>> obtenerPostulaciones(@PathVariable Long id) {
+        List<Postulacion> postulaciones = postulacionRepository.findByOfertasId(id);
+
+        if (postulaciones == null || postulaciones.isEmpty()) {
+            return ResponseEntity.ok(Collections.emptyList()); // Retorna una lista vacía si no hay postulaciones
+        }
+
+        List<Map<String, Object>> resultado = postulaciones.stream()
+                .filter(postulacion -> postulacion.getPersonas() != null) // Evitar NullPointerException
+                .map(postulacion -> {
+                    Map<String, Object> postulanteData = new HashMap<>();
+                    postulanteData.put("id", postulacion.getPersonas().getId());
+                    postulanteData.put("nombre", postulacion.getPersonas().getNombre());
+                    postulanteData.put("apellido", postulacion.getPersonas().getApellido());
+                    return postulanteData;
+                })
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(resultado);
+    }
+
+    @GetMapping("/postulantes/{id}/verHDV")
+    public ResponseEntity<byte[]> verCV(@PathVariable Long id) {
+        Optional<Personas> personaOpt = personaRepository.findById(id);
+
+        if (personaOpt.isPresent() && personaOpt.get().getCv() != null) {
+            byte[] cvBytes = personaOpt.get().getCv();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDisposition(ContentDisposition.inline().filename("CV_" + id + ".pdf").build());
+
+            return new ResponseEntity<>(cvBytes, headers, HttpStatus.OK);
+        }
+
+        return ResponseEntity.notFound().build();
+    }
 }

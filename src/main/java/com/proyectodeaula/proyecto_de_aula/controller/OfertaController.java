@@ -110,15 +110,4 @@ public class OfertaController {
         }
     }
 
-    @GetMapping("/ofertas/{idOferta}/postulaciones")
-    @ResponseBody
-    public ResponseEntity<List<Personas>> obtenerPostulantesPorOferta(@PathVariable long idOferta) {
-        try {
-            List<Personas> postulantes = offerta.obtenerPostulantesPorOferta(idOferta);
-            return ResponseEntity.ok(postulantes);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-    }
-
 }

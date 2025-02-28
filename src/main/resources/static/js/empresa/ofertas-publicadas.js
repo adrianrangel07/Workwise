@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Función para mostrar los detalles en la Sección 2
     const mostrarDetalles = (card) => {
+        const idOferta = card.getAttribute("data-id"); // Obtener ID de la oferta
+
         // Obtener los datos de la tarjeta
         const title = card.querySelector('h3').innerText;
         const description = card.querySelector('p').innerText;
@@ -36,6 +38,8 @@ document.addEventListener('DOMContentLoaded', function () {
         detalleModalidad.innerHTML = `<strong>Modalidad:</strong> ${modalidad}`;
         detalleTipo.innerHTML = `<strong>Tipo de empleo:</strong> ${type}`;
         detalleTipoContrato.innerHTML = `<strong>Tipo de contrato:</strong> ${typeContract}`;
+
+        cargarPostulaciones(idOferta);
     };
 
     // Agregar evento 'click' a cada tarjeta para mostrar la información en la Sección 2
@@ -55,22 +59,73 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-function cargarPostulantes(idOferta) {
+function cargarPostulaciones(idOferta) {
     fetch(`/ofertas/${idOferta}/postulaciones`)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error en la solicitud: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
-            let listado = document.getElementById("listaPostulantes");
-            listado.innerHTML = "";
-            data.forEach(persona => {
+            console.log("Datos recibidos:", data); // Ver qué llega desde el backend
+
+            if (!Array.isArray(data)) {
+                console.error("Respuesta no es un array:", data);
+                return;
+            }
+
+            let listaPostulantes = document.getElementById("lista-postulantes");
+            listaPostulantes.innerHTML = ""; // Limpiar lista previa
+
+            data.forEach(postulante => {
                 let li = document.createElement("li");
-                li.textContent = `${persona.nombre} ${persona.apellido}`;
-                let linkCV = document.createElement("a");
-                linkCV.href = `/descargar-cv/${persona.id}`;
-                linkCV.textContent = " Ver CV";
-                linkCV.target = "_blank";
-                li.appendChild(linkCV);
-                listado.appendChild(li);
+                li.classList.add("postulante-item");
+
+                let btnVerCV = document.createElement("button");
+
+                btnVerCV.innerText = "Ver CV";
+                btnVerCV.classList.add("btn-ver-cv");
+
+                if (postulante.id) {  
+                    btnVerCV.onclick = function () {
+                        abrirModal(`/postulantes/${postulante.id}/verHDV`);
+                    };
+                } else {
+                    btnVerCV.disabled = true; 
+                }
+
+                li.textContent = `${postulante.nombre} ${postulante.apellido} `;
+                li.appendChild(btnVerCV);
+                listaPostulantes.appendChild(li);
             });
         })
-        .catch(error => console.error("Error al obtener postulantes:", error));
+        .catch(error => console.error("Error cargando postulaciones:", error));
 }
+
+
+
+// Función para abrir el modal con el PDF
+function abrirModal(pdfUrl) {
+    let modal = document.getElementById("modalCV");
+    let iframe = document.getElementById("iframeCV");
+
+    iframe.src = pdfUrl;
+    modal.style.display = "block";
+}
+
+// Función para cerrar el modal
+function cerrarModal() {
+    let modal = document.getElementById("modalCV");
+    modal.style.display = "none";
+    document.getElementById("iframeCV").src = ""; // Limpiar el src
+}
+
+// Cerrar el modal si el usuario hace clic fuera del contenido
+window.onclick = function (event) {
+    let modal = document.getElementById("modalCV");
+    if (event.target === modal) {
+        cerrarModal();
+    }
+};
+

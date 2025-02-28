@@ -147,7 +147,7 @@
                             <div>
                                 <h2>Detalles de la Oferta</h2>
                             </div>
-                            <div class="seccion" id="detalle-oferta">
+                            <div class="seccion" id="detalle-oferta" >
                                 <div id="info-oferta">
                                     <h3 id="detalle-titulo"></h3>
                                     <p id="detalle-descripcion"></p>
@@ -161,7 +161,7 @@
                                 </div>
                                 <hr>
                                 <h3>Postulantes:</h3>
-                                <ul id="listaPostulantes"></ul>
+                                <ul id="lista-postulantes"></ul>
                             </div>
                         </div>
                     </div>
@@ -170,7 +170,13 @@
         </div>
     </div>
 
-
+    <div id="modalCV" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal()">&times;</span>
+            <iframe id="iframeCV" width="100%" height="500px" style="border: none;"></iframe>
+        </div>
+    </div>
+    
 
     <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer"
         style="background-color: #343A40 !important;">
