@@ -112,4 +112,8 @@ public class OfertaService implements IofertaService {
                 .collect(Collectors.toList());
     }
 
+    public List<Postulacion> obtenerPostulacionesPorOferta(long idOferta) {
+        return postulacionRepository.findByOfertasId(idOferta);
+    }
+    
 }

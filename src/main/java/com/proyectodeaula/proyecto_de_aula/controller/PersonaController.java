@@ -193,8 +193,8 @@ public class PersonaController {
     @PostMapping("/uploadHDV")
     public ResponseEntity<?> uploadHDV(@RequestParam("file") MultipartFile file, HttpSession session) {
         try {
-            if (file.isEmpty() || file.getOriginalFilename() == null ||
-                    !Objects.requireNonNull(file.getOriginalFilename()).toLowerCase().endsWith(".pdf")) {
+            if (file.isEmpty() || file.getOriginalFilename() == null
+                    || !Objects.requireNonNull(file.getOriginalFilename()).toLowerCase().endsWith(".pdf")) {
                 return ResponseEntity.badRequest().body("Por favor, seleccione un archivo PDF válido.");
             }
 
@@ -234,6 +234,7 @@ public class PersonaController {
 
         return ResponseEntity.ok().headers(headers).body(persona.getCv());
     }
+
 
     @PostMapping("/eliminarHDV")
     public ResponseEntity<?> eliminarHojaDeVida(HttpSession session) {

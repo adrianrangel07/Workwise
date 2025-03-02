@@ -132,11 +132,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Cerrar el modal
-    closeModalBtn.addEventListener('click', function () {
-        modal.style.display = 'none';
-    });
-
     document.getElementById('cancel-button').addEventListener('click', function () {
         // Recarga la página
         location.reload();
@@ -326,28 +321,6 @@ document.getElementById('delete-button').addEventListener('click', function () {
             });
     }
 });
-
-
-fetch(`/ofertas/${idOferta}/postulaciones/count`)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Error al obtener postulaciones');
-        }
-        return response.json(); // Convierte la respuesta en JSON
-    })
-    .then(data => {
-        console.log("Respuesta de postulaciones: ", data);  // Verifica la respuesta
-        if (typeof data === 'number') {
-            document.getElementById('postulaciones-count').innerText = `${data} personas se han postulado`;
-        } else {
-            document.getElementById('postulaciones-count').innerText = 'Error al obtener postulaciones';
-        }
-    })
-    .catch(error => {
-        console.error('Error al obtener el número de postulaciones:', error);
-        document.getElementById('postulaciones-count').innerText = 'Error al obtener postulaciones';
-    });
-
 
 function mostrarPostulaciones(idOferta) {
     console.log("ID de oferta:", idOferta);  // Verifica el valor de idOferta
