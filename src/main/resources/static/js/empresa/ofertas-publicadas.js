@@ -59,59 +59,15 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-function cargarPostulaciones(idOferta) {
-    fetch(`/ofertas/${idOferta}/postulaciones`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error en la solicitud: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log("Datos recibidos:", data); // Ver qué llega desde el backend
-
-            if (!Array.isArray(data)) {
-                console.error("Respuesta no es un array:", data);
-                return;
-            }
-
-            let listaPostulantes = document.getElementById("lista-postulantes");
-            listaPostulantes.innerHTML = ""; // Limpiar lista previa
-
-            data.forEach(postulante => {
-                let li = document.createElement("li");
-                li.classList.add("postulante-item");
-
-                let btnVerCV = document.createElement("button");
-
-                btnVerCV.innerText = "Ver CV";
-                btnVerCV.classList.add("btn-ver-cv");
-
-                if (postulante.id) {  
-                    btnVerCV.onclick = function () {
-                        abrirModal(`/postulantes/${postulante.id}/verHDV`);
-                    };
-                } else {
-                    btnVerCV.disabled = true; 
-                }
-
-                li.textContent = `${postulante.nombre} ${postulante.apellido} `;
-                li.appendChild(btnVerCV);
-                listaPostulantes.appendChild(li);
-            });
-        })
-        .catch(error => console.error("Error cargando postulaciones:", error));
-}
-
-
-
 // Función para abrir el modal con el PDF
-function abrirModal(pdfUrl) {
+function abrirModal(pdfUrl, idPostulacion) {
     let modal = document.getElementById("modalCV");
     let iframe = document.getElementById("iframeCV");
 
     iframe.src = pdfUrl;
     modal.style.display = "block";
+
+    document.getElementById("postulacionId").value = idPostulacion; // Almacena correctamente el ID
 }
 
 // Función para cerrar el modal
@@ -129,3 +85,90 @@ window.onclick = function (event) {
     }
 };
 
+function obtenerIdPostulacion() {
+    let id = document.getElementById("postulacionId").value;
+    return id;
+}
+
+function accionAceptado() {
+    let idPostulacion = obtenerIdPostulacion();
+    cambiarEstadoPostulacion(idPostulacion, 'aceptado');
+}
+
+function accionRechazado() {
+    let idPostulacion = obtenerIdPostulacion();
+    cambiarEstadoPostulacion(idPostulacion, 'rechazado');
+}
+
+function cambiarEstadoPostulacion(idPostulacion, nuevoEstado) {
+    console.log("ID de la postulación que se enviará:", idPostulacion); 
+    console.log("Nuevo estado que se enviará:", nuevoEstado);
+
+    if (!idPostulacion || isNaN(idPostulacion)) {  // Verifica si el ID es válido
+        console.error("Error: idPostulacion es inválido:", idPostulacion);
+        return;
+    }
+
+    fetch(`/postulaciones/${idPostulacion}/estado`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ estado: nuevoEstado }) 
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.text().then(err => { throw new Error(err); });
+        }
+        return response.text();
+    })
+    .then(message => {
+        alert(message);
+        cerrarModal();
+        location.reload();
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function cargarPostulaciones(idOferta) {
+    fetch(`/ofertas/${idOferta}/postulaciones`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error en la solicitud: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Datos recibidos:", data);
+
+            if (!Array.isArray(data)) {
+                console.error("Respuesta no es un array:", data);
+                return;
+            }
+
+            let listaPostulantes = document.getElementById("lista-postulantes");
+            listaPostulantes.innerHTML = "";
+
+            data.forEach(postulante => {
+                let li = document.createElement("li");
+                li.classList.add("postulante-item");
+
+                let btnVerCV = document.createElement("button");
+                btnVerCV.innerText = "Ver CV";
+                btnVerCV.classList.add("btn-ver-cv");
+
+                if (postulante.id) {
+                    btnVerCV.onclick = function () {
+                        console.log("Clic en Ver CV - ID:", postulante.id);
+                        document.getElementById("postulacionId").value = postulante.id;
+                        abrirModal(`/postulantes/${postulante.id}/verHDV`, postulante.id);
+                    };
+                } else {
+                    btnVerCV.disabled = true;
+                }
+
+                li.textContent = `${postulante.nombre} ${postulante.apellido} `;
+                li.appendChild(btnVerCV);
+                listaPostulantes.appendChild(li);
+            });
+        })
+        .catch(error => console.error("Error cargando postulaciones:", error));
+}
