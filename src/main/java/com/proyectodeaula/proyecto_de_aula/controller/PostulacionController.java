@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.proyectodeaula.proyecto_de_aula.interfaces.Ofertas.OfertasRepository;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Personas.Interfaz_Per;
@@ -31,7 +29,6 @@ import com.proyectodeaula.proyecto_de_aula.model.Postulacion;
 
 // import jakarta.servlet.http.HttpSession;
 @Controller
-@RestController
 public class PostulacionController {
 
     @Autowired
@@ -144,28 +141,4 @@ public class PostulacionController {
 
         return ResponseEntity.notFound().build();
     }
-
-    @PutMapping("/postulaciones/{id}/estado")
-    public ResponseEntity<String> actualizarEstado(@PathVariable Long id, @RequestBody Map<String, String> body) {
-        System.out.println("✅ Solicitud PUT recibida para actualizar estado de la postulación ID: " + id);
-        System.out.println("📌 Cuerpo de la solicitud: " + body);
-
-        Optional<Postulacion> postulacionOpt = postulacionRepository.findById(id);
-        if (!postulacionOpt.isPresent()) {
-            System.out.println("❌ ERROR: No se encontró la postulación con ID: " + id);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Postulación no encontrada");
-        }
-
-        String nuevoEstado = body.get("estado");
-        if (nuevoEstado == null || nuevoEstado.isEmpty()) {
-            return ResponseEntity.badRequest().body("Error: El estado no puede estar vacío");
-        }
-
-        Postulacion postulacion = postulacionOpt.get();
-        postulacion.setEstado(nuevoEstado);
-        postulacionRepository.save(postulacion);
-
-        return ResponseEntity.ok("Estado actualizado a: " + nuevoEstado);
-    }
-
 }

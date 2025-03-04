@@ -235,6 +235,7 @@ public class PersonaController {
         return ResponseEntity.ok().headers(headers).body(persona.getCv());
     }
 
+
     @PostMapping("/eliminarHDV")
     public ResponseEntity<?> eliminarHojaDeVida(HttpSession session) {
         try {
@@ -307,6 +308,34 @@ public class PersonaController {
     public String configuracion() {
         return "Html/persona/Configuracion";
     }
+    
+    @GetMapping("/persona/Postulaciones")
+    public String postulaciones(Model model, HttpSession session) {
+    String email = (String) session.getAttribute("email");
+    if (email != null) {
+        Personas persona = personaService.findByEmail(email);
+        if (persona == null) {
+            model.addAttribute("error", "Persona no encontrada.");
+            return "Html/error";
+        }
+        
+        // Obtener postulaciones del usuario
+        List<Postulacion> postulaciones = postulacionService.obtenerPostulacionesPorUsuario(persona.getId());
+        model.addAttribute("postulaciones", postulaciones);
+        
+        model.addAttribute("persona", persona);
+        return "Html/persona/Postulaciones";
+    } else {
+        return "redirect:/login/personas";
+    }
 
+
+    }
+
+
+    @GetMapping("persona/hojaDeVida")
+    public String mostrarHojaDeVida() {
+        return "Html/persona/HojaDeVida"; // Devuelve la vista ubicada en templates/personas
+    }
 
 }
