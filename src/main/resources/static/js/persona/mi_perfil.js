@@ -51,7 +51,7 @@ document.getElementById('change_btn').addEventListener('click', function () {
     document.querySelectorAll('input').forEach(input => {
         // Verifica si el input no es el de fecha
         if (input.id !== 'birthdate') {
-            input.disabled = false; 
+            input.disabled = false;
             saveButton.disabled = false;
         }
     });
@@ -80,34 +80,34 @@ function eliminarPostulacion(button) {
                     'Content-Type': 'application/json'
                 }
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Eliminar la postulación del DOM
-                    button.closest('.card').remove();
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Eliminado!',
-                        text: 'Tu postulación ha sido eliminada exitosamente.',
-                        showConfirmButton: true,
-                        confirmButtonText: 'Ok'
-                    });
-                } else {
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Eliminar la postulación del DOM
+                        button.closest('.card').remove();
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Eliminado!',
+                            text: 'Tu postulación ha sido eliminada exitosamente.',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Ok'
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Hubo un problema al eliminar la postulación.',
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'Hubo un problema al eliminar la postulación.',
+                        text: 'Error al realizar la solicitud.',
                     });
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Error al realizar la solicitud.',
                 });
-            });
         }
     });
 }
@@ -117,75 +117,106 @@ function eliminarHojaDeVida() {
     fetch('/eliminarHDV', {
         method: 'POST'
     })
-    .then(response => response.text())
-    .then(data => {
-        Swal.fire({
-            icon: data.includes("Error") ? 'error' : 'success',
-            title: 'Hoja de Vida',
-            text: data,
-            showConfirmButton: true,
-            confirmButtonText: 'Ok'
+        .then(response => response.text())
+        .then(data => {
+            Swal.fire({
+                icon: data.includes("Error") ? 'error' : 'success',
+                title: 'Hoja de Vida',
+                text: data,
+                showConfirmButton: true,
+                confirmButtonText: 'Ok'
+            });
+            if (!data.includes("Error")) {
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Hubo un problema al eliminar la hoja de vida.',
+                showConfirmButton: true,
+                confirmButtonText: 'Ok'
+            });
         });
-        if (!data.includes("Error")) {
-            setTimeout(() => {
-                location.reload();
-            }, 2000);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Hubo un problema al eliminar la hoja de vida.',
-            showConfirmButton: true,
-            confirmButtonText: 'Ok'
-        });
-    });
 }
 
 // fin borrar HDV
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("uploadFormcv");
     const fileInput = document.getElementById("fileInput");
     const messageDiv = document.getElementById("message");
     const pdfViewer = document.getElementById("pdfViewer");
 
-    form.addEventListener("submit", function(event) {
+    form.addEventListener("submit", function (event) {
         event.preventDefault();
-    
+
         const file = fileInput.files[0];
-    
+
         if (!file) {
             messageDiv.innerHTML = "<p style='color: red;'>Por favor, seleccione un archivo.</p>";
             return;
         }
-    
+
         if (file.type !== "application/pdf") {
             messageDiv.innerHTML = "<p style='color: red;'>Solo se permiten archivos PDF.</p>";
             return;
         }
-    
+
         const formData = new FormData();
         formData.append("file", file);
-    
+
         fetch("/uploadHDV", {
             method: "POST",
             body: formData
         })
-        .then(response => response.text())
-        .then(data => {
-            messageDiv.innerHTML = `<p style='color: ${data.includes("Error") ? "red" : "green"};'>${data}</p>`;
-            if (!data.includes("Error")) {
-                setTimeout(() => {
-                    pdfViewer.src = "/perfil/verHDV"; // Recargar el visor del PDF
-                }, 2000);
-            }
-        })
-        .catch(error => {
-            messageDiv.innerHTML = "<p style='color: red;'>Error: " + error.message + "</p>";
-        });
+            .then(response => response.text())
+            .then(data => {
+                messageDiv.innerHTML = `<p style='color: ${data.includes("Error") ? "red" : "green"};'>${data}</p>`;
+                if (!data.includes("Error")) {
+                    setTimeout(() => {
+                        pdfViewer.src = "/perfil/verHDV"; // Recargar el visor del PDF
+                    }, 2000);
+                }
+            })
+            .catch(error => {
+                messageDiv.innerHTML = "<p style='color: red;'>Error: " + error.message + "</p>";
+            });
     });
-    
+
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    let estadosElementos = document.querySelectorAll(".estado"); // Selecciona TODOS los estados
+
+    estadosElementos.forEach(estadoElemento => {
+        let estadoTexto = estadoElemento.querySelector("span").innerText.trim().toLowerCase();
+        console.log("Estado encontrado:", estadoTexto);
+
+        // Asignar clase según el estado
+        switch (estadoTexto) {
+            case "pendiente":
+                estadoElemento.style.color = "black";
+                estadoElemento.style.backgroundColor = "yellow";
+                break;
+            case "aceptado":
+                estadoElemento.style.color = "white";
+                estadoElemento.style.backgroundColor = "green";
+                break;
+            case "rechazado":
+                estadoElemento.style.color = "white";
+                estadoElemento.style.backgroundColor = "red";
+                break;
+            default:
+                estadoElemento.style.color = "black";
+                estadoElemento.style.backgroundColor = "lightgray"; // Color por defecto
+                break;
+        }
+    });
+});
+
+

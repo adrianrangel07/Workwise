@@ -235,7 +235,6 @@ public class PersonaController {
         return ResponseEntity.ok().headers(headers).body(persona.getCv());
     }
 
-
     @PostMapping("/eliminarHDV")
     public ResponseEntity<?> eliminarHojaDeVida(HttpSession session) {
         try {
@@ -308,5 +307,6 @@ public class PersonaController {
     public String configuracion() {
         return "Html/persona/Configuracion";
     }
+
 
 }

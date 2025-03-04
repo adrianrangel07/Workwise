@@ -10,6 +10,8 @@
     padding: 20px;
     border: 1px solid #ccc;
     text-align: center;
+    user-select: none;
+
 }
 
 /* Botón Ver CV */
@@ -69,7 +71,6 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s;
     cursor: pointer;
-
 }
 
 .card:hover {
@@ -88,28 +89,60 @@ body {
 
 /* Modal */
 .modal {
-    display: none; /* Oculto inicialmente */
+    display: none;
     position: fixed;
-    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal-content {
     background-color: #fff;
     padding: 20px;
-    border-radius: 8px;
-    width: 40%;
-    max-width: 50%;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    animation: fadeIn 0.3s ease-out;
-    text-align: left; 
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 10% auto;
+    position: relative;
+    text-align: center;
+}
+
+/* Estilos para los botones */
+.modal-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.btn-rejected {
+    background-color: #e74c3c !important;
+    color: white !important;
+}
+
+.btn-rejected:hover {
+    background-color: #c0392b !important;
+}
+
+/* Botón Aceptado (verde) */
+.btn-accepted {
+    background-color: #2ecc71 !important;
+    color: white !important;
+}
+
+.btn-accepted:hover {
+    background-color: #27ae60 !important;
 }
 
 .close-btn {
@@ -135,6 +168,8 @@ body {
     top: 0;
     display: flex;
     flex-direction: column;
+    user-select: none;
+
 }
 
 .sidebar a {
@@ -257,7 +292,6 @@ body {
 #info-oferta {
     display: flex;
     flex-direction: column;
-    gap: 8px;
     align-items: center;
 }
 
@@ -300,6 +334,15 @@ li{
 .close:hover {
     transform: scale(1.3); /* Hace que crezca un poco al pasar el mouse */
     color: #d9534f; /* Cambia a rojo para indicar acción de cerrar */
+}
+
+.postulantes-container {
+    max-height: 200px; /* Ajusta según lo que prefieras */
+    overflow-y: auto;  /* Habilita el desplazamiento vertical */
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+
 }
 
 
