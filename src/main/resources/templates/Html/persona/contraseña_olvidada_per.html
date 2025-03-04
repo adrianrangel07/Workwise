@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Contraseña</title>
+    <link rel="stylesheet" href="../Css/persona/contraseña_olvidada_per.css">
+    <link rel="icon" type="image/png" href="../Imagenes/wknlogo2.png">
+
+</head>
+
+<body>
+    <div class="container-logo">
+        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" th:href="@{/}">
+            <img class="logo" id="logo" src="../Imagenes/wknblack.png">
+        </a>
+    </div>
+    <div class="container">
+        <h2>Recuperar Contraseña</h2>
+        <div class="container-back">
+            <a th:href="@{/login/persona}" class="back_a">
+                <i class="fas fa-arrow-left back"></i>
+            </a>
+        </div>
+        <form id="passwordForm">
+            <input type="email" id="email" placeholder="Ingrese su correo" required>
+
+            <div class="captcha-box" id="captchaText"></div>
+            <input type="text" id="captchaInput" placeholder="Ingrese el captcha" required>
+            <button type="button" onclick="validarCaptcha()">Verificar</button>
+            <button type="button" onclick="window.location.href='/login/personas'" class="btn-cancel">Cancelar</button>
+
+        </form>
+        <br>
+        <br>
+        <form id="resetForm" style="display: none;">
+            <label for="nuevaContraseña">Nueva Contraseña:</label>
+            <input type="password" id="nuevaContraseña" required>
+
+            <label for="repetirContraseña">Repetir Contraseña:</label>
+            <input type="password" id="repetirContraseña" required>
+
+            <button type="button" onclick="cambiarContraseña()" class="btn-validate">Cambiar Contraseña</button>
+            <button type="button" onclick="window.location.href='/login/personas'" class="btn-cancel">Cancelar</button>
+
+        </form>
+
+    </div>
+
+    <script src="../js/contraseña-olvidada-per.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+
+</html>

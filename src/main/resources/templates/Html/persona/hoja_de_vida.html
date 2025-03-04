@@ -1,0 +1,125 @@
+<div class="container mt-4">
+    <h2 class="text-primary">Hoja de Vida</h2>
+    <form>
+        <!-- Información Personal -->
+        <div class="card mb-4">
+            <div class="card-header">Información Personal</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="apellido" required>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="telefono" class="form-label">Teléfono</label>
+                        <input type="text" class="form-control" id="telefono" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Experiencia Laboral -->
+        <div class="card mb-4">
+            <div class="card-header">Experiencia Laboral</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="empresa" class="form-label">Nombre de Empresa</label>
+                        <input type="text" class="form-control" id="empresa">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="cargo" class="form-label">Cargo</label>
+                        <input type="text" class="form-control" id="cargo">
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label for="fechaInicioLab" class="form-label">Fecha de Inicio</label>
+                        <input type="date" class="form-control" id="fechaInicioLab">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fechaFinLab" class="form-label">Fecha de Fin</label>
+                        <input type="date" class="form-control" id="fechaFinLab">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Educación -->
+        <div class="card mb-4">
+            <div class="card-header">Educación</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="institucion" class="form-label">Institución</label>
+                        <input type="text" class="form-control" id="institucion">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="titulo" class="form-label">Título Obtenido</label>
+                        <input type="text" class="form-control" id="titulo">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Habilidades -->
+        <div class="card mb-4">
+            <div class="card-header">Habilidades</div>
+            <div class="card-body">
+                <label for="habilidades" class="form-label">Lista tus habilidades</label>
+                <textarea class="form-control" id="habilidades" rows="3"></textarea>
+            </div>
+        </div>
+
+        <!-- Idiomas -->
+        <div class="card mb-4">
+            <div class="card-header">Idiomas</div>
+            <div class="card-body">
+                <label for="idiomas" class="form-label">Idiomas que dominas</label>
+                <input type="text" class="form-control" id="idiomas">
+            </div>
+        </div>
+
+        <!-- Certificaciones -->
+        <div class="card mb-4">
+            <div class="card-header">Certificaciones</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="certificacion" class="form-label">Certificación</label>
+                        <input type="text" class="form-control" id="certificacion">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="institucionCert" class="form-label">Institución</label>
+                        <input type="text" class="form-control" id="institucionCert">
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label for="fechaObtencion" class="form-label">Fecha de Obtención</label>
+                        <input type="date" class="form-control" id="fechaObtencion">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="archivoCert" class="form-label">Cargar Certificado</label>
+                        <input type="file" class="form-control" id="archivoCert">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón de Enviar -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Guardar Hoja de Vida</button>
+        </div>
+    </form>
+</div>
