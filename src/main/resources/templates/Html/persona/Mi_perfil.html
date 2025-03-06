@@ -160,9 +160,8 @@
                                                     </div>
                                                     <div class="col">
                                                         <div class="mb-3">
-                                                            <label class="form-label"
-                                                                for="password"><strong>Password</strong></label>
-                                                            <input class="form-control" type="password" id="contraseña"
+                                                            <label class="form-label"><strong>Password</strong></label>
+                                                            <input class="form-control" type="password"
                                                                 name="contraseña" th:value="${persona.contraseña}"
                                                                 disabled>
                                                         </div>
@@ -209,17 +208,12 @@
                                                     <div class="col">
                                                         <div class="mb-3">
                                                             <button class="btn btn-primary btn-sm" type="button"
-                                                                id="change_btn">Change
-                                                                Settings</button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="mb-3">
+                                                                id="change_btn">Change Settings</button>
                                                             <button class="btn btn-primary btn-sm" type="submit"
-                                                                id="save_btn" disabled>Save
-                                                                changes</button>
+                                                                id="save_btn" disabled>Save changes</button>
                                                         </div>
                                                     </div>
+                                                    <input type="hidden" name="confirmPassword" id="confirmPassword">
                                                 </div>
                                             </form>
                                         </div>

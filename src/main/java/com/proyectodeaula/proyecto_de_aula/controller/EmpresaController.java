@@ -135,7 +135,7 @@ public class EmpresaController {
             @RequestParam String nombreEmp,
             @RequestParam String direccion,
             @RequestParam String razon_social,
-            @RequestParam String confirmPassword, // Contraseña ingresada para confirmar
+            @RequestParam String confirmPassword, 
             HttpSession session, Model model) {
 
         // Verifica si la sesión sigue activa

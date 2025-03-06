@@ -108,7 +108,7 @@ public class PersonaController {
                 model.addAttribute("error", "Persona no encontrada.");
                 return "Html/error";
             }
-            
+
             if (persona.getFoto() != null) {
                 String base64Image = Base64.getEncoder().encodeToString(persona.getFoto());
                 model.addAttribute("base64Image", "data:image/png;base64," + base64Image);
@@ -123,37 +123,43 @@ public class PersonaController {
     }
 
     @PostMapping("/actualizar")
-    public String actualizarPerfil(@RequestParam String nombre, @RequestParam String apellido,
-            @RequestParam String contraseña, @RequestParam String genero,
+    public String actualizarPerfil(
+            @RequestParam String nombre,
+            @RequestParam String apellido,
+            @RequestParam String genero,
+            @RequestParam String confirmPassword,
             HttpSession session, Model model) {
+
+        // Verifica si la sesión sigue activa
+        String email = (String) session.getAttribute("email");
+        if (email == null) {
+            model.addAttribute("error", "Sesión expirada, por favor inicie sesión de nuevo.");
+            return "redirect:/login/personas";
+        }
+
+        // Busca la persona en la base de datos
+        Personas persona = personaService.findByEmail(email);
+        if (persona == null) {
+            model.addAttribute("error", "Usuario no encontrado.");
+            return "Html/error";
+        }
+
         try {
-            String email = (String) session.getAttribute("email");
-            if (email == null) {
-                model.addAttribute("error", "Sesión expirada, por favor inicie sesión de nuevo.");
-                return "redirect:/login/personas";
-            }
-            Personas persona = personaService.findByEmail(email);
-            if (persona == null) {
-                model.addAttribute("error", "Usuario no encontrado.");
-                return "Html/error";
-            }
-            if (nombre != null && !nombre.isEmpty()) {
+            // Actualiza los datos si no están vacíos
+            if (!nombre.isEmpty()) {
                 persona.setNombre(nombre);
             }
-            if (apellido != null && !apellido.isEmpty()) {
+            if (!apellido.isEmpty()) {
                 persona.setApellido(apellido);
             }
-            if (contraseña != null && !contraseña.isEmpty()) {
-                persona.setContraseña(contraseña);
-            }
-            if (genero != null && !genero.isEmpty()) {
+            if (!genero.isEmpty()) {
                 persona.setGenero(genero);
             }
+
+            // Guarda los cambios en la base de datos
             personaService.actualizarPerfil(persona);
-            model.addAttribute("success", "Perfil actualizado con éxito");
             return "redirect:/perfil/persona";
         } catch (Exception e) {
-            logger.error("Error al actualizar el perfil", e);
             model.addAttribute("error", "Error al actualizar el perfil: " + e.getMessage());
             return "Html/error";
         }
@@ -296,6 +302,23 @@ public class PersonaController {
         } else {
             return "redirect:/login/personas";
         }
+    }
+
+    @PostMapping("/verificar-contrasena/persona")
+    public ResponseEntity<Map<String, Boolean>> verificarContrasena(
+            @RequestBody Map<String, String> requestBody, HttpSession session) {
+
+        String email = (String) session.getAttribute("email");
+        if (email == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("valido", false));
+        }
+
+        Personas personas = personaService.findByEmail(email);
+        if (personas == null || !personas.getContraseña().equals(requestBody.get("password"))) {
+            return ResponseEntity.ok(Map.of("valido", false)); // Contraseña incorrecta
+        }
+
+        return ResponseEntity.ok(Map.of("valido", true)); // Contraseña correcta
     }
 
     @GetMapping("/Nosotros") // ruta para enviar a nosotros (informacion sobre la pagina )
