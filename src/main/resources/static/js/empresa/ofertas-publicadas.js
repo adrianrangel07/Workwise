@@ -65,8 +65,9 @@ function abrirModal(pdfUrl, idPostulacion) {
     let iframe = document.getElementById("iframeCV");
 
     iframe.src = pdfUrl;
-    modal.style.display = "block";
-
+    modal.style.display = "flex"
+    modal.style.alignItems = "center"
+    modal.style.justifyContent = "center"
     document.getElementById("postulacionId").value = idPostulacion; // Almacena correctamente el ID
 }
 

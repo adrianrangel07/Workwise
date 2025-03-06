@@ -44,19 +44,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// boton cambio de datos
-const saveButton = document.getElementById('save_btn');
-document.getElementById('change_btn').addEventListener('click', function () {
-    // Selecciona todos los inputs del formulario
-    document.querySelectorAll('input').forEach(input => {
-        // Verifica si el input no es el de fecha
-        if (input.id !== 'birthdate') {
-            input.disabled = false;
-            saveButton.disabled = false;
-        }
-    });
-});
-
 // Función para manejar el clic en el botón de eliminar
 function eliminarPostulacion(button) {
     var postulacionId = button.getAttribute('data-id');
@@ -190,33 +177,60 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    let estadosElementos = document.querySelectorAll(".estado"); // Selecciona TODOS los estados
+document.addEventListener('DOMContentLoaded', function () {
+    const changeButton = document.getElementById('change_btn');
+    const saveButton = document.getElementById('save_btn');
+    const form = document.getElementById('updateForm');
 
-    estadosElementos.forEach(estadoElemento => {
-        let estadoTexto = estadoElemento.querySelector("span").innerText.trim().toLowerCase();
-        console.log("Estado encontrado:", estadoTexto);
-
-        // Asignar clase según el estado
-        switch (estadoTexto) {
-            case "pendiente":
-                estadoElemento.style.color = "black";
-                estadoElemento.style.backgroundColor = "yellow";
-                break;
-            case "aceptado":
-                estadoElemento.style.color = "white";
-                estadoElemento.style.backgroundColor = "green";
-                break;
-            case "rechazado":
-                estadoElemento.style.color = "white";
-                estadoElemento.style.backgroundColor = "red";
-                break;
-            default:
-                estadoElemento.style.color = "black";
-                estadoElemento.style.backgroundColor = "lightgray"; // Color por defecto
-                break;
-        }
+    changeButton.addEventListener('click', function () {
+        Swal.fire({
+            title: 'Verificación requerida',
+            text: 'Ingresa tu contraseña para hacer cambios:',
+            input: 'password',
+            inputPlaceholder: 'Contraseña',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Verificar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed && result.value) {
+                verificarContraseña(result.value);
+            } else {
+                location.reload(); // Si cancela, recarga la página
+            }
+        });
     });
+
+    function verificarContraseña(password) {
+        fetch('/verificar-contrasena/persona', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password: password })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.valido) {
+                    habilitarEdicion(); // Si la contraseña es correcta, habilita los campos
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Contraseña incorrecta',
+                        text: 'Inténtalo nuevamente.'
+                    }).then(() => location.reload()); // Recarga la página si es incorrecta
+                }
+            })
+            .catch(error => console.error('Error en la verificación:', error));
+    }
+
+    function habilitarEdicion() {
+        document.querySelectorAll('input:not([type="email"]):not([type="password"])').forEach(input => {
+            input.disabled = false; // Habilita todos menos email y password
+        });
+        saveButton.disabled = false; // Habilita "Save changes"
+    }
+
 });
 
 
