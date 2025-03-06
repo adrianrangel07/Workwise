@@ -97,6 +97,7 @@
     color: white;
 }
 
+
 /* Estilo del modal */
 .modal {
     display: none; /* Oculto por defecto */
@@ -273,6 +274,7 @@
 }
 
 /* footer */
+
 .custom-footer {
     margin-top: auto;
     background: linear-gradient(90deg, #0a1128, #001f54);

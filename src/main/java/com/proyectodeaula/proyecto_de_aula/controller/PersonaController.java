@@ -108,8 +108,7 @@ public class PersonaController {
                 model.addAttribute("error", "Persona no encontrada.");
                 return "Html/error";
             }
-            List<Postulacion> postulaciones = postulacionService.obtenerPostulacionesPorUsuario(persona.getId());
-            model.addAttribute("postulaciones", postulaciones);
+            
             if (persona.getFoto() != null) {
                 String base64Image = Base64.getEncoder().encodeToString(persona.getFoto());
                 model.addAttribute("base64Image", "data:image/png;base64," + base64Image);
@@ -278,6 +277,27 @@ public class PersonaController {
         return ResponseEntity.ok("OK");
     }
 
+    @GetMapping("/persona/Postulaciones")
+    public String postulaciones(Model model, HttpSession session) {
+        String email = (String) session.getAttribute("email");
+        if (email != null) {
+            Personas persona = personaService.findByEmail(email);
+            if (persona == null) {
+                model.addAttribute("error", "Persona no encontrada.");
+                return "Html/error";
+            }
+
+            // Obtener postulaciones del usuario
+            List<Postulacion> postulaciones = postulacionService.obtenerPostulacionesPorUsuario(persona.getId());
+            model.addAttribute("postulaciones", postulaciones);
+
+            model.addAttribute("persona", persona);
+            return "Html/persona/Postulaciones";
+        } else {
+            return "redirect:/login/personas";
+        }
+    }
+
     @GetMapping("/Nosotros") // ruta para enviar a nosotros (informacion sobre la pagina )
     public String Nosotros() {
         return "Html/Nosotros";
@@ -307,6 +327,5 @@ public class PersonaController {
     public String configuracion() {
         return "Html/persona/Configuracion";
     }
-
 
 }

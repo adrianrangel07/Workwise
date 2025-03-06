@@ -34,6 +34,8 @@
                                 class="fas fa-home"></i><span>Home</span></a></li>
                     <li class="nav-item"><a class="nav-link active" th:href="@{/perfil/persona}"><i
                                 class="far fa-user-circle"></i><span>Profile</span></a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/persona/Postulaciones}"><i
+                                class="fas fa-file-alt"></i><span>My Applications</span>
                     <li class="nav-item"><a class="nav-link" th:href="@{/Estadisticas/personas}"><i
                                 class="fas fa-chart-bar"></i><span>Statistics</span></a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/login/Empresa}"><i
@@ -50,13 +52,6 @@
                     style="background: var(--bs-body-bg);">
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3"
                             id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
-                        <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <div class="input-group"
-                                style="text-align: center;margin: 500px;border-color: var(--bs-emphasis-color);"><input
-                                    class="bg-light form-control border-0 small" type="text"
-                                    placeholder="Buscar..."><button class="btn btn-primary py-0" type="button"
-                                    style="background: #0a1128;"><i class="fas fa-search"></i></button></div>
-                        </form>
                         <ul class="navbar-nav flex-nowrap ms-auto">
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow">
@@ -72,7 +67,7 @@
                                         <a class="dropdown-item" th:href="@{/perfil/persona}">
                                             <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile
                                         </a>
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" th:href="@{/persona/Postulaciones}">
                                             <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;applications
                                         </a>
                                         <a class="dropdown-item" href="#">
@@ -232,62 +227,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- cuadro de postulaciones pendiente -->
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="text-primary m-0 fw-bold">Pending Applications</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div th:if="${postulaciones.isEmpty()}">
-                                            <p class="text-muted">You currently have no pending applications.</p>
-                                        </div>
-                                        <div th:unless="${postulaciones.isEmpty()}">
-                                            <div class="offer-container">
-                                                <div th:each="postulacion : ${postulaciones}" class="card">
-                                                    <div class="offer-content" data-id="${postulacion.ofertas.id}">
-                                                        <h3 th:text="${postulacion.ofertas.titulo_puesto}"></h3>
-                                                        <p th:text="${postulacion.ofertas.descripcion}"></p>
-                                                        
-                                                        <p id="estadoPerfil" class="estado"
-                                                            th:data-id="${postulacion.id}">Estado: <span
-                                                                th:text="${postulacion.estado}"></span></p>
-                                                       
-                                                                <div class="hidden-info">
-                                                            <p class="salario"><strong>Salary:</strong> <span
-                                                                    th:text="${postulacion.ofertas.salario}"></span></p>
-                                                            <p class="duracion"><strong>Duration:</strong> <span
-                                                                    th:text="${postulacion.ofertas.duracion}"></span>
-                                                            </p>
-                                                            <p class="periodo"><strong>Period:</strong> <span
-                                                                    th:text="${postulacion.ofertas.periodo}"></span></p>
-                                                            <p class="tipo_empleo"><strong>Type of employment:</strong>
-                                                                <span
-                                                                    th:text="${postulacion.ofertas.tipo_empleo}"></span>
-                                                            </p>
-                                                            <p class="modalidad"><strong>Mode:</strong> <span
-                                                                    th:text="${postulacion.ofertas.modalidad}"></span>
-                                                            </p>
-                                                            <p class="tipo_contrato"><strong>Type of contract:</strong>
-                                                                <span
-                                                                    th:text="${postulacion.ofertas.tipo_contrato}"></span>
-                                                            </p>
-                                                        </div>
-                                                        <!-- Botón para eliminar la postulación -->
-                                                        <button class="btn btn-danger" th:data-id="${postulacion.id}"
-                                                            onclick="eliminarPostulacion(this)">
-                                                            Delete Application
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
 
                 </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i
