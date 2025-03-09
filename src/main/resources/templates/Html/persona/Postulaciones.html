@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <title>My Applications</title>
+    <link rel="website icon" href="../Imagenes/wknLogo2.png" />
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css?h=97380e22c8933e9aa79cbc2390b9f15a" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" />
+    <link rel="stylesheet" href="../Css/general/bootstrap.min.css" />
+    <link rel="stylesheet" href="../Css/general/Grid-and-List-view-V10-style.css" />
+    <link rel="stylesheet" href="../Css/general/Grid-and-List-view-V10.css" />
+    <link rel="stylesheet" href="../Css/general/Nunito.css" />
+    <link rel="stylesheet" href="../Css/general/styles.min.css" />
+    <link rel="stylesheet" href="../Css/persona/Postulaciones.css" />
+    <link rel="stylesheet" href="../Css/persona/Perfil.css">
+
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark"
+            style="background: #0a1128">
+            <div class="container-fluid d-flex flex-column p-0">
+                <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
+                    th:href="@{/personas/pagina_principal}">
+                    <img src="../Imagenes/working wise 32x32 white.png" width="61" height="58"
+                        style="width: 50px; height: 50px" />
+                    <div class="sidebar-brand-text mx-3"><span>Workwise</span></div>
+                </a>
+                <hr class="sidebar-divider my-0" />
+                <ul class="navbar-nav text-light" id="accordionSidebar">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/personas/pagina_principal}"><i
+                                class="fas fa-home"></i><span>Home</span></a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/perfil/persona}"><i
+                                class="far fa-user-circle"></i><span>Profile</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" th:href="@{/persona/Postulaciones}"><i
+                                class="fas fa-file-alt"></i><span>My Applications</span>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/Estadisticas/personas}"><i
+                                class="fas fa-chart-bar"></i><span>Statistics</span></a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/login/Empresa}"><i
+                                class="fas fa-building"></i><span>Do you have a company? </span></a></li>
+                </ul>
+                <div class="text-center d-none d-md-inline">
+                    <button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button>
+                </div>
+            </div>
+        </nav>
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light"
+                    style="background: var(--bs-body-bg)">
+                    <div class="container-fluid">
+                        <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <ul class="navbar-nav flex-nowrap ms-auto">
+                            <div class="d-none d-sm-block topbar-divider"></div>
+                            <li class="nav-item dropdown no-arrow">
+                                <div class="nav-item dropdown no-arrow" id="usuario-container">
+                                    <img id="user-avatar" th:src="@{/imagen/{id}(id=${persona.id})}" alt="Profile">
+                                    <input type="hidden" id="subirFoto" accept="image/*"
+                                        style="display: block; margin-top: 10px;">
+                                    <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
+                                        href="#">
+                                        <span id="usuario" th:text="${persona.nombre}">Account</span>
+                                    </a>
+                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                                        <a class="dropdown-item" th:href="@{/perfil/persona}">
+                                            <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile
+                                        </a>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;applications
+                                        </a>
+                                        <a class="dropdown-item" th:href="@{/persona/Postulaciones}">
+                                            <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Curriculum
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#" id="logout" onclick="cerrarSesion(event)">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>Logout
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="container-fluid" style="user-select: none;">
+                    <div class="card shadow">
+                        <div class="card-header py-3">
+                            <p class="text-primary m-0 fw-bold">Your Applications</p>
+                        </div>
+                        <!-- cuadro de postulaciones pendiente -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="text-primary m-0 fw-bold">Pending Applications</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div th:if="${postulaciones.isEmpty()}">
+                                            <p class="text-muted">You currently have no pending applications.</p>
+                                        </div>
+                                        <div th:unless="${postulaciones.isEmpty()}">
+                                            <div class="offer-container">
+                                                <div th:each="postulacion : ${postulaciones}" class="card">
+                                                    <div class="offer-content" data-id="${postulacion.ofertas.id}">
+                                                        <h3 th:text="${postulacion.ofertas.titulo_puesto}"></h3>
+                                                        <p th:text="${postulacion.ofertas.empresa.nombreEmp}"></p>
+
+                                                        <p th:text="${postulacion.ofertas.descripcion}"></p>
+
+                                                        <p id="estadoPerfil" class="estado"
+                                                            th:data-id="${postulacion.id}">
+                                                            Estado: <span th:text="${postulacion.estado}"></span></p>
+
+                                                        <div class="hidden-info">
+                                                            <p class="salario">
+                                                                <strong>Salary:</strong>
+                                                                <span th:text="${postulacion.ofertas.salario}"></span>
+                                                            </p>
+                                                            <p class="duracion">
+                                                                <strong>Duration:</strong>
+                                                                <span th:text="${postulacion.ofertas.duracion}"></span>
+                                                            </p>
+                                                            <p class="periodo">
+                                                                <strong>Period:</strong>
+                                                                <span th:text="${postulacion.ofertas.periodo}"></span>
+                                                            </p>
+                                                            <p class="tipo_empleo">
+                                                                <strong>Type of employment:</strong>
+                                                                <span
+                                                                    th:text="${postulacion.ofertas.tipo_empleo}"></span>
+                                                            </p>
+                                                            <p class="modalidad">
+                                                                <strong>Mode:</strong>
+                                                                <span th:text="${postulacion.ofertas.modalidad}"></span>
+                                                            </p>
+                                                            <p class="tipo_contrato">
+                                                                <strong>Type of contract:</strong>
+                                                                <span
+                                                                    th:text="${postulacion.ofertas.tipo_contrato}"></span>
+                                                            </p>
+                                                        </div>
+
+                                                        <!-- Botón para eliminar la postulación -->
+                                                        <button class="btn btn-danger" th:data-id="${postulacion.id}"
+                                                            onclick="eliminarPostulacion(this)">
+                                                            Delete Application
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer">
+                    <div class="container">
+                        <div class="footer-content">
+                            <div class="footer-left">
+                                <p class="mb-1">
+                                    PBX: (605) 123-4567 | Email: contacto@workwise.com
+                                </p>
+                            </div>
+                            <div class="footer-center">
+                                <p class="mb-1">
+                                    © 2024 WorkWise. Todos los derechos reservados.
+                                </p>
+                            </div>
+                            <div class="footer-right">
+                                <a href="https://facebook.com" target="_blank" class="mx-3">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+                                        alt="Facebook" width="30" height="30" />
+                                </a>
+                                <a href="https://instagram.com" target="_blank" class="mx-3">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+                                        alt="Instagram" width="30" height="30" />
+                                </a>
+                                <a href="https://www.tiktok.com" target="_blank" class="mx-3">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/TikTok_Logo.svg"
+                                        alt="TikTok" width="30" height="30" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../js/General/Grid-and-List-view-V10-script.js"></script>
+        <script src="../js/General/script.min.js"></script>
+        <script src="../js/General/theme.js"></script>
+        <script src="../js/persona/postulaciones.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+
+</html>

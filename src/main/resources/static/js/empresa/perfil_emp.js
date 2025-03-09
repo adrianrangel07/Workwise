@@ -43,35 +43,59 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+//verificar contraseña para cambiar los datos de la empresa
+document.addEventListener('DOMContentLoaded', function () {
+    const changeButton = document.getElementById('change_btn');
+    const saveButton = document.getElementById('save_btn');
+    const form = document.getElementById('updateForm');
 
-
-
-const saveButton = document.getElementById('save_btn');
-document.getElementById('change_btn').addEventListener('click', function () {
-    document.querySelectorAll('input:not([type="email"]):not([type="password"])').forEach(input => {
-        input.disabled = false; // Habilita todos menos email y password
+    changeButton.addEventListener('click', function () {
+        Swal.fire({
+            title: 'Verificación requerida',
+            text: 'Ingresa tu contraseña para hacer cambios:',
+            input: 'password',
+            inputPlaceholder: 'Contraseña',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Verificar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed && result.value) {
+                verificarContraseña(result.value);
+            } else {
+                location.reload(); // Si cancela, recarga la página
+            }
+        });
     });
-    saveButton.disabled = false;
+
+    function verificarContraseña(password) {
+        fetch('/verificar-contrasena', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password: password })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.valido) {
+                habilitarEdicion(); // Si la contraseña es correcta, habilita los campos
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Contraseña incorrecta',
+                    text: 'Inténtalo nuevamente.'
+                }).then(() => location.reload()); // Recarga la página si es incorrecta
+            }
+        })
+        .catch(error => console.error('Error en la verificación:', error));
+    }
+
+    function habilitarEdicion() {
+        document.querySelectorAll('input:not([type="email"]):not([type="password"])').forEach(input => {
+            input.disabled = false; // Habilita todos menos email y password
+        });
+        saveButton.disabled = false; // Habilita "Save changes"
+    }
 });
 
-document.getElementById('updateForm').addEventListener('submit', function (event) {
-    event.preventDefault(); // Prevenir el envío
-
-    Swal.fire({
-        title: 'Confirmar cambios',
-        text: 'Ingresa tu contraseña para confirmar:',
-        input: 'password',
-        inputPlaceholder: 'Contraseña',
-        inputAttributes: {
-            autocapitalize: 'off'
-        },
-        showCancelButton: true,
-        confirmButtonText: 'Confirmar',
-        cancelButtonText: 'Cancelar'
-    }).then((result) => {
-        if (result.isConfirmed && result.value) {
-            document.getElementById('confirmPassword').value = result.value; // Asigna la contraseña ingresada
-            this.submit(); // Envía el formulario
-        }
-    });
-});

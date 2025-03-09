@@ -1,3 +1,11 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
 .contenedor-horizontal {
     display: flex;
     gap: 20px;
@@ -5,24 +13,39 @@
 }
 
 .seccion {
-    flex: 1; /* Hace que ambas secciones ocupen el mismo espacio */
+    flex: 1; 
     background-color: #f0f0f0;
     padding: 20px;
     border: 1px solid #ccc;
     text-align: center;
+    user-select: none;
+}
+
+.seccion-ofertas{
+    flex-grow: 1; 
+    max-height: 760px;
+    overflow-y: auto; 
+    padding-bottom: 20px;
+    user-select: none;
+    flex: 1; 
+    background-color: #f0f0f0;
+    padding: 20px;
+    border: 1px solid #ccc;
+    text-align: center;
+    user-select: none;
 }
 
 /* Botón Ver CV */
 .postulante-item {
     display: flex;
-    justify-content: space-between; /* Nombre a la izquierda, botón a la derecha */
-    align-items: center; /* Centra verticalmente */
+    justify-content: space-between; 
+    align-items: center; 
     padding: 10px;
     border-bottom: 1px solid #ddd;
 }
 
 .nombre-postulante {
-    flex-grow: 1; /* Ocupa todo el espacio disponible */
+    flex-grow: 1; 
 }
 
 .btn-ver-cv {
@@ -45,15 +68,6 @@
     transform: scale(0.98);
 }
 
-
-/* Estilos generales */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f8f9fa;
-}
-
 /* Contenedor de ofertas */
 .offer-container {
     display: grid;
@@ -69,7 +83,6 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s;
     cursor: pointer;
-
 }
 
 .card:hover {
@@ -86,36 +99,41 @@ body {
     font-size: 0.9em;
 }
 
-/* Modal */
-.modal {
-    display: none; /* Oculto inicialmente */
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+/* Estilos para los botones */
+.modal-buttons {
+    margin-top: 20px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    gap: 15px;
 }
 
-.modal-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    width: 40%;
-    max-width: 50%;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    animation: fadeIn 0.3s ease-out;
-    text-align: left; 
-}
-
-.close-btn {
-    float: right;
-    font-size: 1.5em;
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.btn-rejected {
+    background-color: #e74c3c !important;
+    color: white !important;
+}
+
+.btn-rejected:hover {
+    background-color: #c0392b !important;
+}
+
+/* Botón Aceptado (verde) */
+.btn-accepted {
+    background-color: #2ecc71 !important;
+    color: white !important;
+}
+
+.btn-accepted:hover {
+    background-color: #27ae60 !important;
 }
 
 /* Botones del modal */
@@ -135,6 +153,8 @@ body {
     top: 0;
     display: flex;
     flex-direction: column;
+    user-select: none;
+
 }
 
 .sidebar a {
@@ -157,67 +177,6 @@ body {
 .sidebar .nav-link.active {
     background-color: rgba(255, 255, 255, 0.1);
     border-left: 4px solid #59625e;
-}
-
-/* Footer */
-.custom-footer {
-    background-color: #343A40 !important;
-    color: white;
-    padding: 15px 0;
-    text-align: center;
-    font-size: 0.9em;
-}
-
-.footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    text-align: center;
-}
-
-.footer-right img {
-    width: 30px;
-    height: 30px;
-}
-
-.sticky-footer {
-    padding: 2rem 0;
-    background: #343A40;
-    flex-shrink: 0;
-}
-
-/* Responsividad */
-@media (max-width: 768px) {
-    .offer-container {
-        grid-template-columns: 1fr;
-        padding: 10px;
-    }
-    
-    .modal-content {
-        width: 95%;
-    }
-    
-    .footer-content {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .footer-right {
-        margin-top: 10px;
-    }
-
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
-    
-    .sidebar a {
-        display: block;
-        text-align: center;
-        padding: 10px;
-    }
 }
 
 #detalle-oferta {
@@ -257,7 +216,6 @@ body {
 #info-oferta {
     display: flex;
     flex-direction: column;
-    gap: 8px;
     align-items: center;
 }
 
@@ -266,35 +224,24 @@ li{
 }
 
 /* modal de ver pdf */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-}
 
 .modal-content {
-    background-color: white;
-    margin: 10% auto;
+    background: #fff;
     padding: 20px;
-    width: 60%;
-    position: relative;
     border-radius: 8px;
+    width: 60%;
+    max-width: 800px;
+    position: relative;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .close {
     position: absolute;
     top: 10px;
-    right: 15px;
-    font-size: 28px;  /* Aumenta el tamaño */
-    font-weight: bold; /* Hace la "X" más gruesa */
-    color: #333; /* Color oscuro para mejor visibilidad */
+    right: 2px;
+    font-size: 24px;
+    font-weight: bold;
     cursor: pointer;
-    transition: transform 0.2s, color 0.2s;
 }
 
 .close:hover {
@@ -302,8 +249,83 @@ li{
     color: #d9534f; /* Cambia a rojo para indicar acción de cerrar */
 }
 
+.postulantes-container {
+    max-height: 200px; 
+    overflow-y: auto;  
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
 
+}
+
+/* Footer */
+.custom-footer {
+    background-color: #343A40 !important;
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.footer-right img {
+    width: 30px;
+    height: 30px;
+}
+
+.sticky-footer {
+    padding: 2rem 0;
+    background: #343A40;
+    flex-shrink: 0;
+}
+
+/* Responsividad */
 @media (max-width: 768px) {
+    
+    .offer-container {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+    
+    .seccion {
+        flex-grow: 1; 
+        max-height: calc(100vh - 100px); 
+        overflow-y: auto; 
+        padding-bottom: 20px; 
+    }
+
+    .modal-content {
+        width: 95%;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-right {
+        margin-top: 10px;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    
+    .sidebar a {
+        display: block;
+        text-align: center;
+        padding: 10px;
+    }
+
     #detalle-oferta {
         max-width: 90%;
         padding: 15px;
@@ -318,4 +340,5 @@ li{
         font-size: 16px;
     }
 }
+
 

@@ -1,6 +1,7 @@
 package com.proyectodeaula.proyecto_de_aula.controller;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -110,13 +112,30 @@ public class EmpresaController {
         return "Html/Empresa/Mi_perfilemp";
     }
 
+    @PostMapping("/verificar-contrasena")
+    public ResponseEntity<Map<String, Boolean>> verificarContrasena(
+            @RequestBody Map<String, String> requestBody, HttpSession session) {
+
+        String email = (String) session.getAttribute("email");
+        if (email == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("valido", false));
+        }
+
+        Empresas empresa = empresaService.findByEmail(email);
+        if (empresa == null || !empresa.getContraseña().equals(requestBody.get("password"))) {
+            return ResponseEntity.ok(Map.of("valido", false)); // Contraseña incorrecta
+        }
+
+        return ResponseEntity.ok(Map.of("valido", true)); // Contraseña correcta
+    }
+
     // Actualiza el perfil de la empresa
     @PostMapping("/actualizar/empresa")
     public String actualizarPerfil(
             @RequestParam String nombreEmp,
             @RequestParam String direccion,
             @RequestParam String razon_social,
-            @RequestParam String confirmPassword, // Contraseña ingresada para confirmar
+            @RequestParam String confirmPassword, 
             HttpSession session, Model model) {
 
         // Verifica si la sesión sigue activa
@@ -130,12 +149,6 @@ public class EmpresaController {
         Empresas empresa = empresaService.findByEmail(email);
         if (empresa == null) {
             model.addAttribute("error", "Empresa no encontrada.");
-            return "Html/error";
-        }
-
-        // Validar la contraseña ingresada
-        if (!empresa.getContraseña().equals(confirmPassword)) {
-            model.addAttribute("error", "Contraseña incorrecta.");
             return "Html/error";
         }
 
@@ -218,16 +231,6 @@ public class EmpresaController {
         return "Html/Empresa/Estadisticas_empresas";
     }
 
-    @GetMapping("/empresas/oferta") // para ver las ofertas postuladas
-    public String oferta() {
-        return "Html/Empresa/Oferta";
-    }
-
-    @GetMapping("/Contraseña-olvidada-empresa") // cuando quieren recuperar la contraseña de la cuenta de empresa
-    public String olvidar_emp() {
-        return "Html/Empresa/contraseña_olvidada_emp";
-    }
-
     @GetMapping("/empresas/published-offers") // Para ver las ofertas publicadas
     public String publishedoffers(HttpSession session, Model model) {
         Empresas empresa = (Empresas) session.getAttribute("empresa");
@@ -238,6 +241,16 @@ public class EmpresaController {
             return "Html/Empresa/ofertas-publicadas";
         }
         return "redirect:/login/Empresa";
+    }
+
+    @GetMapping("/Contraseña-olvidada-empresa") // cuando quieren recuperar la contraseña de la cuenta de empresa
+    public String olvidar_emp() {
+        return "Html/Empresa/contraseña_olvidada_emp";
+    }
+
+    @GetMapping("/empresas/oferta") // para ver las ofertas postuladas
+    public String oferta() {
+        return "Html/Empresa/Oferta";
     }
 
 }

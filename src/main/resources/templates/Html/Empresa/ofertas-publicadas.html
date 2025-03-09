@@ -18,7 +18,7 @@
 
 </head>
 
-<body id="page-top">
+<body id="page-top" style=" user-select: none;">
     <div id="wrapper">
         <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark">
             <div class="container-fluid d-flex flex-column p-0"><a
@@ -108,7 +108,7 @@
                 </nav>
                 <main>
                     <div class="contenedor-horizontal">
-                        <div class="seccion">
+                        <div class="seccion-ofertas">
                             <div class="content-area flex-grow-1 p-3">
                                 <div id="resultadoBusqueda"></div>
                                 <div class="offer-container">
@@ -147,7 +147,7 @@
                             <div>
                                 <h2>Detalles de la Oferta</h2>
                             </div>
-                            <div class="seccion" id="detalle-oferta" >
+                            <div class="seccion" id="detalle-oferta">
                                 <div id="info-oferta">
                                     <h3 id="detalle-titulo"></h3>
                                     <p id="detalle-descripcion"></p>
@@ -161,7 +161,10 @@
                                 </div>
                                 <hr>
                                 <h3>Postulantes:</h3>
-                                <ul id="lista-postulantes"></ul>
+                                <input type="hidden" id="postulacionId">
+                                <div class="postulantes-container">
+                                    <ul id="lista-postulantes"></ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -174,9 +177,13 @@
         <div class="modal-content">
             <span class="close" onclick="cerrarModal()">&times;</span>
             <iframe id="iframeCV" width="100%" height="500px" style="border: none;"></iframe>
+
+            <div class="modal-buttons">
+                <button class="btn btn-rejected" onclick="accionRechazado()">Rechazado</button>
+                <button class="btn btn-accepted" onclick="accionAceptado()">Aceptado</button>
+            </div>
         </div>
     </div>
-    
 
     <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer"
         style="background-color: #343A40 !important;">

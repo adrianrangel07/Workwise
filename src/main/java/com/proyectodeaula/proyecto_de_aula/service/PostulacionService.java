@@ -88,4 +88,16 @@ public class PostulacionService implements IpostulacionService {
     public void eliminarPostulacion(Long id) {
         postulacionRepository.deleteById(id);
     }
+
+    public boolean actualizarEstado(Long id, String nuevoEstado) {
+        Optional<Postulacion> postulacionOpt = postulacionRepository.findById(id);
+        if (postulacionOpt.isPresent()) {
+            Postulacion postulacion = postulacionOpt.get();
+            postulacion.setEstado(nuevoEstado);
+            postulacionRepository.save(postulacion);
+            return true;
+        }
+        return false;
+    }
+    
 }
