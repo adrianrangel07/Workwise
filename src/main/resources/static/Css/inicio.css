@@ -49,6 +49,11 @@
     left: 0;
     right: 0;
 }
+/* .sidebar.toggled {
+    width: 100px !important;
+    overflow: visible !important;
+    transition: width 0.3s ease-in-out;
+} */
 
 #menu-toggle {
     background: none;
@@ -67,6 +72,30 @@
     display: none;
     cursor: pointer;
 }
+
+/* .close-navbar {
+    display: flex;
+}
+
+#ocultarNavBar{
+    margin: 0 !important;
+} */
+
+/* buscador */
+/* #formBusqueda {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;;
+}
+
+.input-group {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto !important;
+} */
+/* fin buscador */
 
 /* filtro */
 #container-menu {
@@ -481,8 +510,8 @@ nav-rp:hover {
     margin: 0 0 11px;
   }
   
-/* footer */
 
+/* footer */
 .custom-footer {
     margin-top: auto;
     background: linear-gradient(90deg, #0a1128, #001f54);
@@ -580,9 +609,9 @@ nav-rp:hover {
 /* estilo para barra de busqueda */
 #termino {
     border: 2px solid black !important; /* Borde negro */
-    border-radius: 5px; /* Bordes redondeados */
     padding: 5px 10px; /* Espaciado interno */
     height: 38px; /* Tamaño del input */
+    box-shadow: none;
 }
 
 #formBusqueda .btn {
@@ -592,32 +621,8 @@ nav-rp:hover {
     width: 38px !important;
 }
 
-/* Hacer que la barra lateral se oculte en pantallas pequeñas */
-@media (max-width: 768px) {
-    .sidebar {
-        display: none;
-    }
-    #sidebarToggle {
-        display: block;
-    }
-}
-
-/* Ajustar la búsqueda para pantallas pequeñas */
-@media (max-width: 576px) {
-    .navbar-search {
-        width: 100%;
-    }
-    .navbar-search .input-group {
-        flex-direction: column;
-    }
-    .navbar-search input {
-        width: 100%;
-        margin-bottom: 5px;
-    }
-}
-
 /* Ajustar las tarjetas de ofertas para que se adapten a móviles */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .offer-container {
         display: flex;
         flex-direction: column;
@@ -626,13 +631,10 @@ nav-rp:hover {
     .card {
         width: 100%;
         margin-bottom: 15px;
-    }
-}
-
+    } */
 /* Optimizar el modal en pantallas pequeñas */
-@media (max-width: 576px) {
-    .modal-content {
-        width: 90%;
+    /* .modal-content {
+        width: 90% !important;
         max-width: 400px;
     }
     .modal-body {
@@ -640,20 +642,42 @@ nav-rp:hover {
     }
     .apply-btn-modal {
         width: 100%;
-    }
-}
+    } */
 
 /* Footer responsive */
-@media (max-width: 768px) {
-    .footer-content {
+    /* .footer-content {
         flex-direction: column;
         text-align: center;
     }
     .footer-left, .footer-center, .footer-right {
         margin-bottom: 10px;
     }
-}
 
+    .footer-left p{
+        width: 95%;
+        margin: 0 auto;
+        text-align: center;
+    } */
 
-  
-    
+    /* barra que cierra y abre le menu*/
+    /* #navbar-toggler{
+        display: flex !important;
+        justify-content: center;
+        margin: 0 !important;
+    }
+    .sidebar{
+        width: 0 !important;
+        overflow: hidden !important;
+        transition: width 0.3s ease-in-out;
+    } */
+
+    /*barra busqueda */
+    /* #formBusqueda {
+        padding: 10px;
+    } */
+
+    /* filtro */
+    /* #cont-menu{
+        width: ;
+    } */
+/* } */
