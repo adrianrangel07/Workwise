@@ -86,6 +86,16 @@ window.onclick = function (event) {
     }
 };
 
+document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("btn-ver-cv")) {
+        let id = event.target.getAttribute("data-id");
+        console.log("Clic en Ver CV - ID detectado:", id);
+        document.getElementById("postulacionId").value = id;
+        abrirModal(`/postulantes/${id}/verHDV`, id);
+    }
+});
+
+
 function obtenerIdPostulacion() {
     let id = document.getElementById("postulacionId").value;
     return id;
@@ -156,16 +166,29 @@ function cargarPostulaciones(idOferta) {
                 btnVerCV.innerText = "Ver CV";
                 btnVerCV.classList.add("btn-ver-cv");
 
+                // if (postulante.id) {
+                //     btnVerCV.onclick = function () {
+                //         console.log("Clic en Ver CV - ID:", postulante.id);
+                //         // document.getElementById("postulacionId").value = postulante.id;
+                //         document.getElementById("postulacionId").value = postulante.id;
+                //         abrirModal(`/postulantes/${postulante.id}/verHDV`, postulante.id);
+                //     };
+                // } else {
+                //     btnVerCV.disabled = true;
+                // }
+
                 if (postulante.id) {
-                    btnVerCV.onclick = function () {
-                        console.log("Clic en Ver CV - ID:", postulante.id);
-                        // document.getElementById("postulacionId").value = postulante.id;
-                        document.getElementById("postulacionId").value = postulante.id;
-                        abrirModal(`/postulantes/${postulante.id}/verHDV`, postulante.id);
-                    };
+                    btnVerCV.setAttribute("data-id", postulante.id);
+                    btnVerCV.addEventListener("click", function () {
+                        let id = this.getAttribute("data-id");
+                        console.log("Clic en Ver CV - ID:", id);
+                        document.getElementById("postulacionId").value = id;
+                        abrirModal(`/postulantes/${id}/verHDV`, id);
+                    });
                 } else {
                     btnVerCV.disabled = true;
                 }
+                
 
                 li.textContent = `${postulante.nombre} ${postulante.apellido} `;
                 li.appendChild(btnVerCV);
