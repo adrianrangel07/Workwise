@@ -143,7 +143,7 @@ body {
     margin-left: -15px; /* Mover hacia la izquierda */
 }
 
-#empresa-avatar {
+#user-avatar {
     width: 30px; /* Hacer la imagen más pequeña */
     height: 30px;
     border-radius: 50%; /* Mantener forma circular */
@@ -152,7 +152,7 @@ body {
     transition: transform 0.2s ease-in-out;
 }
 
-#empresa-avatar:hover {
+#user-avatar:hover {
     transform: scale(1.1); /* Aumentar tamaño al pasar el mouse */
 }
 

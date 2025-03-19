@@ -1,12 +1,14 @@
 package com.proyectodeaula.proyecto_de_aula.controller;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -193,14 +195,25 @@ public class EmpresaController {
         String email = (String) session.getAttribute("email");
         Empresas empresa = empresaService.findByEmail(email);
 
-        if (empresa == null || empresa.getFoto() == null) {
-            return ResponseEntity.notFound().build(); // Si no hay foto, retorna 404
+        byte[] imagen;
+
+        try {
+            if (empresa != null && empresa.getFoto() != null) {
+                imagen = empresa.getFoto();
+            } else {
+                // Cargar imagen por defecto desde static/Imagenes/imagenempresa.png
+                ClassPathResource defaultImage = new ClassPathResource("static/Imagenes/imagenempresa.png");
+                imagen = Files.readAllBytes(defaultImage.getFile().toPath());
+            }
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_PNG); // Cambia a IMAGE_JPEG si la imagen es JPG
+
+            return new ResponseEntity<>(imagen, headers, HttpStatus.OK);
+
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_JPEG); // Cambia el tipo si usas PNG u otro formato
-
-        return new ResponseEntity<>(empresa.getFoto(), headers, HttpStatus.OK);
     }
 
     @GetMapping("/Empresa/imagen/{id}")
