@@ -159,6 +159,7 @@ function cargarPostulaciones(idOferta) {
                 if (postulante.id) {
                     btnVerCV.onclick = function () {
                         console.log("Clic en Ver CV - ID:", postulante.id);
+                        // document.getElementById("postulacionId").value = postulante.id;
                         document.getElementById("postulacionId").value = postulante.id;
                         abrirModal(`/postulantes/${postulante.id}/verHDV`, postulante.id);
                     };
