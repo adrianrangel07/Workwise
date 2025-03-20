@@ -364,3 +364,25 @@
 #usuario:hover {
     color: #555; /* Cambia de color al pasar el mouse */
 }
+
+
+/* Efecto al pasar el mouse */
+.sidebar .nav-item:hover {
+    background: rgba(255, 255, 255, 0.2); /* Un ligero brillo */
+    border-left: 4px solid #FFD700; /* Color dorado en el borde izquierdo */
+    transition: all 0.3s ease-in-out;
+}
+
+/* Para que el texto y el ícono no se muevan */
+.sidebar .nav-item a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    text-decoration: none;
+}
+
+/* Resaltar el enlace activo (cuando está seleccionado) */
+.sidebar .nav-link.active {
+    background: rgba(255, 255, 255, 0.1);
+    border-left: 4px solid #59625e;
+}
