@@ -30,6 +30,7 @@ public class Empresas {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	int id;
+	
 	// columna de nombre de la empresa
 	@Column(name = "NombreEmp", columnDefinition = "varchar(45)", nullable = false)
 	String nombreEmp;
