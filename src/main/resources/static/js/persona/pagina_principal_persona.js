@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalTitle = document.getElementById('modal-title');
     const modalDescription = document.getElementById('modal-description');
     const modalSalary = document.getElementById('modal-salary');
-    const modalCurrency = document.getElementById('modal-currency');    
+    const modalCurrency = document.getElementById('modal-currency');
     const modalDuration = document.getElementById('modal-duration');
     const modalPeriod = document.getElementById('modal-period');
     const modalType = document.getElementById('modal-type');
@@ -19,19 +19,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Función para abrir el modal
     const openModal = (card) => {
-        
+
         // Obtener los datos de la tarjeta
         const title = card.querySelector('h3').innerText;
         const description = card.querySelector('p').innerText;
         const salary = card.querySelector('.salario span').innerText;
-        const currency = card.querySelector('.moneda span').innerText;        
+        const currency = card.querySelector('.moneda span').innerText;
         const duration = card.querySelector('.duracion span').innerText;
         const period = card.querySelector('.periodo span').innerText;
         const type = card.querySelector('.tipo_empleo span').innerText;
         const modalidad = card.querySelector('.modalidad span').innerText;
         const typeContract = card.querySelector('.tipo_contrato span').innerText;
         const empresa = card.querySelector('.empresa span').innerText;
-        
+
 
         // Llenar el modal con los datos de la tarjeta
         modalTitle.innerText = title;
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const ofertaId = card.getAttribute("data-id"); // Obtener ID de la oferta
         postularseBtn.setAttribute("data-oferta-id", ofertaId); // Asignarlo al botón
-    
+
         // Verifica si se asignó correctamente
         console.log("ID de la oferta en el botón:", postularseBtn.getAttribute("data-oferta-id"));
         // Mostrar el modal
@@ -310,5 +310,4 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
 

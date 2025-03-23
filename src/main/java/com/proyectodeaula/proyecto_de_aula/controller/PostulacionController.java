@@ -118,6 +118,7 @@ public class PostulacionController {
                 .filter(postulacion -> postulacion.getPersonas() != null) // Evitar NullPointerException
                 .map(postulacion -> {
                     Map<String, Object> postulanteData = new HashMap<>();
+                    postulanteData.put("postulacionId", postulacion.getId());
                     postulanteData.put("id", postulacion.getPersonas().getId());
                     postulanteData.put("nombre", postulacion.getPersonas().getNombre());
                     postulanteData.put("apellido", postulacion.getPersonas().getApellido());
@@ -167,5 +168,4 @@ public class PostulacionController {
 
         return ResponseEntity.ok("Estado actualizado a: " + nuevoEstado);
     }
-
 }

@@ -15,11 +15,11 @@
     <link rel="stylesheet" href="../Css/persona/pagina_principal_persona.css">
     <link rel="stylesheet" href="../Css/notificaciones.css">
     <link rel="stylesheet" href="https://cdsn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../Css/notificaciones.css">
+
 </head>
 
 <body id="page-top">
-    <div id="wrapper" style="margin: 500;">
+    <div id="wrapper" >
         <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark"
             style="background: #0a1128;">
             <div class="container-fluid d-flex flex-column p-0"><a
@@ -74,9 +74,12 @@
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow" id="usuario-container">
-                                    <img id="user-avatar" th:src="@{/imagen/{id}(id=${persona.id})}" alt="Profile">
+
+                                    <img id="user-avatar" src="../Imagenes/imagenperfil.png" alt="Persona Logo">
+
                                     <input type="hidden" id="subirFoto" accept="image/*"
                                         style="display: block; margin-top: 10px;">
+
                                     <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
                                         href="#">
                                         <span id="usuario" th:text="${persona.nombre}">Account</span>
@@ -86,10 +89,10 @@
                                             <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile
                                         </a>
                                         <a class="dropdown-item" th:href="@{/persona/Postulaciones}">
-                                            <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;applications
+                                            <i class="fas fa-file-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;applications
                                         </a>
                                         <a class="dropdown-item" href="#">
-                                            <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Curriculum
+                                            <i class="fas fa-briefcase fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Curriculum
                                         </a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#" id="logout" onclick="cerrarSesion(event)">
