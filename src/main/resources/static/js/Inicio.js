@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalTitle = document.getElementById('modal-title');
     const modalDescription = document.getElementById('modal-description');
     const modalSalary = document.getElementById('modal-salary');
-    const modalCurrency = document.getElementById('modal-currency');    
+    const modalCurrency = document.getElementById('modal-currency');
     const modalDuration = document.getElementById('modal-duration');
     const modalPeriod = document.getElementById('modal-period');
     const modalType = document.getElementById('modal-type');
@@ -20,19 +20,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Función para abrir el modal
     const openModal = (card) => {
-        
+
         // Obtener los datos de la tarjeta
         const title = card.querySelector('h3').innerText;
         const description = card.querySelector('p').innerText;
         const salary = card.querySelector('.salario span').innerText;
-        const currency = card.querySelector('.moneda span').innerText;        
+        const currency = card.querySelector('.moneda span').innerText;
         const duration = card.querySelector('.duracion span').innerText;
         const period = card.querySelector('.periodo span').innerText;
         const type = card.querySelector('.tipo_empleo span').innerText;
         const modalidad = card.querySelector('.modalidad span').innerText;
         const typeContract = card.querySelector('.tipo_contrato span').innerText;
         const empresa = card.querySelector('.empresa span').innerText;
-        
+
 
         // Llenar el modal con los datos de la tarjeta
         modalTitle.innerText = title;
@@ -151,7 +151,7 @@ function applyFilters() {
 
         // Mostrar u ocultar la oferta
         oferta.style.display = isVisible ? "block" : "none";
-        
+
         if (isVisible) ofertasVisibles++; // Incrementar si la oferta es visible
     });
 
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function () {
             color: "#000",
             width: "30%",
             padding: "1rem",
-            reverseButtons: true 
+            reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
                 window.location.href = '/login/personas'; // Redirige a la página de inicio de sesión
@@ -201,4 +201,13 @@ document.addEventListener("DOMContentLoaded", function () {
             element.textContent = Number(value).toLocaleString("es-CO");
         }
     });
+});
+
+
+document.getElementById("ocultarNavBar").addEventListener("click", function () {
+    let sidebar = document.querySelector(".sidebar");
+
+    // Alternar la clase "toggled" en la barra lateral
+    sidebar.classList.toggle("toggled");
+    // sidebar.classList.toggle("sidebar");
 });

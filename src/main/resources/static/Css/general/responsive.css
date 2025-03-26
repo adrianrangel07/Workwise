@@ -1,0 +1,88 @@
+.close-navbar {
+    display: flex;
+}
+
+#ocultarNavBar{
+    margin: 0 !important;
+}
+
+/* buscador */
+#formBusqueda {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;;
+}
+
+.input-group {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto !important;
+}
+
+.sidebar.toggled {
+    width: 100px !important;
+    overflow: visible !important;
+    transition: width 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+    .offer-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .card {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+/* Optimizar el modal en pantallas pequeñas */
+    .modal-content {
+        width: 90% !important;
+        max-width: 400px;
+    }
+    .modal-body {
+        font-size: 14px;
+    }
+    .apply-btn-modal {
+        width: 100%;
+    }
+
+/* Footer responsive */
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    .footer-left, .footer-center, .footer-right {
+        margin-bottom: 10px;
+    }
+
+    .footer-left p{
+        width: 95%;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    /* barra que cierra y abre le menu*/
+    #navbar-toggler{
+        display: flex !important;
+        justify-content: center;
+        margin: 0 !important;
+    }
+    .sidebar{
+        width: 0 !important;
+        overflow: hidden !important;
+        transition: width 0.3s ease-in-out;
+    }
+
+    /*barra busqueda */
+    #formBusqueda {
+        padding: 10px;
+    }
+
+    /* filtro */
+    /* #cont-menu{
+        width: ;
+    } */
+}
