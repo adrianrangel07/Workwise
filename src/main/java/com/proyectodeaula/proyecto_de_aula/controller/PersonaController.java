@@ -89,6 +89,7 @@ public class PersonaController {
         }
     }
 
+    //hola
     @PostMapping("/eliminarLoginSuccess")
     @ResponseBody
     public void eliminarLoginSuccess(HttpSession session) {
