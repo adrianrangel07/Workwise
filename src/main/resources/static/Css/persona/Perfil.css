@@ -386,3 +386,34 @@
     background: rgba(255, 255, 255, 0.1);
     border-left: 4px solid #59625e;
 }
+
+/* Boton eliminar cuenta  */
+.btn-eliminar {
+    background: linear-gradient(135deg, #ff4b5c, #d62839);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 10px rgba(255, 75, 92, 0.3);
+}
+
+.btn-eliminar i {
+    font-size: 18px;
+}
+
+.btn-eliminar:hover {
+    background: linear-gradient(135deg, #d62839, #ff4b5c);
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(255, 75, 92, 0.5);
+}
+
+.btn-eliminar:active {
+    transform: scale(0.95);
+}

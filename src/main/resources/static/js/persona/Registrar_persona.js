@@ -89,3 +89,8 @@ flatpickr("#fecha", {
 document.getElementById("icono-calendario").addEventListener("click", function () {
     fechaInput._flatpickr.open(); // Abre el calendario
 });
+
+// volver atras 
+function goBack() {
+    window.history.back();
+}

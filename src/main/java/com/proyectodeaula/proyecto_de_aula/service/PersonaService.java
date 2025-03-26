@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.proyectodeaula.proyecto_de_aula.interfaceService.IpersonaService;
@@ -20,29 +21,33 @@ public class PersonaService implements IpersonaService {
     @Autowired
     private Interfaz_Per user;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     @Override
     public List<Personas> listar() {
         return (List<Personas>) data.findAll();
     }
 
     @Override
-    public Optional<Personas> listarId(int id) {
+    public Optional<Personas> listarId(Long id) {
         throw new UnsupportedOperationException("Unimplemented method 'listarId'");
     }
 
     @Override
     public int save(Personas U) {
         int res = 0;
+
+        if (!U.getContraseña().startsWith("$2a$")) {
+            String contraseñaEncriptada = passwordEncoder.encode(U.getContraseña());
+            U.setContraseña(contraseñaEncriptada);
+        }
+
         Personas Usu = data.save(U);
-        if (Usu != null) {  // Corrección de la comparación
+        if (Usu != null) {
             res = 1;
         }
         return res;
-    }
-    
-    @Override
-    public void delete(int Id) {
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
 
     public Personas findByEmail(String email) {
@@ -57,7 +62,11 @@ public class PersonaService implements IpersonaService {
 
         per.setNombre(persona.getNombre());
         per.setApellido(persona.getApellido());
-        per.setContraseña(persona.getContraseña());
+
+        if (!persona.getContraseña().isEmpty() && !persona.getContraseña().equals(per.getContraseña())) {
+            per.setContraseña(passwordEncoder.encode(persona.getContraseña()));
+        }
+
         per.setGenero(persona.getGenero());
         per.setEmail(persona.getEmail());
 
@@ -73,4 +82,13 @@ public class PersonaService implements IpersonaService {
         persona.setCv(null);
         user.save(persona);
     }
+
+    @Override
+    public void eliminarPersona(Long id) { // Cambiamos int -> Long
+        if (!user.existsById(id)) {
+            throw new RuntimeException("El usuario no existe.");
+        }
+        user.deleteById(id);
+    }
+
 }

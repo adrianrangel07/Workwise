@@ -57,6 +57,4 @@ public class Empresas {
 	@OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Ofertas> ofertas = new ArrayList<>();
 
-
-
 }

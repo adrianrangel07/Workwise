@@ -7,6 +7,28 @@ body {
     padding: 0;
 }
 
+/* Efecto al pasar el mouse */
+.sidebar .nav-item:hover {
+    background: rgba(255, 255, 255, 0.2); /* Un ligero brillo */
+    border-left: 2px solid #868383; /* Color dorado en el borde izquierdo */
+}
+
+/* Para que el texto y el ícono no se muevan */
+.sidebar .nav-item a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Resaltar el enlace activo (cuando está seleccionado) */
+.sidebar .nav-link.active {
+    background: rgba(255, 255, 255, 0.1);
+    border-left: 4px solid #59625e;
+}
+
+
 /* Contenedor principal que incluye la barra lateral y el contenido */
 .contenedor {
     display: flex;
@@ -186,9 +208,6 @@ main {
         text-align: justify;
     }
 }
-
-
-
 
 /* Para dispositivos aún más pequeños */
 @media (max-width: 480px) {
