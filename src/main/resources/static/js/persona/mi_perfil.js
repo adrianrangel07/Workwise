@@ -26,22 +26,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Interceptar el submit del formulario
     document.getElementById('uploadForm').addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevenir el envío del formulario para mostrar SweetAlert primero
-
-        // Mostrar SweetAlert con el mensaje de éxito
-        Swal.fire({
-            icon: 'success',
-            title: 'Foto cambiada',
-            text: 'Tu foto de perfil ha sido actualizada exitosamente!',
-            showConfirmButton: true,
-            confirmButtonText: 'Ok'
-        }).then((result) => {
-            // Después de que el usuario haga clic en "Ok", se puede enviar el formulario
-            if (result.isConfirmed) {
-                this.submit(); // Enviar el formulario después de mostrar el mensaje
+        event.preventDefault(); // Evita que el formulario se envíe automáticamente
+    
+        const formData = new FormData(this);
+    
+        fetch('/upload/photo', {
+            method: 'POST',
+            body: formData
+        }).then(response => {
+            if (response.ok) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Foto cambiada',
+                    text: 'Tu foto de perfil ha sido actualizada exitosamente!',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Ok'
+                }).then(() => {
+                    // Recargar la imagen desde el backend después de la subida
+                    document.getElementById('user-avatar').src = "/imagen/perfil?" + new Date().getTime(); // Evita caché
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Hubo un problema al subir la imagen.',
+                });
             }
-        });
-    });
+        }).catch(error => console.error('Error:', error));
+    }); 
 });
 
 
@@ -178,5 +190,62 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 });
+
+function eliminarCuenta() {
+    Swal.fire({
+        title: "¿Estás seguro?",
+        text: "Esta acción eliminará tu cuenta permanentemente.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, eliminar"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Segunda confirmación
+            Swal.fire({
+                title: "Última confirmación",
+                text: "¿Realmente deseas eliminar tu cuenta? Esta acción es irreversible.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Sí, eliminar definitivamente"
+            }).then((finalResult) => {
+                if (finalResult.isConfirmed) {
+                    fetch('/eliminar-cuenta', {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            Swal.fire({
+                                title: "Cuenta eliminada",
+                                text: "Tu cuenta ha sido eliminada correctamente.",
+                                icon: "success",
+                                timer: 3000,
+                                showConfirmButton: false
+                            }).then(() => {
+                                window.location.href = "/login/personas"; // Redirigir al login
+                            });
+                        } else {
+                            return response.text().then(text => { throw new Error(text); });
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            title: "Error",
+                            text: "Error al eliminar la cuenta: " + error.message,
+                            icon: "error"
+                        });
+                    });
+                }
+            });
+        }
+    });
+}
+
 
 

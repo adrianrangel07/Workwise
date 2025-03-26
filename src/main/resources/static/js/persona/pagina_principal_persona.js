@@ -255,21 +255,28 @@ function applyFilters() {
     }
 }
 
-//no borrar
 function cerrarSesion(event) {
     event.preventDefault(); // Evitar que se ejecute el href del enlace
 
     Swal.fire({
-        icon: 'success',
-        title: 'Cerró sesión exitosamente',
-        showConfirmButton: true,
-        confirmButtonText: 'OK'
+        icon: 'warning',
+        title: '¿Estás seguro?',
+        text: 'Se cerrará tu sesión.',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, cerrar sesión',
+        cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = '/'; // Redirigir a la página de inicio
+            fetch('/logout', {
+                method: 'POST',
+                credentials: 'same-origin' // Enviar cookies y sesión
+            }).then(response => {
+                window.location.href = '/login/personas?logout=true'; // Redirigir al login
+            });
         }
     });
 }
+
 
 //codigo que hace que aparezca la foto de perfil 
 document.addEventListener("DOMContentLoaded", function () {
@@ -311,3 +318,50 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+function cerrarSesionYRedirigir(event) {
+    event.preventDefault(); // Evita la navegación inmediata
+
+    Swal.fire({
+        title: "Cerrando sesión...",
+        text: "Estamos cerrando tu sesión. Por favor, espera.",
+        icon: "info",
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        didOpen: () => {
+            Swal.showLoading(); // Muestra un loader
+            
+            // Enviar la solicitud de cierre de sesión
+            fetch('/logout', { method: 'POST' })
+                .then(response => {
+                    // Esperamos 2 segundos antes de redirigir, asegurando que la sesión se cierre
+                    setTimeout(() => {
+                        window.location.href = '/login/Empresa';
+                    }, 2000);
+                })
+                .catch(error => {
+                    console.error('Error al cerrar sesión:', error);
+                    Swal.fire("Error", "No se pudo cerrar la sesión.", "error");
+                });
+        }
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    var loginMeta = document.getElementById("loginSuccess");
+    var loginSuccess = loginMeta ? loginMeta.content === "true" : false;
+
+    console.log("loginSuccess:", loginSuccess); // Para ver si se detecta correctamente
+
+    if (loginSuccess) {
+        Swal.fire({
+            icon: 'success',
+            title: '¡Inicio de sesión exitoso!',
+            text: 'Bienvenido a la plataforma.',
+            timer: 2000,
+            showConfirmButton: false
+        }).then(() => {
+            // 🔹 Eliminar la variable de sesión después de mostrar la alerta
+            fetch('/eliminarLoginSuccess', { method: 'POST' });
+        });
+    }
+});

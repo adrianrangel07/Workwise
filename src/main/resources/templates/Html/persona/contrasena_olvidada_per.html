@@ -5,15 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recuperar Contraseña</title>
-    <link rel="stylesheet" href="../Css/persona/contrasena_olvidada_per.css">
-    <link rel="icon" type="image/png" href="../Imagenes/wknlogo2.png">
+    <link rel="stylesheet" href="/css/persona/contrasena_olvidada_per.css">
+    <link rel="icon" type="image/png" href="/Imagenes/wknlogo2.png">
 
 </head>
 
 <body>
     <div class="container-logo">
         <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" th:href="@{/}">
-            <img class="logo" id="logo" src="../Imagenes/wknblack.png">
+            <img class="logo" id="logo" src="/Imagenes/wknblack.png">
         </a>
     </div>
     <div class="container">
@@ -29,7 +29,7 @@
             <input type="text" id="captchaInput" placeholder="Ingrese el captcha" required>
             <button type="button" onclick="validarCaptcha()">Verificar</button>
             <button type="button" onclick="window.location.href='/login/personas'" class="btn-cancel">Cancelar</button>
-
+            
         </form>
         <br>
         <br>
@@ -47,7 +47,7 @@
 
     </div>
 
-    <script src="../js/persona/contrasena-olvidada-per.js"></script>
+    <script src="/js/persona/contrasena-olvidada-per.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>

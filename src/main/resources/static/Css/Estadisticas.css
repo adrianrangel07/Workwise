@@ -131,8 +131,7 @@ main{
 /* Efecto al pasar el mouse */
 .sidebar .nav-item:hover {
     background: rgba(255, 255, 255, 0.2); /* Un ligero brillo */
-    border-left: 4px solid #FFD700; /* Color dorado en el borde izquierdo */
-    transition: all 0.3s ease-in-out;
+    border-left: 2px solid #868383; /* Color dorado en el borde izquierdo */
 }
 
 /* Para que el texto y el ícono no se muevan */
@@ -141,6 +140,7 @@ main{
     align-items: center;
     padding: 10px;
     text-decoration: none;
+    transition: all 0.3s ease-in-out;
 }
 
 /* Resaltar el enlace activo (cuando está seleccionado) */
