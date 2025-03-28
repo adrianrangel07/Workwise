@@ -38,11 +38,6 @@ public class PersonaService implements IpersonaService {
     public int save(Personas U) {
         int res = 0;
 
-        if (!U.getContraseña().startsWith("$2a$")) {
-            String contraseñaEncriptada = passwordEncoder.encode(U.getContraseña());
-            U.setContraseña(contraseñaEncriptada);
-        }
-
         Personas Usu = data.save(U);
         if (Usu != null) {
             res = 1;
