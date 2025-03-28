@@ -22,9 +22,7 @@ public class PersonaService implements IpersonaService {
     private Interfaz_Per user;
 
     @Autowired
-    public PersonaService(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public List<Personas> listar() {
