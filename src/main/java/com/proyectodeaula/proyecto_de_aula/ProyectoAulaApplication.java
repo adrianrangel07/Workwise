@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+@ComponentScan(basePackages = "com.proyectodeaula")
 public class ProyectoAulaApplication {
  
 	public static void main(String[] args) {
@@ -11,4 +12,5 @@ public class ProyectoAulaApplication {
 	}
 	
 }
+
 
