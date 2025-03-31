@@ -40,7 +40,7 @@ public class Personas {
 	@Column(name = "email", columnDefinition = "VARCHAR(45)", nullable = false)
 	private String email;
 
-	@Column(name = "contraseña", columnDefinition = "VARCHAR(45)", nullable = false)
+	@Column(name = "contraseña", columnDefinition = "VARCHAR(255)", nullable = false)
 	private String contraseña;
 
 	@Column(name = "Cedula", columnDefinition = "VARCHAR(20)", nullable = false)

@@ -16,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -55,6 +56,9 @@ public class PersonaController {
     @Autowired
     private PostulacionService postulacionService;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     @GetMapping("/Register/personas")
     public String agregar(Model model) {
         Personas persona = new Personas();
@@ -64,6 +68,7 @@ public class PersonaController {
 
     @PostMapping("/Register/personas")
     public String save(@ModelAttribute("new_persona") Personas persona, Model model) {
+        persona.setContraseña(passwordEncoder.encode(persona.getContraseña()));
         per.save(persona);
         return "Html/persona/inicio_sesion_persona";
     }
@@ -74,22 +79,34 @@ public class PersonaController {
     }
 
     @PostMapping("/login/personas")
-    public String iniciarSesion(HttpSession session, Model model, @RequestParam String email,
+    public String iniciarSesion(HttpSession session, Model model,
+            @RequestParam String email,
             @RequestParam String contraseña) {
+        Personas persona = user.findByEmail(email);
 
-        Personas persona = user.findByEmailAndContraseña(email, contraseña);
-        if (persona != null) {
+        if (persona == null) {
+            System.out.println("No se encontró usuario con el email: " + email);
+            model.addAttribute("error", "Credenciales incorrectas");
+            return "redirect:/login/personas?error=true";
+        }
+
+        System.out.println("Usuario encontrado: " + persona.getEmail());
+        System.out.println("Contraseña en BD: " + persona.getContraseña());
+        System.out.println("Contraseña ingresada: " + contraseña);
+
+        if (passwordEncoder.matches(contraseña, persona.getContraseña())) {
+            System.out.println("Contraseña correcta, iniciando sesión...");
             session.setAttribute("email", email);
             session.setAttribute("usuarioId", persona.getId());
             session.setAttribute("loginSuccess", "true");
             return "redirect:/personas/pagina_principal";
         } else {
+            System.out.println("Contraseña incorrecta");
             model.addAttribute("error", "Credenciales incorrectas");
             return "redirect:/login/personas?error=true";
         }
     }
 
-    //hola
     @PostMapping("/eliminarLoginSuccess")
     @ResponseBody
     public void eliminarLoginSuccess(HttpSession session) {
@@ -275,6 +292,21 @@ public class PersonaController {
         return ResponseEntity.ok("Correo verificado. Ahora puede cambiar su contraseña.");
     }
 
+    @PostMapping("/cambiar-contrasena")
+    public ResponseEntity<String> cambiarContraseña(@RequestBody Map<String, String> requestData) throws Exception {
+        String email = requestData.get("email");
+        String nuevaContraseña = requestData.get("nuevaContraseña");
+
+        Personas persona = personaService.findByEmail(email);
+        if (persona == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERROR");
+        }
+
+        persona.setContraseña(passwordEncoder.encode(nuevaContraseña)); // ✅ Encriptar antes de guardar
+        personaService.actualizarPerfil(persona);
+        return ResponseEntity.ok("OK");
+    }
+
     @GetMapping("/persona/Postulaciones")
     public String postulaciones(Model model, HttpSession session) {
         String email = (String) session.getAttribute("email");
@@ -306,7 +338,7 @@ public class PersonaController {
         }
 
         Personas personas = personaService.findByEmail(email);
-        if (personas == null || !personas.getContraseña().equals(requestBody.get("password"))) {
+        if (personas == null || !passwordEncoder.matches(requestBody.get("password"), personas.getContraseña())) {
             return ResponseEntity.ok(Map.of("valido", false)); // Contraseña incorrecta
         }
 
@@ -367,13 +399,13 @@ public class PersonaController {
         return "Html/persona/Configuracion";
     }
 
-    @GetMapping("/persona/hdv") 
+    @GetMapping("/persona/hdv")
     public String mostrarHojaDeVida() {
-    return "Html/persona/hoja_de_vida";  
+        return "Html/persona/hoja_de_vida";
     }
-    
-    @GetMapping("/persona/hdv_nv") 
+
+    @GetMapping("/persona/hdv_nv")
     public String mostrarHojaDeVidaNavbar() {
-    return "Html/persona/hoja_de_vida_nv";  
-    } 
+        return "Html/persona/hoja_de_vida_nv";
+    }
 }
