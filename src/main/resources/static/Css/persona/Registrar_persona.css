@@ -30,18 +30,26 @@ html, body {
 
 /* aqui empieza el contenedor */
 .contenedor{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100vw;
     height: 100vh;
-    background-color: transparent;
+    z-index: 100; 
+
+}
+
+.container-login{
+    width: 65%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 100; 
 }
+/* termina contenedo */
 
 /* empieza la tarjeta */
-
 .head-card{
     display: flex;
     justify-content: space-between;
@@ -229,9 +237,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         height: 60px;
         width: 60px;
     }
-    .contenedor{
+
+    .container-login{
         align-items: flex-start;
         justify-content: flex-start;
+        width: 100vw;
+    }
+
+    .curva{
+        display: none;
     }
 }
 

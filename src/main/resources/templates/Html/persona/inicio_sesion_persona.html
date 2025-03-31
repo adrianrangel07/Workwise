@@ -46,10 +46,10 @@
                         <label for="password" class="floating-label">Password</label>
                         <button id="show-password" class="show-password" type="button">show</button>
                     </div>
-                    <p><a th:href="@{/Contrasena-olvidada}">Forget Password?</a></p>
                     <button class="btn btn-primary d-block btn-user w-100" type="submit" id="validar" onclick="validar">
                         Login
                     </button>
+                    <p><a th:href="@{/Contrasena-olvidada}">Forget Password?</a></p>
                 </form>
             </div>
         </div>
@@ -57,8 +57,13 @@
             <p>Don't have an account? <a th:href="@{/Register/personas}">Sign up</a></p>
         </div>
     </div>
+    <div style="display: flex;">
+        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" th:href="@{/}">
+            <img id="logo" src="../Imagenes/wknblack.png" width="61" height="58" style="width: 60px; height: 60px; margin: 10px;">
+        </a>
+    </div>
 
-    <script src="../js/persona/inicio_sesion_persona.js"></script>
+    <script src="../js/general/inicio_sesion.js"></script>
     <script src="../js/General/script.min.js"></script>
     <script src="../js/General/theme.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
