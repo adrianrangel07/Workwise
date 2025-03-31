@@ -28,8 +28,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Función para manejar el clic en el botón de eliminar
-
-
 function eliminarPostulacion(button) {
     var postulacionId = button.getAttribute('data-id');
 

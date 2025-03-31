@@ -23,8 +23,8 @@
             style="background: #0a1128;">
             <div class="container-fluid d-flex flex-column p-0"><a
                     class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
-                    th:href="@{/personas/pagina_principal}"><img src="/Imagenes/wwk_white.png"
-                        width="61" height="58" style="width: 50px;height: 50px;">
+                    th:href="@{/personas/pagina_principal}"><img src="/Imagenes/wwk_white.png" width="61" height="58"
+                        style="width: 50px;height: 50px;">
                     <div class="sidebar-brand-icon rotate-n-15"></div>
                     <div class="sidebar-brand-text mx-3"><span>Workwise</span></div>
                 </a>
@@ -38,8 +38,11 @@
                                 class="fas fa-file-alt"></i><span>My Applications</span>
                     <li class="nav-item"><a class="nav-link" th:href="@{/Estadisticas/personas}"><i
                                 class="fas fa-chart-bar"></i><span>Statistics</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="/logout" th:href="@{/login/Empresa}"><i
-                                class="fas fa-building"></i><span>Do you have a company? </span></a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout" onclick="cerrarSesionYRedirigir(event)">
+                            <i class="fas fa-building"></i><span>Do you have a company? </span>
+                        </a>
+                    </li>
 
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0"
@@ -78,7 +81,8 @@
                                             <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Curriculum
                                         </a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="/logout" id="logout" onclick="cerrarSesion(event)">
+                                        <a class="dropdown-item" href="/logout" id="logout"
+                                            onclick="cerrarSesion(event)">
                                             <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>Logout
                                         </a>
                                     </div>
@@ -216,7 +220,8 @@
                                                             <button class="btn btn-primary btn-sm" type="submit"
                                                                 id="save_btn" disabled>Save changes</button>
                                                         </div>
-                                                        <button id="btnEliminarCuenta" class="btn-eliminar" onclick="eliminarCuenta()">
+                                                        <button id="btnEliminarCuenta" class="btn-eliminar"
+                                                            onclick="eliminarCuenta()">
                                                             <i class="fas fa-trash-alt"></i> Eliminar Cuenta
                                                         </button>
                                                     </div>
