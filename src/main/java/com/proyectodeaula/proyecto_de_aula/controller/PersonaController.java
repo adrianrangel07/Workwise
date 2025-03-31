@@ -367,4 +367,13 @@ public class PersonaController {
         return "Html/persona/Configuracion";
     }
 
+    @GetMapping("/persona/hdv") 
+    public String mostrarHojaDeVida() {
+    return "Html/persona/hoja_de_vida";  
+    }
+    
+    @GetMapping("/persona/hdv_nv") 
+    public String mostrarHojaDeVidaNavbar() {
+    return "Html/persona/hoja_de_vida_nv";  
+    } 
 }

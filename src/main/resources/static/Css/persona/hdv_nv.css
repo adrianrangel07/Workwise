@@ -1,0 +1,87 @@
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 800px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2, h4 {
+    font-weight: bold;
+    color: #0a1128;
+}
+
+
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background: transparent;
+    outline: none;
+    appearance: none; /* Oculta el icono por defecto en algunos navegadores */
+}
+
+.form-group label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #666;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    background: transparent;
+    padding: 0 5px;
+}
+
+.form-group input:focus ~ label,
+.form-group input:valid ~ label,
+.form-group select:focus ~ label,
+.form-group select:valid ~ label,
+.form-group textarea:focus ~ label,
+.form-group textarea:valid ~ label {
+    top: 0;
+    font-size: 12px;
+    color: #0a1128;
+    background: #f8f9fa;
+    padding: 0 5px;
+}
+
+/* Botón principal */
+.btn-primary {
+    background: #007bff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-primary:hover {
+    background: #0056b3;
+}
+
+.solo-lectura input, 
+.solo-lectura textarea {
+    border: none;
+    background: transparent;
+    color: #333;
+    cursor: default;
+}
