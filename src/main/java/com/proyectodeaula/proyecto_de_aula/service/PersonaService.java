@@ -38,6 +38,8 @@ public class PersonaService implements IpersonaService {
     public int save(Personas U) {
         int res = 0;
 
+        U.setContraseña(passwordEncoder.encode(U.getContraseña()));
+
         Personas Usu = data.save(U);
         if (Usu != null) {
             res = 1;
@@ -58,8 +60,14 @@ public class PersonaService implements IpersonaService {
         per.setNombre(persona.getNombre());
         per.setApellido(persona.getApellido());
 
-        if (!persona.getContraseña().isEmpty() && !persona.getContraseña().equals(per.getContraseña())) {
-            per.setContraseña(passwordEncoder.encode(persona.getContraseña()));
+        if (persona.getContraseña() != null && !persona.getContraseña().isEmpty()) {
+            if (!persona.getContraseña().startsWith("$2a$10$")) { 
+                System.out.println("Encriptando nueva contraseña...");
+                per.setContraseña(passwordEncoder.encode(persona.getContraseña()));
+            } else {
+                System.out.println("La contraseña ya está encriptada, no se encripta de nuevo.");
+                per.setContraseña(persona.getContraseña());
+            }
         }
 
         per.setGenero(persona.getGenero());

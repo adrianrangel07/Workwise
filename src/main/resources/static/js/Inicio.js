@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Llenar el modal con los datos de la tarjeta
         modalTitle.innerText = title;
         modalDescription.innerText = description;
-        modalSalary.innerHTML = `<strong>Salario:</strong> ${salary}`;
+        modalSalary.innerHTML = `<strong>Salary:</strong> ${salary}`;
         modalCurrency.innerHTML = `<strong>moneda:</strong> ${currency}`;
         modalDuration.innerHTML = `<strong>Duración:</strong> ${duration}`;
         modalPeriod.innerHTML = `<strong>Periodo:</strong> ${period}`;
