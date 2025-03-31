@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalTitle = document.getElementById('modal-title');
     const modalDescription = document.getElementById('modal-description');
     const modalSalary = document.getElementById('modal-salary');
-    const modalCurrency = document.getElementById('modal-currency');    
+    const modalCurrency = document.getElementById('modal-currency');
     const modalDuration = document.getElementById('modal-duration');
     const modalPeriod = document.getElementById('modal-period');
     const modalType = document.getElementById('modal-type');
@@ -19,19 +19,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Función para abrir el modal
     const openModal = (card) => {
-        
+
         // Obtener los datos de la tarjeta
         const title = card.querySelector('h3').innerText;
         const description = card.querySelector('p').innerText;
         const salary = card.querySelector('.salario span').innerText;
-        const currency = card.querySelector('.moneda span').innerText;        
+        const currency = card.querySelector('.moneda span').innerText;
         const duration = card.querySelector('.duracion span').innerText;
         const period = card.querySelector('.periodo span').innerText;
         const type = card.querySelector('.tipo_empleo span').innerText;
         const modalidad = card.querySelector('.modalidad span').innerText;
         const typeContract = card.querySelector('.tipo_contrato span').innerText;
         const empresa = card.querySelector('.empresa span').innerText;
-        
+
 
         // Llenar el modal con los datos de la tarjeta
         modalTitle.innerText = title;
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const ofertaId = card.getAttribute("data-id"); // Obtener ID de la oferta
         postularseBtn.setAttribute("data-oferta-id", ofertaId); // Asignarlo al botón
-    
+
         // Verifica si se asignó correctamente
         console.log("ID de la oferta en el botón:", postularseBtn.getAttribute("data-oferta-id"));
         // Mostrar el modal
@@ -255,21 +255,28 @@ function applyFilters() {
     }
 }
 
-//no borrar
 function cerrarSesion(event) {
     event.preventDefault(); // Evitar que se ejecute el href del enlace
 
     Swal.fire({
-        icon: 'success',
-        title: 'Cerró sesión exitosamente',
-        showConfirmButton: true,
-        confirmButtonText: 'OK'
+        icon: 'warning',
+        title: '¿Estás seguro?',
+        text: 'Se cerrará tu sesión.',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, cerrar sesión',
+        cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = '/'; // Redirigir a la página de inicio
+            fetch('/logout', {
+                method: 'POST',
+                credentials: 'same-origin' // Enviar cookies y sesión
+            }).then(response => {
+                window.location.href = '/login/personas?logout=true'; // Redirigir al login
+            });
         }
     });
 }
+
 
 //codigo que hace que aparezca la foto de perfil 
 document.addEventListener("DOMContentLoaded", function () {
@@ -311,4 +318,50 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+function cerrarSesionYRedirigir(event) {
+    event.preventDefault(); // Evita la navegación inmediata
 
+    Swal.fire({
+        title: "Cerrando sesión...",
+        text: "Estamos cerrando tu sesión. Por favor, espera.",
+        icon: "info",
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        didOpen: () => {
+            Swal.showLoading(); // Muestra un loader
+            
+            // Enviar la solicitud de cierre de sesión
+            fetch('/logout', { method: 'POST' })
+                .then(response => {
+                    // Esperamos 2 segundos antes de redirigir, asegurando que la sesión se cierre
+                    setTimeout(() => {
+                        window.location.href = '/login/Empresa';
+                    }, 2000);
+                })
+                .catch(error => {
+                    console.error('Error al cerrar sesión:', error);
+                    Swal.fire("Error", "No se pudo cerrar la sesión.", "error");
+                });
+        }
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    var loginMeta = document.getElementById("loginSuccess");
+    var loginSuccess = loginMeta ? loginMeta.content === "true" : false;
+
+    console.log("loginSuccess:", loginSuccess); // Para ver si se detecta correctamente
+
+    if (loginSuccess) {
+        Swal.fire({
+            icon: 'success',
+            title: '¡Inicio de sesión exitoso!',
+            text: 'Bienvenido a la plataforma.',
+            timer: 2000,
+            showConfirmButton: false
+        }).then(() => {
+            // 🔹 Eliminar la variable de sesión después de mostrar la alerta
+            fetch('/eliminarLoginSuccess', { method: 'POST' });
+        });
+    }
+});

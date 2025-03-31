@@ -49,7 +49,6 @@ public class PostulacionService implements IpostulacionService {
         }
         return res;
     }
-    
 
     public void savePostulacion(Long ofertaId, Long personaId) {
         // Buscar la oferta y la persona usando sus IDs
@@ -66,7 +65,7 @@ public class PostulacionService implements IpostulacionService {
             postulacion.setOfertas(oferta); // Asignar la oferta
             postulacion.setPersonas(persona); // Asignar la persona
             postulacion.setN_personas(1); // Aquí puedes definir la cantidad de personas postuladas, dependiendo de tu
-                                          // lógica
+            // lógica
 
             // Guardar la postulación
             postulacionRepository.save(postulacion);
@@ -99,5 +98,5 @@ public class PostulacionService implements IpostulacionService {
         }
         return false;
     }
-    
+
 }

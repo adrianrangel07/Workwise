@@ -24,3 +24,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+function validarFormulario() {
+    var email = document.getElementById('InputEmail').value;
+    var password = document.getElementById('password').value;
+    if (email.trim() === "" || password.trim() === "") {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Campos vacíos',
+            text: 'Por favor, ingresa tu correo y contraseña.',
+        });
+        return false; // Evita el envío del formulario
+    }
+    return true;
+}
+

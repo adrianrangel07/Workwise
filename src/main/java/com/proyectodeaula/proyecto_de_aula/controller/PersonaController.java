@@ -1,15 +1,16 @@
 package com.proyectodeaula.proyecto_de_aula.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,13 +18,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.proyectodeaula.proyecto_de_aula.interfaces.Personas.Interfaz_Per;
@@ -53,9 +55,6 @@ public class PersonaController {
     @Autowired
     private PostulacionService postulacionService;
 
-    @Autowired
-    private Interfaz_Per personaRepository;
-
     @GetMapping("/Register/personas")
     public String agregar(Model model) {
         Personas persona = new Personas();
@@ -78,25 +77,22 @@ public class PersonaController {
     public String iniciarSesion(HttpSession session, Model model, @RequestParam String email,
             @RequestParam String contraseña) {
 
-        // Datos quemados
-        String emailQuemado = "admin@gmail.com";
-        String contraseñaQuemada = "admin123";
-
-        if (email.equals(emailQuemado) && contraseña.equals(contraseñaQuemada)) {
-            session.setAttribute("email", email);
-            session.setAttribute("usuarioId", 1L);
-            return "redirect:/personas/pagina_principal";
-        }
-
         Personas persona = user.findByEmailAndContraseña(email, contraseña);
         if (persona != null) {
             session.setAttribute("email", email);
             session.setAttribute("usuarioId", persona.getId());
+            session.setAttribute("loginSuccess", "true");
             return "redirect:/personas/pagina_principal";
         } else {
             model.addAttribute("error", "Credenciales incorrectas");
             return "redirect:/login/personas?error=true";
         }
+    }
+
+    @PostMapping("/eliminarLoginSuccess")
+    @ResponseBody
+    public void eliminarLoginSuccess(HttpSession session) {
+        session.removeAttribute("loginSuccess");
     }
 
     @GetMapping("/perfil/persona")
@@ -182,16 +178,26 @@ public class PersonaController {
 
     // mostrar la imagen al lado del perfil
     @GetMapping("/imagen/{id}")
-    public ResponseEntity<byte[]> obtenerImagen(@PathVariable Long id) {
-        Optional<Personas> persona = personaRepository.findById(id);
+    public ResponseEntity<byte[]> obtenerImagen(HttpSession session) {
+        String email = (String) session.getAttribute("email");
+        Personas persona = personaService.findByEmail(email);
 
-        if (persona.isPresent() && persona.get().getFoto() != null) {
-            byte[] imagen = persona.get().getFoto();
+        if (persona != null && persona.getFoto() != null) {
+            byte[] imagen = persona.getFoto();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.IMAGE_JPEG); // Ajusta según el formato guardado
             return new ResponseEntity<>(imagen, headers, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            try {
+                // Cargar la imagen por defecto desde el classpath (resources/static/Imagenes/)
+                InputStream inputStream = new ClassPathResource("static/Imagenes/imagenperfil.png").getInputStream();
+                byte[] imagenPorDefecto = inputStream.readAllBytes();
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.IMAGE_PNG); // Ajusta según el tipo de imagen por defecto
+                return new ResponseEntity<>(imagenPorDefecto, headers, HttpStatus.OK);
+            } catch (IOException e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
     }
 
@@ -268,21 +274,6 @@ public class PersonaController {
         return ResponseEntity.ok("Correo verificado. Ahora puede cambiar su contraseña.");
     }
 
-    @PostMapping("/cambiar-contrasena")
-    public ResponseEntity<String> cambiarContraseña(@RequestBody Map<String, String> requestData) throws Exception {
-        String email = requestData.get("email");
-        String nuevaContraseña = requestData.get("nuevaContraseña");
-
-        Personas persona = personaService.findByEmail(email);
-        if (persona == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERROR");
-        }
-
-        persona.setContraseña(nuevaContraseña); // Debería usarse hashing aquí
-        personaService.actualizarPerfil(persona);
-        return ResponseEntity.ok("OK");
-    }
-
     @GetMapping("/persona/Postulaciones")
     public String postulaciones(Model model, HttpSession session) {
         String email = (String) session.getAttribute("email");
@@ -321,14 +312,38 @@ public class PersonaController {
         return ResponseEntity.ok(Map.of("valido", true)); // Contraseña correcta
     }
 
+    @DeleteMapping("/eliminar-cuenta")
+    public ResponseEntity<String> eliminarCuenta(HttpSession session) {
+        String email = (String) session.getAttribute("email");
+
+        if (email == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Sesión expirada. Inicie sesión nuevamente.");
+        }
+
+        Personas persona = personaService.findByEmail(email);
+
+        if (persona == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado.");
+        }
+
+        try {
+            personaService.eliminarPersona(persona.getId());
+            session.invalidate(); // Cerrar sesión después de eliminar la cuenta
+            return ResponseEntity.ok("Cuenta eliminada correctamente.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar la cuenta.");
+        }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // Cerrar sesión manualmente
+        return "redirect:/login/personas?logout=true"; // Redirigir al login
+    }
+
     @GetMapping("/Nosotros") // ruta para enviar a nosotros (informacion sobre la pagina )
     public String Nosotros() {
         return "Html/Nosotros";
-    }
-
-    @GetMapping("/datos_incorrectos") // ruta para cuando se equivoquen al iniciar sesion
-    public String contraseña_incorrecta() {
-        return "Html/persona/contraseña_incorrectauser";
     }
 
     @GetMapping("/Estadisticas") // ruta para llevarlo a estadisticas sobre lo que podemos mostrar
@@ -351,4 +366,13 @@ public class PersonaController {
         return "Html/persona/Configuracion";
     }
 
+    @GetMapping("/persona/hdv") 
+    public String mostrarHojaDeVida() {
+    return "Html/persona/hoja_de_vida";  
+    }
+    
+    @GetMapping("/persona/hdv_nv") 
+    public String mostrarHojaDeVidaNavbar() {
+    return "Html/persona/hoja_de_vida_nv";  
+    } 
 }

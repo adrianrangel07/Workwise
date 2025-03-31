@@ -1,5 +1,5 @@
+
 document.addEventListener('DOMContentLoaded', function () {
-    // Seleccionar todas las tarjetas
     const cards = document.querySelectorAll('.offer-content');
 
     // Elementos de la sección 2
@@ -15,7 +15,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Función para mostrar los detalles en la Sección 2
     const mostrarDetalles = (card) => {
-        const idOferta = card.getAttribute("data-id"); // Obtener ID de la oferta
+        let idOferta = card.getAttribute("data-id"); // Obtener ID de la oferta
+
+        if (!idOferta || idOferta === "null" || idOferta === "undefined") {
+            console.error("❌ ID de oferta inválido:", idOferta);
+            return;
+        }
 
         // Obtener los datos de la tarjeta
         const title = card.querySelector('h3').innerText;
@@ -59,61 +64,17 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// Función para abrir el modal con el PDF
-function abrirModal(pdfUrl, idPostulacion) {
-    let modal = document.getElementById("modalCV");
-    let iframe = document.getElementById("iframeCV");
-
-    iframe.src = pdfUrl;
-    modal.style.display = "flex"
-    modal.style.alignItems = "center"
-    modal.style.justifyContent = "center"
-    document.getElementById("postulacionId").value = idPostulacion; // Almacena correctamente el ID
-}
-
-// Función para cerrar el modal
-function cerrarModal() {
-    let modal = document.getElementById("modalCV");
-    modal.style.display = "none";
-    document.getElementById("iframeCV").src = ""; // Limpiar el src
-}
-
-// Cerrar el modal si el usuario hace clic fuera del contenido
-window.onclick = function (event) {
-    let modal = document.getElementById("modalCV");
-    if (event.target === modal) {
-        cerrarModal();
-    }
-};
-
-function obtenerIdPostulacion() {
-    let id = document.getElementById("postulacionId").value;
-    return id;
-}
-
-function accionAceptado() {
-    let idPostulacion = obtenerIdPostulacion();
-    cambiarEstadoPostulacion(idPostulacion, 'aceptado');
-}
-
-function accionRechazado() {
-    let idPostulacion = obtenerIdPostulacion();
-    cambiarEstadoPostulacion(idPostulacion, 'rechazado');
-}
-
+// Función para cambiar estado de postulación
 function cambiarEstadoPostulacion(idPostulacion, nuevoEstado) {
-    console.log("ID de la postulación que se enviará:", idPostulacion); 
-    console.log("Nuevo estado que se enviará:", nuevoEstado);
-
-    if (!idPostulacion || isNaN(idPostulacion)) {  // Verifica si el ID es válido
-        console.error("Error: idPostulacion es inválido:", idPostulacion);
+    if (!idPostulacion || idPostulacion === "null" || idPostulacion === "undefined") {
+        console.error("❌ Error: ID de postulación inválido:", idPostulacion);
         return;
     }
 
-    fetch(`/postulaciones/${idPostulacion}/estado`, {
+    fetch(`/postulaciones/${idPostulacion}/estado`, { 
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ estado: nuevoEstado }) 
+        body: JSON.stringify({ estado: nuevoEstado })
     })
     .then(response => {
         if (!response.ok) {
@@ -126,24 +87,20 @@ function cambiarEstadoPostulacion(idPostulacion, nuevoEstado) {
         cerrarModal();
         location.reload();
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => console.error('Error al actualizar el estado:', error));
 }
 
+// Función para cargar postulaciones de una oferta
 function cargarPostulaciones(idOferta) {
-    fetch(`/ofertas/${idOferta}/postulaciones`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error en la solicitud: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log("Datos recibidos:", data);
+    if (!idOferta || idOferta === "null" || idOferta === "undefined") {
+        console.error("❌ Error: ID de oferta inválido:", idOferta);
+        return;
+    }
 
-            if (!Array.isArray(data)) {
-                console.error("Respuesta no es un array:", data);
-                return;
-            }
+    fetch(`/ofertas/${idOferta}/postulaciones`)
+        .then(response => response.json())
+        .then(data => {
+            console.log("✅ Datos de postulaciones recibidos:", data);
 
             let listaPostulantes = document.getElementById("lista-postulantes");
             listaPostulantes.innerHTML = "";
@@ -151,26 +108,84 @@ function cargarPostulaciones(idOferta) {
             data.forEach(postulante => {
                 let li = document.createElement("li");
                 li.classList.add("postulante-item");
+                li.innerHTML = `${postulante.nombre} ${postulante.apellido} `;
 
                 let btnVerCV = document.createElement("button");
                 btnVerCV.innerText = "Ver CV";
                 btnVerCV.classList.add("btn-ver-cv");
+                btnVerCV.setAttribute("data-postulacion-id", postulante.postulacionId);
 
-                if (postulante.id) {
-                    btnVerCV.onclick = function () {
-                        console.log("Clic en Ver CV - ID:", postulante.id);
-                        // document.getElementById("postulacionId").value = postulante.id;
-                        document.getElementById("postulacionId").value = postulante.id;
-                        abrirModal(`/postulantes/${postulante.id}/verHDV`, postulante.id);
-                    };
-                } else {
-                    btnVerCV.disabled = true;
-                }
+                btnVerCV.addEventListener("click", function () {
+                    let id = this.getAttribute("data-postulacion-id");
 
-                li.textContent = `${postulante.nombre} ${postulante.apellido} `;
+                    if (!id || id === "null" || id === "undefined") {
+                        console.error("❌ Error: ID de postulación inválido al abrir CV:", id);
+                        return;
+                    }
+
+                    console.log("📄 Abriendo CV - ID de postulación:", id);
+                    document.getElementById("postulacionId").value = id;
+                    abrirModal(`/postulantes/${id}/verHDV`, id);
+                });
+
                 li.appendChild(btnVerCV);
                 listaPostulantes.appendChild(li);
             });
         })
-        .catch(error => console.error("Error cargando postulaciones:", error));
+        .catch(error => console.error("❌ Error cargando postulaciones:", error));
+}
+
+document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("btn-ver-cv")) {
+        let idPostulacion = event.target.getAttribute("data-postulacion-id");
+        console.log("📌 Evento global detectado: ID de postulación:", idPostulacion);
+        document.getElementById("postulacionId").value = idPostulacion;
+        abrirModal(`/postulantes/${idPostulacion}/verHDV`, idPostulacion);
+    }
+});
+
+function abrirModal(pdfUrl, idPostulacion) {
+    let modal = document.getElementById("modalCV");
+    let iframe = document.getElementById("iframeCV");
+
+    if (!pdfUrl || !idPostulacion) {
+        console.error("❌ Error: La URL del PDF o el ID de postulación están vacíos.");
+        return;
+    }
+
+    console.log("✅ Abriendo modal con PDF:", pdfUrl); // 🧐 Verifica en consola
+
+    iframe.src = pdfUrl; // Asegura que se carga correctamente el PDF
+    modal.style.display = "flex";
+    modal.style.alignItems = "center";
+    modal.style.justifyContent = "center";
+    document.getElementById("postulacionId").value = idPostulacion;
+}
+
+
+// Función para cerrar el modal
+function cerrarModal() {
+    let modal = document.getElementById("modalCV");
+    modal.style.display = "none";
+    document.getElementById("iframeCV").src = ""; 
+}
+
+// Cerrar el modal si el usuario hace clic fuera del contenido
+window.onclick = function (event) {
+    let modal = document.getElementById("modalCV");
+    if (event.target === modal) {
+        cerrarModal();
+    }
+};
+
+function accionAceptado() {
+    let idPostulacion = document.getElementById("postulacionId").value;
+    console.log("ID obtenido antes de enviar:", idPostulacion); // 👀 Para depuración
+    cambiarEstadoPostulacion(idPostulacion, 'aceptado');
+}
+
+function accionRechazado() {
+    let idPostulacion = document.getElementById("postulacionId").value;
+    console.log("ID obtenido antes de enviar:", idPostulacion); // 👀 Para depuración
+    cambiarEstadoPostulacion(idPostulacion, 'rechazado');
 }
