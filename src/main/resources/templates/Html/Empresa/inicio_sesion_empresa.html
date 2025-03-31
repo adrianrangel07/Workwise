@@ -16,63 +16,57 @@
 </head>
 
 <body>
-    <div style="display: flex;">
+    <div class="container-logo">
         <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" th:href="@{/}">
-            <img id="logo" src="/Imagenes/wknblack.png" width="61" height="58" style="width: 60px; height: 60px; margin: 10px;">
+            <img class="logo" id="logo" src="../Imagenes/wknblack.png">
         </a>
     </div>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-9 col-lg-12 col-xl-10">
-                <div class="card shadow-lg o-hidden border-0 my-5">
-                    <div class="card-body p-0">
-                        <div class="row">
-                            <div class="col-lg-6 d-none d-lg-flex">
-                                <div class="flex-grow-1 bg-login-image">
-                                    <img src="https://png.pngtree.com/png-clipart/20220131/original/pngtree-cartoon-style-driving-the-organization-consists-of-working-from-many-departments-png-image_7257827.png" alt="" class="img_emp">
-                                </div>
-                            </div>
-                            <div class="col-lg-6" style="height: 540px;">
-                                <a  th:href="@{/}" class="back_a" >
-                                    <i class="fas fa-arrow-left back"></i>
-                                </a>
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h4 class="text-dark mb-4">Welcome Back!</h4>
-                                    </div>
-                                    <form class="user" th:action="@{/login/Empresa}" th:object="${Usuario}"
-                                        method="post">
-
-                                        <div class="mb-3"><input class="form-control form-control-user" type="email"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address." name="email">
-                                        </div>
-                                        <div class="mb-3"><input class="form-control form-control-user" type="password"
-                                                id="password" placeholder="Password" name="contraseña"></div>
-                                        <div class="mb-3">                                   
-                                        </div><button class="btn btn-primary d-block btn-user w-100"
-                                            type="submit" id="validar" onclick="validar">Login</button>
-                                    </form>
-                                    
-                                    <div class="text-center" style="margin-top: 25px;"><a class="small" th:href="@{/Contraseña-olvidada-empresa}">Forgot
-                                            Password?</a></div>
-                                    <div class="text-center" style="margin-top: 25px;"><a class="small" th:href="@{/Registrar/Empresa}">Create an
-                                            Account!</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="contenedor">
+        <div class="card">
+            <div class="head-card">
+                <h1>Sing in</h1>
+                <div class="container-back">
+                    <a th:href="@{/}" class="back_a">
+                        <i class="fas fa-arrow-left back"></i>
+                    </a>
                 </div>
             </div>
+            <p>Let's grow your company together.</p>
+            <div class="formulario">
+                <form class="user" th:action="@{/login/Empresa}" th:object="${Empresa}" method="post">
+                    <div class="mb-3">
+                        <input class="form-control form-control-user" type="email" id="InputEmail"
+                            aria-describedby="emailHelp" name="email" placeholder="" required>
+                        <label for="InputEmail" class="floating-label">Email</label>
+                    </div>
+                    <div class="mb-3">
+                        <input class="form-control form-control-user" type="password" id="password" name="contraseña"
+                            placeholder="" required>
+                        <label for="password" class="floating-label">Password</label>
+                        <button id="show-password" class="show-password" type="button">show</button>
+                    </div>
+                    <button class="btn btn-primary d-block btn-user w-100" type="submit" id="validar" onclick="validar">
+                        Login
+                    </button>
+                    <p><a th:href="@{/Contrasena-olvidada-empresa}">Forget Password?</a></p>
+                </form>
+            </div>
+        </div>
+        <div class="register">
+            <p>Don't have an account for your company? <a th:href="@{/Registrar/Empresa}">Sign up</a></p>
         </div>
     </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/General/Grid-and-List-view-V10-script.js"></script>
-    <script src="/js/General/script.min.js"></script>
-    <script src="/js/General/theme.js"></script>
+    <div style="display: flex;">
+        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" th:href="@{/}">
+            <img id="logo" src="../Imagenes/wknblack.png" width="61" height="58" style="width: 60px; height: 60px; margin: 10px;">
+        </a>
+    </div>
+
+
+    <script src="../js/General/script.min.js"></script>
+    <script src="../js/General/theme.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/js/empresa/inicio_sesion_persona.js"></script>
+    <script src="../js/general/inicio_sesion.js"></script>
 </body>
 
 </html>

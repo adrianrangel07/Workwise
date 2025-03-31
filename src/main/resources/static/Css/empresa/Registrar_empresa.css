@@ -1,60 +1,232 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+html, body {
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* boton regreso */
+/* aqui empieza el logo */
+.container-logo{
+    display: flex;
+    z-index: 50;
+    margin: 15px;
+    position: absolute;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.container-logo:hover {
+    transform: scale(1.1);
+}
+
+.logo{
+    height: 80px;
+    width: 80px;
+}
+
+/* aqui empieza el contenedor */
+.contenedor{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100; 
+}
+
+.container-login{
+    width: 65%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* empieza la tarjeta */
+.head-card{
+    display: flex;
+    justify-content: space-between;
+}
+
 .back{
-    float: right;
     margin: 7px;
     font-size: 30px;
-    transition: all 0.2s ease;
+    color: #0a1128;
 }
 
-.back:hover{
-    transform: scale(1,1);
-}
-/* fin boton regreso */
-
-#select{
-    text-align: end;
-    border-color: black;
+.container-back{
+    transition: all .3s;
 }
 
-#btn-register {
-    background-color: #fec785;
-    color: black; 
-    padding: 12px 30px; 
-    font-size: 16px; 
-    border: none;
-    border-radius: 8px;
-    cursor: pointer; 
-    display: block; 
-    margin: 20px auto; 
-    text-align: center; 
-    width: 80%; 
-    transition: background-color 0.3s ease; 
+.container-back:hover{
+    transform: scale(1.2);
+}
+
+.card{
+    display: flex;
+    justify-content: start;
+    width: 100%;
+    max-width: 550px;
+    border: none !important;
+    box-shadow: 0 4px 12px 4px rgba(0, 0, 0, 0.15);
+    padding: 20px;
 }
 
 
-#btn-register:hover {
-    background-color: #f09c36; 
+.card h1{
+    font-size: 30px;
+    color:#343a40;
+    font-weight: bold; /* Hace el texto más grueso */
 }
 
-body{
-    background-color: #feead1 !important;
+.formulario{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;   
 }
 
-#logo {
-    width: 150px;
-    cursor: pointer;
-    transition: transform 0.3s;
+.formulario form{
+    width: 100%;
 }
 
-#logo:hover {
-    transform: scale(1.1);
+.contenedor-input{
+    width: 50% !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.mb-3 {
+    position: relative;
+    width: 100% !important;
+}
+
+.mb-3 input{
+    width: 100%;
+    font-size: 1.8rem;
+    line-height: 1.33333;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.9) !important;
+    height: 52px;
+    padding: 0px 15px !important;
+    border-radius: 6px !important;
+}
+
+
+.label{
+    position: absolute;
+    padding: 3px !important;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: rgba(0, 0, 0, 0.9) ;
+    font-size: 15px;
+    pointer-events: none;
+    transition: .3s;
+}
+
+.mb-3 input:focus{
+    border: 2px solid #0a1128;
+    box-shadow: none;
+}
+
+.mb-3 input:focus ~ .label,
+.mb-3 input:not(:placeholder-shown) ~ .label{
+    top: 0;
+    font-size: 16px;
+    padding: 0 15px;
+    background: #fff;
+}
+
+
+.btn{
+    margin-top: 20px;
+    background-color: #343a40 !important;
+    font-size: 17px !important;
+    border: none !important;
+}
+
+.btn:hover{
+    background-color: #495057 !important;
+    border: none !important;
+}
+
+.login{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    color: #0a1128;
+}
+/* contenedor de curva */
+.curva{
+    width: 40%;
+    height: 100%;
+    position: relative;
+    clip-path: ellipse(100% 90% at right);
+    box-shadow: 0 4px 12px 4px rgba(3, 3, 3, 0.15);
+}
+
+.curva::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(0,0,0,0.3) 0%,  /* Sombra en el lado izquierdo */
+        rgba(0,0,0,0.1) 20%, /* Transición */
+        transparent 100%       /* Desvanecimiento */
+    );
+    pointer-events: none; /* Permite interactuar con elementos debajo */
+    clip-path: inherit;   /* Hereda la misma curva que el contenedor */
+}
+
+.container-img{
+    height: 100%;
+    background: url("../../Imagenes/job-5382501.png");
+    background-size: cover;
+    background-position: center;
+    filter: contrast(110%);
+    box-shadow: 0 4px 12px 4px rgba(3, 3, 3, 0.15);
+}
+/* termina la curva */
+
+/* termina contenedo */
+
+/* responsive */
+@media (max-width: 600px) {
+    .card {
+        max-width: 100%;
+        box-shadow: none;
+    }
+    .container-logo{
+        width: 100px;
+        display: block;
+        position: sticky;
+        left: 1px;
+        margin: 5px;
+    }
+    .logo{
+        margin: 5px;
+        height: 60px;
+        width: 60px;
+    }
+
+    .container-login{
+        align-items: flex-start;
+        justify-content: flex-start;
+        width: 100vw;
+    }
+
+    .curva{
+        display: none;
+    }
 }
 
