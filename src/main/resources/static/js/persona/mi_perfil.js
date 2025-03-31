@@ -247,5 +247,32 @@ function eliminarCuenta() {
     });
 }
 
+function cerrarSesionYRedirigir(event) {
+    event.preventDefault(); // Evita la navegación inmediata
+
+    Swal.fire({
+        title: "Cerrando sesión...",
+        text: "Estamos cerrando tu sesión. Por favor, espera.",
+        icon: "info",
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        didOpen: () => {
+            Swal.showLoading(); // Muestra un loader
+            
+            // Enviar la solicitud de cierre de sesión
+            fetch('/logout', { method: 'POST' })
+                .then(response => {
+                    // Esperamos 2 segundos antes de redirigir, asegurando que la sesión se cierre
+                    setTimeout(() => {
+                        window.location.href = '/login/Empresa';
+                    }, 2000);
+                })
+                .catch(error => {
+                    console.error('Error al cerrar sesión:', error);
+                    Swal.fire("Error", "No se pudo cerrar la sesión.", "error");
+                });
+        }
+    });
+}
 
 

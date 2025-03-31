@@ -168,7 +168,6 @@ function applyFilters() {
     }
 }
 
-// no borrar
 document.addEventListener('DOMContentLoaded', function () {
     const postularseBtn = document.getElementById('postularseBtn');
 
@@ -193,7 +192,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".salario span").forEach(function (element) {
         let value = element.textContent.trim();
@@ -202,7 +200,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
 
 document.getElementById("ocultarNavBar").addEventListener("click", function () {
     let sidebar = document.querySelector(".sidebar");
