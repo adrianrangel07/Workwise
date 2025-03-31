@@ -370,7 +370,7 @@ public class PersonaController {
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        session.invalidate(); // Cerrar sesión manualmente
+        session.invalidate(); 
         return "redirect:/login/personas?logout=true"; // Redirigir al login
     }
 
