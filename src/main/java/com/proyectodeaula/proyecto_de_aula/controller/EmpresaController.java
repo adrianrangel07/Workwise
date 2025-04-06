@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,16 +52,26 @@ public class EmpresaController {
     @Autowired
     private EmpresaService empresaService;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     // Muestra el formulario de registro de empresa
     @GetMapping("/Registrar/Empresa")
     public String mostrarFormularioRegistro(Model model) {
-        model.addAttribute("empresa", new Empresas());
+        Empresas empresa = new Empresas();
+        model.addAttribute("empresa", empresa);
         return "Html/Empresa/Registrar_empresa";
     }
 
     // Registra una nueva empresa en la base de datos
     @PostMapping("/Registrar/Empresa")
     public String registrarEmpresa(@ModelAttribute Empresas empresa) {
+        String contraseña = empresa.getContraseña();
+        if (contraseña == null || contraseña.isBlank()) {
+            throw new IllegalArgumentException("La contraseña no puede estar vacía");
+        }
+
+        empresa.setContraseña(passwordEncoder.encode(empresa.getContraseña()));
         empresaRepository.save(empresa);
         return "redirect:/login/Empresa";
     }
@@ -73,18 +84,34 @@ public class EmpresaController {
 
     // Procesa el inicio de sesión de una empresa
     @PostMapping("/login/Empresa")
-    public String iniciarSesion(HttpSession session, Model model, @RequestParam String email,
+    public String iniciarSesionEmpresa(HttpSession session, Model model,
+            @RequestParam String email,
             @RequestParam String contraseña) {
-        Empresas empresa = uEmp.findByEmailAndContraseña(email, contraseña);
 
-        if (empresa != null) {
+        Empresas empresa = uEmp.findByEmail(email);
+
+        if (empresa == null) {
+            System.out.println("No se encontró empresa con el email: " + email);
+            model.addAttribute("error", "Credenciales incorrectas");
+            return "redirect:/login/Empresa?error=true";
+        }
+
+        System.out.println("Empresa encontrada: " + empresa.getEmail());
+        System.out.println("Contraseña en BD: " + empresa.getContraseña());
+        System.out.println("Contraseña ingresada: " + contraseña);
+
+        if (passwordEncoder.matches(contraseña, empresa.getContraseña())) {
+            System.out.println("Contraseña correcta, iniciando sesión...");
             session.setAttribute("email", email);
             session.setAttribute("empresa", empresa);
             session.setAttribute("usuarioId", empresa.getId());
+            session.setAttribute("loginSuccess", "true");
             return "redirect:/empresas/pagina_principal";
+        } else {
+            System.out.println("Contraseña incorrecta");
+            model.addAttribute("error", "Credenciales incorrectas");
+            return "redirect:/login/Empresa?error=true";
         }
-        model.addAttribute("error", "Credenciales incorrectas o empresa no encontrada");
-        return "redirect:/login/Empresa?error=true";
     }
 
     // Muestra la página principal de la empresa después del inicio de sesión
@@ -137,7 +164,7 @@ public class EmpresaController {
             @RequestParam String nombreEmp,
             @RequestParam String direccion,
             @RequestParam String razon_social,
-            @RequestParam String confirmPassword, 
+            @RequestParam String confirmPassword,
             HttpSession session, Model model) {
 
         // Verifica si la sesión sigue activa
