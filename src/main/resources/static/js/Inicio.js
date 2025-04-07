@@ -204,7 +204,6 @@ document.addEventListener("DOMContentLoaded", function () {
 document.getElementById("ocultarNavBar").addEventListener("click", function () {
     let sidebar = document.querySelector(".sidebar");
 
-    // Alternar la clase "toggled" en la barra lateral
     sidebar.classList.toggle("toggled");
-    // sidebar.classList.toggle("sidebar");
+
 });

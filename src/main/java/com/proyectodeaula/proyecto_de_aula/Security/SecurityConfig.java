@@ -39,29 +39,4 @@ public class SecurityConfig {
                 .addFilterBefore(sessionFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-    // @Bean
-    // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    //     http
-    //             .authorizeHttpRequests(auth -> auth
-    //             .anyRequest().permitAll()
-    //             )
-    //             .csrf(csrf -> csrf.disable()) // asegúrate de mantener esto si usas formularios normales
-    //             .headers(headers -> headers
-    //             .contentSecurityPolicy(csp -> csp
-    //             .policyDirectives("script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline' 'unsafe-eval'; ")
-    //             )
-    //             )
-    //             .headers(headers -> headers
-    //             .frameOptions(frame -> frame.disable())
-    //             )
-    //             .logout(logout -> logout
-    //             .logoutUrl("/logout")
-    //             .logoutSuccessUrl("/login/personas?logout=true")
-    //             .invalidateHttpSession(true)
-    //             .deleteCookies("JSESSIONID")
-    //             );
-
-    //     return http.build();
-    // }
-
 }
