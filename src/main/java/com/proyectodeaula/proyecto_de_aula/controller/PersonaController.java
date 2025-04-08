@@ -408,4 +408,9 @@ public class PersonaController {
     public String mostrarHojaDeVidaNavbar() {
         return "Html/persona/hoja_de_vida_nv";
     }
+
+    @GetMapping("/")
+    public String pagina_inicio_principal() {
+        return "Html/pagina_inicio";
+    }
 }
