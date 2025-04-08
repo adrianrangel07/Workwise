@@ -59,6 +59,13 @@ public class Ofertas {
     @Column(name = "tipo_contrato", columnDefinition = "varchar(45)", nullable = false)
     String tipo_contrato;
 
+    @Column(name = "experiencia", columnDefinition = "int", nullable = false)
+    int experiencia;
+
+    @Column(name = "nivel_educativo", columnDefinition = "varchar(50)", nullable = false)
+    String nivel_educativo;
+
+
     @ManyToOne
     @JoinColumn(name = "empresa_id") 
     private Empresas empresa;
