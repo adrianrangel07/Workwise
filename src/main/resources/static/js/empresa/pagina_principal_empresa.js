@@ -10,12 +10,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalTitle = document.getElementById('modal-title');
     const modalDescription = document.getElementById('modal-description');
     const modalSalary = document.getElementById('modal-salary');
-    const modalCurrency = document.getElementById('modal-currency');    
+    const modalCurrency = document.getElementById('modal-currency');
     const modalDuration = document.getElementById('modal-duration');
     const modalPeriod = document.getElementById('modal-period');
     const modalType = document.getElementById('modal-type');
     const modalModalidad = document.getElementById('modal-modalidad');
     const modalTypeContract = document.getElementById('modal-typeContract');
+    const modalExperience = document.getElementById('modal-experience');
+    const modalEducationLevel = document.getElementById('modal-educationLevel');
 
     // Función para abrir el modal
     const openModal = (card) => {
@@ -27,12 +29,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const title = card.querySelector('h3').innerText;
         const description = card.querySelector('p').innerText;
         const salary = card.querySelector('.salario span').innerText;
-        const currency = card.querySelector('.moneda span').innerText;        
+        const currency = card.querySelector('.moneda span').innerText;
         const duration = card.querySelector('.duracion span').innerText;
         const period = card.querySelector('.periodo span').innerText;
         const type = card.querySelector('.tipo_empleo span').innerText;
         const modalidad = card.querySelector('.modalidad span').innerText;
         const typeContract = card.querySelector('.tipo_contrato span').innerText;
+        const experience = card.querySelector('.experiencia span').innerText;
+        const educationLevel = card.querySelector('.nivel_educativo span').innerText;
 
         // Llenar el modal con los datos de la tarjeta
         modalTitle.innerText = title;
@@ -44,6 +48,8 @@ document.addEventListener('DOMContentLoaded', function () {
         modalType.innerHTML = `<strong>Tipo de empleo:</strong> ${type}`;
         modalModalidad.innerHTML = `<strong>Modalidad:</strong> ${modalidad}`;
         modalTypeContract.innerHTML = `<strong>Tipo de contrato:</strong> ${typeContract}`;
+        modalExperience.innerHTML = `<strong>Experiencia:</strong> ${experience}`;
+        modalEducationLevel.innerHTML = `<strong>Nivel educativo:</strong> ${educationLevel}`;
 
         // Mostrar el modal
         modal.style.display = 'flex';
@@ -77,13 +83,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalTitle = document.getElementById('modal-title');
     const modalDescription = document.getElementById('modal-description');
     const modalSalary = document.getElementById('modal-salary');
-    const modalCurrency = document.getElementById('modal-currency');  
+    const modalCurrency = document.getElementById('modal-currency');
     const modalDuration = document.getElementById('modal-duration');
     const modalPeriod = document.getElementById('modal-period');
     const modalType = document.getElementById('modal-type');
     const modalModalidad = document.getElementById('modal-modalidad');
     const modalTypeContract = document.getElementById('modal-typeContract');
-      
+    const modalExperience = document.getElementById('modal-experience');
+    const modalEducationLevel = document.getElementById('modal-educationLevel');
+
 
     const editForm = document.getElementById('edit-form');
     const editButton = document.getElementById('edit-button');
@@ -118,6 +126,8 @@ document.addEventListener('DOMContentLoaded', function () {
         modalType.innerHTML = `<strong>Tipo de empleo:</strong> ${card.querySelector('.tipo_empleo span').innerText}`;
         modalModalidad.innerHTML = `<strong>Modalidad:</strong> ${card.querySelector('.modalidad span').innerText}`;
         modalTypeContract.innerHTML = `<strong>tipo de contrato:</strong> ${card.querySelector('.tipo_contrato span').innerText}`;
+        modalExperience.innerHTML = `<strong>Experiencia:</strong> ${card.querySelector('.experiencia span').innerText}`;
+        modalEducationLevel.innerHTML = `<strong>Nivel educativo:</strong> ${card.querySelector('.nivel_educativo span').innerText}`;
 
         mostrarPostulaciones(currentOfferId);
 
@@ -138,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     editButton.addEventListener('click', function () {
-        
+
         // Ocultar botones de editar y eliminar
         editButton.style.display = 'none';
         deleteButton.style.display = 'none';
@@ -153,10 +163,10 @@ document.addEventListener('DOMContentLoaded', function () {
         modalType.style.display = 'none';
         modalModalidad.style.display = 'none';
         modalTypeContract.style.display = 'none';
-        
+
         // Mostrar el formulario de edición
         editForm.style.display = 'block';
-    
+
         // Pre-llenar el formulario con los datos actuales 
         editTitle.value = modalTitle.textContent.trim();
         editDescription.value = modalDescription.textContent.trim();
@@ -168,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function () {
         editType.value = modalType.textContent.replace('Tipo de empleo: ', '').trim();
         editTypeContract.value = modalTypeContract.textContent.replace('Tipo de contrato: ', '').trim();
 
-        
+
     });
 
     // Guardar los cambios
@@ -379,7 +389,7 @@ document.addEventListener("DOMContentLoaded", function () {
 //         userAvatar.src = "../Imagenes/imagenempresa.png"
 //     }
 
-    
+
 
 //     // Evento para actualizar la foto cuando el usuario la cambia
 //     function actualizarFotoPerfil(nuevaFoto) {

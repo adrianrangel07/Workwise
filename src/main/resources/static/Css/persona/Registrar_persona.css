@@ -35,11 +35,9 @@ html, body {
     justify-content: center;
     width: 100vw;
     height: 100vh;
-    z-index: 100; 
-
 }
 
-.container-login{
+.container-register{
     width: 65%;
     height: 100vh;
     display: flex;
@@ -219,6 +217,42 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     width: 100%;
     color: #0a1128;
 }
+
+/* contenedor de curva */
+.curva{
+    width: 40%;
+    height: 100%;
+    position: relative;
+    clip-path: ellipse(100% 90% at right);
+    box-shadow: 0 4px 12px 4px rgba(3, 3, 3, 0.15);
+}
+
+.curva::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(0,0,0,0.3) 0%,  /* Sombra en el lado izquierdo */
+        rgba(0,0,0,0.1) 20%, /* Transición */
+        transparent 100%       /* Desvanecimiento */
+    );
+    pointer-events: none; /* Permite interactuar con elementos debajo */
+    clip-path: inherit;   /* Hereda la misma curva que el contenedor */
+}
+
+.container-img{
+    height: 100%;
+    background: url("../../Imagenes/office.png");
+    background-size: cover;
+    background-position: center;
+    filter: contrast(110%);
+    box-shadow: 0 4px 12px 4px rgba(3, 3, 3, 0.15);
+}
+
 /* responsive */
 @media (max-width: 600px) {
     .card {
@@ -238,7 +272,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         width: 60px;
     }
 
-    .container-login{
+    .container-register{
         align-items: flex-start;
         justify-content: flex-start;
         width: 100vw;
