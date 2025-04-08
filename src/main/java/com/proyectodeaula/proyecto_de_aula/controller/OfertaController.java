@@ -67,7 +67,7 @@ public class OfertaController {
         // Devolvemos la vista "pagina_principal_personas"
     }
 
-    @GetMapping("/")
+    @GetMapping("/pagina/inicio")
     public String listar_ofertas(Model model) {
         List<Ofertas> Ofertas = offerService.listar_ofertas();
         model.addAttribute("Ofertas", Ofertas);

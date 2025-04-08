@@ -1,0 +1,218 @@
+/* estilos.css */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f6f8;
+    color: #1f1f1f;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0a1128;
+    color: white;
+    padding: 15px 40px;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.nav a {
+    color: white;
+    margin-left: 20px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.nav a:hover {
+    color: #FFD700;
+}
+
+.hero {
+    background: url('/Imagenes/job-5382501.png') no-repeat center center/cover;
+    height: auto;
+    min-height: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.hero-content {
+    max-width: 700px;
+}
+
+.hero h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.hero-button, .main-btn {
+    background-color: #0056b3; /* Azul corporativo */
+    color: #ffffff;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+    text-align: center;
+  }
+  
+  .hero-button:hover, .main-btn:hover {
+    background-color: #003d82; /* Azul más oscuro */
+    transform: translateY(-2px);
+  }
+  
+
+.about, .objectives {
+    padding: 40px 60px;
+    background-color: white;
+    margin: 30px auto;
+    max-width: 1000px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.about h2, .objectives h2 {
+    font-size: 28px;
+    color: #001f54;
+    margin-bottom: 20px;
+}
+
+.about p, .objectives li {
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.objectives ul {
+    padding-left: 20px;
+}
+
+.footer {
+    text-align: center;
+    background-color: #0a1128;
+    color: white;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+.btn-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.about {
+    text-align: center;
+    padding: 50px 20px;
+  }
+  
+  .about-image {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .testimonials {
+    margin-top: 40px;
+  }
+  
+  blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 20px auto;
+    padding: 20px;
+    width: 80%;
+    font-style: italic;
+  }
+  
+  blockquote cite {
+    display: block;
+    text-align: right;
+    color: #555;
+    margin-top: 10px;
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .logo-img {
+    width: 40px; /* Ajusta según el tamaño de tu logo */
+    height: auto;
+  }
+  
+  .logo-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 1px;
+  }
+  
+
+/* ----------------- RESPONSIVE ----------------- */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px 20px;
+    }
+
+    .nav {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .about, .objectives {
+        padding: 25px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-button {
+        width: 100%;
+        display: block;
+    }
+
+    .hero-content {
+        padding: 0 10px;
+    }
+
+    .about h2, .objectives h2 {
+        font-size: 22px;
+    }
+
+    .about p, .objectives li {
+        font-size: 15px;
+    }
+}

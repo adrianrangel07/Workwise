@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acerca de Workwise</title>
+    <link rel="stylesheet" href="/Css/pagina_inicio.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="logo-container">
+            <img src="/Imagenes/wwk_white.png" alt="Logo Workwise" class="logo-img">
+            <div class="logo-text">WORKWISE</div>
+        </div>
+        <nav class="nav">
+            <a th:href="@{/}">Ofertas</a>
+            <a th:href="@{/login/Empresa}">Empresas</a>
+            <a th:href="@{/login/personas}">Inicio de sesion</a>
+            <a th:href="@{/Estadisticas}">Estadisticas</a>
+        </nav>
+    </header>
+
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>¡Ahora es el momento de avanzar!</h1>
+            <p>Conecta con las mejores oportunidades laborales en Cartagena.</p>
+            <a href="/pagina/inicio" class="hero-button">Conéctate con el mundo laboral</a>
+        </div>
+    </section>
+
+    <section class="about">
+        <img src="/Imagenes/wkn_black.png" alt="Equipo profesional en una reunión" class="about-image">
+        <p>
+            En <strong>Workwise</strong>, creemos que el empleo digno es una puerta abierta al crecimiento personal y
+            profesional. Por eso, desarrollamos una plataforma web sólida, intuitiva y centrada en la experiencia del
+            usuario, donde las oportunidades laborales están al alcance de todos. Nuestro principal objetivo es conectar
+            a las personas que buscan empleo con empresas que requieren talento, promoviendo así una comunidad activa y
+            dinámica en Cartagena.
+            <br><br>
+            A través de herramientas tecnológicas modernas, recolectamos, almacenamos y procesamos información relevante
+            sobre perfiles de candidatos y vacantes disponibles. Esto permite a nuestros usuarios encontrar fácilmente
+            ofertas que se ajusten a sus habilidades, intereses y expectativas. Asimismo, facilitamos a las empresas
+            —incluyendo pequeños negocios locales— un espacio donde puedan publicar sus ofertas y hallar candidatos
+            cualificados de manera rápida y eficaz.
+            <br><br>
+            En Workwise también nos preocupamos por el crecimiento constante de quienes nos visitan. Por eso, ofrecemos
+            consejos prácticos, recursos audiovisuales y tips enfocados en el desarrollo profesional, mejorando la
+            empleabilidad de los ciudadanos. Nuestro compromiso es con una Cartagena más próspera, donde el talento
+            local encuentre el lugar ideal para crecer y aportar.
+        </p>
+
+        <div class="testimonials">
+            <h3>Experiencias de nuestros usuarios</h3>
+            <blockquote>
+                "Gracias a Workwise encontré mi primer empleo en menos de dos semanas. La plataforma fue clara, sencilla
+                y llena de oportunidades."
+                <cite>– Mariana G.</cite>
+            </blockquote>
+            <blockquote>
+                "Publicamos una vacante y en solo tres días teníamos al candidato ideal. ¡Recomendado para pequeñas
+                empresas!"
+                <cite>– Restaurante Sazón del Mar</cite>
+            </blockquote>
+            <blockquote>
+                "Me encantaron los recursos de preparación para entrevistas. Me sentí mucho más segura y conseguí el
+                trabajo que buscaba."
+                <cite>– Jonathan P.</cite>
+            </blockquote>
+        </div>
+
+        <div class="btn-container">
+            <a href="/pagina/inicio" class="main-btn">Conéctate con el mundo laboral</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        © 2025 Workwise. Todos los derechos reservados.
+    </footer>
+
+</body>
+
+</html>

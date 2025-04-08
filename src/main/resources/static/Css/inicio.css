@@ -147,11 +147,6 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra al pasar el ratón */
 }
 
-.navbar {
-    background-color: #ffff;
-  /* barra superior */
-}
-
 /* Efecto al pasar el mouse */
 .sidebar .nav-item:hover {
     background: rgba(255, 255, 255, 0.2); /* Un ligero brillo */
@@ -160,24 +155,15 @@
 }
 
 /* Para que el texto y el ícono no se muevan */
-.sidebar .nav-item a {
-    display: flex;
-    align-items: center;
-    padding: 10px;
+.sidebar a {
     text-decoration: none;
+    margin: 20px 0;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s;
+    font-size: 15px !important;  /* Aumentar el tamaño del texto */
 }
 
-/* Resaltar el enlace activo (cuando está seleccionado) */
-.sidebar .nav-link.active {
-    background: rgba(255, 255, 255, 0.1);
-    border-left: 4px solid #59625e;
-}
-
-
-.offcanvas {
-    background-color: #0a1128;
-    /* barra de navegacion */
-}
 
 .letras {
     color: #ffffff;
@@ -245,7 +231,6 @@
     display: none;
 }
 
-
 /* Contenedor principal que envuelve las tarjetas */
 .offer-container {
     display: flex;
@@ -295,10 +280,6 @@
 /* Estilos específicos para las etiquetas dentro de la información oculta */
 .hidden-info p {
     margin: 5px 0;
-}
-
-#usuario{
-    color: #000 !important;
 }
 
 /* filtro */
@@ -482,39 +463,6 @@
 }
 
 
-/* Estilos para la foto y el nombre del usuario  */
-#usuario-container {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Espaciado entre la imagen y el nombre */
-    margin-left: -15px; /* Mover hacia la izquierda */
-}
-
-#user-avatar {
-    width: 30px; /* Hacer la imagen más pequeña */
-    height: 30px;
-    border-radius: 50%; /* Mantener forma circular */
-    border: 1px solid #000; /* Borde opcional */
-    cursor: pointer; /* Cambiar cursor al pasar el mouse */
-    transition: transform 0.2s ease-in-out;
-}
-
-#user-avatar:hover {
-    transform: scale(1.1); /* Aumentar tamaño al pasar el mouse */
-}
-
-#usuario {
-    font-size: 18px; /* Tamaño del texto */
-    font-weight: bold;
-    color: black; /* Color negro */
-    cursor: pointer; /* Cambiar cursor al pasar el mouse */
-    transition: color 0.2s ease-in-out;
-}
-
-#usuario:hover {
-    color: #555; /* Cambia de color al pasar el mouse */
-}
-
 /* barra de busqueda */
 #termino {
     border: 2px solid black !important; /* Borde negro */
@@ -529,6 +477,25 @@
     height: 38px !important; /* Ajustar altura */
     width: 38px !important;
 }
+
+.section-title {
+    padding: 10px 0;
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 20px;
+}
+
+.section-title h2 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    color: #0a1128;
+}
+
+.section-title p {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-top: 10px;
+}
+
 
 /* responsive */
 /* Hacer que la barra lateral se oculte en pantallas pequeñas */
