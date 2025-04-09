@@ -1,9 +1,9 @@
-/* estilos.css */
+
 body {
     font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f6f8;
+    background: linear-gradient(to right, #f4f6f8, #dbe9f4);
     color: #1f1f1f;
 }
 
@@ -34,17 +34,79 @@ body {
     color: #FFD700;
 }
 
+.testimonials-section {
+    padding: 60px 30px;
+    background: linear-gradient(145deg, #f0f4f8, #e9eff5);
+    border-radius: 16px;
+    max-width: 1000px;
+    margin: 50px auto;
+}
+
+.testimonials-title {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    color: #1a1a1a;
+}
+
+.testimonial-card {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    padding: 20px 25px;
+    margin-bottom: 25px;
+    backdrop-filter: blur(6px);
+    transition: transform 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-4px);
+}
+
+.testimonial-img {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+    border: 2px solid #007bff;
+}
+
+.testimonial-content {
+    flex: 1;
+}
+
+.testimonial-text {
+    font-size: 17px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.testimonial-author {
+    font-style: italic;
+    font-weight: 600;
+    color: #555;
+}
+
 .hero {
     background: url('/Imagenes/job-5382501.png') no-repeat center center/cover;
     height: auto;
-    min-height: 320px;
+    min-height: 380px;
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
     text-align: center;
     padding: 60px 20px;
+    position: relative;
+    clip-path: ellipse(100% 90% at 50% 0%); /* curva suave arriba */
 }
+
 
 .hero-content {
     max-width: 700px;
@@ -169,7 +231,53 @@ body {
     letter-spacing: 1px;
   }
   
+  .seccion-ofertas {
+    padding: 60px 20px;
+    background: #f8f9fa;
+    text-align: center;
+  }
 
+  .seccion-ofertas h2 {
+    font-size: 28px;
+    color: #222;
+    margin-bottom: 40px;
+  }
+
+  .beneficios {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .beneficio {
+    max-width: 250px;
+  }
+
+  .beneficio i {
+    font-size: 40px;
+    margin-bottom: 15px;
+    color: #0d6efd;
+  }
+
+  .beneficio h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .beneficio p {
+    font-size: 14px;
+    color: #555;
+  }
+
+  .icono-emoji {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  
 /* ----------------- RESPONSIVE ----------------- */
 @media (max-width: 768px) {
     .header {
@@ -214,5 +322,15 @@ body {
 
     .about p, .objectives li {
         font-size: 15px;
+    }
+}
+@media (max-width: 600px) {
+    .testimonial-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .testimonial-img {
+        margin: 0 0 15px 0;
     }
 }

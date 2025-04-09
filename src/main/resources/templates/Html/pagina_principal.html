@@ -24,7 +24,7 @@
             style="background: #0a1128; width: 100px;">
             <div class="container-fluid d-flex flex-column p-0"><a
                     class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
-                    th:href="@{/}"><img src="/Imagenes/wwk_white.png" width="61" height="58"
+                    th:href="@{/pagina/inicio}"><img src="/Imagenes/wwk_white.png" width="61" height="58"
                         style="width: 50px;height: 50px;">
                     <div class="sidebar-brand-icon rotate-n-15"></div>
                     <div class="sidebar-brand-text mx-3"><span>Workwise</span></div>
@@ -32,17 +32,15 @@
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link active" th:href="@{/}"><i
-                                class="fas fa-home"></i><span>Home</span></a></li>
+                                class="fas fa-home"></i><span>Inicio</span></a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/login/personas}"><i
-                                class="far fa-user-circle"></i><span>Login</span></a></li>
+                                class="far fa-user-circle"></i><span>Inicio de sesion</span></a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/Register/personas}"><i
-                                class="fas fa-user-circle"></i><span>Register</span></a></li>
+                                class="fas fa-user-circle"></i><span>Registrarse</span></a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/Estadisticas}"><i
-                                class="fas fa-chart-bar"></i><span>Statistics</span></a></li>
-                    <li class="nav-item"><a class="nav-link" th:href="@{/Nosotros}"><i
-                                class="fas fa-users"></i><span>About Us</span></a></li>
+                                class="fas fa-chart-bar"></i><span>Estadisticas</span></a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/login/Empresa}"><i
-                                class="fas fa-building"></i><span>Do you have a company? </span></a></li>
+                                class="fas fa-building"></i><span>Tienes una empresa?</span></a></li>
                 </ul>
             </div>
         </nav>
@@ -74,8 +72,8 @@
                             <i class="fa fa-filter"></i>
                         </label>
                     </div>
-
                     <!-- fin boton barra lateral filtro -->
+
                 </div>
             </nav>
 
@@ -190,6 +188,24 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="pagination">
+                    <ul>
+                        <li th:if="${paginaActual > 0}">
+                            <a th:href="@{/pagina/inicio(page=${paginaActual - 1})}">« Anterior</a>
+                        </li>
+
+                        <li th:each="i : ${#numbers.sequence(0, totalPaginas - 1)}"
+                            th:classappend="${i == paginaActual} ? 'active'">
+                            <a th:href="@{/pagina/inicio(page=${i})}" th:text="${i + 1}">1</a>
+                        </li>
+
+                        <li th:if="${paginaActual < totalPaginas - 1}">
+                            <a th:href="@{/pagina/inicio(page=${paginaActual + 1})}">Siguiente »</a>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
 
             <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer">

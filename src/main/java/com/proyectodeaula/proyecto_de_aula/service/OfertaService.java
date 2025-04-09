@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.proyectodeaula.proyecto_de_aula.controller.NotificacionSSEController;
@@ -114,6 +117,12 @@ public class OfertaService implements IofertaService {
 
     public List<Postulacion> obtenerPostulacionesPorOferta(long idOferta) {
         return postulacionRepository.findByOfertasId(idOferta);
+    }
+
+    @Override
+    public Page<Ofertas> listar_ofertas_paginadas(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ofertaRepository.findAll(pageable);
     }
     
 }
