@@ -4,9 +4,17 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Acerca de Workwise</title>
+    <title>Workwise</title>
     <link rel="stylesheet" href="/Css/pagina_inicio.css">
+    <link rel="icon" type="image/png" href="/Imagenes/wknlogo2.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-BxGQJfnQJXxyjZ5ZszF1NjqRXBdU6u8IuO+Tqhtm9DvTGKXvNLkWkq+CnOKIQYfLzvXy5hBbEmfEVBKkUOUpNQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta name="description" content="Conecta con oportunidades laborales en Cartagena con Workwise. Encuentra empleo o publica vacantes fácilmente.">
+    <meta name="keywords" content="empleo, trabajo, Cartagena, ofertas laborales, contratar, buscar trabajo">
+        
+
 </head>
 
 <body>
@@ -17,16 +25,15 @@
             <div class="logo-text">WORKWISE</div>
         </div>
         <nav class="nav">
-            <a th:href="@{/}">Ofertas</a>
+            <a th:href="@{/pagina/inicio}">Ofertas</a>
             <a th:href="@{/login/Empresa}">Empresas</a>
-            <a th:href="@{/login/personas}">Inicio de sesion</a>
-            <a th:href="@{/Estadisticas}">Estadisticas</a>
+            <a th:href="@{/login/personas}">Inicio de sesión</a>
+            <a th:href="@{/Estadisticas}">Estadísticas</a>
         </nav>
     </header>
 
-
     <section class="hero">
-        <div class="hero-content">
+        <div class="hero-content" data-aos="fade-down">
             <h1>¡Ahora es el momento de avanzar!</h1>
             <p>Conecta con las mejores oportunidades laborales en Cartagena.</p>
             <a href="/pagina/inicio" class="hero-button">Conéctate con el mundo laboral</a>
@@ -34,8 +41,11 @@
     </section>
 
     <section class="about">
-        <img src="/Imagenes/wkn_black.png" alt="Equipo profesional en una reunión" class="about-image">
-        <p>
+        <img src="/Imagenes/wkn_black.png" alt="Equipo profesional en una reunión" class="about-image"
+            data-aos="zoom-in">
+
+        <p data-aos="fade-up">
+
             En <strong>Workwise</strong>, creemos que el empleo digno es una puerta abierta al crecimiento personal y
             profesional. Por eso, desarrollamos una plataforma web sólida, intuitiva y centrada en la experiencia del
             usuario, donde las oportunidades laborales están al alcance de todos. Nuestro principal objetivo es conectar
@@ -52,36 +62,74 @@
             consejos prácticos, recursos audiovisuales y tips enfocados en el desarrollo profesional, mejorando la
             empleabilidad de los ciudadanos. Nuestro compromiso es con una Cartagena más próspera, donde el talento
             local encuentre el lugar ideal para crecer y aportar.
+
         </p>
 
-        <div class="testimonials">
-            <h3>Experiencias de nuestros usuarios</h3>
-            <blockquote>
-                "Gracias a Workwise encontré mi primer empleo en menos de dos semanas. La plataforma fue clara, sencilla
-                y llena de oportunidades."
-                <cite>– Mariana G.</cite>
-            </blockquote>
-            <blockquote>
-                "Publicamos una vacante y en solo tres días teníamos al candidato ideal. ¡Recomendado para pequeñas
-                empresas!"
-                <cite>– Restaurante Sazón del Mar</cite>
-            </blockquote>
-            <blockquote>
-                "Me encantaron los recursos de preparación para entrevistas. Me sentí mucho más segura y conseguí el
-                trabajo que buscaba."
-                <cite>– Jonathan P.</cite>
-            </blockquote>
+        <div class="testimonials" data-aos="fade-up">
+            <h3 class="testimonials-title">Experiencias de nuestros usuarios</h3>
+
+            <div class="testimonial-card">
+                <img src="/Imagenes/mariana.jpeg" alt="Mariana G." class="testimonial-img">
+                <div class="testimonial-content">
+                    <p class="testimonial-text">"Gracias a Workwise encontré mi primer empleo en menos de dos semanas.
+                        La plataforma fue clara, sencilla y llena de oportunidades."</p>
+                    <cite class="testimonial-author">– Mariana G.</cite>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <img src="/Imagenes/restaurante.jpg" alt="Restaurante Sazón del Mar" class="testimonial-img">
+                <div class="testimonial-content">
+                    <p class="testimonial-text">"Publicamos una vacante y en solo tres días teníamos al candidato ideal.
+                        ¡Recomendado para pequeñas empresas!"</p>
+                    <cite class="testimonial-author">– Restaurante Sazón del Mar</cite>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <img src="/Imagenes/jonathan.jpg" alt="Jonathan P." class="testimonial-img">
+                <div class="testimonial-content">
+                    <p class="testimonial-text">"Me encantaron los recursos de preparación para entrevistas. Me sentí
+                        mucho más seguro y conseguí el trabajo que buscaba."</p>
+                    <cite class="testimonial-author">– Jonathan P.</cite>
+                </div>
+            </div>
         </div>
 
-        <div class="btn-container">
+        <div class="btn-container" data-aos="zoom-in-up">
             <a href="/pagina/inicio" class="main-btn">Conéctate con el mundo laboral</a>
         </div>
     </section>
+
+    <section class="seccion-ofertas">
+        <h2>📢 Publica tus ofertas en el portal de empleo con más impacto</h2>
+      
+        <div class="beneficios">
+          <div class="beneficio">
+            <div class="icono-emoji">🚀</div>
+            <h3>Publica tu vacante</h3>
+            <p>Crea tus ofertas de empleo fácilmente y publícalas al instante.</p>
+          </div>
+          <div class="beneficio">
+            <div class="icono-emoji">🧐</div>
+            <h3>Revisa las postulaciones</h3>
+            <p>Evalúa a los mejores candidatos entre todos los CVs recibidos.</p>
+          </div>
+          <div class="beneficio">
+            <div class="icono-emoji">🤝</div>
+            <h3>Contrata rápido</h3>
+            <p>Encuentra al perfil ideal que encaje con tu vacante.</p>
+          </div>
+        </div>
+      </section>
+      
 
     <footer class="footer">
         © 2025 Workwise. Todos los derechos reservados.
     </footer>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init();</script>
 </body>
 
 </html>

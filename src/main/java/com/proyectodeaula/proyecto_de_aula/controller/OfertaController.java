@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -43,13 +44,19 @@ public class OfertaController {
     private Interfaz_Per personaRepository;
 
     @GetMapping("/personas/pagina_principal")
-    public String listar_ofertas_1(Model model, HttpSession session) {
+    public String listar_ofertas_1(@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size, Model model, HttpSession session) {
+
+        Page<Ofertas> ofertasPage = offerService.listar_ofertas_paginadas(page, size);
+
         // Obtén las ofertas desde el servicio
         List<Ofertas> ofertas = offerService.listar_ofertas();
         Long usuarioId = (Long) session.getAttribute("usuarioId");
 
         // Pasamos las ofertas al modelo con el nombre "Ofertas"
         model.addAttribute("Ofertas", ofertas);
+        model.addAttribute("paginaActual", page);
+        model.addAttribute("totalPaginas", ofertasPage.getTotalPages());
 
         if (usuarioId != null) {
             model.addAttribute("usuarioId", usuarioId); // Pasar el usuarioId al modelo
@@ -68,8 +75,16 @@ public class OfertaController {
     }
 
     @GetMapping("/pagina/inicio")
-    public String listar_ofertas(Model model) {
-        List<Ofertas> Ofertas = offerService.listar_ofertas();
+    public String listar_ofertas(@RequestParam(defaultValue = "0") int page,
+    @RequestParam(defaultValue = "12") int size, Model model) {
+
+        Page<Ofertas> ofertasPage = offerService.listar_ofertas_paginadas(page, size);
+
+        // List<Ofertas> Ofertas = offerService.listar_ofertas();
+        List<Ofertas> Ofertas = ofertasPage.getContent(); // ✅
+
+        model.addAttribute("paginaActual", page);
+        model.addAttribute("totalPaginas", ofertasPage.getTotalPages());
         model.addAttribute("Ofertas", Ofertas);
         return "Html/pagina_principal";
     }

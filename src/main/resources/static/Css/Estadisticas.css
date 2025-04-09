@@ -3,8 +3,7 @@
     height: 80vh;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin-top: 20px;
-}	
+}
 
 .contenedor{
     display: flex;
@@ -18,11 +17,14 @@
 /* fin header */
 
 /*  main */
-main{
+main.container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-
+    justify-content: center;
+    padding-top: 20px;
+    width: 100%;
+    margin: 0;
 }
 
 .container{
@@ -59,18 +61,13 @@ main{
 }
 
 .title-statistics {
-    text-align: center;
     font-size: 28px;
     font-weight: bold;
     margin-bottom: 20px;
     color: #0a1128;
+    text-align: center;
 }
 
-#powerBi{
-    margin: auto;
-    padding: auto;
-    margin-bottom: 20px;
-}
 .custom-footer {
     margin-top: auto;
     background: linear-gradient(90deg, #0a1128, #001f54);
