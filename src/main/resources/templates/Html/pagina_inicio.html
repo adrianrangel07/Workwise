@@ -36,10 +36,10 @@
         <div class="hero-content" data-aos="fade-down">
             <h1>¡Ahora es el momento de avanzar!</h1>
             <p>Conecta con las mejores oportunidades laborales en Cartagena.</p>
-            <a href="/pagina/inicio" class="hero-button">Conéctate con el mundo laboral</a>
+            <a th:href="@{/pagina/inicio}" class="hero-button">Conéctate con el mundo laboral</a>
         </div>
     </section>
-
+{}
     <section class="about">
         <img src="/Imagenes/wkn_black.png" alt="Equipo profesional en una reunión" class="about-image"
             data-aos="zoom-in">
@@ -97,7 +97,7 @@
         </div>
 
         <div class="btn-container" data-aos="zoom-in-up">
-            <a href="/pagina/inicio" class="main-btn">Conéctate con el mundo laboral</a>
+            <a th:href="@{/pagina/inicio}" class="main-btn">Conéctate con el mundo laboral</a>
         </div>
     </section>
 
@@ -128,8 +128,6 @@
         © 2025 Workwise. Todos los derechos reservados.
     </footer>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>AOS.init();</script>
 </body>
 
 </html>
