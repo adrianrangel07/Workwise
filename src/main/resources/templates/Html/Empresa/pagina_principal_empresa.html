@@ -128,10 +128,18 @@
                                 <p class="tipo_empleo"><strong>Type of employment:</strong> <span
                                         th:text="${Oferta.tipo_empleo}"></span>
                                 </p>
-                                <p class="modalidad"><strong>mode:</strong> <span th:text="${Oferta.modalidad}"></span>
+                                <p class="modalidad"><strong>mode:</strong> 
+                                    <span th:text="${Oferta.modalidad}"></span>
                                 </p>
                                 <p class="tipo_contrato"><strong>Type of contract:</strong> <span
-                                        th:text="${Oferta.tipo_contrato}"></span></p>
+                                    th:text="${Oferta.tipo_contrato}"></span>
+                                </p>
+                                <p class="experiencia"><strong>años de experiencia:</strong>
+                                    <span th:text="${Oferta.experiencia}"></span>
+                                </p>
+                                <p class="nivel_educativo"><strong>nivel de estudio:</strong> 
+                                    <span th:text="${Oferta.nivel_educativo}"></span>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -154,6 +162,8 @@
                 <p id="modal-modalidad"></p>
                 <p id="modal-type"></p>
                 <p id="modal-typeContract"></p>
+                <p id="modal-experience"></p>
+                <p id="modal-educationLevel"></p>
 
                 <div id="postCount">
                     <p id="modal-postulaciones">Postulaciones: <span id="postulaciones-count">0</span></p>

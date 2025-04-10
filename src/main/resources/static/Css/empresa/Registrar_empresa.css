@@ -36,7 +36,7 @@ html, body {
     z-index: 100; 
 }
 
-.container-login{
+.container-register{
     width: 65%;
     height: 100vh;
     display: flex;
@@ -219,7 +219,7 @@ html, body {
         width: 60px;
     }
 
-    .container-login{
+    .container-register{
         align-items: flex-start;
         justify-content: flex-start;
         width: 100vw;
