@@ -17,7 +17,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/","/pagina/inicio","/Nosotros", "/Estadisticas", "/Register/personas", "/login/personas", "/Registrar/Empresa", "/login/Empresa").permitAll()
                 .requestMatchers("/Contrasena-olvidada", "/verificar-correo", "/perfil/verHDV", "/uploadHDV", "/upload/photo", "/imagen/{id}", "/cambiar-contrasena","/logout").permitAll()
-                .requestMatchers("/Css/**", "/js/**", "/Imagenes/**", "/webjars/**","/prediccion","/predecir").permitAll()
+                .requestMatchers("/Css/**", "/js/**", "/Imagenes/**", "/webjars/**","/api/prediccion","/prediccion").permitAll()
+                .requestMatchers("/api/prediccion/**").permitAll()
                 .anyRequest().authenticated()
                 )
                 .headers(headers -> headers
