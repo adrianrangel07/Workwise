@@ -118,4 +118,5 @@ public class prediccion {
     public String getExperienciaSuficiente() {
         return experienciaSuficiente;
     }
+
 }
