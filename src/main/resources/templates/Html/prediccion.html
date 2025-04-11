@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Predicción de Compatibilidad</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 30px auto;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 6px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Predicción de Compatibilidad</h2>
+
+    <form id="formPrediccion">
+        <label>Tipo de empleo de la oferta:</label>
+        <select id="tipo_empleo_oferta">
+            <option>Presencial</option>
+            <option>Remoto</option>
+            <option>Híbrido</option>
+        </select>
+
+        <label>Modalidad de la oferta:</label>
+        <select id="modalidad_oferta">
+            <option>Tiempo completo</option>
+            <option>Medio tiempo</option>
+            <option>Freelance</option>
+        </select>
+
+        <label>Tipo de contrato de la oferta:</label>
+        <select id="tipo_contrato_oferta">
+            <option>Indefinido</option>
+            <option>Temporal</option>
+            <option>Prácticas</option>
+        </select>
+
+        <label>Experiencia requerida (años):</label>
+        <input type="number" id="experiencia_requerida" step="0.1" value="1">
+
+        <label>Nivel de estudio requerido:</label>
+        <select id="nivel_estudio_requerido">
+            <option>Primaria</option>
+            <option>Secundaria</option>
+            <option>Técnico</option>
+            <option>Universitario</option>
+            <option>Postgrado</option>
+        </select>
+
+        <label>Sector de la oferta:</label>
+        <select id="sector_oferta">
+            <option>Tecnología</option>
+            <option>Salud</option>
+            <option>Educación</option>
+            <option>Finanzas</option>
+            <option>Comercio</option>
+            <option>Otro</option>
+        </select>
+
+        <label>Tipo de empleo deseado por la persona:</label>
+        <select id="tipo_empleo_deseado">
+            <option>Presencial</option>
+            <option>Remoto</option>
+            <option>Híbrido</option>
+        </select>
+
+        <label>Modalidad preferida:</label>
+        <select id="preferencia_modalidad">
+            <option>Tiempo completo</option>
+            <option>Medio tiempo</option>
+            <option>Freelance</option>
+        </select>
+
+        <label>Contrato preferido:</label>
+        <select id="preferencia_contrato">
+            <option>Indefinido</option>
+            <option>Temporal</option>
+            <option>Prácticas</option>
+        </select>
+
+        <label>Experiencia de la persona (años):</label>
+        <input type="number" id="experiencia_persona" step="0.1" value="1">
+
+        <label>Nivel de estudios de la persona:</label>
+        <select id="nivel_estudio_persona">
+            <option>Primaria</option>
+            <option>Secundaria</option>
+            <option>Técnico</option>
+            <option>Universitario</option>
+            <option>Postgrado</option>
+        </select>
+
+        <label>Sector de experiencia de la persona:</label>
+        <select id="sector_persona">
+            <option>Tecnología</option>
+            <option>Salud</option>
+            <option>Educación</option>
+            <option>Finanzas</option>
+            <option>Comercio</option>
+            <option>Otro</option>
+        </select>
+
+        <label>Edad de la persona:</label>
+        <input type="number" id="edad_persona" value="25">
+
+        <button type="button" onclick="enviarPrediccion()">Realizar Predicción</button>
+    </form>
+
+    <div id="resultado"></div>
+
+    <script>
+        function enviarPrediccion() {
+            const data = {
+                tipo_empleo_oferta: document.getElementById("tipo_empleo_oferta").value,
+                modalidad_oferta: document.getElementById("modalidad_oferta").value,
+                tipo_contrato_oferta: document.getElementById("tipo_contrato_oferta").value,
+                experiencia_requerida: parseFloat(document.getElementById("experiencia_requerida").value),
+                nivel_estudio_requerido: document.getElementById("nivel_estudio_requerido").value,
+                sector_oferta: document.getElementById("sector_oferta").value,
+                tipo_empleo_deseado: document.getElementById("tipo_empleo_deseado").value,
+                preferencia_modalidad: document.getElementById("preferencia_modalidad").value,
+                preferencia_contrato: document.getElementById("preferencia_contrato").value,
+                experiencia_persona: parseFloat(document.getElementById("experiencia_persona").value),
+                nivel_estudio_persona: document.getElementById("nivel_estudio_persona").value,
+                sector_persona: document.getElementById("sector_persona").value,
+                edad_persona: parseFloat(document.getElementById("edad_persona").value)
+            };
+
+            fetch("http://localhost:8080/predecir", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.text())
+                .then(resultado => {
+                    document.getElementById("resultado").innerText = "Resultado: " + resultado;
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    document.getElementById("resultado").innerText = "Error en la predicción.";
+                });
+        }
+    </script>
+</body>
+
+</html>

@@ -413,4 +413,9 @@ public class PersonaController {
     public String pagina_inicio_principal() {
         return "Html/pagina_inicio";
     }
+
+    @GetMapping("/prediccion")
+    public String prediccion() {
+        return "Html/prediccion";
+    }
 }

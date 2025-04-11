@@ -15,9 +15,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, SessionAuthenticationFilter sessionFilter) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/Nosotros", "/Estadisticas", "/Register/personas", "/login/personas", "/Registrar/Empresa", "/login/Empresa","/pagina/inicio").permitAll()
-                .requestMatchers("/Contrasena-olvidada", "/verificar-correo", "/perfil/verHDV", "/uploadHDV", "/upload/photo", "/imagen/{id}", "/cambiar-contrasena").permitAll()
-                .requestMatchers("/Css/**", "/js/**", "/Imagenes/**", "/webjars/**").permitAll()
+                .requestMatchers("/","/pagina/inicio","/Nosotros", "/Estadisticas", "/Register/personas", "/login/personas", "/Registrar/Empresa", "/login/Empresa").permitAll()
+                .requestMatchers("/Contrasena-olvidada", "/verificar-correo", "/perfil/verHDV", "/uploadHDV", "/upload/photo", "/imagen/{id}", "/cambiar-contrasena","/logout").permitAll()
+                .requestMatchers("/Css/**", "/js/**", "/Imagenes/**", "/webjars/**","/prediccion","/predecir").permitAll()
                 .anyRequest().authenticated()
                 )
                 .headers(headers -> headers
