@@ -1,6 +1,7 @@
 package com.proyectodeaula.proyecto_de_aula.controller;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
@@ -31,7 +32,7 @@ public class PrediccionController {
         try {
             // Cargar modelo
             try (ObjectInputStream ois = new ObjectInputStream(
-                getClass().getClassLoader().getResourceAsStream("weka/modelo_empleo_j48.model"))) {
+                    getClass().getClassLoader().getResourceAsStream("weka/modelo_empleo_j48.model"))) {
                 clasificador = (Classifier) ois.readObject();
             }
 
@@ -41,8 +42,8 @@ public class PrediccionController {
             estructura = new Instances(reader);
             estructura.setClassIndex(estructura.numAttributes() - 1);
 
-        } catch (Exception e) {
-            e.printStackTrace(); // ¡Dejá este para depurar!
+        } catch (IOException | ClassNotFoundException e) {
+
         }
     }
 
@@ -52,7 +53,7 @@ public class PrediccionController {
             // Crear nueva instancia sin valores faltantes
             Instance instancia = new DenseInstance(estructura.numAttributes());
             instancia.setDataset(estructura);
-    
+
             // Asignar valores uno a uno (orden como en el .arff)
             instancia.setValue(0, datos.getTipoEmpleoOferta());
             instancia.setValue(1, datos.getModalidadOferta());
@@ -74,20 +75,19 @@ public class PrediccionController {
             instancia.setValue(17, datos.getCoincideSector());
             instancia.setValue(18, datos.getExperienciaSuficiente());
             // Posición 19 es la clase
-    
+
             // Predecir clase
             double clase = clasificador.classifyInstance(instancia);
             String valorClase = estructura.classAttribute().value((int) clase);
-    
+
             // Distribución original
             double[] distribucion = clasificador.distributionForInstance(instancia);
             double porcentajeBase = distribucion[(int) clase] * 100.0;
             System.out.println("Distribución: " + Arrays.toString(distribucion));
 
-    
             // Ajustar el porcentaje basándonos en campos importantes
             double ajuste = 0.0;
-    
+
             // Experiencia
             double diferenciaExperiencia = datos.getExperienciaPersona() - datos.getExperienciaRequerida();
             if (diferenciaExperiencia >= 0) {
@@ -97,32 +97,30 @@ public class PrediccionController {
                 double penalizacion = Math.min(1.0, Math.abs(diferenciaExperiencia) / 10.0); // máximo -0.4
                 ajuste += 0.4 * (1 - penalizacion);
             }
-    
+
             // Nivel de estudio
             if ("Si".equalsIgnoreCase(datos.getCoincideEstudios())) {
                 ajuste += 0.3;
             }
-    
+
             // Sector
             if ("Si".equalsIgnoreCase(datos.getCoincideSector())) {
                 ajuste += 0.3;
             }
-    
+
             // Aplicar ajuste al porcentaje base
             double porcentajeAjustado = porcentajeBase * ajuste;
-    
+
             // Redondear y limitar al máximo de 100
             long porcentajeFinal = Math.min(Math.round(porcentajeAjustado), 100);
-    
+
             return ResponseEntity.ok().body(new ResultadoPrediccion(valorClase, porcentajeFinal));
-    
+
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al predecir compatibilidad");
         }
     }
 
-    // Clase interna para estructurar la respuesta
     record ResultadoPrediccion(String compatible, long porcentaje) {
 
     }

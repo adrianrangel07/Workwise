@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.proyectodeaula.proyecto_de_aula.model.prediccion;
 
+import lombok.Getter;
+import lombok.Setter;
 import weka.classifiers.Classifier;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
@@ -18,8 +20,8 @@ import weka.core.SerializationHelper;
 @Service
 public class WekaPredictionService {
 
-    private Classifier modelo;
-    private Instances dataStructure;
+    private final Classifier modelo;
+    private final Instances dataStructure;
 
     public WekaPredictionService() throws Exception {
         // Cargar el modelo desde resources
@@ -101,16 +103,19 @@ public class WekaPredictionService {
         return estructura;
     }
 
+    @Getter
+    @Setter
     public class ResultadoPrediccion {
+
         private String compatible;
         private long porcentaje;
-    
+
         public ResultadoPrediccion(String compatible, long porcentaje) {
+
             this.compatible = compatible;
             this.porcentaje = porcentaje;
         }
-    
-        // Getters y setters
+
     }
-    
+
 }
