@@ -4,77 +4,119 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Workwise</title>
+    <title>Workwise - Empleos en Cartagena</title>
     <link rel="stylesheet" href="/Css/pagina_inicio.css">
     <link rel="icon" type="image/png" href="/Imagenes/wknlogo2.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-        integrity="sha512-BxGQJfnQJXxyjZ5ZszF1NjqRXBdU6u8IuO+Tqhtm9DvTGKXvNLkWkq+CnOKIQYfLzvXy5hBbEmfEVBKkUOUpNQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <meta name="description"
         content="Conecta con oportunidades laborales en Cartagena con Workwise. Encuentra empleo o publica vacantes fácilmente.">
     <meta name="keywords" content="empleo, trabajo, Cartagena, ofertas laborales, contratar, buscar trabajo">
-
-
 </head>
 
 <body>
-
     <header class="header">
-        <div class="logo-container">
-            <img src="/Imagenes/wwk_white.png" alt="Logo Workwise" class="logo-img">
-            <div class="logo-text">WORKWISE</div>
+        <div class="container header-container">
+            <div class="logo-container">
+                <img src="/Imagenes/wwk_white.png" alt="Logo Workwise" class="logo-img" loading="lazy">
+                <div class="logo-text">WORKWISE</div>
+            </div>
+            <nav class="nav">
+                <a th:href="@{/pagina/inicio}">Ofertas</a>
+                <a th:href="@{/login/Empresa}">Empresas</a>
+                <a th:href="@{/login/personas}">Inicio de sesión</a>
+                <a th:href="@{/prediccion}">Prueba predicción</a>
+            </nav>
         </div>
-        <nav class="nav">
-            <a th:href="@{/pagina/inicio}">Ofertas</a>
-            <a th:href="@{/login/Empresa}">Empresas</a>
-            <a th:href="@{/login/personas}">Inicio de sesión</a>
-            <a th:href="@{/prediccion}">Prueba predicción</a>
-        </nav>
     </header>
-
+    
     <section class="hero">
-        <div class="hero-content" data-aos="fade-down">
-            <h1>¡Ahora es el momento de avanzar!</h1>
-            <p>Conecta con las mejores oportunidades laborales en Cartagena.</p>
-            <a th:href="@{/pagina/inicio}" class="hero-button">Conéctate con el mundo laboral</a>
+        <div class="container hero-content">
+            <h1>¡Encuentra el trabajo ideal en Cartagena!</h1>
+
+            <form id="formBusqueda">
+                <div class="search-bar">
+                    <input id="termino" name="termino" type="text" placeholder="Puesto, empresa o palabra clave">
+                    <button class="btn btn-primary" type="submit">Buscar empleo</button>
+                </div>
+            </form>
+
+            <div class="stats">
+                <span>+5,000 empleos publicados</span>
+                <span>•</span>
+                <span>+1,000 empresas confían en nosotros</span>
+            </div>
         </div>
     </section>
 
-    <section class="about-creadores">
-        <div class="about">
-            <img src="/Imagenes/wkn_black.png" alt="Equipo profesional en una reunión" class="about-image"
-                data-aos="zoom-in">
-            <p data-aos="fade-up">
-                En <strong>Workwise</strong>, creemos que el empleo digno es una puerta abierta al crecimiento personal
-                y
-                profesional. Por eso, desarrollamos una plataforma web sólida, intuitiva y centrada en la experiencia
-                del
-                usuario, donde las oportunidades laborales están al alcance de todos. Nuestro principal objetivo es
-                conectar
-                a las personas que buscan empleo con empresas que requieren talento, promoviendo así una comunidad
-                activa y
-                dinámica en Cartagena.
-                <br><br>
-                A través de herramientas tecnológicas modernas, recolectamos, almacenamos y procesamos información
-                relevante
-                sobre perfiles de candidatos y vacantes disponibles. Esto permite a nuestros usuarios encontrar
-                fácilmente
-                ofertas que se ajusten a sus habilidades, intereses y expectativas. Asimismo, facilitamos a las empresas
-                —incluyendo pequeños negocios locales— un espacio donde puedan publicar sus ofertas y hallar candidatos
-                cualificados de manera rápida y eficaz.
-                <br><br>
-                En Workwise también nos preocupamos por el crecimiento constante de quienes nos visitan. Por eso,
-                ofrecemos
-                consejos prácticos, recursos audiovisuales y tips enfocados en el desarrollo profesional, mejorando la
-                empleabilidad de los ciudadanos. Nuestro compromiso es con una Cartagena más próspera, donde el talento
-                local encuentre el lugar ideal para crecer y aportar.
+    <section class="section categories">
+        <div class="container">
+            <h2 class="section-title">Explora por categoría</h2>
+            <div class="category-grid">
+                <a href="#" class="category-card">
+                    <i class="fas fa-laptop-code"></i>
+                    <span>Tecnología</span>
+                    <small>(1,200+ empleos)</small>
+                </a>
+                <a href="#" class="category-card">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Administrativo</span>
+                    <small>(850+ empleos)</small>
+                </a>
+                <a href="#" class="category-card">
+                    <i class="fas fa-utensils"></i>
+                    <span>Gastronomía</span>
+                    <small>(620+ empleos)</small>
+                </a>
+                <a href="#" class="category-card">
+                    <i class="fas fa-heart"></i>
+                    <span>Salud</span>
+                    <small>(430+ empleos)</small>
+                </a>
+                <a href="#" class="category-card">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>Educación</span>
+                    <small>(380+ empleos)</small>
+                </a>
+                <a href="#" class="category-card">
+                    <i class="fas fa-tools"></i>
+                    <span>Construcción</span>
+                    <small>(290+ empleos)</small>
+                </a>
+            </div>
+        </div>
+    </section>
 
-            </p>
+    <section class="section for-employers bg-primary">
+        <div class="container employer-content">
+            <h2>¿Eres empresa? Publica tus vacantes</h2>
+            <div class="steps">
+                <div class="step">
+                    <span>1</span>
+                    <p>Regístrate gratis</p>
+                </div>
+                <div class="step">
+                    <span>2</span>
+                    <p>Publica tu vacante</p>
+                </div>
+                <div class="step">
+                    <span>3</span>
+                    <p>Recibe candidatos</p>
+                </div>
+            </div>
+            <a th:href="@{/login/Empresa}">
+                <button class="btn btn-secondary">Publicar empleo</button>
+            </a>
 
-            <div class="testimonials" data-aos="fade-up">
-                <h3 class="testimonials-title">Experiencias de nuestros usuarios</h3>
+        </div>
+    </section>
 
+    <section class="section testimonials">
+        <div class="container">
+            <h2 class="section-title">Experiencias de nuestros usuarios</h2>
+
+            <div class="testimonials-list">
                 <div class="testimonial-card">
                     <img src="/Imagenes/mariana.jpeg" alt="Mariana G." class="testimonial-img">
                     <div class="testimonial-content">
@@ -101,63 +143,92 @@
                     </div>
                 </div>
             </div>
-
-            <div class="btn-container" data-aos="zoom-in-up">
-                <a th:href="@{/pagina/inicio}" class="main-btn">Conéctate con el mundo laboral</a>
-            </div>
-        </div>
-
-        <!-- <div class="creadores-right">
-            <div class="creador">
-                <div class="decoracion"></div>
-                <img src="/Imagenes/ARV_perfil.jpeg" alt="Creador 1" class="creador-img">
-                <p class="creador-text">BACKEND</p>
-            </div>
-            <div class="creador">
-                <div class="decoracion"></div>
-                <img src="/Imagenes/creador2.jpg" alt="Creador 2" class="creador-img">
-                <p class="creador-text">Creador 2</p>
-            </div>
-            <div class="creador">
-                <div class="decoracion"></div>
-                <img src="/Imagenes/creador3.jpg" alt="Creador 3" class="creador-img">
-                <p class="creador-text">Creador 3</p>
-            </div>
-            <div class="creador">
-                <div class="decoracion"></div>
-                <img src="/Imagenes/creador4.jpg" alt="Creador 4" class="creador-img">
-                <p class="creador-text">Creador 4</p>
-            </div>
-        </div> -->
-    </section>
-
-    <section class="seccion-ofertas">
-        <h2>📢 Publica tus ofertas en el portal de empleo con más impacto</h2>
-
-        <div class="beneficios">
-            <div class="beneficio">
-                <div class="icono-emoji">🚀</div>
-                <h3>Publica tu vacante</h3>
-                <p>Crea tus ofertas de empleo fácilmente y publícalas al instante.</p>
-            </div>
-            <div class="beneficio">
-                <div class="icono-emoji">🧐</div>
-                <h3>Revisa las postulaciones</h3>
-                <p>Evalúa a los mejores candidatos entre todos los CVs recibidos.</p>
-            </div>
-            <div class="beneficio">
-                <div class="icono-emoji">🤝</div>
-                <h3>Contrata rápido</h3>
-                <p>Encuentra al perfil ideal que encaje con tu vacante.</p>
-            </div>
         </div>
     </section>
 
+    <section class="section creadores-section">
+        <div class="container">
+            <h2 class="section-title">Conoce a los Creadores</h2>
+
+            <div class="creadores-container">
+                <div class="creador-card">
+                    <img src="/Imagenes/ARV.jpeg" alt="Adrian Rangel" class="creador-img">
+                    <h3 class="creador-nombre">Adrian Rangel</h3>
+                    <p class="creador-rol">Desarrollador Fullstack</p>
+                    <div class="creador-redes">
+                        <a href="https://www.linkedin.com/in/adrian-de-jesus-rangel-vides-2150311ab/" target="_blank"><i
+                                class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/adrianrangel07" target="_blank"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="creador-card">
+                    <img src="/Imagenes/marci.jpg" alt="Diana Diaz" class="creador-img">
+                    <h3 class="creador-nombre">Diana Diaz</h3>
+                    <p class="creador-rol">Gestor De Proyecto</p>
+                    <div class="creador-redes">
+                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="creador-card">
+                    <img src="/Imagenes/Diego.jpeg" alt="Diego Seña" class="creador-img">
+                    <h3 class="creador-nombre">Diego Seña</h3>
+                    <p class="creador-rol">Desarrollador Frontend</p>
+                    <div class="creador-redes">
+                        <a href="https://www.instagram.com/_ds1017_" target="_blank"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="https://github.com/akadiegos1017" target="_blank"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="creador-card">
+                    <img src="/Imagenes/yonier.jpeg" alt="Yonier Vasquez" class="creador-img">
+                    <h3 class="creador-nombre">Yonier Vasquez</h3>
+                    <p class="creador-rol">Dessarrollador Backend</p>
+                    <div class="creador-redes">
+                        <a
+                            href="https://www.linkedin.com/in/yonier-alejandro-vasquez-torres-129b26331?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i
+                                class="fab fa-linkedin" target="_blank"></i></a>
+                        <a href="https://github.com/yonierva" target="_blank"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <footer class="footer">
-        © 2025 Workwise. Todos los derechos reservados.
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="/Imagenes/wwk_white.png" alt="Workwise" loading="lazy">
+                    <span>WORKWISE</span>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Para candidatos</h4>
+                        <a th:href="@{/pagina/inicio}">Buscar empleo</a>
+                        <a href="#">Preparación entrevistas</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Contacto</h4>
+                        <a href="#">Soporte</a>
+                        <a href="#">Prensa</a>
+                        <a href="#">Trabaja con nosotros</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Workwise. Todos los derechos reservados.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
     </footer>
 
+    <script src="/js/pagina_inicio.js"></script>
 </body>
 
 </html>
