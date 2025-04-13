@@ -29,7 +29,7 @@ public class WekaPredictionService {
             modelo = (Classifier) SerializationHelper.read(modelStream);
         }
 
-        // Crear estructura vacía basada en el ARFF original (sin datos)
+        // Crear estructura vacía basada en el ARFF original 
         dataStructure = crearEstructuraDatos();
     }
 

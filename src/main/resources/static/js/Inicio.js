@@ -76,19 +76,52 @@ document.addEventListener("DOMContentLoaded", function () {
     const terminoInput = document.getElementById('termino');
     const ofertas = document.querySelectorAll('.offer-container .card');
 
-    // Función para normalizar el texto y quitar tildes
     function normalizeText(text) {
         return text.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
     }
 
-    formBusqueda.addEventListener('submit', function (event) {
-        event.preventDefault();
+    // Captura el término de búsqueda de la URL
+    const params = new URLSearchParams(window.location.search);
+    const terminoBuscado = params.get('termino');
 
-        const termino = normalizeText(terminoInput.value); // Normaliza el término de búsqueda
+    if (terminoBuscado) {
+        if (terminoInput) {
+            terminoInput.value = terminoBuscado; 
+        }
+
+        const terminoNormalizado = normalizeText(terminoBuscado);
         let ofertasEncontradas = false;
 
         ofertas.forEach(oferta => {
-            const titulo = normalizeText(oferta.querySelector('h3').textContent); // Normaliza el título de la oferta
+            const titulo = normalizeText(oferta.querySelector('h3').textContent);
+            if (titulo.includes(terminoNormalizado)) {
+                oferta.style.display = 'block';
+                ofertasEncontradas = true;
+            } else {
+                oferta.style.display = 'none';
+            }
+        });
+
+        if (!ofertasEncontradas) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'No se encontraron ofertas',
+                text: 'Por favor, verifica el término de búsqueda.',
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                location.href = '/pagina/inicio';
+            });
+        }
+    }
+
+    // BÚSQUEDA MANUAL
+    formBusqueda?.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const termino = normalizeText(terminoInput.value);
+        let ofertasEncontradas = false;
+
+        ofertas.forEach(oferta => {
+            const titulo = normalizeText(oferta.querySelector('h3').textContent);
             if (titulo.includes(termino)) {
                 oferta.style.display = 'block';
                 ofertasEncontradas = true;
@@ -111,6 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
         terminoInput.value = '';
     });
 });
+
 
 
 function applyFilters() {
@@ -207,3 +241,5 @@ document.getElementById("ocultarNavBar").addEventListener("click", function () {
     sidebar.classList.toggle("toggled");
 
 });
+
+
