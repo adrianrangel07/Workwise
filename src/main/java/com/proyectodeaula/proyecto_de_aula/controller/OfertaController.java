@@ -81,7 +81,7 @@ public class OfertaController {
         Page<Ofertas> ofertasPage = offerService.listar_ofertas_paginadas(page, size);
 
         // List<Ofertas> Ofertas = offerService.listar_ofertas();
-        List<Ofertas> Ofertas = ofertasPage.getContent(); // ✅
+        List<Ofertas> Ofertas = ofertasPage.getContent(); 
 
         model.addAttribute("paginaActual", page);
         model.addAttribute("totalPaginas", ofertasPage.getTotalPages());
