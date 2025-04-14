@@ -37,14 +37,14 @@ document.addEventListener('DOMContentLoaded', function () {
         // Llenar el modal con los datos de la tarjeta
         modalTitle.innerText = title;
         modalDescription.innerText = description;
-        modalSalary.innerHTML = `<strong>Salary:</strong> ${salary}`;
-        modalCurrency.innerHTML = `<strong>moneda:</strong> ${currency}`;
-        modalDuration.innerHTML = `<strong>Duración:</strong> ${duration}`;
-        modalPeriod.innerHTML = `<strong>Periodo:</strong> ${period}`;
-        modalType.innerHTML = `<strong>Tipo de empleo:</strong> ${type}`;
-        modalModalidad.innerHTML = `<strong>Modalidad:</strong> ${modalidad}`;
-        modalTypeContract.innerHTML = `<strong>tipo de contrato:</strong> ${typeContract}`;
-        modalEmpresa.innerHTML = `<strong>Empresa:</strong> ${empresa}`;
+        modalSalary.innerHTML = `<strong>Salario: </strong> ${salary}`;
+        modalCurrency.innerHTML = `<strong>Moneda: </strong> ${currency}`;
+        modalDuration.innerHTML = `<strong>Duración: </strong> ${duration}`;
+        modalPeriod.innerHTML = `<strong>Periodo: </strong> ${period}`;
+        modalType.innerHTML = `<strong>Tipo de empleo: </strong> ${type}`;
+        modalModalidad.innerHTML = `<strong>Modalidad: </strong> ${modalidad}`;
+        modalTypeContract.innerHTML = `<strong>Tipo de contrato: </strong> ${typeContract}`;
+        modalEmpresa.innerHTML = `<strong>Empresa: </strong> ${empresa}`;
 
         // Mostrar el modal
         modal.style.display = 'flex';
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (terminoBuscado) {
         if (terminoInput) {
-            terminoInput.value = terminoBuscado; 
+            terminoInput.value = terminoBuscado;
         }
 
         const terminoNormalizado = normalizeText(terminoBuscado);
@@ -155,24 +155,23 @@ function applyFilters() {
     const salarioMin = parseFloat(document.getElementById("salarioMin").value) || 0;
     const salarioMax = parseFloat(document.getElementById("salarioMax").value) || Infinity;
     const tipoEmpleo = document.getElementById("tipoEmpleoSelect").value.toLowerCase();
-    const tipoContrato = document.getElementById("typeContract").value.toLowerCase();  // Capturamos el valor del tipo de contrato
+    const tipoContrato = document.getElementById("typeContract").value.toLowerCase();
 
-    const ofertas = document.querySelectorAll(".offer-container .card");
-
-    // Capturar modalidades seleccionadas
-    const checkboxes = document.querySelectorAll('#filterModalidad input[type="checkbox"]');
+    // Capturar modalidades seleccionadas (versión actualizada para la nueva estructura HTML)
+    const checkboxes = document.querySelectorAll('.filter-section-body input[type="checkbox"]');
     const selectedModalities = Array.from(checkboxes)
         .filter(checkbox => checkbox.checked)
         .map(checkbox => checkbox.value.toLowerCase());
 
+    const ofertas = document.querySelectorAll(".offer-container .card");
     let ofertasVisibles = 0; // Contador de ofertas visibles
 
     // Aplicar los filtros a cada tarjeta de oferta
     ofertas.forEach(oferta => {
-        const salario = parseFloat(oferta.querySelector(".salario span").innerText) || 0;
-        const tipoEmpleoOferta = oferta.querySelector(".tipo_empleo span").innerText.toLowerCase();
-        const modalidadOferta = oferta.querySelector(".modalidad span").innerText.toLowerCase();
-        const tipoContratoOferta = oferta.querySelector(".tipo_contrato span").innerText.toLowerCase(); // Asumiendo que hay una clase 'tipo_contrato' en la tarjeta de oferta
+        const salario = parseFloat(oferta.querySelector(".salario span").textContent) || 0;
+        const tipoEmpleoOferta = oferta.querySelector(".tipo_empleo span").textContent.toLowerCase();
+        const modalidadOferta = oferta.querySelector(".modalidad span").textContent.toLowerCase();
+        const tipoContratoOferta = oferta.querySelector(".tipo_contrato span").textContent.toLowerCase();
 
         // Lógica para mostrar/ocultar la oferta según los filtros
         let isVisible = true;
@@ -181,7 +180,7 @@ function applyFilters() {
         if (salario < salarioMin || salario > salarioMax) isVisible = false;
         if (tipoEmpleo && tipoEmpleo !== tipoEmpleoOferta) isVisible = false;
         if (selectedModalities.length > 0 && !selectedModalities.includes(modalidadOferta)) isVisible = false;
-        if (tipoContrato && tipoContrato !== tipoContratoOferta) isVisible = false; // Filtramos por el tipo de contrato
+        if (tipoContrato && tipoContrato !== tipoContratoOferta) isVisible = false;
 
         // Mostrar u ocultar la oferta
         oferta.style.display = isVisible ? "block" : "none";
@@ -197,10 +196,40 @@ function applyFilters() {
             text: 'Ninguna oferta coincide con los filtros aplicados. Intenta con otros criterios.',
             confirmButtonText: 'Aceptar'
         }).then(() => {
-            location.reload();
+            resetFilters(); // Mejor que location.reload() para mantener la experiencia fluida
         });
     }
 }
+
+function resetFilters() {
+    // Restablecer valores de los filtros
+    document.getElementById('salarioMin').value = '';
+    document.getElementById('salarioMax').value = '';
+    document.getElementById('typeContract').value = '';
+    document.getElementById('tipoEmpleoSelect').value = '';
+
+    // Desmarcar todas las casillas de modalidad
+    document.querySelectorAll('.filter-section-body input[type="checkbox"]').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+
+    // Volver a aplicar los filtros (mostrar todo)
+    applyFilters();
+}
+
+// Añadir interactividad a los encabezados de sección (colapsables)
+document.querySelectorAll('.filter-section-header').forEach(header => {
+    header.addEventListener('click', function () {
+        const body = this.nextElementSibling;
+        body.style.display = body.style.display === 'none' ? 'block' : 'none';
+        this.classList.toggle('collapsed');
+    });
+});
+
+// Inicializar todas las secciones como visibles
+document.querySelectorAll('.filter-section-body').forEach(body => {
+    body.style.display = 'block';
+});
 
 document.addEventListener('DOMContentLoaded', function () {
     const postularseBtn = document.getElementById('postularseBtn');
@@ -241,5 +270,3 @@ document.getElementById("ocultarNavBar").addEventListener("click", function () {
     sidebar.classList.toggle("toggled");
 
 });
-
-
