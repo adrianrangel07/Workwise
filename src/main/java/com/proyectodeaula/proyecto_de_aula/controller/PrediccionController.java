@@ -5,10 +5,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.proyectodeaula.proyecto_de_aula.model.prediccion;
 
 import weka.classifiers.Classifier;
+import weka.classifiers.Evaluation;
 import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
-
 @RequestMapping("/api/prediccion")
 @RestController
 public class PrediccionController {
@@ -43,18 +48,18 @@ public class PrediccionController {
             estructura.setClassIndex(estructura.numAttributes() - 1);
 
         } catch (IOException | ClassNotFoundException e) {
-
+            e.printStackTrace();
         }
     }
 
     @PostMapping("/prediccion")
     public ResponseEntity<?> predecir(@RequestBody prediccion datos) {
         try {
-            // Crear nueva instancia sin valores faltantes
+            // 1. Crear instancia WEKA
             Instance instancia = new DenseInstance(estructura.numAttributes());
             instancia.setDataset(estructura);
-
-            // Asignar valores uno a uno (orden como en el .arff)
+    
+            // 2. Asignar todos los valores del formulario
             instancia.setValue(0, datos.getTipoEmpleoOferta());
             instancia.setValue(1, datos.getModalidadOferta());
             instancia.setValue(2, datos.getTipoContratoOferta());
@@ -74,54 +79,30 @@ public class PrediccionController {
             instancia.setValue(16, datos.getCoincideEstudios());
             instancia.setValue(17, datos.getCoincideSector());
             instancia.setValue(18, datos.getExperienciaSuficiente());
-            // Posición 19 es la clase
-
-            // Predecir clase
-            double clase = clasificador.classifyInstance(instancia);
-            String valorClase = estructura.classAttribute().value((int) clase);
-
-            // Distribución original
+    
+            // 3. Obtener la distribución de probabilidades
             double[] distribucion = clasificador.distributionForInstance(instancia);
-            double porcentajeBase = distribucion[(int) clase] * 100.0;
-            System.out.println("Distribución: " + Arrays.toString(distribucion));
-
-            // Ajustar el porcentaje basándonos en campos importantes
-            double ajuste = 0.0;
-
-            // Experiencia
-            double diferenciaExperiencia = datos.getExperienciaPersona() - datos.getExperienciaRequerida();
-            if (diferenciaExperiencia >= 0) {
-                ajuste += 0.4; // experiencia suficiente
-            } else {
-                // Penalización proporcional hasta -0.4
-                double penalizacion = Math.min(1.0, Math.abs(diferenciaExperiencia) / 10.0); // máximo -0.4
-                ajuste += 0.4 * (1 - penalizacion);
-            }
-
-            // Nivel de estudio
-            if ("Si".equalsIgnoreCase(datos.getCoincideEstudios())) {
-                ajuste += 0.3;
-            }
-
-            // Sector
-            if ("Si".equalsIgnoreCase(datos.getCoincideSector())) {
-                ajuste += 0.3;
-            }
-
-            // Aplicar ajuste al porcentaje base
-            double porcentajeAjustado = porcentajeBase * ajuste;
-
-            // Redondear y limitar al máximo de 100
-            long porcentajeFinal = Math.min(Math.round(porcentajeAjustado), 100);
-
-            return ResponseEntity.ok().body(new ResultadoPrediccion(valorClase, porcentajeFinal));
-
+            
+            // 4. Obtener la clase predicha y su confianza
+            double clasePredicha = clasificador.classifyInstance(instancia);
+            double confianzaWeka = distribucion[(int) clasePredicha]; // Esto devuelve valores como 0.98, 0.57, etc.
+    
+            // 5. Devolver el valor exacto de WEKA sin modificaciones
+            return ResponseEntity.ok().body(Map.of(
+                "compatible", estructura.classAttribute().value((int) clasePredicha),
+                "confianzaWeka", confianzaWeka // Valor exacto como 0.98, 0.57, etc.
+            ));
+    
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al predecir compatibilidad");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of(
+                        "error", "Error en la predicción",
+                        "detalle", e.getMessage()
+                    ));
         }
     }
 
-    record ResultadoPrediccion(String compatible, long porcentaje) {
-
-    }
+    // Records para las respuestas
+    public record DetallePrediccion( String actual, String predicho, double confianzaWeka) {}
+//    
 }
