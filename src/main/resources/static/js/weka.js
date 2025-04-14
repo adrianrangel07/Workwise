@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const formulario = document.getElementById("formPrediccion");
     const resultado = document.getElementById("resultado");
+    const errorModelo = document.getElementById("errorModelo");
+    const detallesPrediccion = document.getElementById("detallesPrediccion");
 
     formulario.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -25,7 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
             experienciaRequerida: parseFloat(datos.experiencia_requerida),
             nivelEstudioRequerido: datos.nivel_estudio_requerido,
             sectorOferta: datos.sector_oferta,
-
             tipoEmpleoDeseado: datos.tipo_empleo_deseado,
             preferenciaModalidad: datos.preferencia_modalidad,
             preferenciaContrato: datos.preferencia_contrato,
@@ -33,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
             nivelEstudioPersona: datos.nivel_estudio_persona,
             sectorPersona: datos.sector_persona,
             edadPersona: parseFloat(datos.edad_persona),
-
             coincideTipoEmpleo: coincidencias.coincide_tipo_empleo,
             coincideModalidad: coincidencias.coincide_modalidad,
             coincideContrato: coincidencias.coincide_contrato,
@@ -42,30 +42,29 @@ document.addEventListener("DOMContentLoaded", () => {
             experienciaSuficiente: coincidencias.experiencia_suficiente
         };
 
+
         try {
             const response = await fetch("/api/prediccion/prediccion", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(datosFinales)
             });
 
-            if (!response.ok) {
-                throw new Error("Error al obtener la predicción: " + response.status);
-            }
+            if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
 
             const data = await response.json();
 
+            // Mostrar resultados usando solo los campos recibidos
             resultado.innerHTML = `
-                <p>✅ Predicción: <strong>${data.compatible === "Si" ? "Compatible" : "No Compatible"}</strong></p>
-                <p>🔢 Porcentaje de Aceptación: <strong>${data.porcentaje}%</strong></p>
+                <div class="resultado">
+                    <h3>${data.compatible === "Si" ? "✅ Compatible" : "❌ No Compatible"}</h3>
+                    <p><strong>Valor WEKA:</strong> ${data.confianzaWeka.toFixed(3)}</p>
+                </div>
             `;
-            resultado.style.color = data.compatible === "Si" ? "#27ae60" : "#e74c3c";
 
         } catch (error) {
-            console.error("Error en la predicción:", error);
-            resultado.innerHTML = "<p style='color: red;'>❌ No se pudo realizar la predicción.</p>";
+            console.error("Error:", error);
+            resultado.innerHTML = `<div class="error">${error.message}</div>`;
         }
     });
 });
