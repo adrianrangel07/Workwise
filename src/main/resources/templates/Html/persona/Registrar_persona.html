@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Register user</title>
-        <link rel="stylesheet" href="/Css/persona/Registrar_persona.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-        <link rel="icon" type="image/png" href="/Imagenes/wknlogo2.png">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
-        <link rel="stylesheet" href="/Css/general/bootstrap.min.css">
-        <link rel="stylesheet" href="/Css/general/Grid-and-List-view-V10-style.css">
-        <link rel="stylesheet" href="/Css/general/Grid-and-List-view-V10.css">
-        <link rel="stylesheet" href="/Css/general/Nunito.css">
-        <link rel="stylesheet" href="/Css/general/styles.min.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    </head>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register user</title>
+    <link rel="stylesheet" href="/Css/persona/Registrar_persona.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="/Imagenes/wknlogo2.png">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="/Css/general/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+
 <body>
     <div class="container-logo">
         <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" th:href="@{/}">
@@ -38,46 +36,62 @@
                         <div class="row"> <!-- nombre y apellido -->
                             <div class="contenedor-input">
                                 <div class="col-sm-6 mb-3">
-                                    <input class="form-control form-control-user" type="text" id="nombre" placeholder="" name="nombre" required>
+                                    <input class="form-control form-control-user" type="text" id="nombre" placeholder=""
+                                        name="nombre" required>
                                     <label for="nombre" class="label">First name</label>
                                 </div>
                             </div>
                             <div class="contenedor-input">
                                 <div class="col-sm-6 mb-3">
-                                    <input class="form-control form-control-user" type="text"
-                                        placeholder="" id="apellido" name="apellido" required>
-                                        <label for="apellido" class="label">Last Name</label>
+                                    <input class="form-control form-control-user" type="text" placeholder=""
+                                        id="apellido" name="apellido" required>
+                                    <label for="apellido" class="label">Last Name</label>
                                 </div>
                             </div>
                         </div>
                         <div class="mb-3"> <!-- email -->
                             <input class="form-control form-control-user" type="email"
                                 aria-describedby="emailHelp" placeholder="" id="email" name="email" required>
-                                <label for="email" class="label">Email</label>
+                            <label for="email" class="label">Email</label>
+                            <div class="validation-message" id="emailValidation"></div>
                         </div>
                         <div class="row"> <!-- contraseñas -->
                             <div class="contenedor-input">
                                 <div class="col-sm-6 mb-3">
-                                    <input class="form-control form-control-user" type="password"
-                                        placeholder="" id="password" name="contraseña" minlength="6" maxlength="45" required>
-                                        <label for="contraseña" class="label">Password</label>
+                                    <div class="password-input">
+                                        <input class="form-control form-control-user" type="password"
+                                            placeholder="" id="password" name="contraseña" minlength="6" maxlength="45" required>
+                                        <label for="password" class="label">Password</label>
+                                        <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('password')"></i>
+                                    </div>
+                                    <div class="password-strength-container">
+                                        <div class="password-strength-bar" id="passwordStrengthBar"></div>
+                                        <div class="password-strength-text" id="passwordStrengthText"></div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="contenedor-input">
                                 <div class="col-sm-6 mb-3">
-                                    <input class="form-control form-control-user" type="password"
-                                        placeholder="" id="confirm-password" name="confirm-password" minlength="6" maxlength="45"
-                                        required>
+                                    <div class="password-input">
+                                        <input class="form-control form-control-user" type="password"
+                                            placeholder="" id="confirm-password" name="confirm-password" minlength="6" maxlength="45"
+                                            required>
                                         <label for="confirm-password" class="label">Repeat Password</label>
+                                        <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('confirm-password')"></i>
+                                    </div>
+                                    <div class="password-match" id="passwordMatch">
+                                        <span id="passwordMatchIcon"></span>
+                                        <span id="passwordMatchText"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row"> <!-- cedula y tipo de cedula -->
                             <div class="contenedor-input">
                                 <div class="col-sm-6 mb-3">
-                                    <input class="form-control form-control-user" type="text" placeholder=""
-                                        id="cedula" name="identificacion" minlength="7" maxlength="10" required>
-                                        <label for="cedula" class="label">DNI</label>
+                                    <input class="form-control form-control-user" type="text" placeholder="" id="cedula"
+                                        name="identificacion" minlength="7" maxlength="10" required>
+                                    <label for="cedula" class="label">DNI</label>
                                 </div>
                             </div>
                             <div class="contenedor-input">
@@ -95,7 +109,8 @@
                         <div class="row"> <!-- fecha de nacimiento y genero -->
                             <div class="contenedor-input">
                                 <div class="col-sm-6 mb-3">
-                                    <input class="form-control form-control-user" type="text" id="fecha" name="fecha_nacimiento" required>
+                                    <input class="form-control form-control-user" type="text" id="fecha"
+                                        name="fecha_nacimiento" required>
                                     <label for="fecha" class="fecha-label">F. Nacimiento</label>
                                     <i class="fas fa-calendar-alt fecha" id="icono-calendario"></i>
                                 </div>
@@ -124,9 +139,9 @@
         <div class="curva">
             <div class="container-img"></div>
         </div>
-    </div>    
+    </div>
 
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="/js/General/Grid-and-List-view-V10-script.js"></script>
@@ -135,4 +150,5 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/js/persona/Registrar_persona.js"></script>
 </body>
+
 </html>

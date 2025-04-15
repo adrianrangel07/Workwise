@@ -370,13 +370,8 @@ public class PersonaController {
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        session.invalidate(); 
+        session.invalidate();
         return "redirect:/login/personas?logout=true"; // Redirigir al login
-    }
-
-    @GetMapping("/Nosotros") // ruta para enviar a nosotros (informacion sobre la pagina )
-    public String Nosotros() {
-        return "Html/Nosotros";
     }
 
     @GetMapping("/Estadisticas") // ruta para llevarlo a estadisticas sobre lo que podemos mostrar
@@ -417,5 +412,10 @@ public class PersonaController {
     @GetMapping("/prediccion")
     public String prediccion() {
         return "Html/prediccion";
+    }
+
+    @GetMapping("/recursos")
+    public String cambiarContrasenaEmp() {
+        return "Html/Recursos";
     }
 }

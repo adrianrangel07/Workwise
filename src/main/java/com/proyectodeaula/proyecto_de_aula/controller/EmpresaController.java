@@ -65,7 +65,7 @@ public class EmpresaController {
 
     // Registra una nueva empresa en la base de datos
     @PostMapping("/Registrar/Empresa")
-    public String registrarEmpresa(@ModelAttribute Empresas empresa) {
+    public String registrarEmpresa(@ModelAttribute Empresas empresa, Model model) {
         String contraseña = empresa.getContraseña();
         if (contraseña == null || contraseña.isBlank()) {
             throw new IllegalArgumentException("La contraseña no puede estar vacía");
@@ -291,6 +291,33 @@ public class EmpresaController {
     @GetMapping("/empresas/oferta") // para ver las ofertas postuladas
     public String oferta() {
         return "Html/Empresa/Oferta";
+    }
+
+    @PostMapping("/verificar-correo-emp")
+    public ResponseEntity<String> verificarCorreo(@RequestBody Map<String, String> requestData) {
+        String email = requestData.get("email");
+        Empresas empresas = empresaService.findByEmail(email);
+
+        if (empresas == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("NO_REGISTRADO");
+        }
+
+        return ResponseEntity.ok("Correo verificado. Ahora puede cambiar su contraseña.");
+    }
+
+    @PostMapping("/cambiar-contrasena-emp")
+    public ResponseEntity<String> cambiarContraseña(@RequestBody Map<String, String> requestData) throws Exception {
+        String email = requestData.get("email");
+        String nuevaContraseña = requestData.get("nuevaContraseña");
+
+        Empresas empresas = empresaService.findByEmail(email);
+        if (empresas == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERROR");
+        }
+
+        empresas.setContraseña(passwordEncoder.encode(nuevaContraseña)); // ✅ Encriptar antes de guardar
+        empresaService.actualizarPerfil(empresas);
+        return ResponseEntity.ok("OK");
     }
 
 }

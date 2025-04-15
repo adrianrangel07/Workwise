@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recursos para buscar empleo</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="/Css/general/bootstrap.min.css">
+    <link rel="stylesheet" href="/Css/recursos.css">
+    <link rel="stylesheet" href="/Css/general/responsive.css">
+    <!-- PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark"
+            style="background: #0a1128; width: 100px;">
+            <div class="container-fluid d-flex flex-column p-0"><a
+                    class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
+                    href="#"><img src="/Imagenes/wwk_white.png" width="61" height="58"
+                        style="width: 50px;height: 50px;">
+                    <div class="sidebar-brand-icon rotate-n-15"></div>
+                    <div class="sidebar-brand-text mx-3"><span>Workwise</span></div>
+                </a>
+                <hr class="sidebar-divider my-0">
+                <ul class="navbar-nav text-light" id="accordionSidebar">
+                    <li class="nav-item"><a class="nav-link" href="/pagina/inicio"><i
+                                class="fas fa-home"></i><span>Inicio</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login/personas"><i
+                                class="far fa-user-circle"></i><span>Inicio de sesion</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Register/personas"><i
+                                class="fas fa-user-circle"></i><span>Registrarse</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/recursos"><i
+                                class="fas fa-file"></i><span>Guias de
+                                entrevista</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Estadisticas"><i
+                                class="fas fa-chart-bar"></i><span>Estadisticas</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login/Empresa"><i
+                                class="fas fa-building"></i><span>Tienes una empresa?</span></a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Contenido principal -->
+        <div class="d-flex flex-column" id="content-wrapper">
+            <!-- Barra de navegación superior -->
+            <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light"
+                style="background: var(--bs-body-bg);">
+                <div class="container-fluid">
+                    <div class="close-navbar">
+                        <button class="btn btn-link d-md-none rounded-circle me-3" id="ocultarNavBar" type="button">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Contenido de recursos -->
+            <div class="content-area flex-grow-1 p-3">
+                <div class="recursos-container">
+                    <h1>Recursos para buscar empleo</h1>
+                    <h1> <strong>WorkWise</strong></h1>
+                    <!-- Pestañas -->
+                    <div class="tabs">
+                        <button class="tab-btn active" onclick="openTab('documentos')">📄 Documentos</button>
+                        <button class="tab-btn" onclick="openTab('videos')">🎥 Videos</button>
+                    </div>
+
+                    <!-- Documentos -->
+                    <div id="documentos" class="tab-content active">
+                        <div class="recurso-card">
+                            <h3>Tecnicas de busqueda de empleo</h3>
+                            <iframe
+                                src="https://drive.google.com/viewerng/viewer?embedded=true&url=https://www.bizkaia.eus/home2/archivos/dpto4/temas/pdf/monograficos/busqueda_empleo.pdf?hash=d9394ca6be71e9de88ed4fb0d5026394"
+                                width="100%" height="250px" frameborder="0"></iframe>
+                            <a href="https://www.bizkaia.eus/home2/archivos/dpto4/temas/pdf/monograficos/busqueda_empleo.pdf?hash=d9394ca6be71e9de88ed4fb0d5026394"
+                                class="btn" download="Tecnicas de busqueda de empleo" target="_blank">
+                                Descargar PDF
+                            </a>
+                        </div>
+
+                        <div class="recurso-card">
+                            <h3>Modulo de busqueda de empleo</h3>
+                            <iframe
+                                src="https://drive.google.com/viewerng/viewer?embedded=true&url=https://www.inmujeres.gob.es/areasTematicas/AreaProgInsercionSociolaboral/docs/Materiales/MABEMDinamizadores.pdf?"
+                                width="100%" height="250px" frameborder="0"></iframe>
+                            <a href="https://www.inmujeres.gob.es/areasTematicas/AreaProgInsercionSociolaboral/docs/Materiales/MABEMDinamizadores.pdf?"
+                                class="btn" download="Modulo de busqueda de empleo" target="_blank">
+                                Descargar PDF
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Videos -->
+                    <div id="videos" class="tab-content">
+                        <div class="recurso-card">
+                            <h3>Preguntas para entrevistas</h3>
+                            <div class="video-container">
+                                <iframe width="100%" src="https://www.youtube.com/embed/RHoUFgDEbIM?rel=0"
+                                    frameborder="0" allowfullscreen></iframe>
+                                <button class="expand-btn"
+                                    onclick="openModal('https://www.youtube.com/embed/RHoUFgDEbIM')">
+                                    ⚡ Ampliar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="recurso-card">
+                            <h3>Preguntas frecuentes para entrevistas de trabajo</h3>
+                            <div class="video-container">
+                                <iframe width="100%" src="https://www.youtube.com/embed/iXs3ANkVft0?rel=0"
+                                    frameborder="0" allowfullscreen></iframe>
+                                <button class="expand-btn"
+                                    onclick="openModal('https://www.youtube.com/embed/iXs3ANkVft0')">
+                                    ⚡ Ampliar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal para videos -->
+            <div id="video-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <iframe id="modal-iframe" width="100%" height="500" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <p class="mb-1">PBX: (605) 123-4567 | Email: contacto@workwise.com</p>
+                </div>
+                <div class="footer-center">
+                    <p class="mb-1">© 2024 WorkWise. Todos los derechos reservados.</p>
+                </div>
+                <div class="footer-right">
+                    <a href="https://www.facebook.com/profile.php?id=61558650706843" target="_blank"><i
+                            class="fab fa-facebook"></i></a>
+                    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/recursos.js"></script>
+
+</body>
+
+</html>

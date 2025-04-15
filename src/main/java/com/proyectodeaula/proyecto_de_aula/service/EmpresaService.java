@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.proyectodeaula.proyecto_de_aula.interfaceService.IempresaService;
@@ -20,6 +21,9 @@ public class EmpresaService implements IempresaService {
     @Autowired
     private Interfaz_Emp Emp;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     @Override
     public List<Empresas> listar_Emp() {
         return (List<Empresas>) dataemp.findAll();
@@ -33,9 +37,11 @@ public class EmpresaService implements IempresaService {
     @Override
     public int save(Empresas E) {
         int res = 0;
-        Empresas emp = dataemp.save(E); // Guardar empresa
+        Empresas emp = dataemp.save(E);
 
-        if (emp != null) { // Verificar si el guardado fue exitoso
+        E.setContraseña(passwordEncoder.encode(E.getContraseña()));
+
+        if (emp != null) {
             res = 1;
         }
 
@@ -52,18 +58,31 @@ public class EmpresaService implements IempresaService {
     }
 
     public void actualizarPerfil(Empresas empresa) throws Exception {
-        // Busca el usuario en la base de datos por su email
+        // Busca la empresa en la base de datos por su email
         Empresas emp = Emp.findByEmail(empresa.getEmail());
         if (emp == null) {
-            throw new Exception("Usuario no encontrado");
+            throw new Exception("Empresa no encontrada");
         }
 
+        // Actualiza los campos básicos
         emp.setNombreEmp(empresa.getNombreEmp());
         emp.setDireccion(empresa.getDireccion());
-        emp.setContraseña(empresa.getContraseña());
-        emp.setEmail(empresa.getEmail());
         emp.setRazon_social(empresa.getRazon_social());
+        emp.setEmail(empresa.getEmail());
 
+        // Encriptar contraseña solo si es nueva o no está encriptada
+        if (empresa.getContraseña() != null && !empresa.getContraseña().isEmpty()) {
+            if (!empresa.getContraseña().startsWith("$2a$10$")) {
+                System.out.println("Encriptando nueva contraseña...");
+                emp.setContraseña(passwordEncoder.encode(empresa.getContraseña()));
+            } else {
+                System.out.println("La contraseña ya está encriptada, no se encripta de nuevo.");
+                emp.setContraseña(empresa.getContraseña());
+            }
+        }
+
+        // Guarda los cambios
         Emp.save(emp);
     }
+
 }

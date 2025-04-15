@@ -253,6 +253,95 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     box-shadow: 0 4px 12px 4px rgba(3, 3, 3, 0.15);
 }
 
+/* Añade estas nuevas reglas al CSS */
+
+/* Validación */
+.validation-message {
+    font-size: 13px;
+    margin-top: 5px;
+    min-height: 18px;
+    padding-left: 5px;
+    text-align: left;
+}
+
+.validation-message.valid {
+    color: #28a745;
+}
+
+.validation-message.invalid {
+    color: #dc3545;
+}
+
+/* Password input container */
+.password-input {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6c757d;
+    z-index: 2;
+}
+
+/* Password strength indicator */
+.password-strength-container {
+    margin-top: 8px;
+}
+
+.password-strength-bar {
+    height: 4px;
+    background: #e9ecef;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 3px;
+}
+
+.password-strength-bar::after {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 0;
+    background: #dc3545;
+    transition: width 0.3s, background 0.3s;
+}
+
+.password-strength-text {
+    font-size: 12px;
+    color: #6c757d;
+    text-align: left;
+}
+
+/* Password match indicator */
+.password-match {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    margin-top: 8px;
+    text-align: left;
+}
+
+.password-match #passwordMatchIcon {
+    font-size: 14px;
+}
+
+.password-match.matched {
+    color: #28a745;
+}
+
+.password-match.unmatched {
+    color: #dc3545;
+}
+
+/* Ajuste para los inputs con icono */
+.mb-3 input:not(:placeholder-shown) ~ .label,
+.mb-3 input:focus ~ .label {
+    padding-right: 30px; /* Espacio para el icono */
+}
 /* responsive */
 @media (max-width: 600px) {
     .card {
