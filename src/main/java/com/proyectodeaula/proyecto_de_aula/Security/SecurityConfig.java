@@ -15,9 +15,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, SessionAuthenticationFilter sessionFilter) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/","/pagina/inicio","/Nosotros", "/Estadisticas", "/Register/personas", "/login/personas", "/Registrar/Empresa", "/login/Empresa").permitAll()
-                .requestMatchers("/Contrasena-olvidada", "/verificar-correo", "/perfil/verHDV", "/uploadHDV", "/upload/photo", "/imagen/{id}", "/cambiar-contrasena","/logout").permitAll()
-                .requestMatchers("/Css/**", "/js/**", "/Imagenes/**", "/webjars/**","/api/prediccion","/prediccion").permitAll()
+                .requestMatchers("/", "/pagina/inicio", "/Nosotros", "/Estadisticas", "/Register/personas", "/login/personas", "/Registrar/Empresa", "/login/Empresa").permitAll()
+                .requestMatchers("/Contrasena-olvidada", "/Contraseña-olvidada-empresa", "/verificar-correo", "/perfil/verHDV", "/uploadHDV", "/upload/photo", "/imagen/{id}", "/cambiar-contrasena", "/logout").permitAll()
+                .requestMatchers("/Css/**", "/js/**", "/Imagenes/**", "/webjars/**", "/api/prediccion", "/prediccion", "/cambiar-contrasena-emp","/recursos").permitAll()
                 .requestMatchers("/api/prediccion/**").permitAll()
                 .anyRequest().authenticated()
                 )
@@ -40,4 +40,5 @@ public class SecurityConfig {
                 .addFilterBefore(sessionFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
 }

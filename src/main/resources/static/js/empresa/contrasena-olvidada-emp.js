@@ -156,7 +156,7 @@ async function validarCaptcha() {
     });
     
     try {
-        const response = await fetch("/verificar-correo", {
+        const response = await fetch("/verificar-correo-emp", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email })
@@ -177,7 +177,7 @@ async function validarCaptcha() {
             });
             
             if (result.isConfirmed) {
-                window.location.href = "/Register/personas";
+                window.location.href = "/Registrar/Empresa";
             } else {
                 document.getElementById("email").focus();
             }
@@ -229,7 +229,7 @@ async function cambiarContrasena() {
     });
     
     try {
-        const response = await fetch("/cambiar-contrasena", {
+        const response = await fetch("/cambiar-contrasena-emp", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, nuevaContraseña })
@@ -244,7 +244,7 @@ async function cambiarContrasena() {
                 icon: "success",
                 confirmButtonText: "Iniciar sesión"
             }).then(() => {
-                window.location.href = "/login/personas";
+                window.location.href = "/login/Empresa";
             });
         } else {
             Swal.fire("Error", "Hubo un problema al cambiar la contraseña. Por favor intenta nuevamente.", "error");
