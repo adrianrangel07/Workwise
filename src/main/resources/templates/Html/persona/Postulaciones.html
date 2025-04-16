@@ -9,12 +9,10 @@
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css?h=97380e22c8933e9aa79cbc2390b9f15a" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" />
     <link rel="stylesheet" href="/Css/general/bootstrap.min.css" />
-    <link rel="stylesheet" href="/Css/general/Grid-and-List-view-V10-style.css" />
-    <link rel="stylesheet" href="/Css/general/Grid-and-List-view-V10.css" />
-    <link rel="stylesheet" href="/Css/general/Nunito.css" />
     <link rel="stylesheet" href="/Css/general/styles.min.css" />
     <link rel="stylesheet" href="/Css/persona/Postulaciones.css" />
     <link rel="stylesheet" href="/Css/persona/Perfil.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=1.0, user-scalable=no">
 
 </head>
 
@@ -30,25 +28,24 @@
                 </a>
                 <hr class="sidebar-divider my-0" />
                 <ul class="navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item"><a class="nav-link" th:href="@{/personas/pagina_principal}"><i
-                                class="fas fa-home"></i><span>Home</span></a></li>
+                    <li class="nav-item"><a class="nav-link " th:href="@{/personas/pagina_principal}"><i
+                                class="fas fa-home"></i><span>Inicio</span></a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/perfil/persona}"><i
-                                class="far fa-user-circle"></i><span>Profile</span></a></li>
+                                class="far fa-user-circle"></i><span>Perfil</span></a></li>
                     <li class="nav-item"><a class="nav-link active" th:href="@{/persona/Postulaciones}"><i
-                                class="fas fa-file-alt"></i><span>My Applications</span>
+                                class="fas fa-file-alt"></i><span>Mis postulaciones</span>
                     <li class="nav-item"><a class="nav-link" th:href="@{/persona/hdv}"><i
-                                class="fas fa-file-signature"></i><span>Curriculum Vitaes</span> 
+                                class="fas fa-file-signature"></i><span>Crear Hoja de Vida</span>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/personas/recursos}"><i
+                                class="fas fa-file"></i><span>Como buscar empleo?</span></a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/Estadisticas/personas}"><i
-                                class="fas fa-chart-bar"></i><span>Statistics</span></a></li>
+                                class="fas fa-chart-bar"></i><span>Estadisticas</span></a></li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout" onclick="cerrarSesionYRedirigir(event)">
-                            <i class="fas fa-building"></i><span>Do you have a company? </span>
+                            <i class="fas fa-building"></i><span>Tienes una empresa?</span>
                         </a>
                     </li>
                 </ul>
-                <div class="text-center d-none d-md-inline">
-                    <button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button>
-                </div>
             </div>
         </nav>
         <div class="d-flex flex-column" id="content-wrapper">
@@ -97,19 +94,16 @@
                 </nav>
                 <div class="container-fluid" style="user-select: none;">
                     <div class="card shadow">
-                        <div class="card-header py-3">
-                            <p class="text-primary m-0 fw-bold">Your Applications</p>
-                        </div>
                         <!-- cuadro de postulaciones pendiente -->
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3">
-                                        <h6 class="text-primary m-0 fw-bold">Pending Applications</h6>
+                                        <h6 class="text-primary m-0 fw-bold">Postulaciones pendientes</h6>
                                     </div>
                                     <div class="card-body">
                                         <div th:if="${postulaciones.isEmpty()}">
-                                            <p class="text-muted">You currently have no pending applications.</p>
+                                            <p class="text-muted">No tienes postulaciones pendiente actualmente</p>
                                         </div>
                                         <div th:unless="${postulaciones.isEmpty()}">
                                             <div class="offer-container">
@@ -126,28 +120,28 @@
 
                                                         <div class="hidden-info">
                                                             <p class="salario">
-                                                                <strong>Salary:</strong>
+                                                                <strong>Salario:</strong>
                                                                 <span th:text="${postulacion.ofertas.salario}"></span>
                                                             </p>
                                                             <p class="duracion">
-                                                                <strong>Duration:</strong>
+                                                                <strong>Duracion:</strong>
                                                                 <span th:text="${postulacion.ofertas.duracion}"></span>
                                                             </p>
                                                             <p class="periodo">
-                                                                <strong>Period:</strong>
+                                                                <strong>Periodo:</strong>
                                                                 <span th:text="${postulacion.ofertas.periodo}"></span>
                                                             </p>
                                                             <p class="tipo_empleo">
-                                                                <strong>Type of employment:</strong>
+                                                                <strong>Tipo de empleo:</strong>
                                                                 <span
                                                                     th:text="${postulacion.ofertas.tipo_empleo}"></span>
                                                             </p>
                                                             <p class="modalidad">
-                                                                <strong>Mode:</strong>
+                                                                <strong>Modalidad:</strong>
                                                                 <span th:text="${postulacion.ofertas.modalidad}"></span>
                                                             </p>
                                                             <p class="tipo_contrato">
-                                                                <strong>Type of contract:</strong>
+                                                                <strong>Tipo de contrato:</strong>
                                                                 <span
                                                                     th:text="${postulacion.ofertas.tipo_contrato}"></span>
                                                             </p>
@@ -156,11 +150,26 @@
                                                         <!-- Botón para eliminar la postulación -->
                                                         <button class="btn btn-danger" th:data-id="${postulacion.id}"
                                                             onclick="eliminarPostulacion(this)">
-                                                            Delete Application
+                                                            Borrar postulación
                                                         </button>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- cuadro de postulaciones resueltas -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="text-primary m-0 fw-bold">Postulaciones Resueltas</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="resolved-applications-container">
+                                            <p class="text-muted no-resolved">No tienes postulaciones resueltas actualmente</p>
                                         </div>
                                     </div>
                                 </div>
@@ -173,28 +182,18 @@
                 <div class="container">
                     <div class="footer-content">
                         <div class="footer-left">
-                            <p class="mb-1">
-                                PBX: (605) 123-4567 | Email: contacto@workwise.com
-                            </p>
+                            <p class="mb-1">PBX: (605) 123-4567 | Email: contacto@workwise.com</p>
                         </div>
                         <div class="footer-center">
-                            <p class="mb-1">
-                                © 2024 WorkWise. Todos los derechos reservados.
-                            </p>
+                            <p class="mb-1">© 2024 WorkWise. Todos los derechos reservados.</p>
                         </div>
                         <div class="footer-right">
-                            <a href="https://facebook.com" target="_blank" class="mx-3">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
-                                    alt="Facebook" width="30" height="30" />
-                            </a>
-                            <a href="https://instagram.com" target="_blank" class="mx-3">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
-                                    alt="Instagram" width="30" height="30" />
-                            </a>
-                            <a href="https://www.tiktok.com" target="_blank" class="mx-3">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/TikTok_Logo.svg"
-                                    alt="TikTok" width="30" height="30" />
-                            </a>
+                            <a href="https://www.facebook.com/profile.php?id=61558650706843" target="_blank"><i
+                                    class="fab fa-facebook"></i></a>
+
+                            <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+
+                            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
                 </div>

@@ -349,13 +349,13 @@ function updateAppliedStatus(ofertaId, isApplied) {
         
         // Actualizar el botón en el modal
         postularseBtn.textContent = 'Postulado';
-        postularseBtn.disabled = true;
+       
     }
 }
 
 // Función para cargar el estado de postulación al inicio
 function loadAppliedStatus() {
-    // Esto debería venir del backend, pero como ejemplo:
+
     document.querySelectorAll('.applied-icon').forEach(icon => {
         const ofertaId = icon.getAttribute('data-id');
         updateAppliedStatus(ofertaId, true);

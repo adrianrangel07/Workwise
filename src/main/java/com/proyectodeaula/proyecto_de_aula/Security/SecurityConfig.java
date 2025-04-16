@@ -15,15 +15,23 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, SessionAuthenticationFilter sessionFilter) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/pagina/inicio", "/Nosotros", "/Estadisticas", "/Register/personas", "/login/personas", "/Registrar/Empresa", "/login/Empresa").permitAll()
-                .requestMatchers("/Contrasena-olvidada", "/Contraseña-olvidada-empresa", "/verificar-correo", "/perfil/verHDV", "/uploadHDV", "/upload/photo", "/imagen/{id}", "/cambiar-contrasena", "/logout").permitAll()
-                .requestMatchers("/Css/**", "/js/**", "/Imagenes/**", "/webjars/**", "/api/prediccion", "/prediccion", "/cambiar-contrasena-emp","/recursos").permitAll()
-                .requestMatchers("/api/prediccion/**").permitAll()
-                .anyRequest().authenticated()
+                //general
+                .requestMatchers("/", "/pagina/inicio", "/Estadisticas", "/recursos", "/verificar-correo", "/logout", "/uploadHDV", "/upload/photo", "/imagen/{id}").permitAll()
+                //importaciones
+                .requestMatchers("/Css/**", "/js/**", "/Imagenes/**", "/webjars/**").permitAll()
+                //prediccion
+                .requestMatchers("/api/prediccion/**", "/api/prediccion", "/prediccion").permitAll()
+                //personas
+                .requestMatchers("/Register/personas", "/login/personas", "/personas/recursos", "/Contrasena-olvidada", "/cambiar-contrasena").permitAll()
+                //empresas
+                .requestMatchers("/Contraseña-olvidada-empresa", "/perfil/verHDV", "/Registrar/Empresa", "/login/Empresa", "/cambiar-contrasena-emp").permitAll()
+                .anyRequest().permitAll()
                 )
+                
                 .headers(headers -> headers
                 .contentSecurityPolicy(csp -> csp
                 .policyDirectives("script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline' 'unsafe-eval'; ")
+                
                 )
                 )
                 .headers(headers -> headers

@@ -27,7 +27,56 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// Función para manejar el clic en el botón de eliminar
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Seleccionar todas las tarjetas de postulaciones
+    const applicationCards = document.querySelectorAll('.offer-container .card');
+    const resolvedContainer = document.getElementById('resolved-applications-container');
+    const noResolvedMessage = document.querySelector('.no-resolved');
+
+    // Contador para aplicaciones resueltas
+    let resolvedCount = 0;
+
+    applicationCards.forEach(card => {
+        const estadoElemento = card.querySelector('.estado');
+        const estadoTexto = estadoElemento.querySelector('span').innerText.trim().toLowerCase();
+        const estadoId = estadoElemento.getAttribute('data-id');
+
+
+        // Añadir clase según el estado
+        card.classList.add(estadoTexto === 'pendiente' ? 'pending' :
+            estadoTexto === 'aceptado' ? 'accepted' : 'rejected');
+
+
+        // Mover aplicaciones resueltas a la sección correspondiente
+        if (estadoTexto === 'aceptado' || estadoTexto === 'rechazado') {
+            card.classList.add('resolved-card');
+            resolvedContainer.insertBefore(card, noResolvedMessage);
+            resolvedCount++;
+
+            // Cambiar el botón de eliminar por uno de feedback
+            const deleteBtn = card.querySelector('.btn-danger');
+            if (deleteBtn) {
+                deleteBtn.textContent = estadoTexto === 'aceptado' ? 'Fuiste seleccionado!' : 'No fuiste seleccionado :(';
+                deleteBtn.className = estadoTexto === 'aceptado' ?
+                    'btn btn-success' : 'btn btn-warning';
+                deleteBtn.onclick = null;
+                deleteBtn.style.cursor = 'default';
+                deleteBtn.title = estadoTexto === 'aceptado'
+                    ? '¡Felicitaciones! Se estaran comunicando contigo'
+                    : 'No fuiste seleccionado esta vez. ¡No te rindas!';
+
+            }
+        }
+    });
+
+    // Ocultar mensaje de "no hay aplicaciones" si hay resueltas
+    if (resolvedCount > 0) {
+        noResolvedMessage.style.display = 'none';
+    }
+
+});
+
 function eliminarPostulacion(button) {
     var postulacionId = button.getAttribute('data-id');
 
@@ -93,7 +142,7 @@ function cerrarSesionYRedirigir(event) {
         showConfirmButton: false,
         didOpen: () => {
             Swal.showLoading(); // Muestra un loader
-            
+
             // Enviar la solicitud de cierre de sesión
             fetch('/logout', { method: 'POST' })
                 .then(response => {
