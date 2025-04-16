@@ -317,6 +317,11 @@ body {
     transition: var(--transition);
 }
 
+.sidebar .nav-link.active {
+    background: rgba(255, 255, 255, 0.1);
+    border-left: 4px solid #59625e;
+}
+
 .sidebar a {
     text-decoration: none;
     margin: 5px 0;

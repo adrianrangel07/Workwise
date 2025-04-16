@@ -1,4 +1,4 @@
-
+//de aqui en adelante la tarjeta
 document.addEventListener('DOMContentLoaded', function () {
     // Seleccionar todas las tarjetas
     const cards = document.querySelectorAll('.offer-content');
@@ -36,21 +36,21 @@ document.addEventListener('DOMContentLoaded', function () {
         // Llenar el modal con los datos de la tarjeta
         modalTitle.innerText = title;
         modalDescription.innerText = description;
-        modalSalary.innerHTML = `<strong>Salario:</strong> ${salary}`;
-        modalCurrency.innerHTML = `<strong>moneda:</strong> ${currency}`;
-        modalDuration.innerHTML = `<strong>Duración:</strong> ${duration}`;
-        modalPeriod.innerHTML = `<strong>Periodo:</strong> ${period}`;
-        modalType.innerHTML = `<strong>Tipo de empleo:</strong> ${type}`;
-        modalModalidad.innerHTML = `<strong>Modalidad:</strong> ${modalidad}`;
-        modalTypeContract.innerHTML = `<strong>tipo de contrato:</strong> ${typeContract}`;
-        modalEmpresa.innerHTML = `<strong>Empresa:</strong> ${empresa}`;
-
+        modalSalary.innerHTML = `<strong>Salario: </strong> ${salary}`;
+        modalCurrency.innerHTML = `<strong>Moneda: </strong> ${currency}`;
+        modalDuration.innerHTML = `<strong>Duración: </strong> ${duration}`;
+        modalPeriod.innerHTML = `<strong>Periodo: </strong> ${period}`;
+        modalType.innerHTML = `<strong>Tipo de empleo: </strong> ${type}`;
+        modalModalidad.innerHTML = `<strong>Modalidad: </strong> ${modalidad}`;
+        modalTypeContract.innerHTML = `<strong>Tipo de contrato: </strong> ${typeContract}`;
+        modalEmpresa.innerHTML = `<strong>Empresa: </strong> ${empresa}`;
 
         const ofertaId = card.getAttribute("data-id"); // Obtener ID de la oferta
         postularseBtn.setAttribute("data-oferta-id", ofertaId); // Asignarlo al botón
 
         // Verifica si se asignó correctamente
         console.log("ID de la oferta en el botón:", postularseBtn.getAttribute("data-oferta-id"));
+
         // Mostrar el modal
         modal.style.display = 'flex';
     };
@@ -75,107 +75,58 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-
-//boton postularse 
-const postularseBtn = document.getElementById('postularseBtn');
-postularseBtn.addEventListener("click", function () {
-    // Obtener el ID de la oferta desde el botón
-    const ofertaId = parseInt(postularseBtn.getAttribute('data-oferta-id'), 10);
-    // Obtener el usuarioId desde el campo oculto
-    const usuarioId = document.getElementById('usuarioId').value;
-
-    console.log('Oferta ID:', ofertaId, 'Usuario ID:', usuarioId);  // Ver los valores en consola
-
-    if (!ofertaId || !usuarioId) return;  // Verificar que ambos IDs estén presentes
-
-    Swal.fire({
-        title: '¿Estás seguro?',
-        text: "¿Quieres postularte a esta oferta?",
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, postularme'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Enviar los datos al backend para comprobar si ya está postulado
-            fetch(`/postularse`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    ofertaId: ofertaId,
-                    usuarioId: usuarioId
-                })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Mostrar el mensaje de éxito con un temporizador antes de recargar
-                        Swal.fire({
-                            title: 'Postulación exitosa',
-                            text: data.message,
-                            icon: 'success',
-                            timer: 3000,  // Establece un temporizador de 3 segundos antes de cerrar
-                            showConfirmButton: false // Ocultar el botón de confirmación
-                        }).then(() => {
-                            postularseBtn.textContent = 'Postulado';
-                            postularseBtn.disabled = true;
-                            location.reload(); // Recargar la página después de que cierre el mensaje
-                        });
-                    } else {
-                        // Mostrar mensaje si ya está postulado
-                        Swal.fire({
-                            title: 'Ya estás postulado',
-                            text: data.message,
-                            icon: 'info',
-                            timer: 3000,  // Temporizador de 3 segundos
-                            showConfirmButton: false // No mostrar el botón de confirmación
-                        }).then(() => {
-                            postularseBtn.textContent = 'Postulado';
-                            postularseBtn.disabled = true;
-                            location.reload(); // Recargar la página después de que cierre el mensaje
-                        });
-                    }
-                })
-                .catch(error => {
-                    // Mostrar mensaje de error con temporizador
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'Hubo un problema al postularse. Inténtalo de nuevo más tarde.',
-                        icon: 'error',
-                        timer: 3000,  // Temporizador de 3 segundos
-                        showConfirmButton: false // Ocultar el botón de confirmación
-                    }).then(() => {
-                        location.reload(); // Recargar la página después de que cierre el mensaje
-                    });
-                });
-        }
-    });
-
-});
-
-//no borrar
 //codigo para filtrador de busqueda por termino 
 document.addEventListener("DOMContentLoaded", function () {
     const formBusqueda = document.getElementById('formBusqueda');
     const terminoInput = document.getElementById('termino');
     const ofertas = document.querySelectorAll('.offer-container .card');
 
-    // Función para normalizar el texto y quitar tildes
     function normalizeText(text) {
         return text.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
     }
 
-    formBusqueda.addEventListener('submit', function (event) {
-        event.preventDefault();
+    // Captura el término de búsqueda de la URL
+    const params = new URLSearchParams(window.location.search);
+    const terminoBuscado = params.get('termino');
 
-        const termino = normalizeText(terminoInput.value); // Normaliza el término de búsqueda
+    if (terminoBuscado) {
+        if (terminoInput) {
+            terminoInput.value = terminoBuscado;
+        }
+
+        const terminoNormalizado = normalizeText(terminoBuscado);
         let ofertasEncontradas = false;
 
         ofertas.forEach(oferta => {
-            const titulo = normalizeText(oferta.querySelector('h3').textContent); // Normaliza el título de la oferta
+            const titulo = normalizeText(oferta.querySelector('h3').textContent);
+            if (titulo.includes(terminoNormalizado)) {
+                oferta.style.display = 'block';
+                ofertasEncontradas = true;
+            } else {
+                oferta.style.display = 'none';
+            }
+        });
+
+        if (!ofertasEncontradas) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'No se encontraron ofertas',
+                text: 'Por favor, verifica el término de búsqueda.',
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                location.href = '/personas/pagina_principal';
+            });
+        }
+    }
+
+    // BÚSQUEDA MANUAL
+    formBusqueda?.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const termino = normalizeText(terminoInput.value);
+        let ofertasEncontradas = false;
+
+        ofertas.forEach(oferta => {
+            const titulo = normalizeText(oferta.querySelector('h3').textContent);
             if (titulo.includes(termino)) {
                 oferta.style.display = 'block';
                 ofertasEncontradas = true;
@@ -196,10 +147,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         terminoInput.value = '';
+       
     });
+
+    reloadFavorites();
 });
 
-//funcion para aplicar filtros
 function applyFilters() {
     // Cerrar la barra lateral de filtros desmarcando el checkbox
     document.getElementById('btn-menu').checked = false;
@@ -208,24 +161,23 @@ function applyFilters() {
     const salarioMin = parseFloat(document.getElementById("salarioMin").value) || 0;
     const salarioMax = parseFloat(document.getElementById("salarioMax").value) || Infinity;
     const tipoEmpleo = document.getElementById("tipoEmpleoSelect").value.toLowerCase();
-    const tipoContrato = document.getElementById("typeContract").value.toLowerCase();  // Capturamos el valor del tipo de contrato
+    const tipoContrato = document.getElementById("typeContract").value.toLowerCase();
 
-    const ofertas = document.querySelectorAll(".offer-container .card");
-
-    // Capturar modalidades seleccionadas
-    const checkboxes = document.querySelectorAll('#filterModalidad input[type="checkbox"]');
+    // Capturar modalidades seleccionadas (versión actualizada para la nueva estructura HTML)
+    const checkboxes = document.querySelectorAll('.filter-section-body input[type="checkbox"]');
     const selectedModalities = Array.from(checkboxes)
         .filter(checkbox => checkbox.checked)
         .map(checkbox => checkbox.value.toLowerCase());
 
+    const ofertas = document.querySelectorAll(".offer-container .card");
     let ofertasVisibles = 0; // Contador de ofertas visibles
 
     // Aplicar los filtros a cada tarjeta de oferta
     ofertas.forEach(oferta => {
-        const salario = parseFloat(oferta.querySelector(".salario span").innerText) || 0;
-        const tipoEmpleoOferta = oferta.querySelector(".tipo_empleo span").innerText.toLowerCase();
-        const modalidadOferta = oferta.querySelector(".modalidad span").innerText.toLowerCase();
-        const tipoContratoOferta = oferta.querySelector(".tipo_contrato span").innerText.toLowerCase();
+        const salario = parseFloat(oferta.querySelector(".salario span").textContent) || 0;
+        const tipoEmpleoOferta = oferta.querySelector(".tipo_empleo span").textContent.toLowerCase();
+        const modalidadOferta = oferta.querySelector(".modalidad span").textContent.toLowerCase();
+        const tipoContratoOferta = oferta.querySelector(".tipo_contrato span").textContent.toLowerCase();
 
         // Lógica para mostrar/ocultar la oferta según los filtros
         let isVisible = true;
@@ -234,7 +186,7 @@ function applyFilters() {
         if (salario < salarioMin || salario > salarioMax) isVisible = false;
         if (tipoEmpleo && tipoEmpleo !== tipoEmpleoOferta) isVisible = false;
         if (selectedModalities.length > 0 && !selectedModalities.includes(modalidadOferta)) isVisible = false;
-        if (tipoContrato && tipoContrato !== tipoContratoOferta) isVisible = false; // Filtramos por el tipo de contrato
+        if (tipoContrato && tipoContrato !== tipoContratoOferta) isVisible = false;
 
         // Mostrar u ocultar la oferta
         oferta.style.display = isVisible ? "block" : "none";
@@ -250,10 +202,172 @@ function applyFilters() {
             text: 'Ninguna oferta coincide con los filtros aplicados. Intenta con otros criterios.',
             confirmButtonText: 'Aceptar'
         }).then(() => {
-            location.reload();
+            resetFilters(); // Mejor que location.reload() para mantener la experiencia fluida
         });
     }
+
+    reloadFavorites(); // Recargar favoritos después de aplicar filtros
 }
+
+function resetFilters() {
+    // Restablecer valores de los filtros
+    document.getElementById('salarioMin').value = '';
+    document.getElementById('salarioMax').value = '';
+    document.getElementById('typeContract').value = '';
+    document.getElementById('tipoEmpleoSelect').value = '';
+
+    // Desmarcar todas las casillas de modalidad
+    document.querySelectorAll('.filter-section-body input[type="checkbox"]').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+
+    // Volver a aplicar los filtros (mostrar todo)
+    applyFilters();
+}
+
+// Añadir interactividad a los encabezados de sección (colapsables)
+document.querySelectorAll('.filter-section-header').forEach(header => {
+    header.addEventListener('click', function () {
+        const body = this.nextElementSibling;
+        body.style.display = body.style.display === 'none' ? 'block' : 'none';
+        this.classList.toggle('collapsed');
+    });
+});
+
+// Inicializar todas las secciones como visibles
+document.querySelectorAll('.filter-section-body').forEach(body => {
+    body.style.display = 'block';
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".salario span").forEach(function (element) {
+        let value = element.textContent.trim();
+        if (!isNaN(value) && value !== "") {
+            element.textContent = Number(value).toLocaleString("es-CO");
+        }
+    });
+});
+
+document.getElementById("ocultarNavBar").addEventListener("click", function () {
+    let sidebar = document.querySelector(".sidebar");
+
+    sidebar.classList.toggle("toggled");
+
+});
+
+
+const postularseBtn = document.getElementById('postularseBtn');
+postularseBtn.addEventListener("click", function() {
+    const ofertaId = parseInt(postularseBtn.getAttribute('data-oferta-id'), 10);
+    const usuarioId = document.getElementById('usuarioId').value;
+
+    if (!ofertaId || !usuarioId) return;
+
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "¿Quieres postularte a esta oferta?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, postularme'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`/postularse`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    ofertaId: ofertaId,
+                    usuarioId: usuarioId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Actualizar el estado visual
+                    const card = document.querySelector(`.card .offer-content[data-id="${ofertaId}"]`).closest('.card');
+                    if (card) {
+                        const appliedIcon = document.createElement('div');
+                        appliedIcon.className = 'applied-icon';
+                        appliedIcon.setAttribute('data-id', ofertaId);
+                        appliedIcon.innerHTML = '<i class="fas fa-check-circle"></i><span>Postulado</span>';
+                        card.insertBefore(appliedIcon, card.firstChild);
+                    }
+                    
+                    Swal.fire({
+                        title: 'Postulación exitosa',
+                        text: data.message,
+                        icon: 'success',
+                        timer: 3000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        postularseBtn.textContent = 'Postulado';
+                        postularseBtn.disabled = true;
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Ya estás postulado',
+                        text: data.message,
+                        icon: 'info',
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Hubo un problema al postularse. Inténtalo de nuevo más tarde.',
+                    icon: 'error',
+                    timer: 3000,
+                    showConfirmButton: false
+                });
+            });
+        }
+    });
+});
+
+// Función para actualizar el estado visual de postulación
+function updateAppliedStatus(ofertaId, isApplied) {
+    const appliedIcons = document.querySelectorAll(`.applied-icon[data-id="${ofertaId}"]`);
+    const cards = document.querySelectorAll(`.card .offer-content[data-id="${ofertaId}"]`).closest('.card');
+    
+    if (isApplied) {
+        // Crear el icono si no existe
+        if (appliedIcons.length === 0) {
+            const card = document.querySelector(`.card .offer-content[data-id="${ofertaId}"]`).closest('.card');
+            if (card) {
+                const appliedIcon = document.createElement('div');
+                appliedIcon.className = 'applied-icon';
+                appliedIcon.setAttribute('data-id', ofertaId);
+                appliedIcon.innerHTML = '<i class="fas fa-check-circle"></i><span>Postulado</span>';
+                card.insertBefore(appliedIcon, card.firstChild);
+            }
+        }
+        
+        // Actualizar el botón en el modal
+        postularseBtn.textContent = 'Postulado';
+        postularseBtn.disabled = true;
+    }
+}
+
+// Función para cargar el estado de postulación al inicio
+function loadAppliedStatus() {
+    // Esto debería venir del backend, pero como ejemplo:
+    document.querySelectorAll('.applied-icon').forEach(icon => {
+        const ofertaId = icon.getAttribute('data-id');
+        updateAppliedStatus(ofertaId, true);
+    });
+}
+
+// Llamar al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+    loadAppliedStatus();
+    setupFavorites();
+});
+
 
 function cerrarSesion(event) {
     event.preventDefault(); // Evitar que se ejecute el href del enlace
@@ -277,8 +391,6 @@ function cerrarSesion(event) {
     });
 }
 
-
-//codigo que hace que aparezca la foto de perfil 
 document.addEventListener("DOMContentLoaded", function () {
     // Obtener datos del usuario desde el HTML
     const usuarioNombre = document.getElementById("usuario");
@@ -308,15 +420,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-//codigo que hace que aparezca el salario con comas
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".salario span").forEach(function (element) {
-        let value = element.textContent.trim();
-        if (!isNaN(value) && value !== "") {
-            element.textContent = Number(value).toLocaleString("es-CO");
-        }
-    });
-});
 
 function cerrarSesionYRedirigir(event) {
     event.preventDefault(); // Evita la navegación inmediata
@@ -329,7 +432,7 @@ function cerrarSesionYRedirigir(event) {
         showConfirmButton: false,
         didOpen: () => {
             Swal.showLoading(); // Muestra un loader
-            
+
             // Enviar la solicitud de cierre de sesión
             fetch('/logout', { method: 'POST' })
                 .then(response => {
@@ -365,3 +468,80 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+// Función para manejar favoritos
+function setupFavorites() {
+    // Cargar favoritos desde localStorage
+    let favorites = JSON.parse(localStorage.getItem('jobFavorites')) || [];
+    
+    // Función para actualizar el estado visual de los favoritos
+    function updateFavoriteIcons() {
+        const favoriteIcons = document.querySelectorAll('.favorite-icon');
+        const cards = document.querySelectorAll('.card');
+        
+        favoriteIcons.forEach(icon => {
+            const offerId = icon.getAttribute('data-id');
+            const card = icon.closest('.card');
+            
+            if (favorites.includes(offerId)) {
+                icon.classList.add('favorited');
+                icon.innerHTML = '<i class="fas fa-heart"></i>';
+                card.classList.add('favorited');
+            } else {
+                icon.classList.remove('favorited');
+                icon.innerHTML = '<i class="far fa-heart"></i>';
+                card.classList.remove('favorited');
+            }
+        });
+    }
+    
+    // Manejar clic en iconos de favoritos
+    document.querySelectorAll('.favorite-icon').forEach(icon => {
+        icon.addEventListener('click', function(e) {
+            e.stopPropagation(); // Evitar que se abra el modal
+            const offerId = this.getAttribute('data-id');
+            
+            const index = favorites.indexOf(offerId);
+            if (index === -1) {
+                favorites.push(offerId);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Añadido a favoritos',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            } else {
+                favorites.splice(index, 1);
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Eliminado de favoritos',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+            
+            localStorage.setItem('jobFavorites', JSON.stringify(favorites));
+            updateFavoriteIcons();
+        });
+    });
+    
+    // Actualizar iconos al cargar la página
+    updateFavoriteIcons();
+    
+    // Modificar la función openModal para evitar conflictos
+    const originalOpenModal = window.openModal;
+    window.openModal = function(card) {
+        originalOpenModal(card);
+        // Solo abrir el modal, sin lógica de favoritos
+    };
+}
+
+// Llamar a la función cuando el DOM esté cargado
+document.addEventListener('DOMContentLoaded', function() {
+    setupFavorites();
+});
+
+// Función para recargar favoritos después de filtros/búsquedas
+function reloadFavorites() {
+    setupFavorites();
+}
