@@ -374,11 +374,6 @@ public class PersonaController {
         return "redirect:/login/personas?logout=true"; // Redirigir al login
     }
 
-    @GetMapping("/Estadisticas") // ruta para llevarlo a estadisticas sobre lo que podemos mostrar
-    public String estadistica() {
-        return "Html/Estadisticas";
-    }
-
     @GetMapping("/Estadisticas/personas") // ruta para llevarlo a estadisticas sobre lo que podemos mostrar
     public String estadistica_persona() {
         return "Html/persona/Estadisticas_persona";
@@ -413,9 +408,15 @@ public class PersonaController {
     public String prediccion() {
         return "Html/prediccion";
     }
-
+    
     @GetMapping("/recursos")
     public String cambiarContrasenaEmp() {
         return "Html/Recursos";
     }
+    
+    @GetMapping("/Estadisticas") // ruta para llevarlo a estadisticas sobre lo que podemos mostrar
+    public String estadistica() {
+        return "Html/Estadisticas";
+    }
+    
 }

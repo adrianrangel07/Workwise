@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.proyectodeaula.proyecto_de_aula.model.Ofertas;
@@ -22,4 +24,7 @@ public interface PostulacionRepository extends JpaRepository<Postulacion, Long> 
     List<Postulacion> findByPersonasId(Long personaId);
 
     List<Postulacion> findByOfertasId(Long idOferta);
+
+    @Query("SELECT p.ofertas.id FROM Postulacion p WHERE p.personas.id = :personaId")
+    List<Long> findOfertasIdsByPersonaId(@Param("personaId") Long personaId);
 }

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.proyectodeaula.proyecto_de_aula.interfaceService.IofertaService;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Personas.Interfaz_Per;
+import com.proyectodeaula.proyecto_de_aula.interfaces.postulacion.PostulacionRepository;
 import com.proyectodeaula.proyecto_de_aula.model.Empresas;
 import com.proyectodeaula.proyecto_de_aula.model.Ofertas;
 import com.proyectodeaula.proyecto_de_aula.model.Personas;
@@ -43,45 +44,48 @@ public class OfertaController {
     @Autowired
     private Interfaz_Per personaRepository;
 
+    @Autowired
+    private PostulacionRepository postulacionRepository;
+
     @GetMapping("/personas/pagina_principal")
     public String listar_ofertas_1(@RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "6") int size, Model model, HttpSession session) {
+            @RequestParam(defaultValue = "12") int size, Model model, HttpSession session) {
 
-        Page<Ofertas> ofertasPage = offerService.listar_ofertas_paginadas(page, size);
-
-        // Obtén las ofertas desde el servicio
-        List<Ofertas> ofertas = offerService.listar_ofertas();
         Long usuarioId = (Long) session.getAttribute("usuarioId");
-
-        // Pasamos las ofertas al modelo con el nombre "Ofertas"
-        model.addAttribute("Ofertas", ofertas);
-        model.addAttribute("paginaActual", page);
-        model.addAttribute("totalPaginas", ofertasPage.getTotalPages());
-
-        if (usuarioId != null) {
-            model.addAttribute("usuarioId", usuarioId); // Pasar el usuarioId al modelo
-        } else {
-            return "redirect:/login/personas"; // Si no está autenticado, redirigir al login
+        if (usuarioId == null) {
+            return "redirect:/login/personas";
         }
 
         Optional<Personas> personaOptional = personaRepository.findById(usuarioId);
-        if (personaOptional.isPresent()) {
-            model.addAttribute("persona", personaOptional.get());
-        } else {
-            model.addAttribute("persona", new Personas()); // Si no se encuentra, se pasa un objeto vacío
-        }
-        return "Html/persona/pagina_principal_personas"; // Vista de la página principal
-        // Devolvemos la vista "pagina_principal_personas"
+        model.addAttribute("persona", personaOptional.orElse(new Personas()));
+
+        Page<Ofertas> ofertasPage = offerService.listar_ofertas_paginadas(page, size);
+        List<Ofertas> Ofertas = ofertasPage.getContent();
+
+        // Obtener las ofertas postuladas por el usuario
+        List<Long> ofertasPostuladas = postulacionRepository.findOfertasIdsByPersonaId(usuarioId);
+
+        // Marcar las ofertas postuladas
+        Ofertas.forEach(oferta -> {
+            oferta.setPostulado(ofertasPostuladas.contains(oferta.getId()));
+        });
+
+        model.addAttribute("Ofertas", Ofertas);
+        model.addAttribute("paginaActual", page);
+        model.addAttribute("totalPaginas", ofertasPage.getTotalPages());
+        model.addAttribute("size", size);
+        model.addAttribute("usuarioId", usuarioId);
+
+        return "Html/persona/pagina_principal_personas";
     }
 
     @GetMapping("/pagina/inicio")
     public String listar_ofertas(@RequestParam(defaultValue = "0") int page,
-    @RequestParam(defaultValue = "12") int size, Model model) {
+            @RequestParam(defaultValue = "12") int size, Model model) {
 
         Page<Ofertas> ofertasPage = offerService.listar_ofertas_paginadas(page, size);
 
-        // List<Ofertas> Ofertas = offerService.listar_ofertas();
-        List<Ofertas> Ofertas = ofertasPage.getContent(); 
+        List<Ofertas> Ofertas = ofertasPage.getContent();
 
         model.addAttribute("paginaActual", page);
         model.addAttribute("totalPaginas", ofertasPage.getTotalPages());

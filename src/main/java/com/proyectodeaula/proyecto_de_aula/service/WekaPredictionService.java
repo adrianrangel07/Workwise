@@ -1,17 +1,16 @@
 package com.proyectodeaula.proyecto_de_aula.service;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.InputStreamReader;
 
 import org.springframework.stereotype.Service;
 
-import com.proyectodeaula.proyecto_de_aula.model.prediccion;
+import com.proyectodeaula.proyecto_de_aula.model.PrediccionRequest;
 
 import lombok.Getter;
-import lombok.Setter;
 import weka.classifiers.Classifier;
-import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -21,101 +20,73 @@ import weka.core.SerializationHelper;
 public class WekaPredictionService {
 
     private final Classifier modelo;
-    private final Instances dataStructure;
+    private final Instances estructura;
 
     public WekaPredictionService() throws Exception {
         // Cargar el modelo desde resources
         try (InputStream modelStream = getClass().getClassLoader().getResourceAsStream("weka/modelo_empleo_j48.model")) {
+            if (modelStream == null) {
+                throw new FileNotFoundException("Modelo WEKA no encontrado en resources");
+            }
             modelo = (Classifier) SerializationHelper.read(modelStream);
         }
 
-        // Crear estructura vacía basada en el ARFF original 
-        dataStructure = crearEstructuraDatos();
+        // Cargar estructura desde ARFF
+        try (InputStream arffStream = getClass().getClassLoader().getResourceAsStream("weka/empleo_recomendacion_simplificado_balanceado.arff")) {
+            if (arffStream == null) {
+                throw new FileNotFoundException("Archivo ARFF no encontrado en resources");
+            }
+            estructura = new Instances(new BufferedReader(new InputStreamReader(arffStream)));
+            estructura.setClassIndex(estructura.numAttributes() - 1);
+        }
     }
 
-    public ResultadoPrediccion predecir(prediccion datos) throws Exception {
-        // Crear instancia
-        Instance instancia = new DenseInstance(dataStructure.numAttributes());
-        instancia.setDataset(dataStructure);
+    public ResultadoPrediccion predecir(PrediccionRequest datos) throws Exception {
+        // Crear instancia WEKA
+        Instance instancia = new DenseInstance(estructura.numAttributes());
+        instancia.setDataset(estructura);
 
-        // Asignar valores a los atributos 
-        instancia.setValue(0, datos.getTipoEmpleoOferta());
-        instancia.setValue(1, datos.getModalidadOferta());
-        instancia.setValue(2, datos.getTipoContratoOferta());
-        instancia.setValue(3, datos.getExperienciaRequerida());
-        instancia.setValue(4, datos.getNivelEstudioRequerido());
-        instancia.setValue(5, datos.getSectorOferta());
-        instancia.setValue(6, datos.getTipoEmpleoDeseado());
-        instancia.setValue(7, datos.getPreferenciaModalidad());
-        instancia.setValue(8, datos.getPreferenciaContrato());
-        instancia.setValue(9, datos.getExperienciaPersona());
-        instancia.setValue(10, datos.getNivelEstudioPersona());
-        instancia.setValue(11, datos.getSectorPersona());
-        instancia.setValue(12, datos.getEdadPersona());
-        instancia.setValue(13, datos.getCoincideTipoEmpleo());
-        instancia.setValue(14, datos.getCoincideModalidad());
-        instancia.setValue(15, datos.getCoincideContrato());
-        instancia.setValue(16, datos.getCoincideEstudios());
-        instancia.setValue(17, datos.getCoincideSector());
-        instancia.setValue(18, datos.getExperienciaSuficiente());
+        // Asignar valores - asegúrate que el orden coincide con el ARFF
+        instancia.setValue(estructura.attribute("tipo_empleo_oferta"), datos.getTipoEmpleoOferta());
+        instancia.setValue(estructura.attribute("modalidad_oferta"), datos.getModalidadOferta());
+        instancia.setValue(estructura.attribute("tipo_contrato_oferta"), datos.getTipoContratoOferta());
+        instancia.setValue(estructura.attribute("experiencia_requerida"), datos.getExperienciaRequerida());
+        instancia.setValue(estructura.attribute("nivel_estudio_requerido"), datos.getNivelEstudioRequerido());
+        instancia.setValue(estructura.attribute("sector_oferta"), datos.getSectorOferta());
+        instancia.setValue(estructura.attribute("tipo_empleo_deseado"), datos.getTipoEmpleoDeseado());
+        instancia.setValue(estructura.attribute("preferencia_modalidad"), datos.getPreferenciaModalidad());
+        instancia.setValue(estructura.attribute("preferencia_contrato"), datos.getPreferenciaContrato());
+        instancia.setValue(estructura.attribute("experiencia_persona"), datos.getExperienciaPersona());
+        instancia.setValue(estructura.attribute("nivel_estudio_persona"), datos.getNivelEstudioPersona());
+        instancia.setValue(estructura.attribute("sector_persona"), datos.getSectorPersona());
+        instancia.setValue(estructura.attribute("edad_persona"), datos.getEdadPersona());
+        instancia.setValue(estructura.attribute("coincide_tipo_empleo"), datos.getCoincideTipoEmpleo());
+        instancia.setValue(estructura.attribute("coincide_modalidad"), datos.getCoincideModalidad());
+        instancia.setValue(estructura.attribute("coincide_contrato"), datos.getCoincideContrato());
+        instancia.setValue(estructura.attribute("coincide_estudios"), datos.getCoincideEstudios());
+        instancia.setValue(estructura.attribute("coincide_sector"), datos.getCoincideSector());
+        instancia.setValue(estructura.attribute("experiencia_suficiente"), datos.getExperienciaSuficiente());
 
-        // Predecir
-        double resultado = modelo.classifyInstance(instancia);
-        String clase = dataStructure.classAttribute().value((int) resultado);
+        // Realizar predicción
+        double prediccion = modelo.classifyInstance(instancia);
+        String clasePredicha = estructura.classAttribute().value((int) prediccion);
 
-        // Distribución de probabilidad
+        // Obtener distribución de probabilidad
         double[] distribucion = modelo.distributionForInstance(instancia);
-        double porcentaje = distribucion[(int) resultado] * 100;
+        double porcentaje = distribucion[(int) prediccion] * 100;
 
-        return new ResultadoPrediccion(clase, Math.round(porcentaje));
-    }
-
-    private Instances crearEstructuraDatos() {
-        ArrayList<Attribute> atributos = new ArrayList<>();
-
-        // Atributos como en el ARFF, mismos nombres y orden
-        atributos.add(new Attribute("tipo_empleo_oferta", List.of("Tiempo_Completo", "Medio_Tiempo", "Por_Horas", "Temporal")));
-        atributos.add(new Attribute("modalidad_oferta", List.of("Presencial", "Remoto", "Hibrido")));
-        atributos.add(new Attribute("tipo_contrato_oferta", List.of("Indefinido", "Practicas", "Obra_Servicio")));
-        atributos.add(new Attribute("experiencia_requerida"));
-        atributos.add(new Attribute("nivel_estudio_requerido", List.of("Bachillerato", "Tecnico", "Grado", "Master", "Doctorado")));
-        atributos.add(new Attribute("sector_oferta", List.of("Tecnologia", "Educacion", "Salud", "Construccion", "Otros")));
-
-        atributos.add(new Attribute("tipo_empleo_deseado", List.of("Tiempo_Completo", "Medio_Tiempo", "Por_Horas", "Temporal")));
-        atributos.add(new Attribute("preferencia_modalidad", List.of("Presencial", "Remoto", "Hibrido")));
-        atributos.add(new Attribute("preferencia_contrato", List.of("Indefinido", "Practicas", "Obra_Servicio")));
-        atributos.add(new Attribute("experiencia_persona"));
-        atributos.add(new Attribute("nivel_estudio_persona", List.of("Bachillerato", "Tecnico", "Grado", "Master", "Doctorado")));
-        atributos.add(new Attribute("sector_persona", List.of("Tecnologia", "Educacion", "Salud", "Construccion", "Otros")));
-        atributos.add(new Attribute("edad_persona"));
-
-        atributos.add(new Attribute("coincide_tipo_empleo", List.of("Si", "No")));
-        atributos.add(new Attribute("coincide_modalidad", List.of("Si", "No")));
-        atributos.add(new Attribute("coincide_contrato", List.of("Si", "No")));
-        atributos.add(new Attribute("coincide_estudios", List.of("Si", "No")));
-        atributos.add(new Attribute("coincide_sector", List.of("Si", "No")));
-        atributos.add(new Attribute("experiencia_suficiente", List.of("Si", "No")));
-
-        atributos.add(new Attribute("compatible", List.of("Si", "No"))); // clase
-
-        Instances estructura = new Instances("PrediccionCompatibilidad", atributos, 0);
-        estructura.setClassIndex(estructura.numAttributes() - 1);
-        return estructura;
+        return new ResultadoPrediccion(clasePredicha, porcentaje);
     }
 
     @Getter
-    @Setter
-    public class ResultadoPrediccion {
+    public static class ResultadoPrediccion {
 
-        private String compatible;
-        private long porcentaje;
+        private final String compatible;
+        private final double porcentaje;
 
-        public ResultadoPrediccion(String compatible, long porcentaje) {
-
+        public ResultadoPrediccion(String compatible, double porcentaje) {
             this.compatible = compatible;
             this.porcentaje = porcentaje;
         }
-
     }
-
 }
