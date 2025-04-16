@@ -410,13 +410,18 @@ public class PersonaController {
     }
     
     @GetMapping("/recursos")
-    public String cambiarContrasenaEmp() {
+    public String Recursos_invitados() {
         return "Html/Recursos";
     }
     
-    @GetMapping("/Estadisticas") // ruta para llevarlo a estadisticas sobre lo que podemos mostrar
+    @GetMapping("/Estadisticas")
     public String estadistica() {
         return "Html/Estadisticas";
+    }
+
+    @GetMapping("/personas/recursos")
+    public String Recursos_persona() {
+        return "Html/persona/Recursos_persona";
     }
     
 }

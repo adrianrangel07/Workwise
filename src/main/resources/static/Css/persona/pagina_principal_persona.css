@@ -425,7 +425,7 @@ body {
 
 .sidebar .nav-item:hover {
   background: rgba(255, 255, 255, 0.2);
-  border-left: 4px solid #ffd700;
+  border-left: 4px solid #1e88e5;
   transition: var(--transition);
 }
 
