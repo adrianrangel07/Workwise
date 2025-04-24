@@ -1,0 +1,128 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Arial", sans-serif;
+}
+
+/* Centrar el contenido en la pantalla */
+body {
+    background: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+/* Logo en la esquina superior izquierda */
+.logo {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    width: 80px;
+}
+
+/* Tarjeta contenedora */
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    width: 600px;
+    text-align: center;
+    position: relative;
+}
+
+/* Botón Volver */
+.volver {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    text-decoration: none;
+    color: #6a0dad;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Grid para los campos del formulario */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/* Hacer que la descripción ocupe ambas columnas */
+#jobDescription {
+    grid-column: span 2;
+}
+
+/* Estilos de inputs y selects */
+.input-group {
+    text-align: left;
+}
+
+.input-group label {
+    font-weight: bold;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+    border-color: #6a0dad;
+}
+
+/* Estilos para los botones */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.btn-primary {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 48%;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background: #0056b3;
+}
+
+.btn-cancel {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 48%;
+    transition: 0.3s;
+}
+
+.btn-cancel:hover {
+    background: #c82333;
+}
+
+

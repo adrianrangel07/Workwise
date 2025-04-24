@@ -1,0 +1,445 @@
+:root {
+    --primary-color: #0a1128;
+    --secondary-color: #001f54;
+    --accent-color: #1e88e5;
+    --text-light: #ffffff;
+    --text-dark: #333333;
+    --text-gray: #6c757d;
+    --bg-light: #ffffff;
+    --bg-dark: #1c1c1c;
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+/* Contenedor principal de las ofertas */
+.offer-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem; /* Espacio más amplio entre tarjetas */
+    padding: 2rem;
+    justify-content: center; /* Centrar tarjetas */
+    background-color: #f9f9f9; /* Fondo claro para destacar las tarjetas */
+}
+
+/* Tarjeta de cada oferta */
+.offer-container .card {
+    width: 100%;
+    max-width: 350px;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative; /* Para elementos como badges */
+    overflow: hidden; /* Evitar que el contenido desborde */
+}
+
+/* Efecto al pasar el cursor */
+.offer-container .card:hover {
+    transform: translateY(-8px); /* Efecto de elevación */
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para el título */
+.offer-content h3 {
+    font-size: 1.4rem;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 0.8rem;
+    transition: color 0.3s ease;
+}
+
+.offer-container .card:hover h3 {
+    color: #ff6f61; /* Cambiar color en hover */
+}
+
+/* Descripción y otros detalles */
+.offer-content p {
+    color: #555;
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Botón de acción */
+.offer-content .action-btn {
+    display: inline-block;
+    margin-top: 1rem;
+    background-color: #007bff;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 0.8rem 1.2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.offer-content .action-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+}
+
+/* Información adicional */
+.hidden-info {
+    margin-top: 1.5rem;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 1rem;
+    color: #777;
+}
+
+.estado {
+    padding: 5px 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.estado.pendiente {
+    background-color: yellow;
+    color: black;
+}
+
+.estado.aceptado {
+    background-color: green;
+    color: white;
+}
+
+.estado.rechazado {
+    background-color: red;
+    color: white;
+}
+
+/* Estilo del modal */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Contenido del modal */
+#modal-content {
+    background-color: #fff;
+    padding: 2.5rem;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Cerrar botón en el modal */
+.container-span .close-btn {
+    font-size: 1.8rem;
+    color: #aaa;
+    cursor: pointer;
+    float: right;
+    transition: color 0.3s ease;
+}
+
+.container-span .close-btn:hover {
+    color: #ff6f61;
+}
+
+/* Estilo para textos en el modal */
+#modal-content h3 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+#modal-content p {
+    font-size: 1rem;
+    color: #555;
+    margin: 0.5rem 0;
+}
+
+.container-span {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-btn, .delete-btn {
+    font-size: 20px;
+    cursor: pointer;
+    color: #777;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover, .delete-btn:hover {
+    color: #ff6f61;
+}
+
+.delete-btn {
+    margin-left: auto;
+    padding: 5px;
+}
+
+/* Estilo para los recuadros del perfil */
+.card.shadow {
+    padding: 1.5rem;
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: 1px solid #e3e6f0;
+    transition: all 0.3s ease;
+}
+
+/* Efecto flotante en hover */
+.card.shadow:hover {
+    box-shadow: 
+        0px 20px 50px rgba(0, 0, 0, 0.25), /* Sombra externa más intensa */
+        inset 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra interna más intensa */
+}
+
+/* Inputs del formulario */
+.form-control {
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra interna */
+    transition: box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+    box-shadow: 0px 0px 5px rgba(38, 143, 255, 0.5); /* Sombra externa al enfocar */
+    border-color: #268fff;
+}
+
+/* Botones dentro de la tarjeta */
+.card-body .btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.card-body .btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Espaciado entre elementos del formulario */
+.card-body .mb-3 {
+    margin-bottom: 1.5rem;
+}
+
+/* Contenedor específico de la Hoja de Vida */
+.card-body button {
+    background-color: #007bff; /* Azul claro de Bootstrap */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1); /* Sombra externa suave */
+}
+
+/* Efecto hover: cambia el color de fondo y la sombra */
+.card-body button:hover {
+    background-color: #0056b3; /* Azul más oscuro */
+    transform: scale(1.05); /* Efecto de zoom */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Sombra externa más fuerte */
+}
+
+/* Efecto activo: reduce el tamaño y cambia la sombra */
+.card-body button:active {
+    background-color: #004494; /* Azul aún más oscuro */
+    transform: scale(0.95); /* Efecto de reducción */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra externa más pequeña */
+}
+
+/* Estilo específico para el botón de eliminar Hoja de Vida (botón secundario) */
+.card-body button.delete-btn {
+    background-color: #dc3545; /* Rojo de Bootstrap */
+    color: white;
+}
+
+.card-body button.delete-btn:hover {
+    background-color: #c82333; /* Rojo más oscuro */
+}
+
+.card-body button.delete-btn:active {
+    background-color: #bd2130; /* Rojo aún más oscuro */
+}
+
+
+/* ========== FOOTER ========== */
+.custom-footer {
+    margin-top: auto;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    color: var(--text-light);
+    padding: 20px 0;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.footer-left, .footer-center, .footer-right {
+    flex: 1;
+}
+
+.footer-left {
+    text-align: left;
+}
+
+.footer-center {
+    text-align: center;
+}
+
+.footer-right {
+    text-align: right;
+}
+
+.custom-footer a {
+    text-decoration: none;
+    color: var(--text-light);
+    font-weight: bold;
+    transition: var(--transition);
+}
+
+.custom-footer a:hover {
+    color: #4db8ff;
+}
+
+.footer-right a {
+    display: inline-block;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    margin: 0 10px;
+    font-size: 1.5rem;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.footer-right a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+
+/* Estilos para la foto y el nombre del usuario  */
+#usuario-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espaciado entre la imagen y el nombre */
+    margin-left: -15px; /* Mover hacia la izquierda */
+}
+
+#user-avatar {
+    width: 30px; /* Hacer la imagen más pequeña */
+    height: 30px;
+    border-radius: 50%; /* Mantener forma circular */
+    border: 1px solid #000; /* Borde opcional */
+    cursor: pointer; /* Cambiar cursor al pasar el mouse */
+    transition: transform 0.2s ease-in-out;
+}
+
+#user-avatar:hover {
+    transform: scale(1.1); /* Aumentar tamaño al pasar el mouse */
+}
+
+#usuario {
+    font-size: 18px; /* Tamaño del texto */
+    font-weight: bold;
+    color: black; /* Color negro */
+    cursor: pointer; /* Cambiar cursor al pasar el mouse */
+    transition: color 0.2s ease-in-out;
+}
+
+#usuario:hover {
+    color: #555; /* Cambia de color al pasar el mouse */
+}
+
+
+/* Efecto al pasar el mouse */
+.sidebar .nav-item:hover {
+    background: rgba(255, 255, 255, 0.2); /* Un ligero brillo */
+    border-left: 4px solid #1e88e5; 
+    transition: all 0.3s ease-in-out;
+}
+
+/* Para que el texto y el ícono no se muevan */
+.sidebar .nav-item a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    text-decoration: none;
+}
+
+/* Resaltar el enlace activo (cuando está seleccionado) */
+.sidebar .nav-link.active {
+    background: rgba(255, 255, 255, 0.1);
+    border-left: 4px solid #59625e;
+}
+
+.sidebar a {
+    text-decoration: none;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    transition: var(--transition);
+    font-size: 0.9rem !important;
+    color: var(--text-light);
+}
+
+/* Boton eliminar cuenta  */
+.btn-eliminar {
+    background: linear-gradient(135deg, #ff4b5c, #d62839);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 10px rgba(255, 75, 92, 0.3);
+}
+
+.btn-eliminar i {
+    font-size: 18px;
+}
+
+.btn-eliminar:hover {
+    background: linear-gradient(135deg, #d62839, #ff4b5c);
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(255, 75, 92, 0.5);
+}
+
+.btn-eliminar:active {
+    transform: scale(0.95);
+}

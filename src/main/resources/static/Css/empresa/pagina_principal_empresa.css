@@ -1,0 +1,203 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+/* Contenedor de ofertas */
+.offer-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    cursor: pointer;
+
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.offer-content h3 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.hidden-info {
+    display: none;
+    font-size: 0.9em;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.close-btn {
+    float: right;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+/* Botones del modal */
+.modal-buttons button {
+    margin: 5px;
+}
+
+/* Sidebar */
+.sidebar {
+    background: #343A40;
+    color: white;
+    padding: 20px;
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.sidebar .nav-link {
+    color: white;
+}
+
+.sidebar a:hover {
+    background: #495057;
+}
+
+.sidebar .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-left: 4px solid #59625e;
+}
+
+/* Footer */
+.custom-footer {
+    background-color: #343A40 !important;
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.footer-right img {
+    width: 30px;
+    height: 30px;
+}
+
+.sticky-footer {
+    padding: 2rem 0;
+    background: #343A40;
+    flex-shrink: 0;
+}
+
+/* Estilos para la foto y el nombre del usuario  */
+#empresa-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espaciado entre la imagen y el nombre */
+    margin-left: -15px; /* Mover hacia la izquierda */
+}
+
+#user-avatar {
+    width: 30px; /* Hacer la imagen más pequeña */
+    height: 30px;
+    border-radius: 50%; /* Mantener forma circular */
+    border: 1px solid #000; /* Borde opcional */
+    cursor: pointer; /* Cambiar cursor al pasar el mouse */
+    transition: transform 0.2s ease-in-out;
+}
+
+#user-avatar:hover {
+    transform: scale(1.1); /* Aumentar tamaño al pasar el mouse */
+}
+
+#empresa {
+    font-size: 18px; /* Tamaño del texto */
+    font-weight: bold;
+    color: black; /* Color negro */
+    cursor: pointer; /* Cambiar cursor al pasar el mouse */
+    transition: color 0.2s ease-in-out;
+}
+
+#empresas:hover {
+    color: #555; /* Cambia de color al pasar el mouse */
+}
+
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .offer-container {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+    
+    .modal-content {
+        width: 95%;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-right {
+        margin-top: 10px;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    
+    .sidebar a {
+        display: block;
+        text-align: center;
+        padding: 10px;
+    }
+}

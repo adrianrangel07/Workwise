@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register user</title>
+    <link rel="stylesheet" href="/Css/persona/Registrar_persona.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="/Imagenes/wknlogo2.png">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="/Css/general/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+
+<body>
+    <div class="container-logo">
+        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" th:href="@{/}">
+            <img class="logo" id="logo" src="/Imagenes/wknblack.png">
+        </a>
+    </div>
+    <div class="contenedor">
+        <div class="container-register">
+            <div class="card">
+                <div class="head-card">
+                    <h1>Crea una cuenta!</h1>
+                    <div class="container-back">
+                        <a th:href="@{/pagina/inicio}" class="back_a">
+                            <i class="fas fa-arrow-left back"></i>
+                        </a>
+                    </div>
+                </div>
+                <p>Da el primer paso al mundo profesional.</p>
+                <div class="formulario">
+                    <form id="registerForm" th:action="@{/Register/personas}" method="post" class="user">
+                        <div class="row"> <!-- nombre y apellido -->
+                            <div class="contenedor-input">
+                                <div class="col-sm-6 mb-3">
+                                    <input class="form-control form-control-user" type="text" id="nombre" placeholder=""
+                                        name="nombre" required>
+                                    <label for="nombre" class="label">Nombre(s)</label>
+                                </div>
+                            </div>
+                            <div class="contenedor-input">
+                                <div class="col-sm-6 mb-3">
+                                    <input class="form-control form-control-user" type="text" placeholder=""
+                                        id="apellido" name="apellido" required>
+                                    <label for="apellido" class="label">Apellido(s)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3"> <!-- email -->
+                            <input class="form-control form-control-user" type="email"
+                                aria-describedby="emailHelp" placeholder="" id="email" name="email" required>
+                            <label for="email" class="label">Correo electrónico</label>
+                            <div class="validation-message" id="emailValidation"></div>
+                        </div>
+                        <div class="row"> <!-- contraseñas -->
+                            <div class="contenedor-input">
+                                <div class="col-sm-6 mb-3">
+                                    <div class="password-input">
+                                        <input class="form-control form-control-user" type="password"
+                                            placeholder="" id="password" name="contraseña" minlength="6" maxlength="45" required>
+                                        <label for="password" class="label">Contraseña</label>
+                                        <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('password')"></i>
+                                    </div>
+                                    <div class="password-strength-container">
+                                        <div class="password-strength-bar" id="passwordStrengthBar"></div>
+                                        <div class="password-strength-text" id="passwordStrengthText"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="contenedor-input">
+                                <div class="col-sm-6 mb-3">
+                                    <div class="password-input">
+                                        <input class="form-control form-control-user" type="password"
+                                            placeholder="" id="confirm-password" name="confirm-password" minlength="6" maxlength="45"
+                                            required>
+                                        <label for="confirm-password" class="label">Repetir contraseña</label>
+                                        <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('confirm-password')"></i>
+                                    </div>
+                                    <div class="password-match" id="passwordMatch">
+                                        <span id="passwordMatchIcon"></span>
+                                        <span id="passwordMatchText"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row"> <!-- cedula y tipo de cedula -->
+                            <div class="contenedor-input">
+                                <div class="col-sm-6 mb-3">
+                                    <input class="form-control form-control-user" type="text" placeholder="" id="cedula"
+                                        name="identificacion" minlength="7" maxlength="10" required>
+                                    <label for="cedula" class="label">Número de Documento</label>
+                                </div>
+                            </div>
+                            <div class="contenedor-input">
+                                <div id="select" class="col-sm-6 mb-3 mb-sm-0">
+                                    <select id="tipo-identificacion" name="tipoIdentificacion"
+                                        class="form-control form-control-btn" required>
+                                        <option value="cc">Cédula de Ciudadanía</option>
+                                        <option value="ce">Cédula de Extranjería</option>
+                                        <option value="rc">Registro Civil</option>
+                                        <option value="dni">Documento de Identidad</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row"> <!-- fecha de nacimiento y genero -->
+                            <div class="contenedor-input">
+                                <div class="col-sm-6 mb-3">
+                                    <input class="form-control form-control-user" type="text" id="fecha"
+                                        name="fecha_nacimiento" required>
+                                    <label for="fecha" class="fecha-label">F. Nacimiento</label>
+                                    <i class="fas fa-calendar-alt fecha" id="icono-calendario"></i>
+                                </div>
+                            </div>
+                            <div class="contenedor-input">
+                                <div id="select-genero" class="col-sm-6 mb-3">
+                                    <select name="genero" id="genero" class="form-control form-control-btn">
+                                        <option value="Choose">Género...</option>
+                                        <option value="Female">Femenino</option>
+                                        <option value="Male">Masculino</option>
+                                        <option value="No-espefic">Prefiero no decirlo</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary d-block btn-user w-100" type="submit" id="btn-register">
+                            Registrarse
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="login">
+                <p>Ya tienes una cuenta?<a th:href="@{/login/personas}">Inicia sesión!</a></p>
+            </div>
+        </div>
+        <div class="curva">
+            <div class="container-img"></div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="/js/General/Grid-and-List-view-V10-script.js"></script>
+    <script src="/js/General/script.min.js"></script>
+    <script src="/js/General/theme.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/persona/Registrar_persona.js"></script>
+</body>
+
+</html>

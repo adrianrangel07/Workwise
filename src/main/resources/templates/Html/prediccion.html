@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Predicción de Compatibilidad</title>
+    <link rel="stylesheet" href="/Css/weka.css">
+    <link rel="icon" type="image/png" href="/Imagenes/wknlogo2.png">
+</head>
+
+
+<body>
+    <h1>Compatibilidad con Oferta de Empleo</h1>
+
+    <form id="formPrediccion">
+        <div class="campo">
+            <label>Tipo Empleo Oferta</label>
+            <select name="tipo_empleo_oferta">
+                <option value="Tiempo_Completo">Tiempo completo</option>
+                <option value="Medio_Tiempo">Medio tiempo</option>
+                <option value="Por_Horas">Por horas</option>
+                <option value="Temporal">Temporal</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label>Modalidad Oferta</label>
+            <select name="modalidad_oferta">
+                <option value="Presencial">Presencial</option>
+                <option value="Remoto">Remoto</option>
+                <option value="Hibrido">Híbrido</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label>Tipo Contrato Oferta</label>
+            <select name="tipo_contrato_oferta">
+                <option value="Indefinido">Indefinido</option>
+                <option value="Practicas">Prácticas</option>
+                <option value="Obra_Servicio">Obra o Servicio</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label>Experiencia Requerida (años)</label>
+            <input type="number" name="experiencia_requerida" min="0" required>
+        </div>
+
+        <div class="campo">
+            <label>Nivel Estudio Requerido</label>
+            <select name="nivel_estudio_requerido">
+                <option value="Bachillerato">Bachillerato</option>
+                <option value="Tecnico">Técnico</option>
+                <option value="Grado">Grado</option>
+                <option value="Master">Máster</option>
+                <option value="Doctorado">Doctorado</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label>Sector Oferta</label>
+            <select name="sector_oferta">
+                <option value="Tecnologia">Tecnología</option>
+                <option value="Educacion">Educación</option>
+                <option value="Salud">Salud</option>
+                <option value="Construccion">Construcción</option>
+                <option value="Otros">Otros</option>
+            </select>
+        </div>
+
+        <!-- Datos de la Persona -->
+        <hr>
+
+        <div class="campo">
+            <label>Tipo Empleo Deseado</label>
+            <select name="tipo_empleo_deseado">
+                <option value="Tiempo_Completo">Tiempo completo</option>
+                <option value="Medio_Tiempo">Medio tiempo</option>
+                <option value="Por_Horas">Por horas</option>
+                <option value="Temporal">Temporal</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label>Modalidad Preferida</label>
+            <select name="preferencia_modalidad">
+                <option value="Presencial">Presencial</option>
+                <option value="Remoto">Remoto</option>
+                <option value="Hibrido">Híbrido</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label>Tipo Contrato Preferido</label>
+            <select name="preferencia_contrato">
+                <option value="Indefinido">Indefinido</option>
+                <option value="Practicas">Prácticas</option>
+                <option value="Obra_Servicio">Obra o Servicio</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label>Experiencia Persona (años)</label>
+            <input type="number" name="experiencia_persona" min="0" required>
+        </div>
+
+        <div class="campo">
+            <label>Nivel Estudio Persona</label>
+            <select name="nivel_estudio_persona">
+                <option value="Bachillerato">Bachillerato</option>
+                <option value="Tecnico">Técnico</option>
+                <option value="Grado">Grado</option>
+                <option value="Master">Máster</option>
+                <option value="Doctorado">Doctorado</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label>Sector Persona</label>
+            <select name="sector_persona">
+                <option value="Tecnologia">Tecnología</option>
+                <option value="Educacion">Educación</option>
+                <option value="Salud">Salud</option>
+                <option value="Construccion">Construcción</option>
+                <option value="Otros">Otros</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label>Edad</label>
+            <input type="number" name="edad_persona" min="18" required>
+        </div>
+
+        <button type="submit">Predecir Compatibilidad</button>
+    </form>
+
+    <div id="resultado"></div>
+    <div id="detallesPrediccion"></div>
+    <div id="errorModelo"></di>
+
+
+    <script src="/js/weka.js"></script>
+</body>
+
+</html>

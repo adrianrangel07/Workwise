@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../Imagenes/wknlogo2.png">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="../Css/empresa/oferta.css">
+    <title>Crear Oferta de Trabajo</title>
+</head>
+
+<body>
+    <!-- Logo en la esquina superior izquierda -->
+    <div class="container-logo">
+        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" th:href="@{/empresas/pagina_principal}">
+            <img class="logo" id="logo" src="../Imagenes/wknblack.png">
+        </a>
+    </div>
+    <div class="container">
+        <h1>Crear Oferta</h1>
+
+        <form id="jobOfferForm" action="/guardarOferta" method="POST">
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="jobTitle">Título del Puesto</label>
+                    <input type="text" id="jobTitle" name="titulo_puesto" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="jobDescription">Descripción</label>
+                    <textarea id="jobDescription" name="descripcion" rows="3" required></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label for="jobSalary">Salario</label>
+                    <input type="text" id="jobSalary" name="salario" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="currency">Moneda</label>
+                    <select id="currency" name="moneda" required>
+                        <option value="COP">COP</option>
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="period">Periodo</label>
+                    <select id="period" name="periodo" required>
+                        <option value="Diario">Diario</option>
+                        <option value="Semanal">Semanal</option>
+                        <option value="Mensual">Mensual</option>
+                        <option value="Anual">Anual</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="jobMode">Modalidad</label>
+                    <select id="jobMode" name="modalidad" required>
+                        <option value="Presencial">Presencial</option>
+                        <option value="Remoto">Remoto</option>
+                        <option value="Híbrido">Híbrido</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="contractType">Tipo de Contrato</label>
+                    <select id="contractType" name="tipo_contrato" required>
+                        <option value="Obra o Labor">Obra o Labor</option>
+                        <option value="Fijo">Fijo</option>
+                        <option value="Indefinido">Indefinido</option>
+                        <option value="Prácticas">Prácticas</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="jobDuration">Duración</label>
+                    <select id="jobDuration" name="duracion" required>
+                        <option value="1 mes">1 Mes</option>
+                        <option value="3 meses">3 Meses</option>
+                        <option value="6 meses">6 Meses</option>
+                        <option value="1 año">1 Año</option>
+                        <option value="Indefinido">Indefinido</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="jobType">Tipo de Empleo</label>
+                    <select id="jobType" name="tipo_empleo" required>
+                        <option value="Tiempo Completo">Tiempo Completo</option>
+                        <option value="Medio Tiempo">Medio Tiempo</option>
+                        <option value="Por Proyecto">Por Proyecto</option>
+                        <option value="Freelance">Freelance</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="jobType">Experiencia</label>
+                    <select id="jobType" name="experiencia" required>
+                        <option value= 1 >Menos de 1 año</option>
+                        <option value= 2>Entre 1 y 3 años</option>
+                        <option value= 3>Entre 3 y 5 años</option>
+                        <option value= 5>Entre 5 y 10 años</option>
+                        <option value= 5>Más de 10 años</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="jobType">Nivel de estudio</label>
+                    <select id="jobType" name="nivel-estudio" required>
+                        <option value= "Sin estudios" >Sin estudios</option>
+                        <option value= "Bachiller" >Bachiller</option>
+                        <option value= "Tecnico/Tecnologo">Tecnico/Tecnologo</option>
+                        <option value= "Tecnologo o Universitario">Tecnologo o Universitario</option>
+                        <option value= "Universitario">Universitario</option>
+                        <option value= "Posgrado">Posgrado</option>
+                        <option value= "Doctorado" >Doctorado</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button type="submit" class="btn-primary">Publicar Oferta</button>
+                <button type="button" class="btn-cancel" onclick="cancelarOferta()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="../js/empresa/Oferta.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+
+</html>
