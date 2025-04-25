@@ -179,6 +179,8 @@ img {
     display: flex;
     gap: var(--space-sm);
     margin-left: auto;
+    position: fixed;
+    z-index:1000
 }
 
 .nav a {
@@ -186,11 +188,13 @@ img {
     font-size: 0.95rem;
     font-weight: 500;
     border-radius: var(--radius-sm);
+    font-weight: bold;
 }
 
 .nav a:hover {
-    background-color: var(--gray);
-    color: var(--dark);
+    background-color: #ffffff;
+    color: var(--primary);
+    font-weight: bold;
 }
 
 /* ===== HERO SECTION ===== */
