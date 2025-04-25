@@ -189,7 +189,7 @@ img {
 }
 
 .nav a:hover {
-    background-color: rgba(128, 128, 128, 0.1);
+    background-color: var(--gray);
     color: var(--secondary);
 }
 
