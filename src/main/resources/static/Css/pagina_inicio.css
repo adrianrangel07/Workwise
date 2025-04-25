@@ -196,7 +196,7 @@ img {
 /* ===== HERO SECTION ===== */
 .hero {
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                url("/Imagenes/job-5382501.png") center/cover;
+                url("/Imagenes/job-5382501.webp") center/cover;
     min-height: 500px;
     display: flex;
     align-items: center;
