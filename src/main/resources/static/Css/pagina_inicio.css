@@ -150,6 +150,7 @@ img {
     top: 0;
     z-index: 100;
     box-shadow: var(--shadow-lg);
+    position: sticky;
 }
 
 .header-container {
@@ -186,17 +187,19 @@ img {
     font-size: 0.95rem;
     font-weight: 500;
     border-radius: var(--radius-sm);
+    font-weight: bold;
 }
 
 .nav a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: var(--secondary);
+    background-color: #ffffff;
+    color: var(--primary);
+    font-weight: bold;
 }
 
 /* ===== HERO SECTION ===== */
 .hero {
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                url("/Imagenes/job-5382501.png") center/cover;
+                url("/Imagenes/job-5382501.webp") center/cover;
     min-height: 500px;
     display: flex;
     align-items: center;
