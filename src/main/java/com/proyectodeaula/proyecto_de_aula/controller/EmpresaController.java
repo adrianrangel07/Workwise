@@ -39,7 +39,6 @@ public class EmpresaController {
 
     private static final Logger logger = LoggerFactory.getLogger(EmpresaController.class);
 
-    // Inyección de dependencias para acceder a los servicios y repositorios
     @Autowired
     private Interfaz_Emp uEmp;
 
@@ -121,7 +120,7 @@ public class EmpresaController {
         if (empresa != null) {
             model.addAttribute("Ofertas", ofertaService.listarOfertasPorEmpresa(empresa));
             model.addAttribute("nombreEmpresa", empresa.getNombreEmp());
-            model.addAttribute("empresa", empresa); // Asegurando que Thymeleaf tenga acceso al objeto empresa
+            model.addAttribute("empresa", empresa); 
             return "Html/Empresa/pagina_principal_empresa";
         }
         return "redirect:/login/Empresa";

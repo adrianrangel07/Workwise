@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
-
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -33,18 +32,17 @@ public class PrediccionController {
         try {
             // Cargar modelo
             try (ObjectInputStream ois = new ObjectInputStream(
-                    getClass().getClassLoader().getResourceAsStream("weka/modelo_empleo_j48.model"))) {
+                    getClass().getClassLoader().getResourceAsStream("weka/Modelo_entrenado_empleo.model"))) {
                 clasificador = (Classifier) ois.readObject();
             }
 
             // Cargar estructura ARFF desde recursos
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("weka/empleo_recomendacion_simplificado_balanceado.arff");
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("weka/empleo_recomendacion_simplificado.arff");
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             estructura = new Instances(reader);
             estructura.setClassIndex(estructura.numAttributes() - 1);
 
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
@@ -81,12 +79,12 @@ public class PrediccionController {
 
             // 4. Obtener la clase predicha y su confianza
             double clasePredicha = clasificador.classifyInstance(instancia);
-            double confianzaWeka = distribucion[(int) clasePredicha]; // Esto devuelve valores como 0.98, 0.57, etc.
+            double confianzaWeka = distribucion[(int) clasePredicha];
 
             // 5. Devolver el valor exacto de WEKA sin modificaciones
             return ResponseEntity.ok().body(Map.of(
                     "compatible", estructura.classAttribute().value((int) clasePredicha),
-                    "confianzaWeka", confianzaWeka // Valor exacto como 0.98, 0.57, etc.
+                    "confianzaWeka", confianzaWeka 
             ));
 
         } catch (Exception e) {

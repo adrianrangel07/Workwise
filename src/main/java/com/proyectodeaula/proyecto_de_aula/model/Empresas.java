@@ -57,4 +57,75 @@ public class Empresas {
 	@OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Ofertas> ofertas = new ArrayList<>();
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getNombreEmp() {
+		return nombreEmp;
+	}
+
+	public void setNombreEmp(String nombreEmp) {
+		this.nombreEmp = nombreEmp;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public String getRazon_social() {
+		return razon_social;
+	}
+
+	public void setRazon_social(String razon_social) {
+		this.razon_social = razon_social;
+	}
+
+	public int getNit() {
+		return nit;
+	}
+
+	public void setNit(int nit) {
+		this.nit = nit;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getContraseña() {
+		return contraseña;
+	}
+
+	public void setContraseña(String contraseña) {
+		this.contraseña = contraseña;
+	}
+
+	public byte[] getFoto() {
+		return foto;
+	}
+
+	public void setFoto(byte[] foto) {
+		this.foto = foto;
+	}
+
+	public List<Ofertas> getOfertas() {
+		return ofertas;
+	}
+
+	public void setOfertas(List<Ofertas> ofertas) {
+		this.ofertas = ofertas;
+	}
 }

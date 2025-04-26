@@ -91,4 +91,219 @@ public class HvD {
     @OneToOne(mappedBy = "hvd", cascade = CascadeType.ALL)
     private Personas persona;
 
+    public int getId() {
+      return id;
+    }
+
+    public void setId(int id) {
+      this.id = id;
+    }
+
+    public String getNombre() {
+      return nombre;
+    }
+
+    public void setNombre(String nombre) {
+      this.nombre = nombre;
+    }
+
+    public String getApellido() {
+      return apellido;
+    }
+
+    public void setApellido(String apellido) {
+      this.apellido = apellido;
+    }
+
+    public String getEmail() {
+      return email;
+    }
+
+    public void setEmail(String email) {
+      this.email = email;
+    }
+
+    public String getTelefono() {
+      return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+      this.telefono = telefono;
+    }
+
+    public String getDireccion() {
+      return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+      this.direccion = direccion;
+    }
+
+    public String getCiudad() {
+      return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+      this.ciudad = ciudad;
+    }
+
+    public String getPais() {
+      return pais;
+    }
+
+    public void setPais(String pais) {
+      this.pais = pais;
+    }
+
+    public String getDescripcion() {
+      return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+      this.descripcion = descripcion;
+    }
+
+    public String getNacionalidad() {
+      return nacionalidad;
+    }
+
+    public void setNacionalidad(String nacionalidad) {
+      this.nacionalidad = nacionalidad;
+    }
+
+    public String getEstado_civil() {
+      return estado_civil;
+    }
+
+    public void setEstado_civil(String estado_civil) {
+      this.estado_civil = estado_civil;
+    }
+
+    public String getNombre_de_empresa() {
+      return nombre_de_empresa;
+    }
+
+    public void setNombre_de_empresa(String nombre_de_empresa) {
+      this.nombre_de_empresa = nombre_de_empresa;
+    }
+
+    public String getCargo() {
+      return cargo;
+    }
+
+    public void setCargo(String cargo) {
+      this.cargo = cargo;
+    }
+
+    public String getFecha_inicio_laboral() {
+      return fecha_inicio_laboral;
+    }
+
+    public void setFecha_inicio_laboral(String fecha_inicio_laboral) {
+      this.fecha_inicio_laboral = fecha_inicio_laboral;
+    }
+
+    public String getFecha_fin_laboral() {
+      return fecha_fin_laboral;
+    }
+
+    public void setFecha_fin_laboral(String fecha_fin_laboral) {
+      this.fecha_fin_laboral = fecha_fin_laboral;
+    }
+
+    public String getInstitucion() {
+      return institucion;
+    }
+
+    public void setInstitucion(String institucion) {
+      this.institucion = institucion;
+    }
+
+    public String getTitulo() {
+      return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+      this.titulo = titulo;
+    }
+
+    public String getFecha_inicio_estudio() {
+      return fecha_inicio_estudio;
+    }
+
+    public void setFecha_inicio_estudio(String fecha_inicio_estudio) {
+      this.fecha_inicio_estudio = fecha_inicio_estudio;
+    }
+
+    public String getFecha_fin_estudio() {
+      return fecha_fin_estudio;
+    }
+
+    public void setFecha_fin_estudio(String fecha_fin_estudio) {
+      this.fecha_fin_estudio = fecha_fin_estudio;
+    }
+
+    public String getHabilidad() {
+      return habilidad;
+    }
+
+    public void setHabilidad(String habilidad) {
+      this.habilidad = habilidad;
+    }
+
+    public String getIdioma() {
+      return idioma;
+    }
+
+    public void setIdioma(String idioma) {
+      this.idioma = idioma;
+    }
+
+    public String getNivel() {
+      return nivel;
+    }
+
+    public void setNivel(String nivel) {
+      this.nivel = nivel;
+    }
+
+    public String getCertificaciones() {
+      return certificaciones;
+    }
+
+    public void setCertificaciones(String certificaciones) {
+      this.certificaciones = certificaciones;
+    }
+
+    public String getFecha_obtencion() {
+      return fecha_obtencion;
+    }
+
+    public void setFecha_obtencion(String fecha_obtencion) {
+      this.fecha_obtencion = fecha_obtencion;
+    }
+
+    public String getInstitucion_obtencion() {
+      return institucion_obtencion;
+    }
+
+    public void setInstitucion_obtencion(String institucion_obtencion) {
+      this.institucion_obtencion = institucion_obtencion;
+    }
+
+    public byte[] getCargar_certificado() {
+      return cargar_certificado;
+    }
+
+    public void setCargar_certificado(byte[] cargar_certificado) {
+      this.cargar_certificado = cargar_certificado;
+    }
+
+    public Personas getPersona() {
+      return persona;
+    }
+
+    public void setPersona(Personas persona) {
+      this.persona = persona;
+    }
 }

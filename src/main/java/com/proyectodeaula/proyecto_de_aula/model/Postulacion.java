@@ -15,11 +15,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Getter
+
 @Setter
-@NoArgsConstructor
+@Getter
 @AllArgsConstructor
+@NoArgsConstructor
+@Entity
+
 @Table(name = "Postulacion")
 public class Postulacion {
 
@@ -45,4 +47,43 @@ public class Postulacion {
     @JsonIgnore
     private Personas personas;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public int getN_personas() {
+        return n_personas;
+    }
+
+    public void setN_personas(int n_personas) {
+        this.n_personas = n_personas;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public Ofertas getOfertas() {
+        return ofertas;
+    }
+
+    public void setOfertas(Ofertas ofertas) {
+        this.ofertas = ofertas;
+    }
+
+    public Personas getPersonas() {
+        return personas;
+    }
+
+    public void setPersonas(Personas personas) {
+        this.personas = personas;
+    }
 }

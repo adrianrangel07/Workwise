@@ -76,4 +76,123 @@ public class Ofertas {
     @OneToMany(mappedBy = "ofertas", cascade = CascadeType.ALL)
     private List<Postulacion> postulaciones;
     
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitulo_puesto() {
+        return titulo_puesto;
+    }
+
+    public void setTitulo_puesto(String titulo_puesto) {
+        this.titulo_puesto = titulo_puesto;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(String duracion) {
+        this.duracion = duracion;
+    }
+
+    public String getTipo_empleo() {
+        return tipo_empleo;
+    }
+
+    public void setTipo_empleo(String tipo_empleo) {
+        this.tipo_empleo = tipo_empleo;
+    }
+
+    public int getSalario() {
+        return salario;
+    }
+
+    public void setSalario(int salario) {
+        this.salario = salario;
+    }
+
+    public String getMoneda() {
+        return moneda;
+    }
+
+    public void setMoneda(String moneda) {
+        this.moneda = moneda;
+    }
+
+    public String getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(String periodo) {
+        this.periodo = periodo;
+    }
+
+    public String getModalidad() {
+        return modalidad;
+    }
+
+    public void setModalidad(String modalidad) {
+        this.modalidad = modalidad;
+    }
+
+    public String getTipo_contrato() {
+        return tipo_contrato;
+    }
+
+    public void setTipo_contrato(String tipo_contrato) {
+        this.tipo_contrato = tipo_contrato;
+    }
+
+    public int getExperiencia() {
+        return experiencia;
+    }
+
+    public void setExperiencia(int experiencia) {
+        this.experiencia = experiencia;
+    }
+
+    public String getNivel_educativo() {
+        return nivel_educativo;
+    }
+
+    public void setNivel_educativo(String nivel_educativo) {
+        this.nivel_educativo = nivel_educativo;
+    }
+
+    public boolean isPostulado() {
+        return postulado;
+    }
+
+    public void setPostulado(boolean postulado) {
+        this.postulado = postulado;
+    }
+
+    public Empresas getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresas empresa) {
+        this.empresa = empresa;
+    }
+
+    public List<Postulacion> getPostulaciones() {
+        return postulaciones;
+    }
+
+    public void setPostulaciones(List<Postulacion> postulaciones) {
+        this.postulaciones = postulaciones;
+    }
 }
