@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="../Imagenes/wknlogo2.png">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
-    <link rel="stylesheet" href="../Css/empresa/Crear_oferta.css">
+    <link rel="stylesheet" href="../Css/empresa/crear-oferta.css">
     <link rel="stylesheet" href="/Css/general/bootstrap.min.css">
     <link rel="stylesheet" href="/Css/general/Grid-and-List-view-V10-style.css">
     <link rel="stylesheet" href="/Css/general/Grid-and-List-view-V10.css">
@@ -19,11 +19,10 @@
 </head>
 
 <body>
-    <!-- Logo en la esquina superior izquierda -->
     <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark">
         <div class="container-fluid d-flex flex-column p-0"><a
                 class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
-                th:href="@{/empresas/pagina_principal}"><img src="../Imagenes/working wise 32x32 white.png"
+                th:href="@{/empresas/pagina_principal}"><img src="/Imagenes/wwk_white.png"
                     width="61" height="58" style="width: 50px;height: 50px;">
                 <div class="sidebar-brand-icon rotate-n-15"></div>
                 <div class="sidebar-brand-text mx-3"><span>Workwise</span></div>
@@ -50,256 +49,256 @@
                         <i class="fas fa-user"></i><span>Do you want search offers?</span></a>
                 </li>
             </ul>
-            <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0"
-                    id="sidebarToggle" type="button"></button></div>
+            
         </div>
     </nav>
     <div class="d-flex flex-column main" id="content-wrapper">
-        <div class="form-container">
-            <div class="title">
-                <h2>Anuncia Tu Empleo</h2>
-            </div>
-            
-            <form id="jobOfferForm" action="/guardarOferta" method="POST">
-                <div class="container-step">
-                    <div class="step-indicator">
-                        <div class="step-line"></div>
-
-                        <div class="step-dot active" data-step="0">1</div>
-                        <div class="step-dot" data-step="1">2</div>
-                        <div class="step-dot" data-step="2">3</div>
-
-                        <h6 class="step-text">Datos Generales</h6>
-                        <h6 class="step-text">Descripción</h6>
-                        <h6 class="step-text">Requerimientos</h6>
-                    </div>
+        <div class="content">
+            <div class="form-container">
+                <div class="title">
+                    <h2>Anuncia Tu Empleo</h2>
                 </div>
-                <div class="form-steps">
-                    <!-- pagina 1 -->
-                    <div class="step">
-                        <!-- titulo -->
-                        <div class="mb-3">
-                            <input type="text" class="form-control form-control-user" name="titulo_puesto" placeholder="" required>
-                            <label for="jobTitle" class="label">Título del Puesto</label>
-                        </div>
-                        
-                        <!-- moneda de pago y periodo de pago-->
-                        <div class="row">
-                            <div class="contenedor-input">
-                                <div class="col-sm-6 mb-3">
-                                    <select id="currency" name="moneda" class="form-control" required>
-                                        <option disabled selected>Moneda de pago</option>
-                                        <option value="COP">COP</option>
-                                        <option value="USD">USD</option>
-                                        <option value="EUR">EUR</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="contenedor-input">
-                                <div class="col-sm-6 mb-3">
-                                    <select id="period" name="periodo" class="form-control" required>
-                                        <option disabled selected>Periodo de pago</option>
-                                        <option value="Diario">Diario</option>
-                                        <option value="Semanal">Semanal</option>
-                                        <option value="Mensual">Mensual</option>
-                                        <option value="Anual">Anual</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- modalidad de trabajo y tipo de contratato -->
-                        <div class="row">
-                            <div class="contenedor-input">
-                                <div class="col-sm-6 mb-3">
-                                    <select id="jobMode" name="modalidad" class="form-control" required>
-                                        <option disabled selected>Modalidad de trabajo</option>
-                                        <option value="Presencial">Presencial</option>
-                                        <option value="Remoto">Remoto</option>
-                                        <option value="Híbrido">Híbrido</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="contenedor-input">
-                                <div class="col-sm-6 mb-3">
-                                    <select id="contractType" name="tipo_contrato" class="form-control" required>
-                                        <option disabled selected>Tipo de contrato</option>
-                                        <option value="Obra o Labor">Obra o Labor</option>
-                                        <option value="Fijo">Fijo</option>
-                                        <option value="Indefinido">Indefinido</option>
-                                        <option value="Prácticas">Prácticas</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Duraciion del contrato y tipo de empleo -->
-                        <div class="row">
-                            <div class="contenedor-input">
-                                <div class="col-sm-6 mb-3">
-                                    <select id="jobDuration" name="duracion" class="form-control" required>
-                                        <option disabled selected>Duración del contrato</option>
-                                        <option value="1 mes">1 Mes</option>
-                                        <option value="3 meses">3 Meses</option>
-                                        <option value="6 meses">6 Meses</option>
-                                        <option value="1 año">1 Año</option>
-                                        <option value="Indefinido">Indefinido</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="contenedor-input">
-                                <div class="col-sm-6 mb-3">
-                                    <select id="jobType" name="tipo_empleo" class="form-control" required>
-                                        <option disabled selected>Tipo de empleo</option>
-                                        <option value="Tiempo Completo">Tiempo Completo</option>
-                                        <option value="Medio Tiempo">Medio Tiempo</option>
-                                        <option value="Por Proyecto">Por Proyecto</option>
-                                        <option value="Freelance">Freelance</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="btn-container">
-                            <div>
-                                <button type="button" class="btn-cancel" onclick="cancelarOferta()">Cancelar</button>
-                            </div>
-                            <div>
-                                <button type="button" class="btn-next btn-primary" onclick="nextStep()">Siguiente</button>
-                            </div>
+                
+                <form id="jobOfferForm" action="/guardarOferta" method="POST">
+                    <div class="container-step">
+                        <div class="step-indicator">
+                            <div class="step-line"></div>
+    
+                            <div class="step-dot active" data-step="0">1</div>
+                            <div class="step-dot" data-step="1">2</div>
+                            <div class="step-dot" data-step="2">3</div>
+    
+                            <h6 class="step-text">Datos Generales</h6>
+                            <h6 class="step-text">Descripción</h6>
+                            <h6 class="step-text">Requerimientos</h6>
                         </div>
                     </div>
-
-                    <!-- pagina 2 -->
-                    <div class="step">
-                        <div class="input-group">
-                            <label for="jobDescription"><h3>Descripción</h3></label>
-
-                            <div class="custom-editor">
-                                <div class="editor-toolbar">
-                                    <button type="button" id="boldBtn" onclick="toggleCommand('bold')"><strong>B</strong></button>
-                                    <button type="button" id="italicBtn" onclick="toggleCommand('italic')"><em>I</em></button>
-                                    <button type="button" onclick="execCmd('insertUnorderedList')">&#8226;&#8226;&#8226;</button>
-                                    <button type="button" onclick="execCmd('insertOrderedList')">1.2.3.</button>
-                                </div>
+                    <div class="form-steps">
+                        <!-- pagina 1 -->
+                        <div class="step">
+                            <!-- titulo -->
+                            <div class="mb-3">
+                                <input type="text" class="form-control form-control-user" name="titulo_puesto" placeholder="" required>
+                                <label for="jobTitle" class="label">Título del Puesto</label>
+                            </div>
                             
-                                <!-- ÁREA editable con formato -->
-                                <div id="editorContent" name="descripcion_editable" class="editor-area" contenteditable="true">
-                                    Consejos: Haz un resumen del puesto, explica qué se necesita para triunfar en él y el lugar que ocupa en la empresa.
+                            <!-- moneda de pago y periodo de pago-->
+                            <div class="row">
+                                <div class="contenedor-input">
+                                    <div class="col-sm-6 mb-3">
+                                        <select id="currency" name="moneda" class="form-control" required>
+                                            <option disabled selected>Moneda de pago</option>
+                                            <option value="COP">COP</option>
+                                            <option value="USD">USD</option>
+                                            <option value="EUR">EUR</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="contenedor-input">
+                                    <div class="col-sm-6 mb-3">
+                                        <select id="period" name="periodo" class="form-control" required>
+                                            <option disabled selected>Periodo de pago</option>
+                                            <option value="Diario">Diario</option>
+                                            <option value="Semanal">Semanal</option>
+                                            <option value="Mensual">Mensual</option>
+                                            <option value="Anual">Anual</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <textarea id="jobDescription" name="descripcion" required hidden></textarea>
-                        </div>
-
-                        <div class="btn-container">
-                            <div class="btn-container">
-                                <button class="btn-link" onclick="llenarVistaPrevia()">Vista previa</button>
+    
+                            <!-- modalidad de trabajo y tipo de contratato -->
+                            <div class="row">
+                                <div class="contenedor-input">
+                                    <div class="col-sm-6 mb-3">
+                                        <select id="jobMode" name="modalidad" class="form-control" required>
+                                            <option disabled selected>Modalidad de trabajo</option>
+                                            <option value="Presencial">Presencial</option>
+                                            <option value="Remoto">Remoto</option>
+                                            <option value="Híbrido">Híbrido</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="contenedor-input">
+                                    <div class="col-sm-6 mb-3">
+                                        <select id="contractType" name="tipo_contrato" class="form-control" required>
+                                            <option disabled selected>Tipo de contrato</option>
+                                            <option value="Obra o Labor">Obra o Labor</option>
+                                            <option value="Fijo">Fijo</option>
+                                            <option value="Indefinido">Indefinido</option>
+                                            <option value="Prácticas">Prácticas</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <!-- Duraciion del contrato y tipo de empleo -->
+                            <div class="row">
+                                <div class="contenedor-input">
+                                    <div class="col-sm-6 mb-3">
+                                        <select id="jobDuration" name="duracion" class="form-control" required>
+                                            <option disabled selected>Duración del contrato</option>
+                                            <option value="1 mes">1 Mes</option>
+                                            <option value="3 meses">3 Meses</option>
+                                            <option value="6 meses">6 Meses</option>
+                                            <option value="1 año">1 Año</option>
+                                            <option value="Indefinido">Indefinido</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="contenedor-input">
+                                    <div class="col-sm-6 mb-3">
+                                        <select id="jobType" name="tipo_empleo" class="form-control" required>
+                                            <option disabled selected>Tipo de empleo</option>
+                                            <option value="Tiempo Completo">Tiempo Completo</option>
+                                            <option value="Medio Tiempo">Medio Tiempo</option>
+                                            <option value="Por Proyecto">Por Proyecto</option>
+                                            <option value="Freelance">Freelance</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="btn-container">
-                                <button type="button" class="btn-prev btn-secondary" onclick="prevStep()">Anterior</button>
-                                <button type="button" class="btn-next btn-primary" onclick="nextStep()">Siguiente</button>
+                                <div>
+                                    <button type="button" class="btn-cancel" onclick="cancelarOferta()">Cancelar</button>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn-next btn-primary" onclick="nextStep()">Siguiente</button>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- pagina 2 -->
+                        <div class="step">
+                            <div class="input-group">
+                                <label for="jobDescription"><h3>Descripción</h3></label>
+    
+                                <div class="custom-editor">
+                                    <div class="editor-toolbar">
+                                        <button type="button" id="boldBtn" onclick="toggleCommand('bold')"><strong>B</strong></button>
+                                        <button type="button" id="italicBtn" onclick="toggleCommand('italic')"><em>I</em></button>
+                                        <button type="button" onclick="execCmd('insertUnorderedList')">&#8226;&#8226;&#8226;</button>
+                                        <button type="button" onclick="execCmd('insertOrderedList')">1.2.3.</button>
+                                    </div>
+                                
+                                    <!-- ÁREA editable con formato -->
+                                    <div id="editorContent" name="descripcion_editable" class="editor-area" contenteditable="true">
+                                        Consejos: Haz un resumen del puesto, explica qué se necesita para triunfar en él y el lugar que ocupa en la empresa.
+                                    </div>
+                                </div>
+                                <textarea id="jobDescription" name="descripcion" required hidden></textarea>
+                            </div>
+    
+                            <div class="btn-container">
+                                <div class="btn-container">
+                                    <button class="btn-link" onclick="llenarVistaPrevia()">Vista previa</button>
+                                </div>
+                                <div class="btn-container">
+                                    <button type="button" class="btn-prev btn-secondary" onclick="prevStep()">Anterior</button>
+                                    <button type="button" class="btn-next btn-primary" onclick="nextStep()">Siguiente</button>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- pagina 3 -->
+                        <div class="step">
+                            <!-- Años de experiencia y estudio -->
+                            <div class="row">
+                                <div class="contenedor-input">
+                                    <div class="col-sm-6 mb-3">
+                                        <select id="experiencia" name="experiencia" class="form-control" required>
+                                            <option value="" disabled selected>Años de experiencia</option>
+                                            <option value= 0>Sin experiencia</option>
+                                            <option value= 1>Menos de 1 año</option>
+                                            <option value= 2>Entre 1 y 3 años</option>
+                                            <option value= 3>Entre 3 y 5 años</option>
+                                            <option value= 4>Entre 5 y 10 años</option>
+                                            <option value= 5>Más de 10 años</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="contenedor-input">
+                                    <div class="col-sm-6 mb-3">
+                                        <select id="Sector" name="sector_oferta" class="select2-elegante" required>
+                                            <option value="" disabled selected>Sector empresarial</option>
+                                            <option value="Aeroespacial">Aeroespacial</option>
+                                            <option value="Agricultura">Agricultura</option>
+                                            <option value="Agroindustria">Agroindustria</option>
+                                            <option value="Ambiental">Medio ambiente</option>
+                                            <option value="ArtesCreativas">Artes creativas</option>
+                                            <option value="Automotriz">Automotriz</option>
+                                            <option value="BienesRaices">Bienes raíces</option>
+                                            <option value="Biotecnologia">Biotecnología</option>
+                                            <option value="Comercio">Comercio</option>
+                                            <option value="Construccion">Construcción</option>
+                                            <option value="Consultoria">Consultoría</option>
+                                            <option value="Deportes">Deportes y recreación</option>
+                                            <option value="Diseño">Diseño</option>
+                                            <option value="Educacion">Educación</option>
+                                            <option value="Energia">Energía</option>
+                                            <option value="Finanzas">Finanzas</option>
+                                            <option value="Gobierno">Gobierno</option>
+                                            <option value="Investigacion">Investigación</option>
+                                            <option value="Legal">Legal</option>
+                                            <option value="Logistica">Logística</option>
+                                            <option value="Manufactura">Manufactura</option>
+                                            <option value="Marketing">Marketing</option>
+                                            <option value="Medios">Medios de comunicación</option>
+                                            <option value="Mineria">Minería</option>
+                                            <option value="Naval">Naval</option>
+                                            <option value="Quimica">Química y farmacéutica</option>
+                                            <option value="RRHH">Recursos humanos</option>
+                                            <option value="Salud">Salud</option>
+                                            <option value="Seguros">Seguros</option>
+                                            <option value="Servicios">Servicios</option>
+                                            <option value="Social">Trabajo social</option>
+                                            <option value="Tecnologia">Tecnología</option>
+                                            <option value="Textil">Textil y confección</option>
+                                            <option value="Transporte">Transporte</option>
+                                            <option value="Turismo">Turismo</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <!-- salario y sector empresarial -->
+                            <div class="row">
+                                <div class="contenedor-input">
+                                    <div class="col-sm-6 mb-3">
+                                        <input type="number" id="jobSalary" class="form-control form-control-user" name="salario"  placeholder="" required>
+                                        <label for="jobSalary" class="label">Salario</label>
+                                    </div>
+                                </div>
+                                <div class="contenedor-input">
+                                    <div class="col-sm-6 mb-3">
+                                        <select id="nivel-estudio" name="nivel-estudio" class="form-control" required>
+                                            <option value="" disabled selected>Nivel de estudio</option>
+                                            <option value= "Sin estudios" >Sin estudios</option>
+                                            <option value= "Bachiller" >Bachiller</option>
+                                            <option value= "Tecnico/Tecnologo">Tecnico/Tecnologo</option>
+                                            <option value= "Tecnologo o Universitario">Tecnologo o Universitario</option>
+                                            <option value= "Universitario">Universitario</option>
+                                            <option value= "Posgrado">Posgrado</option>
+                                            <option value= "Doctorado" >Doctorado</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="btn-container">
+                                <div class="btn-container">
+                                    <button type="button" class="btn-link" onclick="llenarVistaPrevia()">Vista previa</button>
+                                </div>
+                                <div class="btn-container">
+                                    <button type="button" class="btn-prev btn-secondary" onclick="prevStep()">Anterior</button>
+                                    <button type="submit" class="btn-submit">Publicar Oferta</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- pagina 3 -->
-                    <div class="step">
-                        <!-- Años de experiencia y estudio -->
-                        <div class="row">
-                            <div class="contenedor-input">
-                                <div class="col-sm-6 mb-3">
-                                    <select id="experiencia" name="experiencia" class="form-control" required>
-                                        <option value="" disabled selected>Años de experiencia</option>
-                                        <option value= 0>Sin experiencia</option>
-                                        <option value= 1>Menos de 1 año</option>
-                                        <option value= 2>Entre 1 y 3 años</option>
-                                        <option value= 3>Entre 3 y 5 años</option>
-                                        <option value= 4>Entre 5 y 10 años</option>
-                                        <option value= 5>Más de 10 años</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="contenedor-input">
-                                <div class="col-sm-6 mb-3">
-                                    <select id="Sector" name="sector_oferta" class="select2-elegante" required>
-                                        <option value="" disabled selected>Sector empresarial</option>
-                                        <option value="Aeroespacial">Aeroespacial</option>
-                                        <option value="Agricultura">Agricultura</option>
-                                        <option value="Agroindustria">Agroindustria</option>
-                                        <option value="Ambiental">Medio ambiente</option>
-                                        <option value="ArtesCreativas">Artes creativas</option>
-                                        <option value="Automotriz">Automotriz</option>
-                                        <option value="BienesRaices">Bienes raíces</option>
-                                        <option value="Biotecnologia">Biotecnología</option>
-                                        <option value="Comercio">Comercio</option>
-                                        <option value="Construccion">Construcción</option>
-                                        <option value="Consultoria">Consultoría</option>
-                                        <option value="Deportes">Deportes y recreación</option>
-                                        <option value="Diseño">Diseño</option>
-                                        <option value="Educacion">Educación</option>
-                                        <option value="Energia">Energía</option>
-                                        <option value="Finanzas">Finanzas</option>
-                                        <option value="Gobierno">Gobierno</option>
-                                        <option value="Investigacion">Investigación</option>
-                                        <option value="Legal">Legal</option>
-                                        <option value="Logistica">Logística</option>
-                                        <option value="Manufactura">Manufactura</option>
-                                        <option value="Marketing">Marketing</option>
-                                        <option value="Medios">Medios de comunicación</option>
-                                        <option value="Mineria">Minería</option>
-                                        <option value="Naval">Naval</option>
-                                        <option value="Quimica">Química y farmacéutica</option>
-                                        <option value="RRHH">Recursos humanos</option>
-                                        <option value="Salud">Salud</option>
-                                        <option value="Seguros">Seguros</option>
-                                        <option value="Servicios">Servicios</option>
-                                        <option value="Social">Trabajo social</option>
-                                        <option value="Tecnologia">Tecnología</option>
-                                        <option value="Textil">Textil y confección</option>
-                                        <option value="Transporte">Transporte</option>
-                                        <option value="Turismo">Turismo</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- salario y sector empresarial -->
-                        <div class="row">
-                            <div class="contenedor-input">
-                                <div class="col-sm-6 mb-3">
-                                    <input type="number" id="jobSalary" class="form-control form-control-user" name="salario"  placeholder="" required>
-                                    <label for="jobSalary" class="label">Salario</label>
-                                </div>
-                            </div>
-                            <div class="contenedor-input">
-                                <div class="col-sm-6 mb-3">
-                                    <select id="nivel-estudio" name="nivel-estudio" class="form-control" required>
-                                        <option value="" disabled selected>Nivel de estudio</option>
-                                        <option value= "Sin estudios" >Sin estudios</option>
-                                        <option value= "Bachiller" >Bachiller</option>
-                                        <option value= "Tecnico/Tecnologo">Tecnico/Tecnologo</option>
-                                        <option value= "Tecnologo o Universitario">Tecnologo o Universitario</option>
-                                        <option value= "Universitario">Universitario</option>
-                                        <option value= "Posgrado">Posgrado</option>
-                                        <option value= "Doctorado" >Doctorado</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="btn-container">
-                            <div class="btn-container">
-                                <button type="button" class="btn-link" onclick="llenarVistaPrevia()">Vista previa</button>
-                            </div>
-                            <div class="btn-container">
-                                <button type="button" class="btn-prev btn-secondary" onclick="prevStep()">Anterior</button>
-                                <button type="submit" class="btn-submit">Publicar Oferta</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-
         <div id="modal" class="modal">
             <div class="modal-content">
                 <div class="modal-header">
