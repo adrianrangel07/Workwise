@@ -24,7 +24,7 @@ public class WekaPredictionService {
 
     public WekaPredictionService() throws Exception {
         // Cargar el modelo desde resources
-        try (InputStream modelStream = getClass().getClassLoader().getResourceAsStream("weka/modelo_empleo_j48.model")) {
+        try (InputStream modelStream = getClass().getClassLoader().getResourceAsStream("weka/Modelo_entrenado_empleo.model")) {
             if (modelStream == null) {
                 throw new FileNotFoundException("Modelo WEKA no encontrado en resources");
             }
@@ -32,7 +32,7 @@ public class WekaPredictionService {
         }
 
         // Cargar estructura desde ARFF
-        try (InputStream arffStream = getClass().getClassLoader().getResourceAsStream("weka/empleo_recomendacion_simplificado_balanceado.arff")) {
+        try (InputStream arffStream = getClass().getClassLoader().getResourceAsStream("weka/empleo_recomendacion_simplificado.arff")) {
             if (arffStream == null) {
                 throw new FileNotFoundException("Archivo ARFF no encontrado en resources");
             }
