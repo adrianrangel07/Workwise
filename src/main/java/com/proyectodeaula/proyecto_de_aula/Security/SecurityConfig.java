@@ -30,8 +30,7 @@ public class SecurityConfig {
                 
                 .headers(headers -> headers
                 .contentSecurityPolicy(csp -> csp
-                .policyDirectives("script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline' 'unsafe-eval'; ")
-                
+                .policyDirectives("script-src 'self' https://cdn.jsdelivr.net https://code.jquery.com 'unsafe-inline' 'unsafe-eval';")
                 )
                 )
                 .headers(headers -> headers
