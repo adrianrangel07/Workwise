@@ -63,14 +63,14 @@ public class PersonaController {
     public String agregar(Model model) {
         Personas persona = new Personas();
         model.addAttribute("new_persona", persona);
-        return "Html/persona/Registrar_persona";
+        return "Html/Persona/Registrar_persona";
     }
 
     @PostMapping("/Register/personas")
     public String save(@ModelAttribute("new_persona") Personas persona, Model model) {
         persona.setContraseña(passwordEncoder.encode(persona.getContraseña()));
         per.save(persona);
-        return "Html/persona/inicio_sesion_persona";
+        return "Html/Persona/inicio_sesion_persona";
     }
 
     @GetMapping("/login/personas")
@@ -130,7 +130,7 @@ public class PersonaController {
                 model.addAttribute("base64Image", "");
             }
             model.addAttribute("persona", persona);
-            return "Html/persona/Mi_perfil";
+            return "Html/Persona/Mi_perfil";
         } else {
             return "redirect:/login/personas";
         }
