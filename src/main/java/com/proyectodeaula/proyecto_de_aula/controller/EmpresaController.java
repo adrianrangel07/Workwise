@@ -2,6 +2,7 @@ package com.proyectodeaula.proyecto_de_aula.controller;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -9,6 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,6 +33,7 @@ import com.proyectodeaula.proyecto_de_aula.interfaceService.IofertaService;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Empresas.Interfaz_Emp;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Empresas.Interfaz_Empresa;
 import com.proyectodeaula.proyecto_de_aula.model.Empresas;
+import com.proyectodeaula.proyecto_de_aula.model.Ofertas;
 import com.proyectodeaula.proyecto_de_aula.service.EmpresaService;
 
 import jakarta.servlet.http.HttpSession;
@@ -115,15 +120,27 @@ public class EmpresaController {
 
     // Muestra la página principal de la empresa después del inicio de sesión
     @GetMapping("/empresas/pagina_principal")
-    public String mostrarPaginaPrincipal(Model model, HttpSession session) {
+    public String listarOfertasEmpresa(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size,
+            Model model,
+            HttpSession session) {
+
         Empresas empresa = (Empresas) session.getAttribute("empresa");
-        if (empresa != null) {
-            model.addAttribute("Ofertas", ofertaService.listarOfertasPorEmpresa(empresa));
-            model.addAttribute("nombreEmpresa", empresa.getNombreEmp());
-            model.addAttribute("empresa", empresa); 
-            return "Html/Empresa/pagina_principal_empresa";
+        if (empresa == null) {
+            return "redirect:/login/Empresa";
         }
-        return "redirect:/login/Empresa";
+
+        // Obtener ofertas paginadas de la empresa
+        Page<Ofertas> ofertasPage = ofertaService.listarOfertasPorEmpresaPaginado(empresa, PageRequest.of(page, size));
+
+        model.addAttribute("Ofertas", ofertasPage.getContent());
+        model.addAttribute("empresa", empresa);
+        model.addAttribute("paginaActual", page);
+        model.addAttribute("totalPaginas", ofertasPage.getTotalPages());
+        model.addAttribute("size", size);
+
+        return "Html/Empresa/pagina_principal_empresa";
     }
 
     // Muestra el perfil de la empresa

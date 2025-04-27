@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.proyectodeaula.proyecto_de_aula.model.Empresas;
 import com.proyectodeaula.proyecto_de_aula.model.Ofertas;
@@ -17,4 +18,5 @@ public interface IofertaService {
     public void update(long id, Ofertas updatedOffer);
     public Ofertas findById(long id);
     Page<Ofertas> listar_ofertas_paginadas(int page, int size);
+    Page<Ofertas> listarOfertasPorEmpresaPaginado(Empresas empresa, Pageable pageable);
 }

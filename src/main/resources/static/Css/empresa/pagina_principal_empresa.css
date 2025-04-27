@@ -6,38 +6,116 @@ body {
   background-color: #f8f9fa;
 }
 
-/* Contenedor de ofertas */
+/* ========== TARJETAS DE OFERTAS ========== */
 .offer-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-  padding: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+  padding: 25px;
 }
 
 .card {
   background: white;
-  border-radius: 8px;
-  padding: 15px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
   cursor: pointer;
+  border: 1px solid #e0e0e0;
+  position: relative;
+  overflow: hidden;
 }
 
 .card:hover {
-  transform: scale(1.05);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  border-color: #0a1128;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: #0a1128;
+  transition: width 0.3s ease;
+}
+
+.card:hover::before {
+  width: 6px;
 }
 
 .offer-content h3 {
-  margin: 0;
-  font-size: 1.2em;
+  margin: 0 0 15px 0;
+  font-size: 1.3em;
+  font-weight: 600;
+  color: #0a1128;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.offer-content h3::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 2px;
+  background: #0a1128;
+}
+
+.offer-content p {
+  margin: 0 0 12px 0;
+  font-size: 0.95em;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .hidden-info {
   display: none;
-  font-size: 0.9em;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px dashed #e0e0e0;
 }
 
-/* Modal */
+.hidden-info p {
+  margin: 8px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.hidden-info p strong {
+  color: #0a1128;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.hidden-info p span {
+  color: #333;
+  text-align: right;
+}
+
+/* Badge para destacar información importante */
+.badge-info {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #0a1128;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75em;
+  font-weight: 600;
+}
+
+/* ========== MODAL MEJORADO ========== */
 .modal {
   display: none;
   position: fixed;
@@ -45,31 +123,186 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   justify-content: center;
   align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(3px);
 }
 
 .modal-content {
   background: white;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 30px;
+  border-radius: 12px;
   width: 90%;
-  max-width: 500px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  position: relative;
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .close-btn {
-  float: right;
+  position: absolute;
+  top: 15px;
+  right: 15px;
   font-size: 1.5em;
   cursor: pointer;
+  color: #777;
+  transition: color 0.2s;
+  background: none;
+  border: none;
+  padding: 5px;
 }
 
-/* Botones del modal */
+.close-btn:hover {
+  color: #0a1128;
+}
+
+.modal-content h3 {
+  color: #0a1128;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-content p {
+  margin: 10px 0;
+  line-height: 1.6;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 25px;
+  gap: 10px;
+}
+
 .modal-buttons button {
-  margin: 5px;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s;
 }
 
+.modal-buttons button:hover {
+  transform: translateY(-2px);
+}
+
+#edit-button {
+  background: #0a1128;
+  border: none;
+}
+
+#delete-button {
+  background: #dc3545;
+  border: none;
+}
+
+#info-button {
+  background: #28a745;
+  border: none;
+}
+
+/* Formulario de edición */
+#edit-form {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+#edit-form .form-control,
+#edit-form .form-select {
+  border-radius: 6px;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  margin-bottom: 15px;
+}
+
+#edit-form .form-label {
+  font-weight: 500;
+  color: #0a1128;
+  margin-bottom: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .offer-container {
+    grid-template-columns: 1fr;
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .modal-content {
+    padding: 20px;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+  }
+
+  .modal-buttons button {
+    width: 100%;
+  }
+}
+
+/* Estilos para el grid de información en el modal */
+.modal-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin: 20px 0;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.modal-info-grid p {
+  margin: 5px 0;
+  padding: 8px;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el formulario de edición */
+#edit-form {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+#edit-form .form-group {
+  margin-bottom: 15px;
+}
+
+#edit-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+#edit-form input,
+#edit-form select,
+#edit-form textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
 
 /* Sidebar */
 .sidebar {
@@ -151,7 +384,6 @@ body {
   color: #acb6bd;
 }
 
-
 .footer-right a {
   display: inline-block;
   background-color: #f0f0f0;
@@ -202,6 +434,56 @@ body {
 
 #empresas:hover {
   color: #555; /* Cambia de color al pasar el mouse */
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.pagination li {
+  margin: 0 5px;
+}
+
+.pagination a {
+  display: block;
+  padding: 8px 12px;
+  background: #495057;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+.pagination a:hover {
+  background: #0a1128;
+  color: white;
+}
+
+.pagination li.active a {
+  background: #0a1128;
+  color: white;
+  font-weight: bold;
+}
+
+.pagination li.disabled a {
+  color: #ccc;
+  pointer-events: none;
+}
+
+.dropdown-item:focus,
+.dropdown-item:active {
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: #495057 !important;
+  color: white !important;
 }
 
 /* Responsividad */

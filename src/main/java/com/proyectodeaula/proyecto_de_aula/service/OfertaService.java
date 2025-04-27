@@ -124,5 +124,9 @@ public class OfertaService implements IofertaService {
         Pageable pageable = PageRequest.of(page, size);
         return ofertaRepository.findAll(pageable);
     }
-    
+
+    @Override
+    public Page<Ofertas> listarOfertasPorEmpresaPaginado(Empresas empresa, Pageable pageable) {
+        return ofertaRepository.findByEmpresa(empresa, pageable);
+    }
 }
