@@ -75,7 +75,7 @@ public class PersonaController {
 
     @GetMapping("/login/personas")
     public String iniciar_sesion() {
-        return "Html/persona/inicio_sesion_persona";
+        return "Html/Persona/inicio_sesion_persona";
     }
 
     @PostMapping("/login/personas")
