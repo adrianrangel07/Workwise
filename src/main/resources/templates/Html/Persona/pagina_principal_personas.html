@@ -304,25 +304,23 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="pagination">
-                    <ul>
-                        <li th:if="${paginaActual > 0}">
-                            <a th:href="@{/personas/pagina_principal(page=${paginaActual - 1})}">« Anterior</a>
-                        </li>
-
-                        <li th:each="i : ${#numbers.sequence(0, totalPaginas - 1)}"
-                            th:classappend="${i == paginaActual} ? 'active'">
-                            <a th:href="@{/personas/pagina_principal(page=${i})}" th:text="${i + 1}">1</a>
-                        </li>
-
-                        <li th:if="${paginaActual < totalPaginas - 1}">
-                            <a th:href="@{/personas/pagina_principal(page=${paginaActual + 1})}">Siguiente »</a>
-                        </li>
-                    </ul>
-                </div>
             </div>
+            <div class="pagination">
+                <ul>
+                    <li th:if="${paginaActual > 0}">
+                        <a th:href="@{/personas/pagina_principal(page=${paginaActual - 1})}">« Anterior</a>
+                    </li>
 
+                    <li th:each="i : ${#numbers.sequence(0, totalPaginas - 1)}"
+                        th:classappend="${i == paginaActual} ? 'active'">
+                        <a th:href="@{/personas/pagina_principal(page=${i})}" th:text="${i + 1}">1</a>
+                    </li>
+
+                    <li th:if="${paginaActual < totalPaginas - 1}">
+                        <a th:href="@{/personas/pagina_principal(page=${paginaActual + 1})}">Siguiente »</a>
+                    </li>
+                </ul>
+            </div>
             <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer">
                 <div class="container">
                     <div class="footer-content">
