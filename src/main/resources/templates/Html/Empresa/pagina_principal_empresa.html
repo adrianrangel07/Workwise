@@ -24,124 +24,145 @@
                     <div class="sidebar-brand-icon rotate-n-15"></div>
                     <div class="sidebar-brand-text mx-3"><span>Workwise</span></div>
                 </a>
-                <span style="font-size: 15px; text-align: center; color: white;">Only Companies</span>
+                <span style="font-size: 15px; text-align: center; color: white;">Solo empresas</span>
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link active" th:href="@{/empresas/pagina_principal}">
-                            <i class="fas fa-home"></i><span>Home</span></a>
+                            <i class="fas fa-home"></i><span>Inicio</span></a>
                     </li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/perfil/empresa}">
-                            <i class="far fa-user-circle"></i><span>Profile</span></a>
+                            <i class="far fa-user-circle"></i><span>Perfil</span></a>
                     </li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/empresas/oferta}">
-                            <i class="fas fa-plus-circle"></i><span>Create offer</span></a>
+                            <i class="fas fa-plus-circle"></i><span>Crear oferta</span></a>
                     </li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/empresas/published-offers}">
-                            <i class="fas fa-check-circle"></i><span>Listed offers</span></a>
+                            <i class="fas fa-check-circle"></i><span>Ofertas publicadas</span></a>
                     </li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/Estadisticas/empresas}">
-                            <i class="fas fa-chart-bar"></i><span>Statistics</span></a>
+                            <i class="fas fa-chart-bar"></i><span>Estadisticas</span></a>
                     </li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/login/personas}">
-                            <i class="fas fa-user"></i><span>Do you want search offers?</span></a>
+                            <i class="fas fa-user"></i><span>Quieres postularte a ofertas?</span></a>
                     </li>
                 </ul>
 
             </div>
         </nav>
         <div class="d-flex flex-column" id="content-wrapper">
-            <div id="content">
-                <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light"
-                    style="background: var(--bs-body-bg);">
-                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3"
-                            id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
-                        <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search"
-                            id="formBusqueda">
-                            <div class="input-group"
-                                style="text-align: center;margin: 500px;border-color: var(--bs-emphasis-color);">
-                                <input id="termino" name="termino" class=" bg-light form-control border-4 small"
-                                    type="text" placeholder="Puesto o palabra clave..">
-                                <button class="btn btn-primary py-0" type="submit"
-                                    style="background: #0a1128; border: none;">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </form>
-                        <ul class="navbar-nav flex-nowrap ms-auto">
-                            <div class="d-none d-sm-block topbar-divider"></div>
-                            <li class="nav-item dropdown no-arrow">
-                                <div class="nav-item dropdown no-arrow" id="empresa-container">
 
-                                    <img id="user-avatar" src="../Imagenes/imagenempresa.png" alt="Empresa Logo">
+            <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light"
+                style="background: var(--bs-body-bg);">
+                <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3"
+                        id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
+                    <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search"
+                        id="formBusqueda">
+                        <div class="input-group"
+                            style="text-align: center;margin: 500px;border-color: var(--bs-emphasis-color);">
+                            <input id="termino" name="termino" class=" bg-light form-control border-4 small" type="text"
+                                placeholder="Puesto o palabra clave..">
+                            <button class="btn btn-primary py-0" type="submit"
+                                style="background: #0a1128; border: none;">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <ul class="navbar-nav flex-nowrap ms-auto">
 
-                                    <input type="hidden" id="subirFoto" accept="image/*"
-                                        style="display: block; margin-top: 10px;">
+                        <li class="nav-item dropdown no-arrow">
+                            <div class="nav-item dropdown no-arrow" id="empresa-container">
 
-                                    <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
-                                        href="#">
-                                        <span id="empresa" th:text="${empresa.nombreEmp}">Account</span>
+                                <img id="user-avatar" src="../Imagenes/imagenempresa.png" alt="Empresa Logo">
+
+                                <input type="hidden" id="subirFoto" accept="image/*"
+                                    style="display: block; margin-top: 10px;">
+
+                                <a class="dropdown-toggle nav-link mi-link" aria-expanded="false" data-bs-toggle="dropdown"
+                                    href="#">
+                                    <span id="empresa" th:text="${empresa.nombreEmp}">Cuenta</span>
+                                </a>
+                                <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                                    <a class="dropdown-item" th:href="@{/perfil/empresa}" style="color: #0a1128;">
+                                        <i class="fas fa-user fa-sm fa-fw me-2"></i>&nbsp;Perfil
                                     </a>
-                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
-                                        <a class="dropdown-item" th:href="@{/perfil/empresa}">
-                                            <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile
-                                        </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i
-                                                class="fas fa-briefcase fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Published
-                                            Jobs
-                                        </a>
-                                        <a class="dropdown-item" th:href="@{/Estadisticas/empresas}">
-                                            <i
-                                                class="fas fa-chart-line fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Statistics
-                                        </a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#" id="logout" onclick="cerrarSesion(event)">
-                                            <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>Logout
-                                        </a>
-                                    </div>
+                                    <a class="dropdown-item" th:href="@{/empresas/published-offers}" style="color: #0a1128;">
+                                        <i class="fas fa-briefcase fa-sm fa-fw me-2"></i>&nbsp;Ofertas
+                                        Publicadas
+                                    </a>
+                                    <a class="dropdown-item" th:href="@{/Estadisticas/empresas}" style="color: #0a1128;">
+                                        <i
+                                            class="fas fa-chart-line fa-sm fa-fw me-2 "></i>&nbsp;Estadisticas
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#" id="logout" onclick="cerrarSesion(event)" style="color: #0a1128;">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw me-2"></i>Cerrar Sesión
+                                    </a>
                                 </div>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="section-title text-center">
+                <h2 class="display-5 fw-bold ">Ofertas publicadas</h2>
+                <p class="text-muted">Gestiona tus ofertas publicadas</p>
             </div>
+
 
             <div class="content-area flex-grow-1 p-3">
                 <div id="resultadoBusqueda"></div>
+
                 <div class="offer-container">
                     <div th:each="Oferta:${Ofertas}" class="card">
                         <div class="offer-content" th:data-id="${Oferta.id}">
+                            <!-- Badge para destacar modalidad -->
+                            <span class="badge-info" th:text="${Oferta.modalidad}"></span>
+
                             <h3 th:text="${Oferta.titulo_puesto}"></h3>
                             <p th:text="${Oferta.descripcion}"></p>
+
+                            <!-- Información destacada visible -->
+                            <div class="visible-info">
+                                <p><strong>Salario:</strong> <span
+                                        th:text="${Oferta.salario + ' ' + Oferta.moneda + ' ' + Oferta.periodo}"></span>
+                                </p>
+                                <p><strong>Tipo de empleo:</strong> <span th:text="${Oferta.tipo_empleo}"></span></p>
+                            </div>
+
                             <div class="hidden-info">
-                                <p class="salario"><strong>Salary:</strong> <span th:text="${Oferta.salario}"></span>
+                                <p><strong>Salario:</strong> <span th:text="${Oferta.salario}"></span></p>
+                                <p><strong>Moneda:</strong> <span th:text="${Oferta.moneda}"></span></p>
+                                <p><strong>Duración:</strong> <span th:text="${Oferta.duracion}"></span></p>
+                                <p><strong>Periodo:</strong> <span th:text="${Oferta.periodo}"></span></p>
+                                <p><strong>Tipo de empleo:</strong> <span th:text="${Oferta.tipo_empleo}"></span>
                                 </p>
-                                <p class="moneda"><Strong>Currency:</Strong> <span th:text="${Oferta.moneda}"></span>
+                                <p><strong>Modalidad:</strong> <span th:text="${Oferta.modalidad}"></span></p>
+                                <p><strong>Tipo de contrato:</strong> <span th:text="${Oferta.tipo_contrato}"></span>
                                 </p>
-                                <p class="duracion"><strong>Duration:</strong> <span
-                                        th:text="${Oferta.duracion}"></span>
-                                </p>
-                                <p class="periodo"><strong>Period:</strong> <span th:text="${Oferta.periodo}"></span>
-                                </p>
-                                <p class="tipo_empleo"><strong>Type of employment:</strong> <span
-                                        th:text="${Oferta.tipo_empleo}"></span>
-                                </p>
-                                <p class="modalidad"><strong>mode:</strong>
-                                    <span th:text="${Oferta.modalidad}"></span>
-                                </p>
-                                <p class="tipo_contrato"><strong>Type of contract:</strong> <span
-                                        th:text="${Oferta.tipo_contrato}"></span>
-                                </p>
-                                <p class="experiencia"><strong>años de experiencia:</strong>
-                                    <span th:text="${Oferta.experiencia}"></span>
-                                </p>
-                                <p class="nivel_educativo"><strong>nivel de estudio:</strong>
-                                    <span th:text="${Oferta.nivel_educativo}"></span>
+                                <p><strong>Experiencia:</strong> <span th:text="${Oferta.experiencia} "></span></p>
+                                <p><strong>Nivel de educación:</strong> <span
+                                        th:text="${Oferta.nivel_educativo}"></span>
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="pagination">
+                <ul>
+                    <li th:if="${paginaActual > 0}">
+                        <a th:href="@{/empresas/pagina_principal(page=${paginaActual - 1})}">« Anterior</a>
+                    </li>
+
+                    <li th:each="i : ${#numbers.sequence(0, totalPaginas - 1)}"
+                        th:classappend="${i == paginaActual} ? 'active'">
+                        <a th:href="@{/empresas/pagina_principal(page=${i})}" th:text="${i + 1}">1</a>
+                    </li>
+
+                    <li th:if="${paginaActual < totalPaginas - 1}">
+                        <a th:href="@{/empresas/pagina_principal(page=${paginaActual + 1})}">Siguiente »</a>
+                    </li>
+                </ul>
             </div>
         </div>
 
@@ -153,15 +174,18 @@
                 </div>
                 <h3 id="modal-title"></h3>
                 <p id="modal-description"></p>
-                <p id="modal-salary"></p>
-                <p id="modal-currency"></p>
-                <p id="modal-duration"></p>
-                <p id="modal-period"></p>
-                <p id="modal-modalidad"></p>
-                <p id="modal-type"></p>
-                <p id="modal-typeContract"></p>
-                <p id="modal-experience"></p>
-                <p id="modal-educationLevel"></p>
+
+                <div class="modal-info-grid">
+                    <p id="modal-salary"></p>
+                    <p id="modal-currency"></p>
+                    <p id="modal-duration"></p>
+                    <p id="modal-period"></p>
+                    <p id="modal-type"></p>
+                    <p id="modal-modalidad"></p>
+                    <p id="modal-typeContract"></p>
+                    <p id="modal-experience"></p>
+                    <p id="modal-educationLevel"></p>
+                </div>
 
                 <div id="postCount">
                     <p id="modal-postulaciones">Postulaciones: <span id="postulaciones-count">0</span></p>
@@ -169,23 +193,23 @@
 
                 <!-- Botones de editar y eliminar -->
                 <div class="modal-buttons">
-                    <button id="edit-button" class="btn btn-primary">Edit</button>
-                    <button id="delete-button" class="btn btn-danger">Delete</button>
+                    <button id="edit-button" class="btn btn-primary">Editar</button>
+                    <button id="delete-button" class="btn btn-danger">Eliminar</button>
                     <button id="info-button" class="btn btn-success"
-                        th:onclick="'window.location.href=\'' + @{/empresas/published-offers} + '\''">More</button>
+                        th:onclick="'window.location.href=\'' + @{/empresas/published-offers} + '\''">Más</button>
                 </div>
 
                 <div id="edit-form" style="display: none;">
                     <div class="mb-3">
-                        <label for="edit-title" class="form-label">Edit Title</label>
+                        <label for="edit-title" class="form-label">Editar titulo del puesto</label>
                         <input type="text" id="edit-title" class="form-control" placeholder="Edit Title">
                     </div>
                     <div class="mb-3">
-                        <label for="edit-description" class="form-label">Edit Description</label>
+                        <label for="edit-description" class="form-label">Editar descripcion</label>
                         <textarea id="edit-description" class="form-control" placeholder="Edit Description"></textarea>
                     </div>
                     <div class="mb-3 d-flex align-items-center">
-                        <label class="form-label me-1">Edit Salary</label>
+                        <label class="form-label me-1">Editar salario</label>
                         <input type="text" id="edit-salary" class="form-control me-1" placeholder="Edit Salary">
                         <select id="edit-currency" class="form-select" required>
                             <option value="COP">COP</option>
@@ -194,51 +218,51 @@
                             <option value="LBR">LBR</option>
                         </select>
                         <select id="edit-period" class="form-select" required>
-                            <option value="Diario">Daily</option>
-                            <option value="Semanal">Weekly</option>
-                            <option value="Quincenal">Biweekly</option>
-                            <option value="Mensual">Monthly</option>
-                            <option value="Anual">Annual</option>
+                            <option value="Diario">Diario</option>
+                            <option value="Semanal">Semanal</option>
+                            <option value="Quincenal">Quincenal</option>
+                            <option value="Mensual">Mensual</option>
+                            <option value="Anual">Anual</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="edit-modalidad" class="form-label">Edit Modality</label>
+                        <label for="edit-modalidad" class="form-label">Editar modalidad</label>
                         <select id="edit-modalidad" class="form-select" required>
-                            <option value="Presencial">In person</option>
-                            <option value="Remoto">Remote</option>
-                            <option value="Híbrido">Hybrid</option>
+                            <option value="Presencial">Presencial</option>
+                            <option value="Remoto">Remoto</option>
+                            <option value="Híbrido">Hibrido</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="edit-type" class="form-label">Edit work Type</label>
+                        <label for="edit-type" class="form-label">Editar tipo de empleo</label>
                         <select id="edit-type" class="form-select">
-                            <option value="Tiempo Completo">Full time</option>
-                            <option value="Medio Tiempo">Half-time</option>
-                            <option value="Por Horas">For hours</option>
+                            <option value="Tiempo Completo">Tiempo Completo</option>
+                            <option value="Medio Tiempo">Medio Tiempo</option>
+                            <option value="Por Horas">Por Horas</option>
                             <option value="Freelance">Freelance</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="edit-typeContract" class="form-label">Edit Contract Type</label>
+                        <label for="edit-typeContract" class="form-label">Editar tipo de contrato</label>
                         <select id="edit-typeContract" class="form-select">
-                            <option value="Contrato obra o labor">Contract for work or labor</option>
-                            <option value="contrato fijo">Fixed term contract</option>
-                            <option value="contrato indefinido">Indefinite term contract</option>
-                            <option value="contrato por practicas">Internship contract</option>
+                            <option value="Contrato obra o labor">Contrato obra o labor</option>
+                            <option value="contrato fijo">contrato fijo</option>
+                            <option value="contrato indefinido">contrato indefinido</option>
+                            <option value="contrato por practicas">contrato por practicas</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="edit-duration" class="form-label">Edit Duration</label>
+                        <label for="edit-duration" class="form-label">Editar duración</label>
                         <select id="edit-duration" class="form-select">
-                            <option value="1 mes">1 month</option>
-                            <option value="3 meses">3 months</option>
-                            <option value="6 meses">6 months</option>
-                            <option value="1 año">1 year</option>
-                            <option value="Indefinido">Indefinite</option>
+                            <option value="1 mes">1 Mes</option>
+                            <option value="3 meses">3 Mes(s)</option>
+                            <option value="6 meses">6 Mes(s)</option>
+                            <option value="1 año">1 Año</option>
+                            <option value="Indefinido">Indefinido</option>
                         </select>
                     </div>
-                    <button id="save-button" class="btn btn-success">Save Changes</button>
-                    <button id="cancel-button" class="btn btn-danger">Cancel</button>
+                    <button id="save-button" class="btn btn-success">Guardar Cambios</button>
+                    <button id="cancel-button" class="btn btn-danger">Cancelar</button>
                 </div>
             </div>
         </div>
