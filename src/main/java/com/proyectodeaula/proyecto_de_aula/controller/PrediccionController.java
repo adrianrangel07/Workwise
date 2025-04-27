@@ -89,14 +89,12 @@ public class PrediccionController {
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of(
-                            "error", "Error en la predicción",
-                            "detalle", e.getMessage()
-                    ));
+            .body(Map.of(
+                    "error", "Error en la predicción",
+                    "detalle", e.getMessage()
+            ));
         }
     }
-
- 
     public record DetallePrediccion(String actual, String predicho, double confianzaWeka) {
 
     }

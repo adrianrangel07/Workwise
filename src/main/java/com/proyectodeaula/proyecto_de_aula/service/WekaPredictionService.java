@@ -24,7 +24,9 @@ public class WekaPredictionService {
 
     public WekaPredictionService() throws Exception {
         // Cargar el modelo desde resources
-        try (InputStream modelStream = getClass().getClassLoader().getResourceAsStream("weka/modelo_entrenado_empleo.model")) {
+
+        try (InputStream modelStream = getClass().getClassLoader().getResourceAsStream("weka/Modelo_entrenado_empleo.model")) {
+
             if (modelStream == null) {
                 throw new FileNotFoundException("Modelo WEKA no encontrado en resources");
             }
