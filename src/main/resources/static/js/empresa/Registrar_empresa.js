@@ -22,7 +22,6 @@ function validateEmail() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!email) {
-        document.getElementById('emailValidation').style.display = 'none';
         emailValidation.textContent = '';
         emailValidation.className = 'validation-message';
         return false;
