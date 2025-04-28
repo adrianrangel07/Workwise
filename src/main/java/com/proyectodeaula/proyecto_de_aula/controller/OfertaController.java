@@ -76,7 +76,7 @@ public class OfertaController {
         model.addAttribute("size", size);
         model.addAttribute("usuarioId", usuarioId);
 
-        return "Html/persona/pagina_principal_personas";
+        return "Html/Persona/pagina_principal_personas";
     }
 
     @GetMapping("/pagina/inicio")
