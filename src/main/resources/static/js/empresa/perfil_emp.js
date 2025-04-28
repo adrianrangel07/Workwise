@@ -41,6 +41,20 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
+
+    const userAvatar = document.getElementById("user-avatar");
+    fetch("/empresas/photo")
+        .then(response => {
+            if (!response.ok) throw new Error('Foto no encontrada');
+            return response.blob();
+        })
+        .then(blob => {
+            userAvatar.src = URL.createObjectURL(blob);
+        })
+        .catch(() => {
+            userAvatar.src = "../Imagenes/imagenempresa.png";
+        });
+
 });
 
 //verificar contraseña para cambiar los datos de la empresa
@@ -98,4 +112,97 @@ document.addEventListener('DOMContentLoaded', function () {
         saveButton.disabled = false; // Habilita "Save changes"
     }
 });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Efecto hover para los accesos rápidos
+    const quickLinks = document.querySelectorAll('.quick-link');
+    
+    quickLinks.forEach(link => {
+        link.addEventListener('mouseenter', function() {
+            this.querySelector('.quick-arrow').style.transform = 'translateX(3px)';
+            this.querySelector('.quick-icon').style.backgroundColor = '#d6e4ff';
+        });
+        
+        link.addEventListener('mouseleave', function() {
+            this.querySelector('.quick-arrow').style.transform = 'translateX(0)';
+            this.querySelector('.quick-icon').style.backgroundColor = '#e9f0ff';
+        });
+    });
+});
+
+
+function eliminarCuenta() {
+    Swal.fire({
+        title: 'Eliminar cuenta permanentemente',
+        html: `
+            <p>Esta acción eliminará todos tus datos, ofertas y estadísticas de forma permanente.</p>
+            <p>¿Estás seguro de que deseas continuar?</p>
+            <input type="password" id="password" class="swal2-input" placeholder="Ingresa tu contraseña">
+        `,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar cuenta',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#d33',
+        focusConfirm: false,
+        preConfirm: () => {
+            const password = Swal.getPopup().querySelector('#password').value;
+            if (!password) {
+                Swal.showValidationMessage('Debes ingresar tu contraseña');
+                return false;
+            }
+            return { password: password };
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const password = result.value.password;
+            
+            // Verificar contraseña primero
+            fetch('/verificar-contrasena-eliminar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password: password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.valido) {
+                    // Si la contraseña es correcta, proceder con la eliminación
+                    return fetch('/eliminar-cuenta-empresa', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ password: password })
+                    });
+                } else {
+                    throw new Error('Contraseña incorrecta');
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                }
+                throw new Error('Error al eliminar la cuenta');
+            })
+            .then(message => {
+                Swal.fire({
+                    title: 'Cuenta eliminada',
+                    text: message,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.location.href = '/';
+                });
+            })
+            .catch(error => {
+                Swal.fire({
+                    title: 'Error',
+                    text: error.message,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
+        }
+    });
+}
+
 

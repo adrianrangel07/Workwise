@@ -49,8 +49,17 @@ public class EmpresaService implements IempresaService {
     }
 
     @Override
-    public void delete(int Id) {
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    public void delete(int id) {
+        Emp.deleteById(id);
+    }
+
+    public boolean verificarContraseña(int id, String contraseña) {
+        Optional<Empresas> empresaOptional = dataemp.findById(id);
+        if (empresaOptional.isPresent()) {
+            Empresas empresa = empresaOptional.get();
+            return passwordEncoder.matches(contraseña, empresa.getContraseña());
+        }
+        return false;
     }
 
     public Empresas findByEmail(String email) {

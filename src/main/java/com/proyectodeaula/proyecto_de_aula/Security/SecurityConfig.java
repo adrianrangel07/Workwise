@@ -24,7 +24,7 @@ public class SecurityConfig {
                 //personas
                 .requestMatchers("/Register/personas", "/login/personas", "/personas/recursos", "/Contrasena-olvidada", "/cambiar-contrasena").permitAll()
                 //empresas
-                .requestMatchers("/Contraseña-olvidada-empresa", "/perfil/verHDV", "/Registrar/Empresa", "/login/Empresa", "/cambiar-contrasena-emp").permitAll()
+                .requestMatchers("/Contraseña-olvidada-empresa", "/perfil/verHDV", "/Registrar/Empresa", "/login/Empresa", "/cambiar-contrasena-emp","/verificar-contrasena-eliminar","/eliminar-cuenta-empresa").permitAll()
                 .anyRequest().permitAll()
                 )
                 

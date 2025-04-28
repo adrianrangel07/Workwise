@@ -28,14 +28,14 @@
         <div class="container-register">
             <div class="card">
                 <div class="head-card">
-                    <h1>Create a Company Account!</h1>
+                    <h1>Crea una cuenta</h1>
                     <div class="container-back">
                         <a th:href="@{/pagina/inicio}" class="back_a">
                             <i class="fas fa-arrow-left back"></i>
                         </a>
                     </div>
                 </div>
-                <p>We give you solutions.</p>
+                <p>Registra tu empresa y empieza a crecer con nosotros.</p>
                 <div class="formulario">
                     <form id="registerForm" th:action="@{/Registrar/Empresa}" method="post" class="user">
                         <div class="row"> <!-- nombre y razon social -->
@@ -43,21 +43,21 @@
                                 <div class="col-sm-6 mb-3">
                                     <input class="form-control form-control-user" type="text" id="nombreEmp"
                                         placeholder="" name="nombreEmp" required>
-                                    <label for="nombreEmp" class="label">Comany name</label>
+                                    <label for="nombreEmp" class="label">Nombre de la compañia</label>
                                 </div>
                             </div>
                             <div class="contenedor-input">
                                 <div class="col-sm-6 mb-3">
                                     <input class="form-control form-control-user" type="text" placeholder=""
                                         id="razon_social" name="razon_social" required>
-                                    <label for="razon_social" class="label">Social Reason</label>
+                                    <label for="razon_social" class="label">Razón social</label>
                                 </div>
                             </div>
                         </div>
                         <div class="mb-3"> <!-- email -->
                             <input class="form-control form-control-user" type="email" aria-describedby="emailHelp"
                                 placeholder="" id="email" name="email" required>
-                            <label for="email" class="label">Email</label>
+                            <label for="email" class="label">Correo electronico</label>
                             <div class="validation-message" id="emailValidation" style="display: none;"></div>
                         </div>
                         <div class="row"> <!-- contraseñas -->
@@ -66,7 +66,7 @@
                                     <div class="password-input">
                                         <input class="form-control form-control-user" type="password" placeholder=""
                                             id="password" name="contraseña" minlength="6" maxlength="45" required>
-                                        <label for="password" class="label">Password</label>
+                                        <label for="password" class="label">Contraseña</label>
                                         <i class="fas fa-eye toggle-password"
                                             onclick="togglePasswordVisibility('password')"></i>
                                     </div>
@@ -82,7 +82,7 @@
                                         <input class="form-control form-control-user" type="password" placeholder=""
                                             id="confirm-password" name="confirm-password" minlength="6" maxlength="45"
                                             required>
-                                        <label for="confirm-password" class="label">Repeat Password</label>
+                                        <label for="confirm-password" class="label">Repetir Contraseña</label>
                                         <i class="fas fa-eye toggle-password"
                                             onclick="togglePasswordVisibility('confirm-password')"></i>
                                     </div>
@@ -105,7 +105,7 @@
                                 <div class="col-sm-6 mb-3">
                                     <input class="form-control form-control-user" type="text" placeholder=""
                                         id="direccion" name="direccion" required>
-                                    <label for="direccion" class="label">Address</label>
+                                    <label for="direccion" class="label">Dirección</label>
                                 </div>
                             </div>
                         </div>
@@ -116,7 +116,7 @@
                 </div>
             </div>
             <div class="login">
-                <p>Already have a company account?<a th:href="@{/login/Empresa}">Login!</a></p>
+                <p>Ya tienes una cuenta de empresa?<a th:href="@{/login/Empresa}">Inicia sesión!</a></p>
             </div>
         </div>
         <div class="curva">

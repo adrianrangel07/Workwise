@@ -436,6 +436,58 @@ body {
   color: #555; /* Cambia de color al pasar el mouse */
 }
 
+/* Iconos  */
+.modal-info-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 8px 0;
+}
+
+.modal-info-item::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  width: 25px;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #3498db;
+}
+#modal-salary::before {
+  content: "\f155"; /* Icono dinero */
+}
+
+#modal-currency::before {
+  content: "\f51e"; /* Icono moneda */
+}
+
+#modal-duration::before {
+  content: "\f017"; /* Icono reloj */
+}
+
+#modal-period::before {
+  content: "\f073"; /* Icono calendario */
+}
+
+#modal-modalidad::before {
+  content: "\f109"; /* Icono computadora */
+}
+
+#modal-type::before {
+  content: "\f0c0"; /* Icono grupo */
+}
+
+#modal-typeContract::before {
+  content: "\f560"; /* Icono contrato */
+}
+
+#modal-educationLevel::before {
+  content: "\f19d"; /* Icono de nivel educativo */
+}
+
+#modal-experience::before {
+  content: "\f0b1"; /* Icono de experiencia */
+}
+
 .pagination {
   display: flex;
   justify-content: center;
