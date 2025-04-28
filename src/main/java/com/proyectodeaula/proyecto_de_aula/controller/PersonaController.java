@@ -408,20 +408,31 @@ public class PersonaController {
     public String prediccion() {
         return "Html/prediccion";
     }
-    
+
     @GetMapping("/recursos")
     public String Recursos_invitados() {
         return "Html/Recursos";
     }
-    
+
     @GetMapping("/Estadisticas")
     public String estadistica() {
         return "Html/Estadisticas";
     }
 
     @GetMapping("/personas/recursos")
-    public String Recursos_persona() {
-        return "Html/persona/Recursos_persona";
+    public String Recursos_persona(Model model, HttpSession session) {
+        String email = (String) session.getAttribute("email");
+        if (email != null) {
+            Personas persona = personaService.findByEmail(email);
+            if (persona == null) {
+                model.addAttribute("error", "Persona no encontrada.");
+                return "Html/error";
+            }
+            model.addAttribute("persona", persona);
+            return "Html/persona/Recursos_persona";
+        } else {
+            return "redirect:/login/personas";
+        }
     }
-    
+
 }

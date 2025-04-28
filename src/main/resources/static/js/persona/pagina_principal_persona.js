@@ -295,17 +295,13 @@ postularseBtn.addEventListener("click", function() {
                         appliedIcon.innerHTML = '<i class="fas fa-check-circle"></i><span>Postulado</span>';
                         card.insertBefore(appliedIcon, card.firstChild);
                     }
-                    
                     Swal.fire({
                         title: 'Postulación exitosa',
                         text: data.message,
                         icon: 'success',
                         timer: 3000,
                         showConfirmButton: false
-                    }).then(() => {
-                        postularseBtn.textContent = 'Postulado';
-                        postularseBtn.disabled = true;
-                    });
+                    })
                 } else {
                     Swal.fire({
                         title: 'Ya estás postulado',
