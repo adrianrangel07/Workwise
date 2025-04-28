@@ -64,8 +64,8 @@ public class Ofertas {
 
     @Column(name = "nivel_educativo", columnDefinition = "varchar(50)", nullable = false)
     String nivel_educativo;
-
-    @Column(name = "sector_oferta", columnDefinition = "varchar(100)", nullable = false)
+  
+    @Column(name = "sector_oferta", columnDefinition = "varchar(50)", nullable = false)
     String sector_oferta;
 
     @Transient

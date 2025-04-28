@@ -86,8 +86,9 @@ public class OfertaService implements IofertaService {
             existingOffer.setModalidad(updatedOffer.getModalidad());
             existingOffer.setTipo_empleo(updatedOffer.getTipo_empleo());
             existingOffer.setTipo_contrato(updatedOffer.getTipo_contrato());
-            existingOffer.setExperiencia(updatedOffer.getExperiencia());
             existingOffer.setNivel_educativo(updatedOffer.getNivel_educativo());
+            existingOffer.setExperiencia(updatedOffer.getExperiencia());
+            existingOffer.setSector_oferta(updatedOffer.getSector_oferta());
 
             ofertaRepository.save(existingOffer); // Guarda los cambios
         } else {

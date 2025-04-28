@@ -23,7 +23,8 @@ form label {
 }
 
 form select,
-form input[type="number"] {
+form input[type="number"],
+form input[type="text"] {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
