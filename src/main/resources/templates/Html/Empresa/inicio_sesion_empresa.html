@@ -25,36 +25,37 @@
         <div class="container-login">
             <div class="card">
                 <div class="head-card">
-                    <h1>Sing in</h1>
+                    <h1>Iniciar sesión</h1>
                     <div class="container-back">
                         <a th:href="@{/pagina/inicio}" class="back_a">
                             <i class="fas fa-arrow-left back"></i>
                         </a>
                     </div>
                 </div>
-                <p>Let's grow your company together.</p>
+                <p>Hagamos crecer tu empresa juntos.</p>
                 <div class="formulario">
                     <form class="user" th:action="@{/login/Empresa}" th:object="${Empresa}" method="post">
                         <div class="mb-3">
                             <input class="form-control form-control-user" type="email" id="InputEmail"
                                 aria-describedby="emailHelp" name="email" placeholder="" required>
-                            <label for="InputEmail" class="floating-label">Email</label>
+                            <label for="InputEmail" class="floating-label">Correo electronico</label>
                         </div>
                         <div class="mb-3">
                             <input class="form-control form-control-user" type="password" id="password" name="contraseña"
                                 placeholder="" required>
-                            <label for="password" class="floating-label">Password</label>
+                            <label for="password" class="floating-label">Contraseña</label>
                             <button id="show-password" class="show-password" type="button">show</button>
                         </div>
                         <button class="btn btn-primary d-block btn-user w-100" type="submit" id="validar" onclick="validar">
-                            Login
+                            Ingresar
                         </button>
-                        <p><a th:href="@{/Contraseña-olvidada-empresa}">Forget Password?</a></p>
+                        <br>
+                        <p><a th:href="@{/Contraseña-olvidada-empresa}">Olvidaste tu contraseña?</a></p>
                     </form>
                 </div>
             </div>
             <div class="register">
-                <p>Don't have an account for your company? <a th:href="@{/Registrar/Empresa}">Sign up</a></p>
+                <p>No tienes una cuenta para tu empresa? <a th:href="@{/Registrar/Empresa}">Registrate!</a></p>
             </div>
         </div>
         <div class="curva">
