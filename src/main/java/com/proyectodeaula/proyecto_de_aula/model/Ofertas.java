@@ -66,6 +66,9 @@ public class Ofertas {
     @Column(name = "nivel_educativo", columnDefinition = "varchar(50)", nullable = false)
     String nivel_educativo;
 
+    @Column(name = "sector_oferta", columnDefinition = "varchar(50)", nullable = false)
+    String sector_oferta;
+
     @Transient
     private boolean postulado;
 
@@ -170,6 +173,14 @@ public class Ofertas {
 
     public void setNivel_educativo(String nivel_educativo) {
         this.nivel_educativo = nivel_educativo;
+    }
+
+    public String getSector_oferta() {
+        return sector_oferta;
+    }
+
+    public void setSector_oferta(String sector_oferta) {
+        this.sector_oferta = sector_oferta;
     }
 
     public boolean isPostulado() {

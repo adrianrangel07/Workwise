@@ -7,13 +7,17 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.util.Map;
 
+import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.proyectodeaula.proyecto_de_aula.model.Ofertas;
 import com.proyectodeaula.proyecto_de_aula.model.prediccion;
 
 import weka.classifiers.Classifier;
@@ -21,9 +25,13 @@ import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
 
+import com.proyectodeaula.proyecto_de_aula.interfaces.Ofertas.OfertasRepository;
+
 @RequestMapping("/api/prediccion")
 @RestController
 public class PrediccionController {
+
+    private OfertasRepository ofertaRepository;
 
     private Classifier clasificador;
     private Instances estructura;

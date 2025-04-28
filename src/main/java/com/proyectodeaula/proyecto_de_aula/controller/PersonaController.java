@@ -6,6 +6,7 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,10 +32,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.proyectodeaula.proyecto_de_aula.interfaces.Personas.Interfaz_Per;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Personas.Interfaz_Persona;
+import com.proyectodeaula.proyecto_de_aula.model.Ofertas;
 import com.proyectodeaula.proyecto_de_aula.model.Personas;
 import com.proyectodeaula.proyecto_de_aula.model.Postulacion;
 import com.proyectodeaula.proyecto_de_aula.service.PersonaService;
 import com.proyectodeaula.proyecto_de_aula.service.PostulacionService;
+import com.proyectodeaula.proyecto_de_aula.interfaces.Ofertas.OfertasRepository;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -43,6 +46,9 @@ import jakarta.servlet.http.HttpSession;
 public class PersonaController {
 
     private static final Logger logger = LoggerFactory.getLogger(PersonaController.class);
+
+    @Autowired
+    private OfertasRepository ofertaRepository;
 
     @Autowired
     private Interfaz_Per user;
@@ -403,15 +409,27 @@ public class PersonaController {
     public String pagina_inicio_principal() {
         return "Html/pagina_inicio";
     }
-
-    @GetMapping("/prediccion")
-    public String prediccion() {
-        return "Html/prediccion";
-    }
     
     @GetMapping("/recursos")
     public String Recursos_invitados() {
         return "Html/Recursos";
+    }
+
+    @GetMapping("/prediccion")
+    public String prediccion(@RequestParam("id") Long ofertaId, Model model) {
+        Optional<Ofertas> oferta = ofertaRepository.findById(ofertaId);
+        if (oferta.isPresent()) {
+            Ofertas ofertaData = oferta.get();
+            System.out.println("Oferta encontrada: ");
+            System.out.println("Tipo de Empleo: " + ofertaData.getTipo_empleo());
+            System.out.println("Salario: " + ofertaData.getSalario());
+            System.out.println("Moneda: " + ofertaData.getMoneda());
+            System.out.println("Experiencia: " + ofertaData.getExperiencia());
+            model.addAttribute("oferta", ofertaData);
+            return "Html/prediccion";
+        } else {
+            return "error";  // Si no se encuentra la oferta, redirige a la página de error
+        }
     }
     
     @GetMapping("/Estadisticas")

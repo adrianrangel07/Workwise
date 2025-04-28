@@ -48,13 +48,15 @@ document.addEventListener('DOMContentLoaded', function () {
         const ofertaId = card.getAttribute("data-id"); // Obtener ID de la oferta
         postularseBtn.setAttribute("data-oferta-id", ofertaId); // Asignarlo al botón
 
+        const btnPrediccion = document.getElementById('btn-prediccion');
+        btnPrediccion.setAttribute("href", `/prediccion?id=${ofertaId}`);
+
         // Verifica si se asignó correctamente
         console.log("ID de la oferta en el botón:", postularseBtn.getAttribute("data-oferta-id"));
 
         // Mostrar el modal
         modal.style.display = 'flex';
     };
-
     // Agregar evento 'click' a cada tarjeta para abrir el modal
     cards.forEach(card => {
         card.addEventListener('click', function () {
@@ -74,6 +76,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+
+
+
+
 
 //codigo para filtrador de busqueda por termino 
 document.addEventListener("DOMContentLoaded", function () {
@@ -147,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         terminoInput.value = '';
-       
+
     });
 
     reloadFavorites();
@@ -257,7 +264,7 @@ document.getElementById("ocultarNavBar").addEventListener("click", function () {
 
 
 const postularseBtn = document.getElementById('postularseBtn');
-postularseBtn.addEventListener("click", function() {
+postularseBtn.addEventListener("click", function () {
     const ofertaId = parseInt(postularseBtn.getAttribute('data-oferta-id'), 10);
     const usuarioId = document.getElementById('usuarioId').value;
 
@@ -283,48 +290,48 @@ postularseBtn.addEventListener("click", function() {
                     usuarioId: usuarioId
                 })
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Actualizar el estado visual
-                    const card = document.querySelector(`.card .offer-content[data-id="${ofertaId}"]`).closest('.card');
-                    if (card) {
-                        const appliedIcon = document.createElement('div');
-                        appliedIcon.className = 'applied-icon';
-                        appliedIcon.setAttribute('data-id', ofertaId);
-                        appliedIcon.innerHTML = '<i class="fas fa-check-circle"></i><span>Postulado</span>';
-                        card.insertBefore(appliedIcon, card.firstChild);
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Actualizar el estado visual
+                        const card = document.querySelector(`.card .offer-content[data-id="${ofertaId}"]`).closest('.card');
+                        if (card) {
+                            const appliedIcon = document.createElement('div');
+                            appliedIcon.className = 'applied-icon';
+                            appliedIcon.setAttribute('data-id', ofertaId);
+                            appliedIcon.innerHTML = '<i class="fas fa-check-circle"></i><span>Postulado</span>';
+                            card.insertBefore(appliedIcon, card.firstChild);
+                        }
+
+                        Swal.fire({
+                            title: 'Postulación exitosa',
+                            text: data.message,
+                            icon: 'success',
+                            timer: 3000,
+                            showConfirmButton: false
+                        }).then(() => {
+                            postularseBtn.textContent = 'Postulado';
+                            postularseBtn.disabled = true;
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Ya estás postulado',
+                            text: data.message,
+                            icon: 'info',
+                            timer: 3000,
+                            showConfirmButton: false
+                        });
                     }
-                    
+                })
+                .catch(error => {
                     Swal.fire({
-                        title: 'Postulación exitosa',
-                        text: data.message,
-                        icon: 'success',
-                        timer: 3000,
-                        showConfirmButton: false
-                    }).then(() => {
-                        postularseBtn.textContent = 'Postulado';
-                        postularseBtn.disabled = true;
-                    });
-                } else {
-                    Swal.fire({
-                        title: 'Ya estás postulado',
-                        text: data.message,
-                        icon: 'info',
+                        title: 'Error',
+                        text: 'Hubo un problema al postularse. Inténtalo de nuevo más tarde.',
+                        icon: 'error',
                         timer: 3000,
                         showConfirmButton: false
                     });
-                }
-            })
-            .catch(error => {
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Hubo un problema al postularse. Inténtalo de nuevo más tarde.',
-                    icon: 'error',
-                    timer: 3000,
-                    showConfirmButton: false
                 });
-            });
         }
     });
 });
@@ -333,7 +340,7 @@ postularseBtn.addEventListener("click", function() {
 function updateAppliedStatus(ofertaId, isApplied) {
     const appliedIcons = document.querySelectorAll(`.applied-icon[data-id="${ofertaId}"]`);
     const cards = document.querySelectorAll(`.card .offer-content[data-id="${ofertaId}"]`).closest('.card');
-    
+
     if (isApplied) {
         // Crear el icono si no existe
         if (appliedIcons.length === 0) {
@@ -346,10 +353,10 @@ function updateAppliedStatus(ofertaId, isApplied) {
                 card.insertBefore(appliedIcon, card.firstChild);
             }
         }
-        
+
         // Actualizar el botón en el modal
         postularseBtn.textContent = 'Postulado';
-       
+
     }
 }
 
@@ -363,7 +370,7 @@ function loadAppliedStatus() {
 }
 
 // Llamar al cargar la página
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     loadAppliedStatus();
     setupFavorites();
 });
@@ -473,16 +480,16 @@ document.addEventListener("DOMContentLoaded", function () {
 function setupFavorites() {
     // Cargar favoritos desde localStorage
     let favorites = JSON.parse(localStorage.getItem('jobFavorites')) || [];
-    
+
     // Función para actualizar el estado visual de los favoritos
     function updateFavoriteIcons() {
         const favoriteIcons = document.querySelectorAll('.favorite-icon');
         const cards = document.querySelectorAll('.card');
-        
+
         favoriteIcons.forEach(icon => {
             const offerId = icon.getAttribute('data-id');
             const card = icon.closest('.card');
-            
+
             if (favorites.includes(offerId)) {
                 icon.classList.add('favorited');
                 icon.innerHTML = '<i class="fas fa-heart"></i>';
@@ -494,13 +501,13 @@ function setupFavorites() {
             }
         });
     }
-    
+
     // Manejar clic en iconos de favoritos
     document.querySelectorAll('.favorite-icon').forEach(icon => {
-        icon.addEventListener('click', function(e) {
+        icon.addEventListener('click', function (e) {
             e.stopPropagation(); // Evitar que se abra el modal
             const offerId = this.getAttribute('data-id');
-            
+
             const index = favorites.indexOf(offerId);
             if (index === -1) {
                 favorites.push(offerId);
@@ -519,25 +526,25 @@ function setupFavorites() {
                     timer: 1500
                 });
             }
-            
+
             localStorage.setItem('jobFavorites', JSON.stringify(favorites));
             updateFavoriteIcons();
         });
     });
-    
+
     // Actualizar iconos al cargar la página
     updateFavoriteIcons();
-    
+
     // Modificar la función openModal para evitar conflictos
     const originalOpenModal = window.openModal;
-    window.openModal = function(card) {
+    window.openModal = function (card) {
         originalOpenModal(card);
         // Solo abrir el modal, sin lógica de favoritos
     };
 }
 
 // Llamar a la función cuando el DOM esté cargado
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     setupFavorites();
 });
 

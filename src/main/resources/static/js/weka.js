@@ -13,18 +13,47 @@ document.addEventListener("DOMContentLoaded", () => {
         const formData = new FormData(formulario);
         const datos = Object.fromEntries(formData.entries());
 
+
+        function obtenerTipoEmpleo(obtenerEmpleo) {
+            if (obtenerEmpleo === "Tiempo completo") {
+                const tipoEmpleo = "Tiempo_Completo";
+                return tipoEmpleo;
+            }
+            else if (obtenerEmpleo === "Medio tiempo") {
+                const tipoEmpleo = "Medio_Tiempo";
+                return tipoEmpleo;
+            }
+            else if (obtenerEmpleo === "Por horas") {
+                const tipoEmpleo = "Por_Horas";
+                return tipoEmpleo;
+            }
+            else if (obtenerEmpleo === "Temporal") {
+                const tipoEmpleo = "Temporal";
+                return tipoEmpleo;
+            }
+
+        }
+
+        const obtenerEmpleot = document.getElementById("tipoEmpleoOferta").value;
+
+        console.log(obtenerTipoEmpleo(obtenerEmpleot));
+        console.log(datos.modalidad_oferta);
+        console.log(datos.tipo_contrato_oferta);
+        console.log(datos.nivel_estudio_requerido);
+        console.log(datos.sector_oferta);
+        console.log(datos.experiencia_requerida);
+
         // Calcular coincidencias
         const coincidencias = {
-            coincide_tipo_empleo: datos.tipo_empleo_oferta === datos.tipo_empleo_deseado ? "Si" : "No",
+            coincide_tipo_empleo: obtenerTipoEmpleo(obtenerEmpleot) === datos.tipo_empleo_deseado ? "Si" : "No",
             coincide_modalidad: datos.modalidad_oferta === datos.preferencia_modalidad ? "Si" : "No",
             coincide_contrato: datos.tipo_contrato_oferta === datos.preferencia_contrato ? "Si" : "No",
             coincide_estudios: datos.nivel_estudio_requerido === datos.nivel_estudio_persona ? "Si" : "No",
             coincide_sector: datos.sector_oferta === datos.sector_persona ? "Si" : "No",
             experiencia_suficiente: parseFloat(datos.experiencia_persona) >= parseFloat(datos.experiencia_requerida) ? "Si" : "No"
         };
-
         const datosFinales = {
-            tipoEmpleoOferta: datos.tipo_empleo_oferta,
+            tipoEmpleoOferta: obtenerTipoEmpleo(obtenerEmpleot),
             modalidadOferta: datos.modalidad_oferta,
             tipoContratoOferta: datos.tipo_contrato_oferta,
             experienciaRequerida: parseFloat(datos.experiencia_requerida),
@@ -63,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
             resultado.innerHTML = `
                 <div class="resultado">
                     <h3>${data.compatible === "Si" ? "✅ Compatible" : "❌ No Compatible"}</h3>
-                    <p><strong>Probabilidad:</strong> ${data.porcentaje}</p>
+                    <p><strong>rango de error:</strong> ${data.confianzaWeka.toFixed(3)}</p>
                 </div>
             `;
 
@@ -94,3 +123,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+// document.addEventListener('DOMContentLoaded', function () {
+//     // Obtener el valor del atributo data-tipo-empleo
+//     const tipoEmpleo = document.getElementById("tipoEmpleo").getAttribute("data-tipo-empleo");
+
+//     // Verificar si el valor fue capturado
+//     console.log("Tipo de empleo: " + tipoEmpleo);
+
+//     // Asignar el valor al campo de entrada (input)
+//     document.getElementById("tipoEmpleoOferta").value = tipoEmpleo;
+// });
