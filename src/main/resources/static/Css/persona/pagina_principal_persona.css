@@ -227,6 +227,7 @@ body {
   background: #f9f9f9;
   text-align: right;
   border-top: 1px solid #eee;
+  justify-content: space-between;
 }
 
 .apply-btn-modal {

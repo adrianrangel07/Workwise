@@ -13,59 +13,34 @@
     <h1>Compatibilidad con Oferta de Empleo</h1>
 
     <form id="formPrediccion">
-        <div class="campo">
+        <div class="campo" id="tipoEmpleo">
             <label>Tipo Empleo Oferta</label>
-            <select name="tipo_empleo_oferta">
-                <option value="Tiempo_Completo">Tiempo completo</option>
-                <option value="Medio_Tiempo">Medio tiempo</option>
-                <option value="Por_Horas">Por horas</option>
-                <option value="Temporal">Temporal</option>
-            </select>
+            <input type="text" name="tipo_empleo_oferta" id="tipoEmpleoOferta" th:value="${oferta.tipo_empleo}" readonly required>
         </div>
 
         <div class="campo">
             <label>Modalidad Oferta</label>
-            <select name="modalidad_oferta">
-                <option value="Presencial">Presencial</option>
-                <option value="Remoto">Remoto</option>
-                <option value="Hibrido">Híbrido</option>
-            </select>
+            <input type="text" name="modalidad_oferta" id="modalidadOferta" th:value="${oferta.modalidad}" readonly required>
         </div>
 
         <div class="campo">
             <label>Tipo Contrato Oferta</label>
-            <select name="tipo_contrato_oferta">
-                <option value="Indefinido">Indefinido</option>
-                <option value="Practicas">Prácticas</option>
-                <option value="Obra_Servicio">Obra o Servicio</option>
-            </select>
+            <input type="text" name="tipo_contrato_oferta" id="tipoContratoOferta" th:value="${oferta.tipo_contrato}" readonly required>
         </div>
 
         <div class="campo">
             <label>Experiencia Requerida (años)</label>
-            <input type="number" name="experiencia_requerida" min="0" required>
+            <input type="number" name="experiencia_requerida" min="0" id="experienciaRequerida" th:value="${oferta.experiencia}" readonly  required>
         </div>
 
         <div class="campo">
             <label>Nivel Estudio Requerido</label>
-            <select name="nivel_estudio_requerido">
-                <option value="Bachillerato">Bachillerato</option>
-                <option value="Tecnico">Técnico</option>
-                <option value="Grado">Grado</option>
-                <option value="Master">Máster</option>
-                <option value="Doctorado">Doctorado</option>
-            </select>
+            <input type="text" name="nivel_estudio_requerido" id="nivelEstudioRequerido" th:value="${oferta.nivel_educativo}" readonly required>
         </div>
 
         <div class="campo">
             <label>Sector Oferta</label>
-            <select name="sector_oferta">
-                <option value="Tecnologia">Tecnología</option>
-                <option value="Educacion">Educación</option>
-                <option value="Salud">Salud</option>
-                <option value="Construccion">Construcción</option>
-                <option value="Otros">Otros</option>
-            </select>
+            <input type="text" name="sector_oferta" id="sectorOferta" th:value="${oferta.sector_oferta}"  readonly required>
         </div>
 
         <!-- Datos de la Persona -->
