@@ -9,9 +9,6 @@
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css?h=97380e22c8933e9aa79cbc2390b9f15a">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
     <link rel="stylesheet" href="../Css/general/bootstrap.min.css">
-    <link rel="stylesheet" href="../Css/general/Grid-and-List-view-V10-style.css">
-    <link rel="stylesheet" href="../Css/general/Grid-and-List-view-V10.css">
-    <link rel="stylesheet" href="../Css/general/Nunito.css">
     <link rel="stylesheet" href="../Css/general/styles.min.css">
     <link rel="stylesheet" href="../Css/empresa/PerfilEmpresa.css">
 
@@ -22,35 +19,34 @@
         <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark">
             <div class="container-fluid d-flex flex-column p-0"><a
                     class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
-                    th:href="@{/empresas/pagina_principal}"><img src="../Imagenes/working wise 32x32 white.png"
-                        width="61" height="58" style="width: 50px;height: 50px;">
+                    th:href="@{/empresas/pagina_principal}"><img src="/Imagenes/wwk_white.png" width="61" height="58"
+                        style="width: 50px;height: 50px;">
                     <div class="sidebar-brand-icon rotate-n-15"></div>
                     <div class="sidebar-brand-text mx-3"><span>Workwise</span></div>
                 </a>
-                <span style="font-size: 15px; text-align: center; color: white;">Only Companies</span>
+                <span style="font-size: 15px; text-align: center; color: white;">Solo empresas</span>
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link" th:href="@{/empresas/pagina_principal}">
-                            <i class="fas fa-home"></i><span>Home</span></a>
+                            <i class="fas fa-home"></i><span>Inicio</span></a>
                     </li>
                     <li class="nav-item"><a class="nav-link active" th:href="@{/perfil/empresa}">
-                            <i class="far fa-user-circle"></i><span>Profile</span></a>
+                            <i class="far fa-user-circle"></i><span>Perfil</span></a>
                     </li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/empresas/oferta}">
-                            <i class="fas fa-plus-circle"></i><span>Create offer</span></a>
+                            <i class="fas fa-plus-circle"></i><span>Crear oferta</span></a>
                     </li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/empresas/published-offers}">
-                            <i class="fas fa-check-circle"></i><span>Listed offers</span></a>
+                            <i class="fas fa-check-circle"></i><span>Ofertas publicadas</span></a>
                     </li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/Estadisticas/empresas}">
-                            <i class="fas fa-chart-bar"></i><span>Statistics</span></a>
+                            <i class="fas fa-chart-bar"></i><span>Estadisticas</span></a>
                     </li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/login/personas}">
-                            <i class="fas fa-user"></i><span>Do you want search offers?</span></a>
+                            <i class="fas fa-user"></i><span>Quieres postularte a ofertas?</span></a>
                     </li>
                 </ul>
-                <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0"
-                        id="sidebarToggle" type="button"></button></div>
+
             </div>
         </nav>
         <div class="d-flex flex-column" id="content-wrapper">
@@ -59,33 +55,36 @@
                     style="background: var(--bs-body-bg);">
                     <div class="container-fluid">
                         <ul class="navbar-nav flex-nowrap ms-auto">
-                            <div class="d-none d-sm-block topbar-divider"></div>
+
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow" id="empresa-container">
-                                    <img id="empresa-avatar" th:src="@{/Empresa/imagen/{id}(id=${empresa.id})}"
-                                        alt="Empresa Logo">
+
+                                    <img id="user-avatar" src="../Imagenes/imagenempresa.png" alt="Empresa Logo">
+
                                     <input type="hidden" id="subirFoto" accept="image/*"
                                         style="display: block; margin-top: 10px;">
-                                    <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
-                                        href="#">
-                                        <span id="empresa" th:text="${empresa.nombreEmp}">Account</span>
+
+                                    <a class="dropdown-toggle nav-link mi-link" aria-expanded="false"
+                                        data-bs-toggle="dropdown" href="#">
+                                        <span id="empresa" th:text="${empresa.nombreEmp}">Cuenta</span>
                                     </a>
                                     <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
-                                        <a class="dropdown-item" th:href="@{/perfil/empresa}">
-                                            <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile
+                                        <a class="dropdown-item" th:href="@{/perfil/empresa}" style="color: #0a1128;">
+                                            <i class="fas fa-user fa-sm fa-fw me-2"></i>&nbsp;Perfil
                                         </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i
-                                                class="fas fa-briefcase fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Published
-                                            Jobs
+                                        <a class="dropdown-item" th:href="@{/empresas/published-offers}"
+                                            style="color: #0a1128;">
+                                            <i class="fas fa-briefcase fa-sm fa-fw me-2"></i>&nbsp;Ofertas
+                                            Publicadas
                                         </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i
-                                                class="fas fa-chart-line fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Statistics
+                                        <a class="dropdown-item" th:href="@{/Estadisticas/empresas}"
+                                            style="color: #0a1128;">
+                                            <i class="fas fa-chart-line fa-sm fa-fw me-2 "></i>&nbsp;Estadisticas
                                         </a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#" id="logout" onclick="cerrarSesion(event)">
-                                            <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>Logout
+                                        <a class="dropdown-item" href="#" id="logout" onclick="cerrarSesion(event)"
+                                            style="color: #0a1128;">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw me-2"></i>Cerrar Sesión
                                         </a>
                                     </div>
                                 </div>
@@ -94,7 +93,7 @@
                     </div>
                 </nav>
                 <div class="container-fluid">
-                    <h3 class="text-dark mb-4">Profile</h3>
+                    <h3 class="text-dark mb-4">Perfil empresa</h3>
                     <div class="row mb-3">
 
                         <!-- Desde aqui cargar imagen de perfil -->
@@ -106,23 +105,61 @@
                                         width="160" height="160" alt="Perfil">
                                     <div class="mb-3">
                                         <!-- Botón para cambiar la foto -->
-                                        <button id="changePhotoBtn" class="btn btn-primary btn-sm">Change Photo</button>
+                                        <button id="changePhotoBtn" class="btn btn-primary btn-sm"><i
+                                                class="fas fa-upload"></i> Subir foto</button>
                                         <!-- Formulario para subir la foto -->
                                         <form id="uploadForm" action="/empresas/upload/photo" method="post"
                                             enctype="multipart/form-data" style="display:none;">
                                             <input type="hidden" name="id" value="${persona.id}">
                                             <input type="file" name="file" required>
                                             <br>
-                                            <button class="btn btn-primary btn-sm" type="submit">Submit</button>
+                                            <button class="btn btn-primary btn-sm" type="submit">Enviar</button>
                                         </form>
                                         <br>
                                         <!-- Botón para cancelar el cambio de foto -->
                                         <button id="cancelUploadBtn" class="btn btn-secondary btn-sm"
-                                            style="display:none;">Cancel</button>
+                                            style="display:none;">Cancelar</button>
                                     </div>
                                 </div>
                             </div>
-                            <!-- fin cargar imagen de perfil -->
+
+                            <!-- SECCIÓN DE ACCESOS RÁPIDOS -->
+                            <div class="card mb-3 quick-access-card">
+                                <div class="card-body shadow">
+                                    <h5 class="card-title text-center mb-4" style="color: black;">Accesos rápidos</h5>
+
+                                    <div class="quick-access-item">
+                                        <a href="/Estadisticas/empresas" class="quick-link">
+                                            <div class="quick-icon">
+                                                <i class="fas fa-chart-bar"></i>
+                                            </div>
+                                            <div class="quick-text">
+                                                <h6>Estadísticas</h6>
+                                                <p>Ver análisis de lo que pasa en la pagina</p>
+                                            </div>
+                                            <div class="quick-arrow">
+                                                <i class="fas fa-chevron-right"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="quick-access-item">
+                                        <a href="/empresas/published-offers" class="quick-link">
+                                            <div class="quick-icon">
+                                                <i class="fas fa-briefcase"></i>
+                                            </div>
+                                            <div class="quick-text">
+                                                <h6>Ofertas publicadas</h6>
+                                                <p>Gestiona tus ofertas laborales</p>
+                                            </div>
+                                            <div class="quick-arrow">
+                                                <i class="fas fa-chevron-right"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- FIN SECCIÓN ACCESOS RÁPIDOS -->
                         </div>
 
                         <!-- Perfil de la persona  -->
@@ -131,63 +168,79 @@
                                 <div class="col">
                                     <div class="card shadow mb-3">
                                         <div class="card-header py-3">
-                                            <p class="text-primary m-0 fw-bold">Company Profile</p>
+                                            <p class="m-0 fw-bold" style="color: black;">Datos personales</p>
                                         </div>
                                         <div class="card-body">
                                             <form th:action="@{/actualizar/empresa}" method="post" id="updateForm">
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="mb-3">
-                                                            <label class="form-label"><strong>Email
-                                                                    Address</strong></label>
+                                                            <label class="form-label"><strong>Correo
+                                                                    electronico</strong></label>
                                                             <input class="form-control" type="email" name="email"
                                                                 th:value="${empresa.email}" disabled>
                                                         </div>
                                                     </div>
                                                     <div class="col">
                                                         <div class="mb-3">
-                                                            <label class="form-label"><strong>Password</strong></label>
+                                                            <label
+                                                                class="form-label"><strong>Contraseña</strong></label>
                                                             <input class="form-control" type="password"
                                                                 name="contraseña" th:value="${empresa.contraseña}"
                                                                 disabled>
                                                         </div>
                                                     </div>
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label class="form-label"><strong>Nit</strong></label>
+                                                            <input class="form-control" type="text" name="nit"
+                                                                th:value="${empresa.nit}" disabled>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="mb-3">
-                                                            <label class="form-label"><strong>Company
-                                                                    Name</strong></label>
+                                                            <label class="form-label"><strong>Nombre de la
+                                                                    empresa</strong></label>
                                                             <input class="form-control" type="text" name="nombreEmp"
                                                                 th:value="${empresa.nombreEmp}" disabled>
                                                         </div>
                                                     </div>
                                                     <div class="col">
                                                         <div class="mb-3">
-                                                            <label class="form-label"><strong>Social
-                                                                    Reason</strong></label>
+                                                            <label class="form-label"><strong>Razón
+                                                                    social</strong></label>
                                                             <input class="form-control" type="text" name="razon_social"
                                                                 th:value="${empresa.razon_social}" disabled>
                                                         </div>
                                                     </div>
                                                     <div class="col">
                                                         <div class="mb-3">
-                                                            <label class="form-label"><strong>Address</strong></label>
+                                                            <label class="form-label"><strong>Dirección</strong></label>
                                                             <input class="form-control" type="text" name="direccion"
                                                                 th:value="${empresa.direccion}" disabled>
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <div class="col">
                                                     <div class="mb-3">
                                                         <button class="btn btn-primary btn-sm" type="button"
-                                                            id="change_btn">Change Settings</button>
+                                                            id="change_btn"> <i class="fas fa-pen"></i> Cambiar
+                                                            datos</button>
                                                         <button class="btn btn-primary btn-sm" type="submit"
-                                                            id="save_btn" disabled>Save changes</button>
+                                                            id="save_btn" disabled> <i class="fas fa-save"></i> Guardar
+                                                            cambios</button>
                                                     </div>
+                                                    
                                                 </div>
                                                 <input type="hidden" name="confirmPassword" id="confirmPassword">
                                             </form>
+                                            <button class="btn-eliminar" onclick="eliminarCuenta()">
+                                                <i class="fas fa-trash-alt"></i> Eliminar Cuenta
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -199,8 +252,7 @@
         </div>
     </div>
 
-    <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer"
-        style="background-color: #343A40 !important;">
+    <footer class="custom-footer text-light text-center py-4 sticky-footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-left">
@@ -210,18 +262,12 @@
                     <p class="mb-1">© 2024 WorkWise. Todos los derechos reservados.</p>
                 </div>
                 <div class="footer-right">
-                    <a href="https://facebook.com" target="_blank" class="mx-3">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
-                            alt="Facebook" width="30" height="30">
-                    </a>
-                    <a href="https://instagram.com" target="_blank" class="mx-3">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
-                            alt="Instagram" width="30" height="30">
-                    </a>
-                    <a href="https://www.tiktok.com" target="_blank" class="mx-3">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/TikTok_Logo.svg" alt="TikTok"
-                            width="30" height="30">
-                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=61558650706843" target="_blank"><i
+                            class="fab fa-facebook"></i></a>
+
+                    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+
+                    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
         </div>

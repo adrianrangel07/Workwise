@@ -1,101 +1,126 @@
-//no quitar 
 document.addEventListener('DOMContentLoaded', function () {
-    // Mostrar el formulario al hacer clic en "Change Photo"
-    document.getElementById('changePhotoBtn').addEventListener('click', function () {
-        document.getElementById('uploadForm').style.display = 'block'; // Muestra el formulario
-        document.getElementById('cancelUploadBtn').style.display = 'inline-block'; // Muestra el botón de cancelar
+    const changePhotoBtn = document.getElementById('changePhotoBtn');
+    const cancelUploadBtn = document.getElementById('cancelUploadBtn');
+    const uploadForm = document.getElementById('uploadForm');
+    const fileInput = document.querySelector('input[name="file"]');
+    const profileImage = document.getElementById('profileImage');
+
+    const allowedTypes = ['image/jpeg', 'image/png'];
+    const maxSize = 500 * 1024; // 10MB
+
+    function validarArchivo(file) {
+        if (!file) return false;
+
+        if (!allowedTypes.includes(file.type)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Formato inválido',
+                text: 'Solo se permiten imágenes JPG o PNG.'
+            });
+            fileInput.value = '';
+            return false;
+        }
+
+        if (file.size > maxSize) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Imagen demasiado grande',
+                text: 'La imagen debe pesar menos de 500kb.'
+            });
+            fileInput.value = '';
+            return false;
+        }
+
+        return true;
+    }
+
+    changePhotoBtn.addEventListener('click', function () {
+        uploadForm.style.display = 'block';
+        cancelUploadBtn.style.display = 'inline-block';
+        changePhotoBtn.style.display = 'none';
     });
 
-    // Ocultar el formulario al hacer clic en "Cancel"
-    document.getElementById('cancelUploadBtn').addEventListener('click', function () {
-        document.getElementById('uploadForm').style.display = 'none'; // Oculta el formulario
-        document.getElementById('cancelUploadBtn').style.display = 'none'; // Oculta el botón de cancelar
+    cancelUploadBtn.addEventListener('click', function (event) {
+        event.preventDefault();
+        uploadForm.reset();
+        uploadForm.style.display = 'none';
+        cancelUploadBtn.style.display = 'none';
+        changePhotoBtn.style.display = 'inline-block';
     });
 
-    // Mostrar la nueva imagen al cambiar la foto
-    document.querySelector('input[name="file"]').addEventListener('change', function (event) {
+    fileInput.addEventListener('change', function (event) {
         const file = event.target.files[0];
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-            document.getElementById('profileImage').src = e.target.result; // Muestra la nueva imagen
-        };
-
-        reader.readAsDataURL(file);
+        if (file) {
+            if (validarArchivo(file)) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    profileImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
     });
 
-    // Interceptar el submit del formulario
-    document.getElementById('uploadForm').addEventListener('submit', function (event) {
-        event.preventDefault(); // Evita que el formulario se envíe automáticamente
-    
+    uploadForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const file = fileInput.files[0];
+
+        if (!file) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Sin archivo',
+                text: 'Por favor selecciona una imagen antes de enviar.'
+            });
+            return;
+        }
+
+        if (!validarArchivo(file)) {
+            return; // No enviar si no pasa validación
+        }
+
         const formData = new FormData(this);
-    
+
         fetch('/upload/photo', {
             method: 'POST',
             body: formData
-        }).then(response => {
-            if (response.ok) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Foto cambiada',
-                    text: 'Tu foto de perfil ha sido actualizada exitosamente!',
-                    showConfirmButton: true,
-                    confirmButtonText: 'Ok'
-                }).then(() => {
-                    // Recargar la imagen desde el backend después de la subida
-                    document.getElementById('user-avatar').src = "/imagen/perfil?" + new Date().getTime(); // Evita caché
-                });
-            } else {
+        })
+            .then(response => {
+                if (response.ok) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Foto actualizada',
+                        text: 'Tu foto de perfil ha sido cambiada exitosamente.',
+                        confirmButtonText: 'Ok'
+                    }).then(() => {
+                        document.getElementById('user-avatar').src = "/imagen/perfil?" + new Date().getTime();
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Hubo un problema al subir la imagen.'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'Hubo un problema al subir la imagen.',
+                    text: 'Ocurrió un error inesperado al intentar subir la imagen.'
                 });
-            }
-        }).catch(error => console.error('Error:', error));
-    }); 
+            });
+    });
 });
-
-
-// borrar HDV
-function eliminarHojaDeVida() {
-    fetch('/eliminarHDV', {
-        method: 'POST'
-    })
-        .then(response => response.text())
-        .then(data => {
-            Swal.fire({
-                icon: data.includes("Error") ? 'error' : 'success',
-                title: 'Hoja de Vida',
-                text: data,
-                showConfirmButton: true,
-                confirmButtonText: 'Ok'
-            });
-            if (!data.includes("Error")) {
-                setTimeout(() => {
-                    location.reload();
-                }, 2000);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Hubo un problema al eliminar la hoja de vida.',
-                showConfirmButton: true,
-                confirmButtonText: 'Ok'
-            });
-        });
-}
-
-// fin borrar HDV
 
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("uploadFormcv");
     const fileInput = document.getElementById("fileInput");
-    const messageDiv = document.getElementById("message");
     const pdfViewer = document.getElementById("pdfViewer");
+
+    const maxFileSize = 2 * 1024 * 1024; // 2MB máximo
 
     form.addEventListener("submit", function (event) {
         event.preventDefault();
@@ -103,12 +128,31 @@ document.addEventListener("DOMContentLoaded", function () {
         const file = fileInput.files[0];
 
         if (!file) {
-            messageDiv.innerHTML = "<p style='color: red;'>Por favor, seleccione un archivo.</p>";
+            Swal.fire({
+                icon: 'warning',
+                title: 'Sin archivo',
+                text: 'Por favor selecciona un archivo PDF.'
+            });
             return;
         }
 
-        if (file.type !== "application/pdf") {
-            messageDiv.innerHTML = "<p style='color: red;'>Solo se permiten archivos PDF.</p>";
+        if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Formato inválido',
+                text: 'Solo se permiten archivos PDF.'
+            });
+            fileInput.value = '';
+            return;
+        }
+
+        if (file.size > maxFileSize) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Archivo demasiado grande',
+                text: 'El PDF debe pesar menos de 2MB.'
+            });
+            fileInput.value = '';
             return;
         }
 
@@ -121,42 +165,113 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then(response => response.text())
             .then(data => {
-                messageDiv.innerHTML = `<p style='color: ${data.includes("Error") ? "red" : "green"};'>${data}</p>`;
-                if (!data.includes("Error")) {
-                    setTimeout(() => {
-                        pdfViewer.src = "/perfil/verHDV"; // Recargar el visor del PDF
-                    }, 2000);
+                if (data.includes("Error")) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error al subir',
+                        text: data
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Subido correctamente',
+                        text: data
+                    }).then(() => {
+                        form.reset();
+                        pdfViewer.src = "/perfil/verHDV?" + new Date().getTime(); // Evita caché
+                    });
                 }
             })
             .catch(error => {
-                messageDiv.innerHTML = "<p style='color: red;'>Error: " + error.message + "</p>";
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error inesperado',
+                    text: error.message
+                });
             });
     });
-
 });
+
+// Función para eliminar hoja de vida
+function eliminarHojaDeVida() {
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "Esta acción eliminará tu hoja de vida.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, borrar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch('/eliminarHDV', {
+                method: 'POST'
+            })
+                .then(response => response.text())
+                .then(data => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Eliminado',
+                        text: data
+                    }).then(() => {
+                        document.getElementById("pdfViewer").src = ""; // Quitar el PDF
+                    });
+                })
+                .catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'No se pudo eliminar la hoja de vida.'
+                    });
+                });
+        }
+    });
+}
+
 
 document.addEventListener('DOMContentLoaded', function () {
     const changeButton = document.getElementById('change_btn');
     const saveButton = document.getElementById('save_btn');
-    const form = document.getElementById('updateForm');
+    const form = document.querySelector('form');
+    const birthdateInput = document.getElementById('birthdate');
+
+    // Establecer fecha máxima para el campo de nacimiento (hoy - 12 años)
+    const today = new Date();
+    const minDate = new Date();
+    minDate.setFullYear(today.getFullYear() - 100); // 100 años atrás
+    const maxDate = new Date();
+    maxDate.setFullYear(today.getFullYear() - 12); // Mínimo 12 años
+
+    birthdateInput.max = maxDate.toISOString().split('T')[0];
+    birthdateInput.min = minDate.toISOString().split('T')[0];
 
     changeButton.addEventListener('click', function () {
+        // Animación suave al abrir la sección
+        document.querySelector('.card-body').style.opacity = '0';
+        document.querySelector('.card-body').style.transition = 'opacity 0.3s ease';
+
         Swal.fire({
             title: 'Verificación requerida',
             text: 'Ingresa tu contraseña para hacer cambios:',
             input: 'password',
             inputPlaceholder: 'Contraseña',
             inputAttributes: {
-                autocapitalize: 'off'
+                autocapitalize: 'off',
+                'aria-label': 'Ingresa tu contraseña'
             },
             showCancelButton: true,
             confirmButtonText: 'Verificar',
-            cancelButtonText: 'Cancelar'
+            cancelButtonText: 'Cancelar',
+            customClass: {
+                popup: 'animated fadeIn' // Animación al mostrar el modal
+            }
         }).then((result) => {
+            document.querySelector('.card-body').style.opacity = '1';
+
             if (result.isConfirmed && result.value) {
                 verificarContraseña(result.value);
             } else {
-                location.reload(); // Si cancela, recarga la página
+                location.reload();
             }
         });
     });
@@ -170,25 +285,47 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 if (data.valido) {
-                    habilitarEdicion(); // Si la contraseña es correcta, habilita los campos
+                    document.getElementById('confirmPassword').value = password;
+                    habilitarEdicion();
                 } else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Contraseña incorrecta',
-                        text: 'Inténtalo nuevamente.'
-                    }).then(() => location.reload()); // Recarga la página si es incorrecta
+                        text: 'Inténtalo nuevamente.',
+                        customClass: {
+                            popup: 'animated shake' // Animación de error
+                        }
+                    }).then(() => location.reload());
                 }
             })
-            .catch(error => console.error('Error en la verificación:', error));
+            .catch(error => {
+                console.error('Error en la verificación:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Ocurrió un error al verificar la contraseña.'
+                });
+            });
     }
 
     function habilitarEdicion() {
-        document.querySelectorAll('input:not([type="email"]):not([type="password"])').forEach(input => {
-            input.disabled = false; // Habilita todos menos email y password
-        });
-        saveButton.disabled = false; // Habilita "Save changes"
-    }
+        // Animación al habilitar la edición
+        const cardBody = document.querySelector('.card-body');
+        cardBody.style.transform = 'scale(0.98)';
+        cardBody.style.transition = 'transform 0.3s ease';
 
+        setTimeout(() => {
+            cardBody.style.transform = 'scale(1)';
+        }, 300);
+
+        // Habilita todos los campos editables
+        document.querySelectorAll('input:not([type="email"]):not([type="password"]), select').forEach(input => {
+            input.disabled = false;
+        });
+
+        saveButton.disabled = false;
+        saveButton.focus(); // Mejora de accesibilidad
+    }
 });
 
 function eliminarCuenta() {
@@ -219,28 +356,28 @@ function eliminarCuenta() {
                             'Content-Type': 'application/json'
                         }
                     })
-                    .then(response => {
-                        if (response.ok) {
+                        .then(response => {
+                            if (response.ok) {
+                                Swal.fire({
+                                    title: "Cuenta eliminada",
+                                    text: "Tu cuenta ha sido eliminada correctamente.",
+                                    icon: "success",
+                                    timer: 3000,
+                                    showConfirmButton: false
+                                }).then(() => {
+                                    window.location.href = "/login/personas"; // Redirigir al login
+                                });
+                            } else {
+                                return response.text().then(text => { throw new Error(text); });
+                            }
+                        })
+                        .catch(error => {
                             Swal.fire({
-                                title: "Cuenta eliminada",
-                                text: "Tu cuenta ha sido eliminada correctamente.",
-                                icon: "success",
-                                timer: 3000,
-                                showConfirmButton: false
-                            }).then(() => {
-                                window.location.href = "/login/personas"; // Redirigir al login
+                                title: "Error",
+                                text: "Error al eliminar la cuenta: " + error.message,
+                                icon: "error"
                             });
-                        } else {
-                            return response.text().then(text => { throw new Error(text); });
-                        }
-                    })
-                    .catch(error => {
-                        Swal.fire({
-                            title: "Error",
-                            text: "Error al eliminar la cuenta: " + error.message,
-                            icon: "error"
                         });
-                    });
                 }
             });
         }
@@ -258,7 +395,7 @@ function cerrarSesionYRedirigir(event) {
         showConfirmButton: false,
         didOpen: () => {
             Swal.showLoading(); // Muestra un loader
-            
+
             // Enviar la solicitud de cierre de sesión
             fetch('/logout', { method: 'POST' })
                 .then(response => {

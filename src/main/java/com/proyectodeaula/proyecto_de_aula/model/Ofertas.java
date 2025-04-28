@@ -23,11 +23,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="Ofertas")
+@Table(name = "Ofertas")
 public class Ofertas {
 
     @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @Column(name = "Titulo_puesto", columnDefinition = "Varchar(45)", nullable = false)
@@ -41,14 +41,13 @@ public class Ofertas {
 
     //@Column(name = "tiempo", columnDefinition = "TIME", nullable = false)
     //java.sql.Time tiempo;
-
     @Column(name = "Tipo_empleo", columnDefinition = "Varchar(45)", nullable = false)
     String tipo_empleo;
 
     @Column(name = "Salario", columnDefinition = "int", nullable = false)
     int salario;
 
-    @Column(name = "Moneda", columnDefinition = "Varchar(45)", nullable = false) 
+    @Column(name = "Moneda", columnDefinition = "Varchar(45)", nullable = false)
     String moneda;
 
     @Column(name = "Periodo", columnDefinition = "Varchar(45)", nullable = false)
@@ -65,7 +64,7 @@ public class Ofertas {
 
     @Column(name = "nivel_educativo", columnDefinition = "varchar(50)", nullable = false)
     String nivel_educativo;
-
+  
     @Column(name = "sector_oferta", columnDefinition = "varchar(50)", nullable = false)
     String sector_oferta;
 
@@ -73,12 +72,12 @@ public class Ofertas {
     private boolean postulado;
 
     @ManyToOne
-    @JoinColumn(name = "empresa_id") 
+    @JoinColumn(name = "empresa_id")
     private Empresas empresa;
 
     @OneToMany(mappedBy = "ofertas", cascade = CascadeType.ALL)
     private List<Postulacion> postulaciones;
-    
+
     public Long getId() {
         return id;
     }
@@ -97,6 +96,14 @@ public class Ofertas {
 
     public String getDescripcion() {
         return descripcion;
+    }
+
+    public String getSector_oferta() {
+        return sector_oferta;
+    }
+
+    public void setSector_oferta(String sector_oferta) {
+        this.sector_oferta = sector_oferta;
     }
 
     public void setDescripcion(String descripcion) {

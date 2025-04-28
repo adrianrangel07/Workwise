@@ -27,26 +27,26 @@
                 <div class="sidebar-brand-icon rotate-n-15"></div>
                 <div class="sidebar-brand-text mx-3"><span>Workwise</span></div>
             </a>
-            <span style="font-size: 15px; text-align: center; color: white;">Only Companies</span>
+            <span style="font-size: 15px; text-align: center; color: white;">Solo empresa</span>
             <hr class="sidebar-divider my-0">
             <ul class="navbar-nav text-light" id="accordionSidebar">
-                <li class="nav-item"><a class="nav-link active" th:href="@{/empresas/pagina_principal}">
-                        <i class="fas fa-home"></i><span>Home</span></a>
+                <li class="nav-item"><a class="nav-link" th:href="@{/empresas/pagina_principal}">
+                        <i class="fas fa-home"></i><span>Inicio</span></a>
                 </li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/perfil/empresa}">
-                        <i class="far fa-user-circle"></i><span>Profile</span></a>
+                        <i class="far fa-user-circle"></i><span>Perfil</span></a>
                 </li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/empresas/oferta}">
-                        <i class="fas fa-plus-circle"></i><span>Create offer</span></a>
+                <li class="nav-item"><a class="nav-link active" th:href="@{/empresas/oferta}">
+                        <i class="fas fa-plus-circle"></i><span>Crear Oferta</span></a>
                 </li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/empresas/published-offers}">
-                        <i class="fas fa-check-circle"></i><span>Listed offers</span></a>
+                        <i class="fas fa-check-circle"></i><span>Ofertas publicadas</span></a>
                 </li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/Estadisticas/empresas}">
-                        <i class="fas fa-chart-bar"></i><span>Statistics</span></a>
+                        <i class="fas fa-chart-bar"></i><span>Estadisticas</span></a>
                 </li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/login/personas}">
-                        <i class="fas fa-user"></i><span>Do you want search offers?</span></a>
+                        <i class="fas fa-user"></i><span>Estas buscando ofertas?</span></a>
                 </li>
             </ul>
             
@@ -271,7 +271,7 @@
                                 </div>
                                 <div class="contenedor-input">
                                     <div class="col-sm-6 mb-3">
-                                        <select id="nivel-estudio" name="nivel-estudio" class="form-control" required>
+                                        <select id="nivel-estudio" name="nivel_educativo" class="form-control" required>
                                             <option value="" disabled selected>Nivel de estudio</option>
                                             <option value= "Sin estudios" >Sin estudios</option>
                                             <option value= "Bachiller" >Bachiller</option>

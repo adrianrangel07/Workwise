@@ -27,7 +27,6 @@ function cancelarOferta() {
     });
 }
 
-
 // pasar pagina
 // Variables globales
 let currentStep = 0;

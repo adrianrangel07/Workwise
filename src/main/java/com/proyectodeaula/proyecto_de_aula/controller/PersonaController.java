@@ -409,12 +409,13 @@ public class PersonaController {
     public String pagina_inicio_principal() {
         return "Html/pagina_inicio";
     }
-    
+  
     @GetMapping("/recursos")
     public String Recursos_invitados() {
         return "Html/Recursos";
     }
 
+  
     @GetMapping("/prediccion")
     public String prediccion(@RequestParam("id") Long ofertaId, Model model) {
         Optional<Ofertas> oferta = ofertaRepository.findById(ofertaId);
@@ -438,8 +439,19 @@ public class PersonaController {
     }
 
     @GetMapping("/personas/recursos")
-    public String Recursos_persona() {
-        return "Html/persona/Recursos_persona";
+    public String Recursos_persona(Model model, HttpSession session) {
+        String email = (String) session.getAttribute("email");
+        if (email != null) {
+            Personas persona = personaService.findByEmail(email);
+            if (persona == null) {
+                model.addAttribute("error", "Persona no encontrada.");
+                return "Html/error";
+            }
+            model.addAttribute("persona", persona);
+            return "Html/persona/Recursos_persona";
+        } else {
+            return "redirect:/login/personas";
+        }
     }
-    
+
 }

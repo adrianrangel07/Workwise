@@ -336,4 +336,65 @@ public class EmpresaController {
         return ResponseEntity.ok("OK");
     }
 
+    @PostMapping("/verificar-contrasena-eliminar")
+    public ResponseEntity<Map<String, Boolean>> verificarContrasenaEliminar(
+            @RequestBody Map<String, String> requestBody, HttpSession session) {
+
+        String email = (String) session.getAttribute("email");
+        if (email == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("valido", false));
+        }
+
+        Empresas empresa = empresaService.findByEmail(email);
+        if (empresa == null) {
+            return ResponseEntity.ok(Map.of("valido", false));
+        }
+
+        boolean contraseñaValida = empresaService.verificarContraseña(empresa.getId(), requestBody.get("password"));
+        return ResponseEntity.ok(Map.of("valido", contraseñaValida));
+    }
+
+    @PostMapping("/eliminar-cuenta-empresa")
+    public ResponseEntity<String> eliminarCuentaEmpresa(
+            @RequestBody Map<String, String> requestBody, HttpSession session) {
+
+        String email = (String) session.getAttribute("email");
+        if (email == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Sesión expirada");
+        }
+
+        Empresas empresa = empresaService.findByEmail(email);
+        if (empresa == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Empresa no encontrada");
+        }
+
+        // Verificar contraseña nuevamente por seguridad
+        boolean contraseñaValida = empresaService.verificarContraseña(
+                empresa.getId(), requestBody.get("password"));
+
+        if (!contraseñaValida) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Contraseña incorrecta");
+        }
+
+        try {
+            // 1. Eliminar todas las ofertas de la empresa primero
+            List<Ofertas> ofertas = ofertaService.listarOfertasPorEmpresa(empresa);
+            for (Ofertas oferta : ofertas) {
+                ofertaService.delete(oferta.getId());
+            }
+
+            // 2. Eliminar la cuenta de la empresa
+            empresaService.delete(empresa.getId());
+
+            // 3. Invalidar la sesión
+            session.invalidate();
+
+            return ResponseEntity.ok("Cuenta eliminada exitosamente");
+        } catch (Exception e) {
+            logger.error("Error al eliminar cuenta de empresa", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al eliminar la cuenta");
+        }
+    }
+
 }

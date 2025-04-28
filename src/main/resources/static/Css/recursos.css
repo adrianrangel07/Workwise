@@ -321,3 +321,36 @@ iframe {
   background-color: #007bff;
   color: white;
 }
+
+/* ==========  Estilos para la foto y el nombre del usuario  ========== */
+#usuario-container {
+  display: flex;
+  align-items: center;
+  margin-left: 15px; /* Mover hacia la izquierda */
+}
+
+#user-avatar {
+  width: 30px; /* Hacer la imagen más pequeña */
+  height: 30px;
+  border-radius: 50%; /* Mantener forma circular */
+  border: 1px solid #000; /* Borde opcional */
+  cursor: pointer; /* Cambiar cursor al pasar el mouse */
+  transition: transform 0.2s ease-in-out;
+}
+
+#user-avatar:hover {
+  transform: scale(1.1); /* Aumentar tamaño al pasar el mouse */
+}
+
+#usuario {
+  font-size: 18px; /* Tamaño del texto */
+  font-weight: bold;
+  color: black; /* Color negro */
+  cursor: pointer; /* Cambiar cursor al pasar el mouse */
+  transition: color 0.2s ease-in-out;
+}
+
+#usuario:hover {
+  color: #555; /* Cambia de color al pasar el mouse */
+}
+
