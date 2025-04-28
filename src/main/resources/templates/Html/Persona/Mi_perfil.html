@@ -57,7 +57,7 @@
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3"
                             id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
                         <ul class="navbar-nav flex-nowrap ms-auto">
-                            <div class="d-none d-sm-block topbar-divider"></div>
+
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow" id="usuario-container">
 
@@ -72,19 +72,20 @@
                                         <span id="usuario" th:text="${persona.nombre}">Account</span>
                                     </a>
                                     <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
-                                        <a class="dropdown-item" th:href="@{/perfil/persona}">
-                                            <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile
+                                        <a class="dropdown-item" th:href="@{/perfil/persona}" style="color: #0a1128;">
+                                            <i class="fas fa-user fa-sm fa-fw me-2 "></i>&nbsp;Perfil
                                         </a>
-                                        <a class="dropdown-item" th:href="@{/persona/Postulaciones}">
-                                            <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;applications
+                                        <a class="dropdown-item" th:href="@{/persona/Postulaciones}"
+                                            style="color: #0a1128;">
+                                            <i class="fas fa-file-alt fa-sm fa-fw me-2"></i>&nbsp;Postulaciones
                                         </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Curriculum
+                                        <a class="dropdown-item" href="#" style="color: #0a1128;">
+                                            <i class="fas fa-briefcase fa-sm fa-fw me-2 "></i>&nbsp;Hoja de vida
                                         </a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="/logout" id="logout"
-                                            onclick="cerrarSesion(event)">
-                                            <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>Logout
+                                            onclick="cerrarSesion(event)" style="color: #0a1128;">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw me-2"></i>Cerrar sesión
                                         </a>
                                     </div>
                                 </div>
@@ -106,20 +107,23 @@
 
                                     <div class="mb-3">
                                         <!-- Botón para cambiar la foto -->
-                                        <button id="changePhotoBtn" class="btn btn-primary btn-sm">Cambiar foto</button>
-
+                                        <button id="changePhotoBtn" class="btn btn-primary btn-sm"> <i
+                                                class="fas fa-upload"></i> Cambiar foto</button>
+                                        <br><br>
                                         <!-- Formulario para subir la foto -->
                                         <form id="uploadForm" action="/upload/photo" method="post"
                                             enctype="multipart/form-data" style="display:none;">
                                             <input type="hidden" name="id" value="${persona.id}">
-                                            <input type="file" name="file" required>
-                                            <br>
+                                            <input type="file" class="fileInput" name="file" accept=".png, .jpg, .jpeg"
+                                                required>
+                                            <br><br>
                                             <button class="btn btn-primary btn-sm" type="submit">Enviar</button>
+                                            <!-- Botón para cancelar el cambio de foto -->
+                                            <button id="cancelUploadBtn" class="btn btn-secondary btn-sm"
+                                                style="display:none;">Cancel</button>
                                         </form>
                                         <br>
-                                        <!-- Botón para cancelar el cambio de foto -->
-                                        <button id="cancelUploadBtn" class="btn btn-secondary btn-sm"
-                                            style="display:none;">Cancel</button>
+
                                     </div>
                                 </div>
                             </div>
@@ -131,17 +135,19 @@
                                         <form id="uploadFormcv" enctype="multipart/form-data">
                                             <input type="file" id="fileInput" name="file" accept="application/pdf"
                                                 required />
-                                            <button type="submit">Subir PDF</button>
+                                            <br><br>
+                                            <button type="submit"><i class="fas fa-upload"></i> Subir PDF</button>
+
+                                            <!-- Botón de Eliminar PDF -->
+                                            <button class="delete-btn" onclick="eliminarHojaDeVida()"> <i
+                                                    class="fas fa-trash-alt"></i> Borrar Hoja de Vida</button>
                                         </form>
                                         <div id="message"></div>
 
                                         <h3>Hoja de Vida</h3>
                                         <iframe id="pdfViewer" src="/perfil/verHDV" width="100%"
                                             height="400px"></iframe>
-
                                         <br>
-                                        <!-- Botón de Eliminar PDF -->
-                                        <button onclick="eliminarHojaDeVida()">Borrar Hoja de Vida</button>
                                     </div>
                                 </div>
                             </div>
@@ -154,23 +160,24 @@
                                 <div class="col">
                                     <div class="card shadow mb-3">
                                         <div class="card-header py-3">
-                                            <p class="text-primary m-0 fw-bold">Datos usuario</p>
+                                            <p class="text-primary m-0 fw-bold">Datos personales</p>
                                         </div>
                                         <div class="card-body">
                                             <form th:action="@{/actualizar}" method="post">
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="mb-3">
-                                                            <label class="form-label" for="email"><strong>Email
-                                                                    Address</strong></label>
+                                                            <label class="form-label" for="email"><strong>Correo
+                                                                    electrónico</strong></label>
                                                             <input class="form-control" type="email" id="email"
                                                                 name="email" th:value="${persona.email}" disabled>
                                                         </div>
                                                     </div>
                                                     <div class="col">
                                                         <div class="mb-3">
-                                                            <label class="form-label"><strong>Password</strong></label>
-                                                            <input class="form-control" type="password"
+                                                            <label class="form-label"
+                                                                for="password"><strong>Contraseña</strong></label>
+                                                            <input class="form-control" type="password" id="password"
                                                                 name="contraseña" th:value="${persona.contraseña}"
                                                                 disabled>
                                                         </div>
@@ -179,16 +186,16 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="mb-3">
-                                                            <label class="form-label" for="first_name"><strong>First
-                                                                    Name</strong></label>
+                                                            <label class="form-label"
+                                                                for="first_name"><strong>Nombre(s)</strong></label>
                                                             <input class="form-control" type="text" id="first_name"
                                                                 name="nombre" th:value="${persona.nombre}" disabled>
                                                         </div>
                                                     </div>
                                                     <div class="col">
                                                         <div class="mb-3">
-                                                            <label class="form-label" for="last_name"><strong>First
-                                                                    Surname</strong></label>
+                                                            <label class="form-label"
+                                                                for="last_name"><strong>Apellido(s)</strong></label>
                                                             <input class="form-control" type="text" id="last_name"
                                                                 name="apellido" th:value="${persona.apellido}" disabled>
                                                         </div>
@@ -197,37 +204,52 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="mb-3">
-                                                            <label class="form-label" for="birthdate"><strong>Date of
-                                                                    Birth</strong></label>
-                                                            <input class="form-control" type="text" id="birthdate"
+                                                            <label class="form-label" for="birthdate"><strong>Fecha de
+                                                                    nacimiento</strong></label>
+                                                            <input class="form-control" type="date" id="birthdate"
                                                                 name="fecha_nacimiento"
-                                                                th:value="${persona.fecha_nacimiento}" disabled>
+                                                                th:value="${#dates.format(persona.fecha_nacimiento, 'yyyy-MM-dd')}"
+                                                                max="" disabled>
                                                         </div>
                                                     </div>
                                                     <div class="col">
                                                         <div class="mb-3">
                                                             <label class="form-label"
-                                                                for="Gender"><strong>Gender</strong></label>
-                                                            <input class="form-control" type="text" id="Gender"
-                                                                name="genero" th:value="${persona.genero}" disabled>
+                                                                for="gender"><strong>Género</strong></label>
+                                                            <select class="form-select" id="gender" name="genero"
+                                                                disabled>
+                                                                <option value="">Seleccione una opción</option>
+                                                                <option value="Hombre"
+                                                                    th:selected="${persona.genero == 'Hombre'}">Hombre
+                                                                </option>
+                                                                <option value="Mujer"
+                                                                    th:selected="${persona.genero == 'Mujer'}">Mujer
+                                                                </option>
+                                                                <option value="Prefiero no decir"
+                                                                    th:selected="${persona.genero == 'Prefiero no decir'}">
+                                                                    Prefiero no decir</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <div class="mb-3">
-                                                            <button class="btn btn-primary btn-sm" type="button"
-                                                                id="change_btn">Change Settings</button>
-                                                            <button class="btn btn-primary btn-sm" type="submit"
-                                                                id="save_btn" disabled>Save changes</button>
+                                                        <div
+                                                            class="mb-3 d-flex justify-content-between align-items-center">
+                                                            <div>
+                                                                <button class="btn btn-primary btn-sm" type="button"
+                                                                    id="change_btn">Cambiar datos</button>
+                                                                <button class="btn btn-primary btn-sm" type="submit"
+                                                                    id="save_btn" disabled>Guardar cambios</button>
+                                                            </div>
+                                                            <button class="delete-btn"
+                                                                onclick="eliminarCuenta()">
+                                                                <i class="fas fa-trash-alt"></i> Eliminar Cuenta
+                                                            </button>
                                                         </div>
-                                                        <button id="btnEliminarCuenta" class="btn-eliminar"
-                                                            onclick="eliminarCuenta()">
-                                                            <i class="fas fa-trash-alt"></i> Eliminar Cuenta
-                                                        </button>
                                                     </div>
-                                                    <input type="hidden" name="confirmPassword" id="confirmPassword">
                                                 </div>
+                                                <input type="hidden" name="confirmPassword" id="confirmPassword">
                                             </form>
                                         </div>
                                     </div>

@@ -103,6 +103,106 @@
   width: 100%;
 }
 
+/* Estilo para las ofertas */
+/* Contenedor principal de las ofertas */
+.offer-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem; /* Espacio más amplio entre tarjetas */
+  padding: 2rem;
+  justify-content: center; /* Centrar tarjetas */
+  background-color: #f9f9f9; /* Fondo claro para destacar las tarjetas */
+}
+
+/* Tarjeta de cada oferta */
+.offer-container .card {
+  width: 100%;
+  max-width: 350px;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative; /* Para elementos como badges */
+  overflow: hidden; /* Evitar que el contenido desborde */
+}
+
+/* Efecto al pasar el cursor */
+.offer-container .card:hover {
+  transform: translateY(-8px); /* Efecto de elevación */
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para el título */
+.offer-content h3 {
+  font-size: 1.4rem;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 0.8rem;
+  transition: color 0.3s ease;
+}
+
+.offer-container .card:hover h3 {
+  color: #ff6f61; /* Cambiar color en hover */
+}
+
+/* Descripción y otros detalles */
+.offer-content p {
+  color: #555;
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Botón de acción */
+.offer-content .action-btn {
+  display: inline-block;
+  margin-top: 1rem;
+  background-color: #007bff;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 0.8rem 1.2rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.offer-content .action-btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-3px);
+}
+
+/* Información adicional */
+.hidden-info {
+  margin-top: 1.5rem;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 1rem;
+  color: #777;
+}
+
+.estado {
+  padding: 5px 5px;
+  border-radius: 5px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.estado.pendiente {
+  background-color: yellow;
+  color: black;
+}
+
+.estado.aceptado {
+  background-color: green;
+  color: white;
+}
+
+.estado.rechazado {
+  background-color: red;
+  color: white;
+}
+
 /* Botones */
 .btn-action-group {
   display: flex;
@@ -202,6 +302,7 @@
   background-color: #007bff;
   color: white;
 }
+
 
 /* ========== MEDIA QUERIES PARA RESPONSIVE ========== */
 
