@@ -182,14 +182,6 @@ public class Ofertas {
         this.nivel_educativo = nivel_educativo;
     }
 
-    public String getSector_oferta() {
-        return sector_oferta;
-    }
-
-    public void setSector_oferta(String sector_oferta) {
-        this.sector_oferta = sector_oferta;
-    }
-
     public boolean isPostulado() {
         return postulado;
     }
