@@ -328,7 +328,7 @@ public class PersonaController {
             model.addAttribute("postulaciones", postulaciones);
 
             model.addAttribute("persona", persona);
-            return "Html/persona/Postulaciones";
+            return "Html/Persona/Postulaciones";
         } else {
             return "redirect:/login/personas";
         }
@@ -382,27 +382,22 @@ public class PersonaController {
 
     @GetMapping("/Estadisticas/personas") // ruta para llevarlo a estadisticas sobre lo que podemos mostrar
     public String estadistica_persona() {
-        return "Html/persona/Estadisticas_persona";
+        return "Html/Persona/Estadisticas_persona";
     }
 
     @GetMapping("/Contrasena-olvidada") // ruta para cuando quieren volver a recordar la contraseña
     public String olvidar() {
-        return "Html/persona/contrasena_olvidada_per";
-    }
-
-    @GetMapping("/configuracion/persona") // ruta para configuracion de las personas
-    public String configuracion() {
-        return "Html/persona/Configuracion";
+        return "Html/Persona/contrasena_olvidada_per";
     }
 
     @GetMapping("/persona/hdv")
     public String mostrarHojaDeVida() {
-        return "Html/persona/hoja_de_vida";
+        return "Html/Persona/hoja_de_vida";
     }
 
     @GetMapping("/persona/hdv_nv")
     public String mostrarHojaDeVidaNavbar() {
-        return "Html/persona/hoja_de_vida_nv";
+        return "Html/Persona/hoja_de_vida_nv";
     }
 
     @GetMapping("/")
@@ -448,7 +443,7 @@ public class PersonaController {
                 return "Html/error";
             }
             model.addAttribute("persona", persona);
-            return "Html/persona/Recursos_persona";
+            return "Html/Persona/Recursos_persona";
         } else {
             return "redirect:/login/personas";
         }
