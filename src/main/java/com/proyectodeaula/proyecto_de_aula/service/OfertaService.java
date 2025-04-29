@@ -52,7 +52,6 @@ public class OfertaService implements IofertaService {
         Ofertas Usu = oferr.save(O);  // Guardar oferta en la base de datos
         if (Usu != null) {
             res = 1;
-            notificacionSSEController.enviarNotificacion("Nueva oferta publicada: " + Usu.getTitulo_puesto());
         }
         return res;
     }

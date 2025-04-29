@@ -47,6 +47,9 @@ public class OfertaController {
     @Autowired
     private PostulacionRepository postulacionRepository;
 
+    @Autowired
+    private NotificacionSSEController notificacionController;
+
     @GetMapping("/personas/pagina_principal")
     public String listar_ofertas_1(@RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "12") int size, Model model, HttpSession session) {
@@ -102,9 +105,17 @@ public class OfertaController {
     @PostMapping("/guardarOferta")
     public String guardarOferta(@ModelAttribute Ofertas oferta, HttpSession session) {
         Empresas empresa = (Empresas) session.getAttribute("empresa");
-        oferta.setEmpresa(empresa); // Establecer la empresa para la oferta
-        offerService.save(oferta); // Guarda la oferta usando el servicio
-        return "redirect:/empresas/pagina_principal"; // Redirige a la página principal
+        oferta.setEmpresa(empresa);
+        offerService.save(oferta);
+
+        String mensajeNotificacion = String.format(
+                "¡Nueva oferta disponible! %s ha publicado: %s",
+                empresa.getNombreEmp(),
+                oferta.getTitulo_puesto());
+
+        notificacionController.enviarNotificacion(mensajeNotificacion, "exito");
+
+        return "redirect:/empresas/pagina_principal";
     }
 
     @DeleteMapping("/offers/delete/{id}")

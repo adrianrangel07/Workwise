@@ -14,23 +14,43 @@ public class NotificacionSSEController {
 
     @GetMapping("/notificaciones")
     public SseEmitter conectar() {
-        SseEmitter emisor = new SseEmitter(0L); // Tiempo ilimitado de conexión
-        emisores.add(emisor);
-
-        emisor.onCompletion(() -> emisores.remove(emisor));
-        emisor.onTimeout(() -> emisores.remove(emisor));
-
+        SseEmitter emisor = new SseEmitter(60_000L); // 1 minuto de timeout
+        
+        emisor.onCompletion(() -> {
+            synchronized (this.emisores) {
+                this.emisores.remove(emisor);
+            }
+        });
+        
+        emisor.onTimeout(() -> {
+            emisor.complete();
+            synchronized (this.emisores) {
+                this.emisores.remove(emisor);
+            }
+        });
+        
+        synchronized (this.emisores) {
+            this.emisores.add(emisor);
+        }
+        
         return emisor;
     }
 
-    public void enviarNotificacion(String mensaje) {
-        for (SseEmitter emisor : emisores) {
-            try {
-                emisor.send(SseEmitter.event().data(mensaje));
-            } catch (IOException e) {
-                emisores.remove(emisor);
+    public void enviarNotificacion(String mensaje, String tipo) {
+        synchronized (this.emisores) {
+            for (SseEmitter emisor : this.emisores) {
+                try {
+                    String json = String.format("{\"mensaje\":\"%s\", \"tipo\":\"%s\"}", 
+                        mensaje.replace("\"", "\\\""),
+                        tipo);
+                    emisor.send(SseEmitter.event()
+                            .name("notificacion")
+                            .data(json));
+                } catch (IOException e) {
+                    emisor.completeWithError(e);
+                    this.emisores.remove(emisor);
+                }
             }
         }
     }
 }
-

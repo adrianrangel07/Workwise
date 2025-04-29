@@ -16,7 +16,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                 //general
-                .requestMatchers("/", "/pagina/inicio", "/Estadisticas", "/recursos", "/verificar-correo", "/logout", "/uploadHDV", "/upload/photo", "/imagen/{id}").permitAll()
+                .requestMatchers("/", "/pagina/inicio", "/Estadisticas", "/recursos", "/verificar-correo", "/logout", "/uploadHDV", "/upload/photo", "/imagen/{id}","/notificaciones").permitAll()
                 //importaciones
                 .requestMatchers("/Css/**", "/js/**", "/Imagenes/**", "/webjars/**").permitAll()
                 //prediccion

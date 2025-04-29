@@ -409,8 +409,7 @@ public class PersonaController {
     public String Recursos_invitados() {
         return "Html/Recursos";
     }
-
-  
+    
     @GetMapping("/prediccion")
     public String prediccion(@RequestParam("id") Long ofertaId, Model model) {
         Optional<Ofertas> oferta = ofertaRepository.findById(ofertaId);
