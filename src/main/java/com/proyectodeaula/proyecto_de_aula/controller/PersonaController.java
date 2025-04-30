@@ -411,19 +411,25 @@ public class PersonaController {
     }
     
     @GetMapping("/prediccion")
-    public String prediccion(@RequestParam("id") Long ofertaId, Model model) {
+    public String prediccion(@RequestParam("id") Long ofertaId, Model model, HttpSession session) {
         Optional<Ofertas> oferta = ofertaRepository.findById(ofertaId);
         if (oferta.isPresent()) {
             Ofertas ofertaData = oferta.get();
-            System.out.println("Oferta encontrada: ");
-            System.out.println("Tipo de Empleo: " + ofertaData.getTipo_empleo());
-            System.out.println("Salario: " + ofertaData.getSalario());
-            System.out.println("Moneda: " + ofertaData.getMoneda());
-            System.out.println("Experiencia: " + ofertaData.getExperiencia());
             model.addAttribute("oferta", ofertaData);
-            return "Html/prediccion";
+            String email = (String) session.getAttribute("email");
+            if (email != null) {
+                Personas persona = personaService.findByEmail(email);
+                if (persona == null) {
+                    model.addAttribute("error", "Persona no encontrada.");
+                    return "Html/error";
+                }
+                model.addAttribute("persona", persona);
+                return "Html/prediccion";
+            } else {
+                return "error";
+            }
         } else {
-            return "error";  // Si no se encuentra la oferta, redirige a la página de error
+            return "error";
         }
     }
     
