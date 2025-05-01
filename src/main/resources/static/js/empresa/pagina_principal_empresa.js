@@ -16,7 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
         modalidad: document.getElementById('modal-modalidad'),
         typeContract: document.getElementById('modal-typeContract'),
         experience: document.getElementById('modal-experience'),
-        educationLevel: document.getElementById('modal-educationLevel')
+        educationLevel: document.getElementById('modal-educationLevel'),
+        sector_oferta: document.getElementById('modal-sector_oferta')
     };
 
     // Elementos de edición
@@ -38,7 +39,10 @@ document.addEventListener('DOMContentLoaded', function () {
         period: document.getElementById('edit-period'),
         modalidad: document.getElementById('edit-modalidad'),
         type: document.getElementById('edit-type'),
-        typeContract: document.getElementById('edit-typeContract')
+        typeContract: document.getElementById('edit-typeContract'),
+        experience: document.getElementById('edit-experience'),
+        educationLevel: document.getElementById('edit-educationLevel'),
+        sector_oferta: document.getElementById('edit-sector_oferta')
     };
 
     let currentOfferId = null;
@@ -60,7 +64,8 @@ document.addEventListener('DOMContentLoaded', function () {
             modality: card.querySelector('.hidden-info p:nth-child(6) span').textContent,
             contractType: card.querySelector('.hidden-info p:nth-child(7) span').textContent,
             experience: card.querySelector('.hidden-info p:nth-child(8) span').textContent,
-            educationLevel: card.querySelector('.hidden-info p:nth-child(9) span').textContent
+            educationLevel: card.querySelector('.hidden-info p:nth-child(9) span').textContent,
+            sector_oferta: card.querySelector('.hidden-info p:nth-child(10) span').textContent
         };
 
         // Llenar el modal con todos los datos
@@ -75,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
         modalElements.typeContract.innerHTML = `<strong>Tipo de contrato:</strong> ${cardData.contractType}`;
         modalElements.experience.innerHTML = `<strong>Experiencia:</strong> ${cardData.experience}`;
         modalElements.educationLevel.innerHTML = `<strong>Nivel educativo:</strong> ${cardData.educationLevel}`;
+        modalElements.sector_oferta.innerHTML = `<strong>Sector de oferta:</strong> ${cardData.sector_oferta}`;
 
         // Mostrar número de postulaciones
         mostrarPostulaciones(currentOfferId);
@@ -137,6 +143,10 @@ document.addEventListener('DOMContentLoaded', function () {
         editFields.modalidad.value = getValueFromModal(modalElements.modalidad, 'Modalidad: ');
         editFields.type.value = getValueFromModal(modalElements.type, 'Tipo de empleo: ');
         editFields.typeContract.value = getValueFromModal(modalElements.typeContract, 'Tipo de contrato: ');
+        editFields.experience.value = getValueFromModal(modalElements.experience, 'Experiencia: ');
+        editFields.educationLevel.value = getValueFromModal(modalElements.educationLevel, 'Nivel educativo: ');
+        editFields.sector_oferta.value = getValueFromModal(modalElements.sector_oferta, 'Sector de oferta: ');
+
 
         // Enfocar el primer campo del formulario
         editFields.title.focus();
@@ -151,29 +161,64 @@ document.addEventListener('DOMContentLoaded', function () {
         return element.textContent.replace(prefix, '').trim();
     }
     // Guardar cambios
-    saveButton.addEventListener('click', function () {
-        const updatedOffer = {
-            id: currentOfferId,
-            titulo_puesto: editFields.title.value,
-            descripcion: editFields.description.value,
-            salario: parseInt(editFields.salary.value),
-            moneda: editFields.currency.value,
-            duracion: editFields.duration.value,
-            periodo: editFields.period.value,
-            modalidad: editFields.modalidad.value,
-            tipo_empleo: editFields.type.value,
-            tipo_contrato: editFields.typeContract.value
-        };
+    saveButton.addEventListener('click', async function () {
+        // Validar campos obligatorios
+        if (!editFields.title.value || !editFields.description.value || !editFields.salary.value) {
+            await Swal.fire({
+                icon: 'warning',
+                title: 'Campos incompletos',
+                text: 'Por favor complete todos los campos obligatorios'
+            });
+            return;
+        }
 
-        fetch(`/offers/edit/${currentOfferId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedOffer)
-        })
-            .then(handleResponse)
-            .catch(handleError);
+        try {
+            const updatedOffer = {
+                id: currentOfferId,
+                titulo_puesto: editFields.title.value,
+                descripcion: editFields.description.value,
+                salario: parseInt(editFields.salary.value),
+                moneda: editFields.currency.value,
+                duracion: editFields.duration.value,
+                periodo: editFields.period.value,
+                modalidad: editFields.modalidad.value,
+                tipo_empleo: editFields.type.value,
+                tipo_contrato: editFields.typeContract.value,
+                nivel_educativo: editFields.educationLevel.value,
+                experiencia: parseInt(editFields.experience.value) || 0,
+                sector_oferta: editFields.sector_oferta.value
+            };
+
+            const response = await fetch(`/offers/edit/${currentOfferId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedOffer)
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.error || 'Error al actualizar la oferta');
+            }
+
+            await Swal.fire({
+                icon: 'success',
+                title: '¡Actualizado!',
+                text: result.message || 'Los cambios se guardaron correctamente',
+                timer: 1500
+            });
+
+            location.reload();
+        } catch (error) {
+            console.error("Error:", error);
+            await Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message || 'Hubo un problema al guardar los cambios'
+            });
+        }
     });
 
     // Eliminar oferta
