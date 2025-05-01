@@ -88,107 +88,148 @@
             </nav>
             <div class="content-area flex-grow-1 p-3">
                 <h1>Compatibilidad con Oferta de Empleo</h1>
-    
                 <form id="formPrediccion">
-                    <div class="campo" id="tipoEmpleo">
-                        <label>Tipo Empleo Oferta</label>
-                        <input type="text" name="tipo_empleo_oferta" id="tipoEmpleoOferta" th:value="${oferta.tipo_empleo}" readonly required>
-                    </div>
-    
-                    <div class="campo">
-                        <label>Modalidad Oferta</label>
-                        <input type="text" name="modalidad_oferta" id="modalidadOferta" th:value="${oferta.modalidad}" readonly required>
-                    </div>
+                    <div class="data">
+                        <div class="data-oferta tarjeta">
+                            <div class="data-title">
+                                <h2>Datos de la oferta</h2>
+                            </div>
+                            <div class="campo" id="tipoEmpleo">
+                                <label>Tipo Empleo Oferta</label>
+                                <input type="text" name="tipo_empleo_oferta" id="tipoEmpleoOferta" th:value="${oferta.tipo_empleo}" readonly required>
+                            </div>
+            
+                            <div class="campo">
+                                <label>Modalidad Oferta</label>
+                                <input type="text" name="modalidad_oferta" id="modalidadOferta" th:value="${oferta.modalidad}" readonly required>
+                            </div>
+                            
+                            <div class="campo">
+                                <label>Tipo Contrato Oferta</label>
+                                <input type="text" name="tipo_contrato_oferta" id="tipoContratoOferta" th:value="${oferta.tipo_contrato}" readonly required>
+                            </div>
                     
-                    <div class="campo">
-                        <label>Tipo Contrato Oferta</label>
-                        <input type="text" name="tipo_contrato_oferta" id="tipoContratoOferta" th:value="${oferta.tipo_contrato}" readonly required>
+                            <div class="campo">
+                                <label>Experiencia Requerida (años)</label>
+                                <input type="number" name="experiencia_requerida" min="0" id="experienciaRequerida" th:value="${oferta.experiencia}" readonly  required>
+                            </div>
+                    
+                            <div class="campo">
+                                <label>Nivel Estudio Requerido</label>
+                                <input type="text" name="nivel_estudio_requerido" id="nivelEstudioRequerido" th:value="${oferta.nivel_educativo}" readonly required>
+                            </div>
+                    
+                            <div class="campo">
+                                <label>Sector Oferta</label>
+                                <input type="text" name="sector_oferta" id="sectorOferta" th:value="${oferta.sector_oferta}"  readonly required>
+                            </div>
+                        </div>
+                        
+                        <div class="data-persona tarjeta">
+                            <div class="data-title">
+                                <h2>Ingresa tus Datos</h2>
+                            </div>
+                            <div class="campo">
+                                <label>Tipo Empleo Deseado</label>
+                                <select name="tipo_empleo_deseado">
+                                    <option value="Tiempo_Completo">Tiempo Completo</option>
+                                    <option value="Medio_Tiempo">Medio Tiempo</option>
+                                    <option value="Por_Horas">Por horas</option>
+                                    <option value="Freelance">Freelance</option>
+                                </select>
+                            </div>
+                    
+                            <div class="campo">
+                                <label>Modalidad Preferida</label>
+                                <select name="preferencia_modalidad">
+                                    <option value="Presencial">Presencial</option>
+                                    <option value="Remoto">Remoto</option>
+                                    <option value="Hibrido">Híbrido</option>
+                                </select>
+                            </div>
+                    
+                            <div class="campo">
+                                <label>Tipo Contrato Preferido</label>
+                                <select name="preferencia_contrato">
+                                    <option value="Obra_Labor">Obra o Labor</option>
+                                    <option value="Fijo">Fijo</option>
+                                    <option value="Indefinido">Indefinido</option>
+                                    <option value="Practicas">Prácticas</option>
+                                </select>
+                            </div>
+                    
+                            <div class="campo">
+                                <label>Experiencia Persona (años)</label>
+                                <input type="number" name="experiencia_persona" min="0" required>
+                            </div>
+                    
+                            <div class="campo">
+                                <label>Nivel Estudio Persona</label>
+                                <select name="nivel_estudio_persona">
+                                    <option value= "Sin_estudios">Sin estudios</option>
+                                    <option value= "Bachiller">Bachiller</option>
+                                    <option value= "Tecnico_Tecnologo">Tecnico/Tecnologo</option>
+                                    <option value= "Tecnologo_Universitario">Tecnologo o Universitario</option>
+                                    <option value= "Universitario">Universitario</option>
+                                    <option value= "Master">Master</option>
+                                    <option value= "Doctorado" >Doctorado</option>
+                                </select>
+                            </div>
+                    
+                            <div class="campo">
+                                <label>Sector Persona</label>
+                                <select name="sector_persona">
+                                    <option value="Aeroespacial">Aeroespacial</option>
+                                    <option value="Agricultura">Agricultura</option>
+                                    <option value="Agroindustria">Agroindustria</option>
+                                    <option value="Ambiental">Medio ambiente</option>
+                                    <option value="ArtesCreativas">Artes creativas</option>
+                                    <option value="Automotriz">Automotriz</option>
+                                    <option value="BienesRaices">Bienes raíces</option>
+                                    <option value="Biotecnologia">Biotecnología</option>
+                                    <option value="Comercio">Comercio</option>
+                                    <option value="Construccion">Construcción</option>
+                                    <option value="Consultoria">Consultoría</option>
+                                    <option value="Deportes">Deportes y recreación</option>
+                                    <option value="Diseño">Diseño</option>
+                                    <option value="Educacion">Educación</option>
+                                    <option value="Energia">Energía</option>
+                                    <option value="Finanzas">Finanzas</option>
+                                    <option value="Gobierno">Gobierno</option>
+                                    <option value="Investigacion">Investigación</option>
+                                    <option value="Legal">Legal</option>
+                                    <option value="Logistica">Logística</option>
+                                    <option value="Manufactura">Manufactura</option>
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="Medios">Medios de comunicación</option>
+                                    <option value="Mineria">Minería</option>
+                                    <option value="Naval">Naval</option>
+                                    <option value="Quimica">Química y farmacéutica</option>
+                                    <option value="RRHH">Recursos humanos</option>
+                                    <option value="Salud">Salud</option>
+                                    <option value="Seguros">Seguros</option>
+                                    <option value="Servicios">Servicios</option>
+                                    <option value="Social">Trabajo social</option>
+                                    <option value="Tecnologia">Tecnología</option>
+                                    <option value="Textil">Textil y confección</option>
+                                    <option value="Transporte">Transporte</option>
+                                    <option value="Turismo">Turismo</option>
+                                </select>
+                            </div>
+                    
+                            <div class="campo">
+                                <label>Edad</label>
+                                <input type="number" name="edad_persona" min="18" required>
+                            </div>
+                        </div>
                     </div>
-            
-                    <div class="campo">
-                        <label>Experiencia Requerida (años)</label>
-                        <input type="number" name="experiencia_requerida" min="0" id="experienciaRequerida" th:value="${oferta.experiencia}" readonly  required>
-                    </div>
-            
-                    <div class="campo">
-                        <label>Nivel Estudio Requerido</label>
-                        <input type="text" name="nivel_estudio_requerido" id="nivelEstudioRequerido" th:value="${oferta.nivel_educativo}" readonly required>
-                    </div>
-            
-                    <div class="campo">
-                        <label>Sector Oferta</label>
-                        <input type="text" name="sector_oferta" id="sectorOferta" th:value="${oferta.sector_oferta}"  readonly required>
-                    </div>
-            
-                    <!-- Datos de la Persona -->
-                    <hr>
-            
-                    <div class="campo">
-                        <label>Tipo Empleo Deseado</label>
-                        <select name="tipo_empleo_deseado">
-                            <option value="Tiempo_Completo">Tiempo completo</option>
-                            <option value="Medio_Tiempo">Medio tiempo</option>
-                            <option value="Por_Horas">Por horas</option>
-                            <option value="Temporal">Temporal</option>
-                        </select>
-                    </div>
-            
-                    <div class="campo">
-                        <label>Modalidad Preferida</label>
-                        <select name="preferencia_modalidad">
-                            <option value="Presencial">Presencial</option>
-                            <option value="Remoto">Remoto</option>
-                            <option value="Hibrido">Híbrido</option>
-                        </select>
-                    </div>
-            
-                    <div class="campo">
-                        <label>Tipo Contrato Preferido</label>
-                        <select name="preferencia_contrato">
-                            <option value="Indefinido">Indefinido</option>
-                            <option value="Practicas">Prácticas</option>
-                            <option value="Obra_Servicio">Obra o Servicio</option>
-                        </select>
-                    </div>
-            
-                    <div class="campo">
-                        <label>Experiencia Persona (años)</label>
-                        <input type="number" name="experiencia_persona" min="0" required>
-                    </div>
-            
-                    <div class="campo">
-                        <label>Nivel Estudio Persona</label>
-                        <select name="nivel_estudio_persona">
-                            <option value="Bachillerato">Bachillerato</option>
-                            <option value="Tecnico">Técnico</option>
-                            <option value="Grado">Grado</option>
-                            <option value="Master">Máster</option>
-                            <option value="Doctorado">Doctorado</option>
-                        </select>
-                    </div>
-            
-                    <div class="campo">
-                        <label>Sector Persona</label>
-                        <select name="sector_persona">
-                            <option value="Tecnologia">Tecnología</option>
-                            <option value="Educacion">Educación</option>
-                            <option value="Salud">Salud</option>
-                            <option value="Construccion">Construcción</option>
-                            <option value="Otros">Otros</option>
-                        </select>
-                    </div>
-            
-                    <div class="campo">
-                        <label>Edad</label>
-                        <input type="number" name="edad_persona" min="18" required>
-                    </div>
-            
-                    <button type="submit">Predecir Compatibilidad</button>
+                    <button type="submit" style="width: 30%;">Predecir Compatibilidad</button>
                 </form>
         
                 <div id="resultado"></div>
-                <div id="detallesPrediccion"></div>
-                <div id="errorModelo"></div>
+                <div id="contenedor-error"></div>
+                <div class="offer-container" id="recomendadas-container"></div>
+
             </div>
             <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer">
                 <div class="container">
