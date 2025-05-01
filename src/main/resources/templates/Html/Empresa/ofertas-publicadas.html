@@ -5,12 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workwise Navigator</title>
-    <link rel="icon" type="image/png" href="../Imagenes/wknlogo2.png">
+    <link rel="icon" type="image/png" href="/Imagenes/wknlogo2.png">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
     <link rel="stylesheet" href="../Css/general/bootstrap.min.css">
-    <link rel="stylesheet" href="../Css/general/Grid-and-List-view-V10-style.css">
-    <link rel="stylesheet" href="../Css/general/Grid-and-List-view-V10.css">
-    <link rel="stylesheet" href="../Css/general/Nunito.css">
     <link rel="stylesheet" href="../Css/general/styles.min.css">
     <link rel="stylesheet" href="../Css/empresa/PerfilEmpresa.css">
     <link rel="stylesheet" href="../Css/empresa/ofertas-publicadas.css">
@@ -23,35 +20,33 @@
         <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark">
             <div class="container-fluid d-flex flex-column p-0"><a
                     class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
-                    th:href="@{/empresas/pagina_principal}"><img src="../Imagenes/working wise 32x32 white.png"
-                        width="61" height="58" style="width: 50px;height: 50px;">
+                    th:href="@{/empresas/pagina_principal}"><img src="/Imagenes/wwk_white.png" width="61" height="58"
+                        style="width: 50px;height: 50px;">
                     <div class="sidebar-brand-icon rotate-n-15"></div>
                     <div class="sidebar-brand-text mx-3"><span>Workwise</span></div>
                 </a>
-                <span style="font-size: 15px; text-align: center; color: white;">Only Companies</span>
+                <span style="font-size: 15px; text-align: center; color: white;">Solo empresas</span>
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item"><a class="nav-link " th:href="@{/empresas/pagina_principal}">
-                            <i class="fas fa-home"></i><span>Home</span></a>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/empresas/pagina_principal}">
+                            <i class="fas fa-home"></i><span>Inicio</span></a>
                     </li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/perfil/empresa}">
-                            <i class="far fa-user-circle"></i><span>Profile</span></a>
+                            <i class="far fa-user-circle"></i><span>Perfil</span></a>
                     </li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/empresas/oferta}">
-                            <i class="fas fa-plus-circle"></i><span>Create offer</span></a>
+                            <i class="fas fa-plus-circle"></i><span>Crear oferta</span></a>
                     </li>
                     <li class="nav-item"><a class="nav-link active" th:href="@{/empresas/published-offers}">
-                            <i class="fas fa-check-circle"></i><span>Listed offers</span></a>
+                            <i class="fas fa-check-circle"></i><span>Ofertas publicadas</span></a>
                     </li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/Estadisticas/empresas}">
-                            <i class="fas fa-chart-bar"></i><span>Statistics</span></a>
+                            <i class="fas fa-chart-bar"></i><span>Estadisticas</span></a>
                     </li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/login/personas}">
-                            <i class="fas fa-user"></i><span>Do you want search offers?</span></a>
+                            <i class="fas fa-user"></i><span>Quieres postularte a ofertas?</span></a>
                     </li>
                 </ul>
-                <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0"
-                        id="sidebarToggle" type="button"></button></div>
             </div>
         </nav>
         <div class="d-flex flex-column" id="content-wrapper">
@@ -75,13 +70,15 @@
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow" id="empresa-container">
-                                    <img id="empresa-avatar" th:src="@{/Empresa/imagen/{id}(id=${empresa.id})}"
-                                        alt="Empresa Logo">
+
+                                    <img id="user-avatar" src="../Imagenes/imagenempresa.png" alt="Empresa Logo">
+
                                     <input type="hidden" id="subirFoto" accept="image/*"
                                         style="display: block; margin-top: 10px;">
-                                    <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
-                                        href="#">
-                                        <span id="empresa" th:text="${empresa.nombreEmp}">Account</span>
+
+                                    <a class="dropdown-toggle nav-link mi-link" aria-expanded="false"
+                                        data-bs-toggle="dropdown" href="#">
+                                        <span id="empresa" th:text="${empresa.nombreEmp}">Cuenta</span>
                                     </a>
                                     <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
                                         <a class="dropdown-item" th:href="@{/perfil/empresa}">
@@ -111,59 +108,88 @@
                         <div class="seccion-ofertas">
                             <div class="content-area flex-grow-1 p-3">
                                 <div id="resultadoBusqueda"></div>
+                                <h2 class="section-title">Tus Ofertas Publicadas</h2>
                                 <div class="offer-container">
                                     <div th:each="Oferta:${Ofertas}" class="card">
                                         <div class="offer-content" th:data-id="${Oferta.id}">
-                                            <h3 th:text="${Oferta.titulo_puesto}"></h3>
-                                            <p th:text="${Oferta.descripcion}"></p>
+                                            <div class="offer-header">
+                                                <h3 th:text="${Oferta.titulo_puesto}"></h3>
+                                                <span class="offer-badge"
+                                                    th:classappend="${Oferta.postulaciones?.size() > 0 ? 'has-applicants' : ''}">
+                                                    <i class="fas fa-users"></i> <span
+                                                        th:text="${Oferta.postulaciones?.size() ?: '0'}"></span>
+                                                </span>
+                                            </div>
+                                            <p class="offer-description" th:text="${Oferta.descripcion}"></p>
                                             <div class="hidden-info">
-                                                <p class="salario"><strong>Salary:</strong> <span
-                                                        th:text="${Oferta.salario}"></span>
-                                                </p>
-                                                <p class="moneda"><Strong>Currency:</Strong> <span
-                                                        th:text="${Oferta.moneda}"></span>
-                                                </p>
-                                                <p class="duracion"><strong>Duration:</strong> <span
-                                                        th:text="${Oferta.duracion}"></span>
-                                                </p>
-                                                <p class="periodo"><strong>Period:</strong> <span
-                                                        th:text="${Oferta.periodo}"></span>
-                                                </p>
-                                                <p class="tipo_empleo"><strong>Type of employment:</strong> <span
-                                                        th:text="${Oferta.tipo_empleo}"></span>
-                                                </p>
-                                                <p class="modalidad"><strong>mode:</strong> <span
-                                                        th:text="${Oferta.modalidad}"></span>
-                                                </p>
-                                                <p class="tipo_contrato"><strong>Type of contract:</strong> <span
-                                                        th:text="${Oferta.tipo_contrato}"></span></p>
+                                                <div class="info-row">
+                                                    <i class="fas fa-money-bill-wave"></i>
+                                                    <p class="salario"><strong>Salario:</strong> <span
+                                                            th:text="${Oferta.salario}"></span> <span
+                                                            th:text="${Oferta.moneda}"></span></p>
+                                                </div>
+                                                <div class="info-row">
+                                                    <i class="fas fa-clock"></i>
+                                                    <p class="duracion"><strong>Duración:</strong> <span
+                                                            th:text="${Oferta.duracion}"></span> <span
+                                                            th:text="${Oferta.periodo}"></span></p>
+                                                </div>
+                                                <div class="info-row">
+                                                    <i class="fas fa-briefcase"></i>
+                                                    <p class="tipo_empleo"><strong>Tipo:</strong> <span
+                                                            th:text="${Oferta.tipo_empleo}"></span></p>
+                                                </div>
+                                                <div class="info-row">
+                                                    <i class="fas fa-laptop-house"></i>
+                                                    <p class="modalidad"><strong>Modalidad:</strong> <span
+                                                            th:text="${Oferta.modalidad}"></span></p>
+                                                </div>
+                                                <div class="info-row">
+                                                    <i class="fas fa-file-signature"></i>
+                                                    <p class="tipo_contrato"><strong>Contrato:</strong> <span
+                                                            th:text="${Oferta.tipo_contrato}"></span></p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="seccion">
-                            <div>
-                                <h2>Detalles de la Oferta</h2>
+
+                        <div class="seccion-detalle">
+                            <div class="detail-header">
+                                <h2><i class="fas fa-info-circle"></i> Detalles de la Oferta</h2>
+                                <div class="status-indicator" id="offer-status">
+                                    <span class="status-dot"></span>
+                                    <span class="status-text">Activa</span>
+                                </div>
                             </div>
                             <div class="seccion" id="detalle-oferta">
                                 <div id="info-oferta">
-                                    <h3 id="detalle-titulo"></h3>
-                                    <p id="detalle-descripcion"></p>
-                                    <p id="detalle-salario"></p>
-                                    <p id="detalle-moneda"></p>
-                                    <p id="detalle-duracion"></p>
-                                    <p id="detalle-periodo"></p>
-                                    <p id="detalle-modalidad"></p>
-                                    <p id="detalle-tipo"></p>
-                                    <p id="detalle-tipoContrato"></p>
+                                    <h3 id="detalle-titulo">Selecciona una oferta</h3>
+                                    <p id="detalle-descripcion" class="empty-state">Haz clic en una oferta de la lista
+                                        para ver sus detalles y postulantes</p>
+                                    <div class="offer-details-grid" id="offer-details">
+                                    </div>
                                 </div>
                                 <hr>
-                                <h3>Postulantes:</h3>
-                                <input type="hidden" id="postulacionId">
-                                <div class="postulantes-container">
-                                    <ul id="lista-postulantes"></ul>
+                                <div class="applicants-section">
+                                    <h3><i class="fas fa-users"></i> Postulantes</h3>
+                                    <div class="applicants-filters">
+                                        <button class="filter-btn active" data-filter="all">Todos</button>
+                                        <button class="filter-btn" data-filter="aceptado">Aceptados</button>
+                                        <button class="filter-btn" data-filter="rechazado">Rechazados</button>
+                                        <button class="filter-btn" data-filter="pendiente">Pendientes</button>
+                                    </div>
+                                    <input type="hidden" id="postulacionId">
+                                    <div class="postulantes-container">
+                                        <ul id="lista-postulantes"></ul>
+                                        <div class="empty-applicants" id="empty-applicants">
+                                            <i class="fas fa-user-friends"></i>
+                                            <p>No hay postulantes para esta oferta</p>
+                                        </div>
+                                        
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -173,20 +199,31 @@
         </div>
     </div>
 
+    <!-- Modal para CV -->
     <div id="modalCV" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="cerrarModal()">&times;</span>
-            <iframe id="iframeCV" width="100%" height="500px" style="border: none;"></iframe>
-
+            <div class="modal-header">
+                <h3 id="applicant-name">CV del Postulante</h3>
+                <div class="applicant-status">
+                    <span class="status-badge" id="current-status">Pendiente</span>
+                </div>
+                <button class="close" onclick="cerrarModal()">&times;</button>
+            </div>
+            <div class="pdf-viewer-container">
+                <iframe id="iframeCV" width="100%" height="500px" style="border: none;"></iframe>
+            </div>
             <div class="modal-buttons">
-                <button class="btn btn-rejected" onclick="accionRechazado()">Rechazado</button>
-                <button class="btn btn-accepted" onclick="accionAceptado()">Aceptado</button>
+                <button class="btn btn-rejected" onclick="accionRechazado()">
+                    <i class="fas fa-times-circle"></i> Rechazado
+                </button>
+                <button class="btn btn-accepted" onclick="accionAceptado()">
+                    <i class="fas fa-check-circle"></i> Aceptado
+                </button>
             </div>
         </div>
     </div>
 
-    <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer"
-        style="background-color: #343A40 !important;">
+    <footer class="custom-footer text-light text-center py-4 sticky-footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-left">
@@ -196,18 +233,12 @@
                     <p class="mb-1">© 2024 WorkWise. Todos los derechos reservados.</p>
                 </div>
                 <div class="footer-right">
-                    <a href="https://facebook.com" target="_blank" class="mx-3">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
-                            alt="Facebook" width="30" height="30">
-                    </a>
-                    <a href="https://instagram.com" target="_blank" class="mx-3">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
-                            alt="Instagram" width="30" height="30">
-                    </a>
-                    <a href="https://www.tiktok.com" target="_blank" class="mx-3">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/TikTok_Logo.svg" alt="TikTok"
-                            width="30" height="30">
-                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=61558650706843" target="_blank"><i
+                            class="fab fa-facebook"></i></a>
+
+                    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+
+                    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
         </div>

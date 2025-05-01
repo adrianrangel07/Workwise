@@ -111,17 +111,18 @@ public class PostulacionController {
         List<Postulacion> postulaciones = postulacionRepository.findByOfertasId(id);
 
         if (postulaciones == null || postulaciones.isEmpty()) {
-            return ResponseEntity.ok(Collections.emptyList()); // Retorna una lista vacía si no hay postulaciones
+            return ResponseEntity.ok(Collections.emptyList());
         }
 
         List<Map<String, Object>> resultado = postulaciones.stream()
-                .filter(postulacion -> postulacion.getPersonas() != null) // Evitar NullPointerException
+                .filter(postulacion -> postulacion.getPersonas() != null)
                 .map(postulacion -> {
                     Map<String, Object> postulanteData = new HashMap<>();
                     postulanteData.put("postulacionId", postulacion.getId());
                     postulanteData.put("id", postulacion.getPersonas().getId());
                     postulanteData.put("nombre", postulacion.getPersonas().getNombre());
                     postulanteData.put("apellido", postulacion.getPersonas().getApellido());
+                    postulanteData.put("estado", postulacion.getEstado()); // Añadir esta línea
                     return postulanteData;
                 })
                 .collect(Collectors.toList());
@@ -129,43 +130,76 @@ public class PostulacionController {
         return ResponseEntity.ok(resultado);
     }
 
-    @GetMapping("/postulantes/{id}/verHDV")
-    public ResponseEntity<byte[]> verCV(@PathVariable Long id) {
-        Optional<Personas> personaOpt = personaRepository.findById(id);
+    @GetMapping("/postulaciones/{id}/verHDV")
+    public ResponseEntity<byte[]> verCVDesdePostulacion(@PathVariable Long id) {
+        Optional<Postulacion> postulacionOpt = postulacionRepository.findById(id);
 
-        if (personaOpt.isPresent() && personaOpt.get().getCv() != null) {
-            byte[] cvBytes = personaOpt.get().getCv();
+        if (postulacionOpt.isPresent()) {
+            Personas persona = postulacionOpt.get().getPersonas();
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_PDF);
-            headers.setContentDisposition(ContentDisposition.inline().filename("CV_" + id + ".pdf").build());
+            if (persona != null && persona.getCv() != null) {
+                byte[] cvBytes = persona.getCv();
 
-            return new ResponseEntity<>(cvBytes, headers, HttpStatus.OK);
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_PDF);
+                headers.setContentDisposition(ContentDisposition.inline().filename("CV_" + persona.getId() + ".pdf").build());
+
+                return new ResponseEntity<>(cvBytes, headers, HttpStatus.OK);
+            }
         }
 
         return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/postulaciones/{id}/estado")
-    public ResponseEntity<String> actualizarEstado(@PathVariable Long id, @RequestBody Map<String, String> body) {
-        System.out.println("✅ Solicitud PUT recibida para actualizar estado de la postulación ID: " + id);
-        System.out.println("📌 Cuerpo de la solicitud: " + body);
+    public ResponseEntity<Map<String, Object>> actualizarEstado(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> body) {
+
+        System.out.println("✅ Actualizando estado para postulación ID: " + id);
+        System.out.println("📌 Nuevo estado: " + body.get("estado"));
 
         Optional<Postulacion> postulacionOpt = postulacionRepository.findById(id);
         if (!postulacionOpt.isPresent()) {
-            System.out.println("❌ ERROR: No se encontró la postulación con ID: " + id);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Postulación no encontrada");
+            System.out.println("❌ Postulación no encontrada");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    Collections.singletonMap("error", "Postulación no encontrada")
+            );
         }
 
         String nuevoEstado = body.get("estado");
         if (nuevoEstado == null || nuevoEstado.isEmpty()) {
-            return ResponseEntity.badRequest().body("Error: El estado no puede estar vacío");
+            return ResponseEntity.badRequest().body(
+                    Collections.singletonMap("error", "El estado no puede estar vacío")
+            );
         }
 
         Postulacion postulacion = postulacionOpt.get();
+        System.out.println("🔄 Estado anterior: " + postulacion.getEstado());
         postulacion.setEstado(nuevoEstado);
-        postulacionRepository.save(postulacion);
 
-        return ResponseEntity.ok("Estado actualizado a: " + nuevoEstado);
+        // Guardar explícitamente
+        try {
+            postulacionRepository.save(postulacion);
+            System.out.println("💾 Estado guardado: " + postulacion.getEstado());
+
+            // Verificar en base de datos
+            Optional<Postulacion> postGuardada = postulacionRepository.findById(id);
+            System.out.println("🔍 Estado en BD después de guardar: "
+                    + postGuardada.map(Postulacion::getEstado).orElse("NO ENCONTRADA"));
+        } catch (Exception e) {
+            System.out.println("❌ Error al guardar: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonMap("error", "Error al guardar"));
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("message", "Estado actualizado correctamente");
+        response.put("estado", nuevoEstado);
+        response.put("postulacionId", id);
+
+        return ResponseEntity.ok(response);
     }
+
 }
