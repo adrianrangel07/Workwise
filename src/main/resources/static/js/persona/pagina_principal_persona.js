@@ -311,7 +311,6 @@ postularseBtn.addEventListener("click", function () {
                             showConfirmButton: false
                         }).then(() => {
                             postularseBtn.textContent = 'Postulado';
-                            postularseBtn.disabled = true;
                         });
                     } else {
                         Swal.fire({

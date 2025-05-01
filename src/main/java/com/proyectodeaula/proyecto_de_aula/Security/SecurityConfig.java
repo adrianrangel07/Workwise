@@ -16,7 +16,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                 //general
-                .requestMatchers("/", "/pagina/inicio", "/Estadisticas", "/recursos", "/verificar-correo", "/logout", "/uploadHDV", "/upload/photo", "/imagen/{id}","/notificaciones").permitAll()
+                .requestMatchers("/", "/pagina/inicio", "/Estadisticas", "/recursos", "/verificar-correo", "/logout", "/uploadHDV", "/upload/photo", "/imagen/{id}", "/notificaciones", "/perfil/verHDV", "/postulantes/{id}/verHDV").permitAll()
                 //importaciones
                 .requestMatchers("/Css/**", "/js/**", "/Imagenes/**", "/webjars/**").permitAll()
                 //prediccion
@@ -24,10 +24,9 @@ public class SecurityConfig {
                 //personas
                 .requestMatchers("/Register/personas", "/login/personas", "/personas/recursos", "/Contrasena-olvidada", "/cambiar-contrasena").permitAll()
                 //empresas
-                .requestMatchers("/Contraseña-olvidada-empresa", "/perfil/verHDV", "/Registrar/Empresa", "/login/Empresa", "/cambiar-contrasena-emp","/verificar-contrasena-eliminar","/eliminar-cuenta-empresa").permitAll()
+                .requestMatchers("/Contraseña-olvidada-empresa", "/Registrar/Empresa", "/login/Empresa", "/cambiar-contrasena-emp", "/verificar-contrasena-eliminar", "/eliminar-cuenta-empresa").permitAll()
                 .anyRequest().permitAll()
                 )
-                
                 .headers(headers -> headers
                 .contentSecurityPolicy(csp -> csp
                 .policyDirectives("script-src 'self' https://cdn.jsdelivr.net https://code.jquery.com 'unsafe-inline' 'unsafe-eval';")
