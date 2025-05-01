@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Función para abrir el modal
     const openModal = (card) => {
-
         // Obtener los datos de la tarjeta
         const title = card.querySelector('h3').innerText;
         const description = card.querySelector('p').innerText;
@@ -551,3 +550,4 @@ document.addEventListener('DOMContentLoaded', function () {
 function reloadFavorites() {
     setupFavorites();
 }
+

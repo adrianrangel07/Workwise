@@ -5,9 +5,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.proyectodeaula.proyecto_de_aula.model.Ofertas;
 import com.proyectodeaula.proyecto_de_aula.model.prediccion;
 
+
 import weka.classifiers.Classifier;
 import weka.core.DenseInstance;
 import weka.core.Instance;
@@ -31,6 +38,7 @@ import com.proyectodeaula.proyecto_de_aula.interfaces.Ofertas.OfertasRepository;
 @RestController
 public class PrediccionController {
 
+    @Autowired
     private OfertasRepository ofertaRepository;
 
     private Classifier clasificador;
@@ -89,7 +97,6 @@ public class PrediccionController {
             double clasePredicha = clasificador.classifyInstance(instancia);
             double confianzaWeka = distribucion[(int) clasePredicha];
 
-            // 5. Devolver el valor exacto de WEKA sin modificaciones
             return ResponseEntity.ok().body(Map.of(
                     "compatible", estructura.classAttribute().value((int) clasePredicha),
                     "confianzaWeka", confianzaWeka 
@@ -103,8 +110,84 @@ public class PrediccionController {
             ));
         }
     }
-    public record DetallePrediccion(String actual, String predicho, double confianzaWeka) {
+    @PostMapping("/recomendar")
+    public ResponseEntity<?> recomendarOfertas(@RequestBody prediccion datos) {
+        try {
+            // Obtener todas las ofertas de la base de datos
+            List<Ofertas> ofertas = ofertaRepository.findAll();
+            System.out.println("Ofertas: " + ofertas);
+            List<OfertaRecomendada> recomendadas = new ArrayList<>();
 
+            for (Ofertas oferta : ofertas) {
+                // Crear una instancia de WEKA para cada oferta
+                Instance instancia = new DenseInstance(estructura.numAttributes());
+                instancia.setDataset(estructura);
+
+                // Asignar los valores de la oferta
+                instancia.setValue(0, oferta.getTipo_empleo());
+                instancia.setValue(1, oferta.getModalidad());
+                instancia.setValue(2, oferta.getTipo_contrato());
+                instancia.setValue(3, oferta.getExperiencia());
+                instancia.setValue(4, oferta.getNivel_educativo());
+                instancia.setValue(5, oferta.getSector_oferta());
+
+                instancia.setValue(6, datos.getTipoEmpleoDeseado());
+                instancia.setValue(7, datos.getPreferenciaModalidad());
+                instancia.setValue(8, datos.getPreferenciaContrato());
+                instancia.setValue(9, datos.getExperienciaPersona());
+                instancia.setValue(10, datos.getNivelEstudioPersona());
+                instancia.setValue(11, datos.getSectorPersona());
+                instancia.setValue(12, datos.getEdadPersona());
+
+                // Obtener la distribución de probabilidades y la clase predicha
+                double[] distribucion = clasificador.distributionForInstance(instancia);
+                double clase = clasificador.classifyInstance(instancia);
+                double confianza = distribucion[(int) clase];
+
+                // Si la clase es "compatible", agregar a la lista de recomendadas
+                if (estructura.classAttribute().value((int) clase).equals("compatible")) {
+                    recomendadas.add(new OfertaRecomendada(oferta, confianza));
+                }
+                System.out.println("Clase predicha: " + estructura.classAttribute().value((int) clase));
+            }
+
+            // Ordenar las ofertas recomendadas por la confianza en orden descendente
+            recomendadas.sort(Comparator.comparingDouble(OfertaRecomendada::getConfianza).reversed());
+
+            // Limitar las recomendaciones a las 6 más compatibles
+            List<OfertaRecomendada> top6Recomendadas = recomendadas.stream()
+                .limit(6)  // Limitar a 6 ofertas
+                .collect(Collectors.toList());
+
+            return ResponseEntity.ok(top6Recomendadas);
+            
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of("error", "Error al generar recomendaciones", "detalle", e.getMessage()));
+        }
     }
-//    
+
+    
+
+    public record DetallePrediccion(String actual, String predicho, double confianzaWeka) {
+    }
+
+    public static class OfertaRecomendada {
+        private Ofertas oferta;
+        private double confianza;
+    
+        public OfertaRecomendada(Ofertas oferta, double confianza) {
+            this.oferta = oferta;
+            this.confianza = confianza;
+        }
+    
+        public Ofertas getOferta() {
+            return oferta;
+        }
+    
+        public double getConfianza() {
+            return confianza;
+        }
+    }
 }
