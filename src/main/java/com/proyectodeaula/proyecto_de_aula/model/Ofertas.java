@@ -39,8 +39,6 @@ public class Ofertas {
     @Column(name = "Duracion", columnDefinition = "Varchar(45)", nullable = false)
     String duracion;
 
-    //@Column(name = "tiempo", columnDefinition = "TIME", nullable = false)
-    //java.sql.Time tiempo;
     @Column(name = "Tipo_empleo", columnDefinition = "Varchar(45)", nullable = false)
     String tipo_empleo;
 
@@ -205,4 +203,5 @@ public class Ofertas {
     public void setPostulaciones(List<Postulacion> postulaciones) {
         this.postulaciones = postulaciones;
     }
+
 }

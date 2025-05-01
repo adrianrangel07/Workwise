@@ -127,125 +127,200 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(5px);
+  overflow-y: auto; /* Permitir scroll si el contenido es muy largo */
 }
 
 .modal-content {
   background: white;
-  padding: 30px;
-  border-radius: 12px;
+  border-radius: 16px;
   width: 90%;
-  max-width: 600px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  max-width: 700px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
   position: relative;
-  animation: modalFadeIn 0.3s ease-out;
+  animation: modalFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Evitar que el contenido se salga del modal */
 }
 
-@keyframes modalFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.modal-header {
+  padding: 25px 30px 15px;
+  border-bottom: 1px solid #f0f0f0;
+  background: #f9fafc;
 }
 
-.close-btn {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  font-size: 1.5em;
-  cursor: pointer;
-  color: #777;
-  transition: color 0.2s;
-  background: none;
+.modal-header h3 {
+  color: #0a1128;
+  font-size: 1.6em;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
   border: none;
-  padding: 5px;
 }
 
-.close-btn:hover {
-  color: #0a1128;
+.modal-body {
+  padding: 25px 30px;
+  flex: 1;
+  overflow-y: auto;
 }
 
-.modal-content h3 {
-  color: #0a1128;
-  font-size: 1.5em;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-.modal-content p {
-  margin: 10px 0;
-  line-height: 1.6;
-}
-
-.modal-buttons {
+.modal-footer {
+  padding: 20px 30px;
+  background: #f9fafc;
+  border-top: 1px solid #f0f0f0;
   display: flex;
   justify-content: flex-end;
+}
+
+.description-container {
+  margin-bottom: 25px;
+}
+
+.description-container h4 {
+  color: #0a1128;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.description-container p {
+  color: #555;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.modal-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin: 25px 0;
+}
+
+.modal-info-grid p {
+  margin: 0;
+  padding: 12px 15px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  font-size: 0.95em;
+}
+
+.modal-info-grid p strong {
+  font-weight: 600;
+  color: #0a1128;
+  margin-right: 8px;
+  min-width: 120px;
+}
+
+.modal-info-item::before {
+  margin-right: 10px;
+  color: #3a86ff;
+}
+
+.postulaciones-container {
   margin-top: 25px;
-  gap: 10px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.postulaciones-count {
+  display: inline-flex;
+  align-items: center;
+  background: #f0f7ff;
+  padding: 8px 15px;
+  border-radius: 20px;
+  color: #0a1128;
+  font-weight: 500;
+}
+
+.postulaciones-count i {
+  margin-right: 8px;
+  color: #3a86ff;
+}
+
+/* Botones mejorados */
+.modal-buttons {
+  display: flex;
+  gap: 12px;
 }
 
 .modal-buttons button {
-  padding: 8px 20px;
-  border-radius: 6px;
-  font-weight: 500;
-  transition: all 0.2s;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95em;
 }
 
-.modal-buttons button:hover {
-  transform: translateY(-2px);
+.modal-buttons button i {
+  font-size: 0.9em;
 }
 
 #edit-button {
-  background: #0a1128;
+  background: linear-gradient(to right, #0a1128, #1a365d);
+  color: white;
   border: none;
 }
 
 #delete-button {
-  background: #dc3545;
+  background: linear-gradient(to right, #dc3545, #c82333);
+  color: white;
   border: none;
 }
 
 #info-button {
-  background: #28a745;
+  background: linear-gradient(to right, #28a745, #218838);
+  color: white;
   border: none;
 }
 
-/* Formulario de edición */
-#edit-form {
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px solid #eee;
+.modal-buttons button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  opacity: 0.9;
 }
 
-#edit-form .form-control,
-#edit-form .form-select {
-  border-radius: 6px;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  margin-bottom: 15px;
+/* Estilos para el botón de cerrar */
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 1.8em;
+  cursor: pointer;
+  color: #777;
+  transition: all 0.2s;
+  background: none;
+  border: none;
+  padding: 5px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
 }
 
-#edit-form .form-label {
-  font-weight: 500;
+.close-btn:hover {
   color: #0a1128;
-  margin-bottom: 5px;
+  background: #f0f0f0;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .offer-container {
-    grid-template-columns: 1fr;
-    padding: 15px;
-    gap: 15px;
+  .modal-content {
+    width: 95%;
+    max-width: 95%;
   }
 
-  .modal-content {
-    padding: 20px;
+  .modal-info-grid {
+    grid-template-columns: 1fr;
   }
 
   .modal-buttons {
@@ -255,53 +330,67 @@ body {
   .modal-buttons button {
     width: 100%;
   }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding: 20px;
+  }
 }
 
-/* Estilos para el grid de información en el modal */
-.modal-info-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-  margin: 20px 0;
-  padding: 15px;
-  background: #f8f9fa;
-  border-radius: 8px;
+/* Animación de entrada */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.modal-info-grid p {
-  margin: 5px 0;
-  padding: 8px;
-  background: white;
-  border-radius: 5px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-/* Estilos para el formulario de edición */
+/* ========== FORMULARIO DE EDICIÓN CON SCROLL CORRECTO ========== */
 #edit-form {
-  margin-top: 20px;
-  padding: 20px;
-  background: #f8f9fa;
-  border-radius: 8px;
+  margin-top: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  max-height: calc(100vh - 200px); /* Ajustar según necesidad */
+  overflow-y: auto;
+  display: none; /* Mantenemos el display none inicial */
 }
 
-#edit-form .form-group {
-  margin-bottom: 15px;
+/* Contenedor principal del modal cuando está en modo edición */
+.modal.editing .modal-content {
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
 }
 
-#edit-form label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: 500;
+.modal.editing .modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0; /* Eliminamos el padding para que ocupe todo el espacio */
 }
 
-#edit-form input,
-#edit-form select,
-#edit-form textarea {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
+/* Ajustes para el formulario cuando está visible */
+#edit-form {
+  padding: 25px 30px;
+  background: #fff;
+}
+
+/* Asegurar que los elementos del formulario no causen overflow */
+.form-section {
+  margin-bottom: 25px;
+}
+
+/* Media queries para ajustar en diferentes tamaños */
+@media (max-width: 768px) {
+  #edit-form {
+    padding: 20px;
+    max-height: calc(100vh - 150px);
+  }
 }
 
 /* Sidebar */
