@@ -11,7 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.proyectodeaula.proyecto_de_aula.controller.NotificacionSSEController;
 import com.proyectodeaula.proyecto_de_aula.interfaceService.IofertaService;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Ofertas.Interfaz_ofertas;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Ofertas.OfertasRepository;
@@ -21,20 +20,24 @@ import com.proyectodeaula.proyecto_de_aula.model.Ofertas;
 import com.proyectodeaula.proyecto_de_aula.model.Personas;
 import com.proyectodeaula.proyecto_de_aula.model.Postulacion;
 
+import jakarta.transaction.Transactional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public class OfertaService implements IofertaService {
+
+    private static final Logger logger = LoggerFactory.getLogger(OfertaService.class);
 
     @Autowired
     private Interfaz_ofertas oferr;
 
     @Autowired
-    private OfertasRepository ofertaRepository;
+    public OfertasRepository ofertaRepository;
 
     @Autowired
     private PostulacionRepository postulacionRepository;
-
-    @Autowired
-    private NotificacionSSEController notificacionSSEController;
 
     @Override
     public List<Ofertas> listar_ofertas() {
@@ -71,28 +74,33 @@ public class OfertaService implements IofertaService {
     }
 
     @Override
-    public void update(long id, Ofertas updatedOffer) {
-        Optional<Ofertas> existingOfferOpt = ofertaRepository.findById(id);
-        if (existingOfferOpt.isPresent()) {
-            Ofertas existingOffer = existingOfferOpt.get();
-            // Actualiza los campos de la oferta
-            existingOffer.setTitulo_puesto(updatedOffer.getTitulo_puesto());
-            existingOffer.setDescripcion(updatedOffer.getDescripcion());
-            existingOffer.setSalario(updatedOffer.getSalario());
-            existingOffer.setMoneda(updatedOffer.getMoneda());
-            existingOffer.setDuracion(updatedOffer.getDuracion());
-            existingOffer.setPeriodo(updatedOffer.getPeriodo());
-            existingOffer.setModalidad(updatedOffer.getModalidad());
-            existingOffer.setTipo_empleo(updatedOffer.getTipo_empleo());
-            existingOffer.setTipo_contrato(updatedOffer.getTipo_contrato());
-            existingOffer.setNivel_educativo(updatedOffer.getNivel_educativo());
-            existingOffer.setExperiencia(updatedOffer.getExperiencia());
-            existingOffer.setSector_oferta(updatedOffer.getSector_oferta());
+    public Ofertas findById(long id) {
+        return ofertaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Oferta no encontrada con id: " + id));
+    }
 
-            ofertaRepository.save(existingOffer); // Guarda los cambios
-        } else {
-            throw new ResourceNotFoundException("Oferta no encontrada con id: " + id);
-        }
+    @Override
+    @Transactional
+    public void update(long id, Ofertas updatedOffer) {
+        Ofertas existingOffer = ofertaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Oferta no encontrada con id: " + id));
+
+        // Actualizar solo campos permitidos
+        existingOffer.setTitulo_puesto(updatedOffer.getTitulo_puesto());
+        existingOffer.setDescripcion(updatedOffer.getDescripcion());
+        existingOffer.setSalario(updatedOffer.getSalario());
+        existingOffer.setMoneda(updatedOffer.getMoneda());
+        existingOffer.setDuracion(updatedOffer.getDuracion());
+        existingOffer.setPeriodo(updatedOffer.getPeriodo());
+        existingOffer.setModalidad(updatedOffer.getModalidad());
+        existingOffer.setTipo_empleo(updatedOffer.getTipo_empleo());
+        existingOffer.setTipo_contrato(updatedOffer.getTipo_contrato());
+        existingOffer.setExperiencia(updatedOffer.getExperiencia());
+        existingOffer.setNivel_educativo(updatedOffer.getNivel_educativo());
+        existingOffer.setSector_oferta(updatedOffer.getSector_oferta());
+
+        ofertaRepository.save(existingOffer);
+        logger.info("Oferta actualizada ID: {}", id);
     }
 
     public int obtenerNumeroPostulaciones(long idOferta) {
@@ -103,11 +111,6 @@ public class OfertaService implements IofertaService {
             return oferta.getPostulaciones() != null ? oferta.getPostulaciones().size() : 0;
         }
         return 0;
-    }
-
-    @Override
-    public Ofertas findById(long id) {
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
     }
 
     public List<Personas> obtenerPostulantesPorOferta(long idOferta) {

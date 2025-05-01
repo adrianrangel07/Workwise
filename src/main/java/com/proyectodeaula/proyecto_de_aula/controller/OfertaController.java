@@ -3,6 +3,7 @@ package com.proyectodeaula.proyecto_de_aula.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.util.Collections;
+import java.util.Map;
+
 import com.proyectodeaula.proyecto_de_aula.interfaceService.IofertaService;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Personas.Interfaz_Per;
 import com.proyectodeaula.proyecto_de_aula.interfaces.postulacion.PostulacionRepository;
@@ -30,6 +34,7 @@ import com.proyectodeaula.proyecto_de_aula.model.Personas;
 import com.proyectodeaula.proyecto_de_aula.service.OfertaService;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 
 @Controller
 @RequestMapping
@@ -125,9 +130,47 @@ public class OfertaController {
     }
 
     @PutMapping("/offers/edit/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public void updateOffer(@PathVariable long id, @RequestBody Ofertas updatedOffer) {
-        offerService.update(id, updatedOffer); // Llamada al servicio para actualizar la oferta
+    @Transactional
+    public ResponseEntity<?> updateOffer(@PathVariable long id, @RequestBody Ofertas updatedOffer, HttpSession session) {
+        try {
+            // Verificar sesión y empresa
+            Empresas empresa = (Empresas) session.getAttribute("empresa");
+            if (empresa == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("error", "Sesión no válida"));
+            }
+
+            // Obtener y actualizar la oferta usando el servicio
+            Ofertas existingOffer = offerService.findById(id);
+                   
+            // Verificar que la oferta pertenece a la empresa
+            if (existingOffer.getEmpresa() == null || existingOffer.getEmpresa().getId() != empresa.getId()) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body(Map.of("error", "No tienes permiso para editar esta oferta"));
+            }
+
+            // Validar campos obligatorios
+            if (updatedOffer.getTitulo_puesto() == null || updatedOffer.getTitulo_puesto().isEmpty()
+                    || updatedOffer.getDescripcion() == null || updatedOffer.getDescripcion().isEmpty()
+                    || updatedOffer.getSalario() <= 0) {
+                return ResponseEntity.badRequest()
+                        .body(Map.of("error", "Campos obligatorios faltantes o inválidos"));
+            }
+
+            // Actualizar la oferta
+            offerService.update(id, updatedOffer);
+
+            return ResponseEntity.ok(Map.of(
+                    "message", "Oferta actualizada correctamente",
+                    "id", existingOffer.getId()
+            ));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("error", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body(Map.of("error", "Error al actualizar la oferta: " + e.getMessage()));
+        }
     }
 
     @GetMapping("/ofertas/{idOferta}/postulaciones/count")
