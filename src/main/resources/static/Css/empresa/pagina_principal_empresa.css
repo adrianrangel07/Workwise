@@ -627,6 +627,40 @@ body {
   color: white !important;
 }
 
+/* Estilos para ofertas deshabilitadas */
+.disabled-offer {
+  opacity: 0.7;
+  background-color: #f8f9fa;
+  border-left: 4px solid #6c757d;
+  position: relative;
+}
+
+.disabled-offer::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.disabled-offer .offer-content {
+  filter: grayscale(70%);
+}
+
+.disabled-offer h3,
+.disabled-offer p {
+  color: #6c757d !important;
+}
+
+.badge-secondary {
+  background-color: #6c757d;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+}
+
 /* Responsividad */
 @media (max-width: 768px) {
   .offer-container {

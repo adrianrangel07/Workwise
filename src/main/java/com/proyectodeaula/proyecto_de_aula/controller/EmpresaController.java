@@ -133,6 +133,11 @@ public class EmpresaController {
         // Obtener ofertas paginadas de la empresa
         Page<Ofertas> ofertasPage = ofertaService.listarOfertasPorEmpresaPaginado(empresa, PageRequest.of(page, size));
 
+        // Depuración: Verificar el estado de habilitación
+        ofertasPage.getContent().forEach(oferta -> {
+            System.out.println("Oferta ID: " + oferta.getId() + " - Habilitada: " + oferta.getHabilitada());
+        });
+
         model.addAttribute("Ofertas", ofertasPage.getContent());
         model.addAttribute("empresa", empresa);
         model.addAttribute("paginaActual", page);

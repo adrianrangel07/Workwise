@@ -111,6 +111,12 @@ public class OfertaController {
     public String guardarOferta(@ModelAttribute Ofertas oferta, HttpSession session) {
         Empresas empresa = (Empresas) session.getAttribute("empresa");
         oferta.setEmpresa(empresa);
+
+        // Asegurar que la oferta se guarde como habilitada
+        if (oferta.getHabilitada() == null) {
+            oferta.setHabilitada(true);
+        }
+
         offerService.save(oferta);
 
         String mensajeNotificacion = String.format(
@@ -142,7 +148,7 @@ public class OfertaController {
 
             // Obtener y actualizar la oferta usando el servicio
             Ofertas existingOffer = offerService.findById(id);
-                   
+
             // Verificar que la oferta pertenece a la empresa
             if (existingOffer.getEmpresa() == null || existingOffer.getEmpresa().getId() != empresa.getId()) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -181,6 +187,22 @@ public class OfertaController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
+    }
+
+    @PutMapping("/ofertas/{id}/toggle-habilitar")
+    public ResponseEntity<?> toggleHabilitarOferta(@PathVariable long id, HttpSession session) {
+        Empresas empresa = (Empresas) session.getAttribute("empresa");
+        if (empresa == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        Ofertas oferta = offerta.findById(id);
+        if (oferta.getEmpresa() == null || oferta.getEmpresa().getId() != empresa.getId()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        offerta.toggleHabilitar(id);
+        return ResponseEntity.ok().build();
     }
 
 }
