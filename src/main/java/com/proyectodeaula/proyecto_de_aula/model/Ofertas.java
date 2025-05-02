@@ -62,9 +62,12 @@ public class Ofertas {
 
     @Column(name = "nivel_educativo", columnDefinition = "varchar(50)", nullable = false)
     String nivel_educativo;
-  
+
     @Column(name = "sector_oferta", columnDefinition = "varchar(50)", nullable = false)
     String sector_oferta;
+
+    @Column(name = "habilitada", nullable = false, columnDefinition = "boolean default true")
+    private Boolean habilitada = true;
 
     @Transient
     private boolean postulado;
@@ -202,6 +205,14 @@ public class Ofertas {
 
     public void setPostulaciones(List<Postulacion> postulaciones) {
         this.postulaciones = postulaciones;
+    }
+
+    public Boolean getHabilitada() {
+        return habilitada;
+    }
+
+    public void setHabilitada(Boolean habilitada) {
+        this.habilitada = habilitada;
     }
 
 }
