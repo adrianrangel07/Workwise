@@ -1,10 +1,12 @@
 package com.proyectodeaula.proyecto_de_aula.controller;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -16,8 +18,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.proyectodeaula.proyecto_de_aula.model.Ofertas;
 import com.proyectodeaula.proyecto_de_aula.model.prediccion;
-
 
 import weka.classifiers.Classifier;
 import weka.core.DenseInstance;
@@ -45,20 +44,17 @@ public class PrediccionController {
     private Instances estructura;
 
     public PrediccionController() {
-        try {
-            // Cargar modelo
-            try (ObjectInputStream ois = new ObjectInputStream(
-                    getClass().getClassLoader().getResourceAsStream("weka/Modelo_entrenado_empleo.model"))) {
-                clasificador = (Classifier) ois.readObject();
+        try (InputStream arffStream = getClass().getClassLoader().getResourceAsStream("weka/empleo_recomendacion_simplificado.arff")) {
+            if (arffStream == null) {
+                throw new FileNotFoundException("Archivo ARFF no encontrado en resources");
             }
 
-            // Cargar estructura ARFF desde recursos
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("weka/empleo_recomendacion_simplificado.arff");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            estructura = new Instances(reader);
-            estructura.setClassIndex(estructura.numAttributes() - 1);
+            // Reiniciar el stream
+            InputStream arffStream2 = getClass().getClassLoader().getResourceAsStream("weka/empleo_recomendacion_simplificado.arff");
 
-        } catch (IOException | ClassNotFoundException e) {
+            estructura = new Instances(new BufferedReader(new InputStreamReader(arffStream2, StandardCharsets.UTF_8)));
+            estructura.setClassIndex(estructura.numAttributes() - 1);
+        } catch (IOException e) {
         }
     }
 
@@ -99,17 +95,18 @@ public class PrediccionController {
 
             return ResponseEntity.ok().body(Map.of(
                     "compatible", estructura.classAttribute().value((int) clasePredicha),
-                    "confianzaWeka", confianzaWeka 
+                    "confianzaWeka", confianzaWeka
             ));
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(Map.of(
-                    "error", "Error en la predicción",
-                    "detalle", e.getMessage()
-            ));
+                    .body(Map.of(
+                            "error", "Error en la predicción",
+                            "detalle", e.getMessage()
+                    ));
         }
     }
+
     @PostMapping("/recomendar")
     public ResponseEntity<?> recomendarOfertas(@RequestBody prediccion datos) {
         try {
@@ -156,36 +153,35 @@ public class PrediccionController {
 
             // Limitar las recomendaciones a las 6 más compatibles
             List<OfertaRecomendada> top6Recomendadas = recomendadas.stream()
-                .limit(6)  // Limitar a 6 ofertas
-                .collect(Collectors.toList());
+                    .limit(6) // Limitar a 6 ofertas
+                    .collect(Collectors.toList());
 
             return ResponseEntity.ok(top6Recomendadas);
-            
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of("error", "Error al generar recomendaciones", "detalle", e.getMessage()));
+                    .body(Map.of("error", "Error al generar recomendaciones", "detalle", e.getMessage()));
         }
     }
 
-    
-
     public record DetallePrediccion(String actual, String predicho, double confianzaWeka) {
+
     }
 
     public static class OfertaRecomendada {
+
         private Ofertas oferta;
         private double confianza;
-    
+
         public OfertaRecomendada(Ofertas oferta, double confianza) {
             this.oferta = oferta;
             this.confianza = confianza;
         }
-    
+
         public Ofertas getOferta() {
             return oferta;
         }
-    
+
         public double getConfianza() {
             return confianza;
         }

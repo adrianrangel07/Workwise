@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const cards = document.querySelectorAll('.offer-content');
     const modal = document.getElementById('modal');
     const closeModalBtn = document.querySelector('.close-btn');
+    const editForm = document.getElementById('edit-form');
+    const postCount = document.getElementById('postCount');
+    const formBusqueda = document.getElementById('formBusqueda');
 
     // Elementos del modal
     const modalElements = {
@@ -19,15 +22,6 @@ document.addEventListener('DOMContentLoaded', function () {
         educationLevel: document.getElementById('modal-educationLevel'),
         sector_oferta: document.getElementById('modal-sector_oferta')
     };
-
-    // Elementos de edición
-    const editForm = document.getElementById('edit-form');
-    const editButton = document.getElementById('edit-button');
-    const saveButton = document.getElementById('save-button');
-    const deleteButton = document.getElementById('delete-button');
-    const cancelButton = document.getElementById('cancel-button');
-    const infoButton = document.getElementById('info-button');
-    const postCount = document.getElementById('postCount');
 
     // Campos del formulario de edición
     const editFields = {
@@ -47,15 +41,61 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let currentOfferId = null;
 
-    // Función mejorada para abrir el modal
+    // ==================== FUNCIONES PRINCIPALES ====================
+
     function openModal(card) {
         currentOfferId = card.getAttribute('data-id');
+        const isDisabled = card.closest('.card').classList.contains('disabled-offer');
 
-        // Obtener todos los elementos de datos de la tarjeta
+        // Limpiar botones anteriores del modal
+        const modalButtons = document.querySelector('.modal-buttons');
+        modalButtons.innerHTML = '';
+
+        // 1. Botón de habilitar/deshabilitar
+        const toggleButton = document.createElement('button');
+        toggleButton.className = `btn ${isDisabled ? 'btn-success' : 'btn-warning'}`;
+        toggleButton.innerHTML = `<i class="fas ${isDisabled ? 'fa-check-circle' : 'fa-ban'}"></i> ${isDisabled ? 'Habilitar' : 'Deshabilitar'}`;
+        toggleButton.onclick = () => toggleOfferStatus(currentOfferId, isDisabled);
+        modalButtons.appendChild(toggleButton);
+
+        // 2. Botón de Editar (solo si está habilitada)
+        if (!isDisabled) {
+            const editButton = document.createElement('button');
+            editButton.className = 'btn btn-primary';
+            editButton.innerHTML = '<i class="fas fa-edit"></i> Editar';
+            editButton.onclick = prepareEditForm;
+            modalButtons.appendChild(editButton);
+        }
+
+        // 3. Botón de Eliminar
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'btn btn-danger';
+        deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i> Eliminar';
+        deleteButton.onclick = confirmDeleteOffer;
+        modalButtons.appendChild(deleteButton);
+
+        // 4. Botón de Más Detalles
+        const infoButton = document.createElement('button');
+        infoButton.className = 'btn btn-success';
+        infoButton.innerHTML = '<i class="fas fa-info-circle"></i> Más detalles';
+        infoButton.onclick = () => window.location.href = "/empresas/published-offers";
+        modalButtons.appendChild(infoButton);
+
+        // Llenar el modal con los datos
+        fillModalWithCardData(card);
+
+        // Mostrar número de postulaciones
+        mostrarPostulaciones(currentOfferId);
+
+        // Mostrar el modal
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function fillModalWithCardData(card) {
         const cardData = {
             title: card.querySelector('h3').textContent,
             description: card.querySelector('p:not(.visible-info p)').textContent,
-            // Obtenemos todos los datos de hidden-info
             salary: card.querySelector('.hidden-info p:nth-child(1) span').textContent,
             currency: card.querySelector('.hidden-info p:nth-child(2) span').textContent,
             duration: card.querySelector('.hidden-info p:nth-child(3) span').textContent,
@@ -68,7 +108,6 @@ document.addEventListener('DOMContentLoaded', function () {
             sector_oferta: card.querySelector('.hidden-info p:nth-child(10) span').textContent
         };
 
-        // Llenar el modal con todos los datos
         modalElements.title.textContent = cardData.title;
         modalElements.description.textContent = cardData.description;
         modalElements.salary.innerHTML = `<strong>Salario:</strong> ${cardData.salary}`;
@@ -81,19 +120,154 @@ document.addEventListener('DOMContentLoaded', function () {
         modalElements.experience.innerHTML = `<strong>Experiencia:</strong> ${cardData.experience}`;
         modalElements.educationLevel.innerHTML = `<strong>Nivel educativo:</strong> ${cardData.educationLevel}`;
         modalElements.sector_oferta.innerHTML = `<strong>Sector de oferta:</strong> ${cardData.sector_oferta}`;
-
-        // Mostrar número de postulaciones
-        mostrarPostulaciones(currentOfferId);
-
-        // Mostrar el modal
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
     }
+
+    async function toggleOfferStatus(id, isCurrentlyDisabled) {
+        try {
+            const response = await fetch(`/ofertas/${id}/toggle-habilitar`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(response.statusText || 'Error al cambiar estado');
+            }
+
+            await Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: `Oferta ${isCurrentlyDisabled ? 'habilitada' : 'deshabilitada'} correctamente`,
+                timer: 1500
+            });
+
+            location.reload();
+        } catch (error) {
+            console.error("Error:", error);
+            await Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message || 'Hubo un problema al cambiar el estado'
+            });
+        }
+    }
+
+    function prepareEditForm() {
+        // Ocultar elementos del modal de visualización
+        Object.values(modalElements).forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.modal-buttons button').forEach(btn => btn.style.display = 'none');
+        postCount.style.display = 'none';
+
+        // Mostrar formulario de edición
+        editForm.style.display = 'block';
+
+        // Autorellenar el formulario
+        editFields.title.value = modalElements.title.textContent.trim();
+        editFields.description.value = modalElements.description.textContent.trim();
+
+        // Extraer y formatear el salario
+        const rawSalary = modalElements.salary.textContent
+            .replace('Salario: ', '')
+            .replace(/[^0-9]/g, '');
+        editFields.salary.value = rawSalary;
+
+        // Autorellenar los selects
+        editFields.currency.value = getValueFromModal(modalElements.currency, 'Moneda: ');
+        editFields.duration.value = getValueFromModal(modalElements.duration, 'Duración: ');
+        editFields.period.value = getValueFromModal(modalElements.period, 'Periodo: ');
+        editFields.modalidad.value = getValueFromModal(modalElements.modalidad, 'Modalidad: ');
+        editFields.type.value = getValueFromModal(modalElements.type, 'Tipo de empleo: ');
+        editFields.typeContract.value = getValueFromModal(modalElements.typeContract, 'Tipo de contrato: ');
+        editFields.experience.value = getValueFromModal(modalElements.experience, 'Experiencia: ');
+        editFields.educationLevel.value = getValueFromModal(modalElements.educationLevel, 'Nivel educativo: ');
+        editFields.sector_oferta.value = getValueFromModal(modalElements.sector_oferta, 'Sector de oferta: ');
+
+        // Enfocar el primer campo
+        editFields.title.focus();
+    }
+
+    function confirmDeleteOffer() {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteOffer(currentOfferId);
+            }
+        });
+    }
+
+    async function deleteOffer(id) {
+        try {
+            const response = await fetch(`/offers/delete/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Error en la respuesta del servidor');
+            }
+
+            await Swal.fire({
+                icon: 'success',
+                title: 'Operación exitosa',
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+            location.reload();
+        } catch (error) {
+            console.error("Error:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Hubo un problema al procesar la solicitud'
+            });
+        }
+    }
+
+    // ==================== FUNCIONES AUXILIARES ====================
+
+    function getValueFromModal(element, prefix) {
+        return element.textContent.replace(prefix, '').trim();
+    }
+
+    function mostrarPostulaciones(idOferta) {
+        fetch(`/ofertas/${idOferta}/postulaciones/count`)
+            .then(response => {
+                if (!response.ok) throw new Error('Error al obtener postulaciones');
+                return response.json();
+            })
+            .then(data => {
+                const count = typeof data === 'number' ? data : 0;
+                document.getElementById('postulaciones-count').textContent =
+                    `${count} ${count === 1 ? 'persona se ha postulado' : 'personas se han postulado'}`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('postulaciones-count').textContent = 'No disponible';
+            });
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    // ==================== EVENT LISTENERS ====================
 
     // Event listeners para las tarjetas
     cards.forEach(card => {
         card.addEventListener('click', function (e) {
-            // Evitar que se active si se hace clic en un botón dentro de la tarjeta
             if (!e.target.closest('button')) {
                 openModal(card);
             }
@@ -108,60 +282,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    function closeModal() {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto'; // Restaurar scroll
-    }
-
-    // Función mejorada para manejar la edición
-    editButton.addEventListener('click', function () {
-        // Ocultar elementos del modal de visualización
-        Object.values(modalElements).forEach(el => el.style.display = 'none');
-        editButton.style.display = 'none';
-        deleteButton.style.display = 'none';
-        infoButton.style.display = 'none';
-        postCount.style.display = 'none';
-
-        // Mostrar formulario de edición
-        editForm.style.display = 'block';
-
-        // Autorellenar el formulario con los datos actuales
-        editFields.title.value = modalElements.title.textContent.trim();
-        editFields.description.value = modalElements.description.textContent.trim();
-
-        // Extraer y formatear los valores numéricos (como el salario)
-        const rawSalary = modalElements.salary.textContent
-            .replace('Salario: ', '')
-            .replace(/[^0-9]/g, '');
-
-        editFields.salary.value = rawSalary;
-
-        // Autorellenar los selects y demás campos
-        editFields.currency.value = getValueFromModal(modalElements.currency, 'Moneda: ');
-        editFields.duration.value = getValueFromModal(modalElements.duration, 'Duración: ');
-        editFields.period.value = getValueFromModal(modalElements.period, 'Periodo: ');
-        editFields.modalidad.value = getValueFromModal(modalElements.modalidad, 'Modalidad: ');
-        editFields.type.value = getValueFromModal(modalElements.type, 'Tipo de empleo: ');
-        editFields.typeContract.value = getValueFromModal(modalElements.typeContract, 'Tipo de contrato: ');
-        editFields.experience.value = getValueFromModal(modalElements.experience, 'Experiencia: ');
-        editFields.educationLevel.value = getValueFromModal(modalElements.educationLevel, 'Nivel educativo: ');
-        editFields.sector_oferta.value = getValueFromModal(modalElements.sector_oferta, 'Sector de oferta: ');
-
-
-        // Enfocar el primer campo del formulario
-        editFields.title.focus();
-    });
-
-    // Cancelar edición
-    cancelButton.addEventListener('click', function () {
-        location.reload();
-    });
-    // Función auxiliar para extraer valores del modal
-    function getValueFromModal(element, prefix) {
-        return element.textContent.replace(prefix, '').trim();
-    }
-    // Guardar cambios
-    saveButton.addEventListener('click', async function () {
+    // Guardar cambios en edición
+    document.getElementById('save-button').addEventListener('click', async function () {
         // Validar campos obligatorios
         if (!editFields.title.value || !editFields.description.value || !editFields.salary.value) {
             await Swal.fire({
@@ -221,100 +343,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Eliminar oferta
-    deleteButton.addEventListener('click', function () {
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: "¡No podrás revertir esto!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                fetch(`/offers/delete/${currentOfferId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                    .then(handleResponse)
-                    .catch(handleError);
-            }
-        });
+    // Cancelar edición
+    document.getElementById('cancel-button').addEventListener('click', function () {
+        location.reload();
     });
-
-    // Funciones auxiliares
-    function handleResponse(response) {
-        if (response.ok) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Operación exitosa',
-                showConfirmButton: false,
-                timer: 1500
-            }).then(() => {
-                location.reload();
-            });
-        } else {
-            throw new Error('Error en la respuesta del servidor');
-        }
-    }
-
-    function handleError(error) {
-        console.error("Error:", error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Hubo un problema al procesar la solicitud'
-        });
-    }
-
-    function mostrarPostulaciones(idOferta) {
-        fetch(`/ofertas/${idOferta}/postulaciones/count`)
-            .then(response => {
-                if (!response.ok) throw new Error('Error al obtener postulaciones');
-                return response.json();
-            })
-            .then(data => {
-                const count = typeof data === 'number' ? data : 0;
-                document.getElementById('postulaciones-count').textContent =
-                    `${count} ${count === 1 ? 'persona se ha postulado' : 'personas se han postulado'}`;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('postulaciones-count').textContent = 'No disponible';
-            });
-    }
-
-    // Formatear salarios
-    document.querySelectorAll(".hidden-info p strong").forEach(el => {
-        if (el.textContent.trim().toLowerCase().includes('salario')) {
-            const value = el.nextElementSibling.textContent.trim();
-            if (!isNaN(value.replace(/[^0-9]/g, ''))) {
-                el.nextElementSibling.textContent =
-                    Number(value.replace(/[^0-9]/g, '')).toLocaleString("es-CO");
-            }
-        }
-    });
-
-    // Cargar foto de perfil
-    const userAvatar = document.getElementById("user-avatar");
-    fetch("/empresas/photo")
-        .then(response => {
-            if (!response.ok) throw new Error('Foto no encontrada');
-            return response.blob();
-        })
-        .then(blob => {
-            userAvatar.src = URL.createObjectURL(blob);
-        })
-        .catch(() => {
-            userAvatar.src = "../Imagenes/imagenempresa.png";
-        });
 
     // Búsqueda de ofertas
-    const formBusqueda = document.getElementById('formBusqueda');
     if (formBusqueda) {
         formBusqueda.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -341,12 +375,38 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Función para normalizar texto de búsqueda
     function normalizeText(text) {
         return text.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
     }
+
+    // Cargar foto de perfil
+    const userAvatar = document.getElementById("user-avatar");
+    fetch("/empresas/photo")
+        .then(response => {
+            if (!response.ok) throw new Error('Foto no encontrada');
+            return response.blob();
+        })
+        .then(blob => {
+            userAvatar.src = URL.createObjectURL(blob);
+        })
+        .catch(() => {
+            userAvatar.src = "../Imagenes/imagenempresa.png";
+        });
+
+    // Formatear salarios
+    document.querySelectorAll(".hidden-info p strong").forEach(el => {
+        if (el.textContent.trim().toLowerCase().includes('salario')) {
+            const value = el.nextElementSibling.textContent.trim();
+            if (!isNaN(value.replace(/[^0-9]/g, ''))) {
+                el.nextElementSibling.textContent =
+                    Number(value.replace(/[^0-9]/g, '')).toLocaleString("es-CO");
+            }
+        }
+    });
 });
 
-// Función para cerrar sesión (global)
+// Función global para cerrar sesión
 function cerrarSesion(event) {
     event.preventDefault();
     Swal.fire({

@@ -115,8 +115,10 @@
                 <div id="resultadoBusqueda"></div>
 
                 <div class="offer-container">
-                    <div th:each="Oferta:${Ofertas}" class="card">
+                    <div th:each="Oferta:${Ofertas}" class="card"
+                        th:classappend="${Oferta.habilitada == null or !Oferta.habilitada} ? 'disabled-offer' : ''">
                         <div class="offer-content" th:data-id="${Oferta.id}">
+                            <span th:if="${Oferta.habilitada == null or !Oferta.habilitada}" class="badge badge-secondary">Deshabilitada</span>
                             <!-- Badge para destacar modalidad -->
                             <span class="badge-info" th:text="${Oferta.modalidad}"></span>
 

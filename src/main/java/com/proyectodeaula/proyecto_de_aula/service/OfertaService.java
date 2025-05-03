@@ -51,6 +51,9 @@ public class OfertaService implements IofertaService {
 
     @Override
     public int save(Ofertas O) {
+        if (O.getHabilitada() == null) {
+            O.setHabilitada(true);
+        }
         int res = 0;
         Ofertas Usu = oferr.save(O);  // Guardar oferta en la base de datos
         if (Usu != null) {
@@ -134,4 +137,27 @@ public class OfertaService implements IofertaService {
     public Page<Ofertas> listarOfertasPorEmpresaPaginado(Empresas empresa, Pageable pageable) {
         return ofertaRepository.findByEmpresa(empresa, pageable);
     }
+
+    @Override
+    public void toggleHabilitar(long id) {
+        Ofertas offer = findById(id);
+       
+        if (offer.getHabilitada() == null) {
+            offer.setHabilitada(false);
+        } else {
+            offer.setHabilitada(!offer.getHabilitada());
+        }
+        ofertaRepository.save(offer);
+    }
+
+    @Override
+    public List<Ofertas> listarTodasOfertasPorEmpresa(Empresas empresa) {
+        return ofertaRepository.findByEmpresa(empresa);
+    }
+
+    @Override
+    public Page<Ofertas> listarTodasOfertasPorEmpresaPaginado(Empresas empresa, Pageable pageable) {
+        return ofertaRepository.findByEmpresa(empresa, pageable);
+    }
+
 }
