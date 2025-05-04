@@ -75,7 +75,7 @@ public class AdminController {
         model.addAttribute("ofertasRecientes", ofertasRecientes);
         model.addAttribute("empresasRecientes", empresasRecientes);
 
-        return "Html/Admin/dashboard";
+        return "Html/admin/dashboard";
     }
 
     @GetMapping("/admin/usuarios")
@@ -99,7 +99,7 @@ public class AdminController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", usuariosPage.getTotalPages());
 
-        return "Html/Admin/usuarios";
+        return "Html/admin/usuarios";
     }
 
     @GetMapping("/admin/ofertas")
@@ -111,7 +111,7 @@ public class AdminController {
         List<Ofertas> ofertas = ofertaService.listar_ofertas();
         model.addAttribute("ofertas", ofertas);
 
-        return "Html/Admin/ofertas";
+        return "Html/admin/ofertas";
     }
 
     @GetMapping("/admin/empresas")
@@ -123,7 +123,7 @@ public class AdminController {
         List<Empresas> empresas = empresaService.listar_Emp();
         model.addAttribute("empresas", empresas);
 
-        return "Html/Admin/empresas";
+        return "Html/admin/empresas";
     }
 
     @GetMapping("/admin/logout")
@@ -184,6 +184,6 @@ public class AdminController {
         model.addAttribute("totalUsuarios", usuariosPage.getTotalElements());
         model.addAttribute("searchQuery", query); // Para mantener el término de búsqueda
 
-        return "Html/Admin/usuarios";
+        return "Html/admin/usuarios";
     }
 }
