@@ -1,0 +1,13 @@
+{
+    "login_titulo": "Sign in",
+    "login_subtitulo": "Stay updated on your professional world.",
+    "login_email": "Email",
+    "login_contraseña": "Password",
+    "login_mostrar_contraseña": "Show",
+    "login_ocultar_contraseña": "Hide",
+    "login_boton": "Login",
+    "login_olvido": "Forget Password?",
+    "registro_no_tienes_cuenta": "Don't have an account?",
+    "registro_singup": "Sign up"
+  }
+  
