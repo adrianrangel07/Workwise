@@ -160,4 +160,17 @@ public class OfertaService implements IofertaService {
         return ofertaRepository.findByEmpresa(empresa, pageable);
     }
 
+    public long contarOfertasActivas() {
+        return ofertaRepository.countByHabilitada(true); // Necesitas agregar este método en el repositorio
+    }
+
+    public List<Ofertas> obtenerOfertasRecientes(int i) {
+        Pageable pageable = PageRequest.of(0, i); 
+        Page<Ofertas> ofertasRecientes = ofertaRepository.findAllByOrderByIdDesc(pageable);
+        return ofertasRecientes.getContent();
+    }
+
+    public long contarPostulaciones() {
+        return postulacionRepository.count();
+    }
 }

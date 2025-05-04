@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - WKN</title>
+    <link rel="stylesheet" href="/Css/general/bootstrap.min.css">
+    <link rel="stylesheet" href="/Css/admin/dashboard.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="admin-sidebar">
+            <div class="admin-logo">
+                <img src="/Imagenes/wknblack.png" alt="WKN Logo">
+                <h3>Panel de Administración</h3>
+            </div>
+            <nav class="admin-nav">
+                <ul>
+                    <li class="active"><a th:href="@{/admin/dashboard}"><i class="fas fa-tachometer-alt"></i>
+                            Dashboard</a></li>
+                    <li><a th:href="@{/admin/usuarios}"><i class="fas fa-users"></i> Usuarios</a></li>
+                    <li><a th:href="@{/admin/ofertas}"><i class="fas fa-briefcase"></i> Ofertas</a></li>
+                    <li><a href="#"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="admin-main">
+            <!-- Header -->
+            <header class="admin-header">
+                <div class="admin-user">
+                    <span th:text="${session.adminEmail}"></span>
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Mi perfil</a></li>
+                            <li><a class="dropdown-item" th:href="@{/admin/logout}">Cerrar sesión</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="admin-content">
+                <h2>Bienvenido al Panel de Administración</h2>
+
+                <!-- Tarjetas de Resumen -->
+                <div class="admin-cards">
+                    <div class="admin-card">
+                        <div class="card-icon bg-primary">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3 th:text="${totalUsuarios}">0</h3>
+                            <p>Usuarios registrados</p>
+                        </div>
+                    </div>
+                    <div class="admin-card">
+                        <div class="card-icon bg-success">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3 th:text="${totalOfertas}">0</h3>
+                            <p>Ofertas activas</p>
+                        </div>
+                    </div>
+                    <div class="admin-card">
+                        <div class="card-icon bg-warning">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3 th:text="${totalPostulaciones}">0</h3>
+                            <p>Postulaciones</p>
+                        </div>
+                    </div>
+                    <div class="admin-card">
+                        <div class="card-icon bg-danger">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3 th:text="${totalEmpresas}">0</h3>
+                            <p>Empresas</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección de Usuarios Recientes -->
+                <div class="admin-section">
+                    <h3>Usuarios recientes</h3>
+                    <div class="recent-table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Email</th>
+                                    <th>Cedula</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="usuario : ${usuariosRecientes}">
+                                    <td th:text="${usuario.id}"></td>
+                                    <td th:text="${usuario.nombre + ' ' + usuario.apellido}"></td>
+                                    <td th:text="${usuario.email}"></td>
+                                    <td th:text="${usuario.identificacion}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Sección de Ofertas Recientes -->
+                <div class="admin-section">
+                    <h3>Ofertas recientes</h3>
+                    <div class="recent-table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Título</th>
+                                    <th>Empresa</th>
+                                    <th>Nit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="oferta : ${ofertasRecientes}">
+                                    <td th:text="${oferta.id}"></td>
+                                    <td th:text="${oferta.titulo_puesto}"></td>
+                                    <td th:text="${oferta.empresa?.nombreEmp} ?: 'Sin empresa'"></td>
+                                    <td th:text="${oferta.empresa?.nit} ?: 'Sin empresa'"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <p class="mb-1">PBX: (605) 123-4567 | Email: contacto@workwise.com</p>
+                </div>
+                <div class="footer-center">
+                    <p class="mb-1">© 2024 WorkWise. Todos los derechos reservados.</p>
+                </div>
+                <div class="footer-right">
+                    <a href="https://www.facebook.com/profile.php?id=61558650706843" target="_blank"><i
+                            class="fab fa-facebook"></i></a>
+
+                    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+
+                    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/general/bootstrap.bundle.min.js"></script>
+    <script src="/js/General/sweetalert2.all.min.js"></script>
+    <script src="/js/admin/dashboard.js"></script>
+</body>
+
+</html>

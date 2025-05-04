@@ -22,19 +22,40 @@ document.addEventListener("DOMContentLoaded", function () {
             text: 'Credenciales incorrectas. Inténtalo de nuevo.',
         });
     }
+
+    const adminLogout = urlParams.get("adminLogout");
+    if (adminLogout) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Sesión cerrada',
+            text: 'Has cerrado sesión como administrador.',
+        });
+    }
 });
 
 function validarFormulario() {
-    var email = document.getElementById('InputEmail').value;
-    var password = document.getElementById('password').value;
-    if (email.trim() === "" || password.trim() === "") {
+    var email = document.getElementById('InputEmail').value.trim();
+    var password = document.getElementById('password').value.trim();
+
+    if (email === "" || password === "") {
         Swal.fire({
             icon: 'warning',
             title: 'Campos vacíos',
             text: 'Por favor, ingresa tu correo y contraseña.',
         });
-        return false; // Evita el envío del formulario
+        return false;
     }
+
+    // Opcional: Validación especial para admin (puedes personalizar)
+    if (email.endsWith('@wkn.com') && password === 'admin123') {
+        // Esto es solo para dar un mensaje, el control real está en el backend
+        Swal.fire({
+            icon: 'info',
+            title: 'Acceso administrativo',
+            text: 'Estás ingresando como administrador',
+        });
+    }
+
     return true;
 }
 

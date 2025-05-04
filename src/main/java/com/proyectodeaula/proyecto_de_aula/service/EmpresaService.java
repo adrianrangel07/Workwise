@@ -94,4 +94,8 @@ public class EmpresaService implements IempresaService {
         Emp.save(emp);
     }
 
+    public long contarEmpresas() {
+        return dataemp.count();
+    }
+
 }

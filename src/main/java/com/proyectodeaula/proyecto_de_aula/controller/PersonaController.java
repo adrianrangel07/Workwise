@@ -65,6 +65,11 @@ public class PersonaController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    private static final Map<String, String> ADMIN_CREDENTIALS = Map.of(
+            "admin@wkn.com", "admin123",
+            "superadmin@wkn.com", "superadmin456"
+    );
+
     @GetMapping("/Register/personas")
     public String agregar(Model model) {
         Personas persona = new Personas();
@@ -88,6 +93,17 @@ public class PersonaController {
     public String iniciarSesion(HttpSession session, Model model,
             @RequestParam String email,
             @RequestParam String contraseña) {
+
+        // Primero verificar si es administrador
+        if (ADMIN_CREDENTIALS.containsKey(email)
+                && ADMIN_CREDENTIALS.get(email).equals(contraseña)) {
+
+            session.setAttribute("isAdmin", true);
+            session.setAttribute("adminEmail", email);
+            return "redirect:/admin/dashboard";
+        }
+
+        // Si no es admin, procesar como login normal de persona
         Personas persona = user.findByEmail(email);
 
         if (persona == null) {
@@ -95,10 +111,6 @@ public class PersonaController {
             model.addAttribute("error", "Credenciales incorrectas");
             return "redirect:/login/personas?error=true";
         }
-
-        System.out.println("Usuario encontrado: " + persona.getEmail());
-        System.out.println("Contraseña en BD: " + persona.getContraseña());
-        System.out.println("Contraseña ingresada: " + contraseña);
 
         if (passwordEncoder.matches(contraseña, persona.getContraseña())) {
             System.out.println("Contraseña correcta, iniciando sesión...");
@@ -404,12 +416,12 @@ public class PersonaController {
     public String pagina_inicio_principal() {
         return "Html/pagina_inicio";
     }
-  
+
     @GetMapping("/recursos")
     public String Recursos_invitados() {
         return "Html/Recursos";
     }
-    
+
     @GetMapping("/prediccion")
     public String prediccion(@RequestParam("id") Long ofertaId, Model model, HttpSession session) {
         Optional<Ofertas> oferta = ofertaRepository.findById(ofertaId);
@@ -432,7 +444,7 @@ public class PersonaController {
             return "error";
         }
     }
-    
+
     @GetMapping("/Estadisticas")
     public String estadistica() {
         return "Html/Estadisticas";

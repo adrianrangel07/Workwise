@@ -15,4 +15,7 @@ public interface OfertasRepository extends JpaRepository<Ofertas, Long> {
     
     List<Ofertas> findByEmpresa(Empresas empresa);
     Page<Ofertas> findByEmpresa(Empresas empresa, Pageable pageable);
+
+    Page<Ofertas> findAllByOrderByIdDesc(Pageable pageable);
+    long countByHabilitada(boolean b);
 }
