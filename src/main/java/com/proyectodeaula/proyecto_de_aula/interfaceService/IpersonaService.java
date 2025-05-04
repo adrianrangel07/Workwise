@@ -10,4 +10,5 @@ public interface IpersonaService {
     public Optional<Personas>listarId(Long id);
     public int save(Personas U);
     void eliminarPersona(Long id); 
+    Optional<Personas> obtenerPersonaPorId(Long id);
 }

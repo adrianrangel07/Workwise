@@ -18,7 +18,7 @@ public class SecurityConfig {
                 //general
                 .requestMatchers("/", "/pagina/inicio", "/Estadisticas", "/recursos", "/verificar-correo", "/logout", "/uploadHDV", "/upload/photo", "/imagen/{id}", "/notificaciones", "/perfil/verHDV", "/postulantes/{id}/verHDV").permitAll()
                 //importaciones
-                .requestMatchers("/Css/**", "/js/**", "/Imagenes/**", "/webjars/**").permitAll()
+                .requestMatchers("/Css/**", "/js/**", "/Imagenes/**", "/webjars/**", "/admin/**").permitAll()
                 //prediccion
                 .requestMatchers("/api/prediccion/**", "/api/prediccion", "/prediccion").permitAll()
                 //personas

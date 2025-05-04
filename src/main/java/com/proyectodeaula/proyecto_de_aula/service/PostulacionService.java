@@ -99,4 +99,8 @@ public class PostulacionService implements IpostulacionService {
         return false;
     }
 
+    public long contarPostulaciones() {
+        return postulacionRepository.count();
+    }
+
 }

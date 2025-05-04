@@ -1,9 +1,14 @@
 package com.proyectodeaula.proyecto_de_aula.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -61,7 +66,7 @@ public class PersonaService implements IpersonaService {
         per.setApellido(persona.getApellido());
 
         if (persona.getContraseña() != null && !persona.getContraseña().isEmpty()) {
-            if (!persona.getContraseña().startsWith("$2a$10$")) { 
+            if (!persona.getContraseña().startsWith("$2a$10$")) {
                 System.out.println("Encriptando nueva contraseña...");
                 per.setContraseña(passwordEncoder.encode(persona.getContraseña()));
             } else {
@@ -94,4 +99,48 @@ public class PersonaService implements IpersonaService {
         user.deleteById(id);
     }
 
+    public long contarUsuarios() {
+        return user.count();
+    }
+
+    public List<Personas> obtenerUsuariosRecientes(int i) {
+        return user.findTopNByOrderByIdDesc(i);
+    }
+
+    public Map<String, Object> obtenerUsuariosPaginados(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Personas> pageResult = user.findAll(pageable);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("usuarios", pageResult.getContent());
+        response.put("currentPage", pageResult.getNumber());
+        response.put("totalItems", pageResult.getTotalElements());
+        response.put("totalPages", pageResult.getTotalPages());
+
+        return response;
+    }
+
+    public void cambiarEstadoUsuario(Long id) {
+        Personas usuario = user.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        usuario.setActivo(!usuario.isActivo());
+        user.save(usuario);
+    }
+
+    public Page<Personas> listarUsuariosPaginados(Pageable pageable) {
+        return user.findAll(pageable);
+    }
+
+    @Override
+    public Optional<Personas> obtenerPersonaPorId(Long id) {
+        return user.findById(id);
+    }
+
+    public Personas guardarPersona(Personas persona) {
+        return user.save(persona);
+    }
+
+    public Page<Personas> buscarUsuarios(String query, Pageable pageable) {
+        return user.buscarPorNombreEmailOIdentificacion(query, pageable);
+    }
 }
