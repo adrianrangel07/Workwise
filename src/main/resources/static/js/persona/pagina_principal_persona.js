@@ -468,7 +468,6 @@ document.addEventListener("DOMContentLoaded", function () {
             timer: 2000,
             showConfirmButton: false
         }).then(() => {
-            // 🔹 Eliminar la variable de sesión después de mostrar la alerta
             fetch('/eliminarLoginSuccess', { method: 'POST' });
         });
     }

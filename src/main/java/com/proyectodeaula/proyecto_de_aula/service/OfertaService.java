@@ -141,7 +141,6 @@ public class OfertaService implements IofertaService {
     @Override
     public void toggleHabilitar(long id) {
         Ofertas offer = findById(id);
-       
         if (offer.getHabilitada() == null) {
             offer.setHabilitada(false);
         } else {
@@ -161,11 +160,11 @@ public class OfertaService implements IofertaService {
     }
 
     public long contarOfertasActivas() {
-        return ofertaRepository.countByHabilitada(true); // Necesitas agregar este método en el repositorio
+        return ofertaRepository.countByHabilitada(true); 
     }
 
     public List<Ofertas> obtenerOfertasRecientes(int i) {
-        Pageable pageable = PageRequest.of(0, i); 
+        Pageable pageable = PageRequest.of(0, i);
         Page<Ofertas> ofertasRecientes = ofertaRepository.findAllByOrderByIdDesc(pageable);
         return ofertasRecientes.getContent();
     }

@@ -119,4 +119,28 @@ public class PersonaService implements IpersonaService {
 
         return response;
     }
+
+    public void cambiarEstadoUsuario(Long id) {
+        Personas usuario = user.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        usuario.setActivo(!usuario.isActivo());
+        user.save(usuario);
+    }
+
+    public Page<Personas> listarUsuariosPaginados(Pageable pageable) {
+        return user.findAll(pageable);
+    }
+
+    @Override
+    public Optional<Personas> obtenerPersonaPorId(Long id) {
+        return user.findById(id);
+    }
+
+    public Personas guardarPersona(Personas persona) {
+        return user.save(persona);
+    }
+
+    public Page<Personas> buscarUsuarios(String query, Pageable pageable) {
+        return user.buscarPorNombreEmailOIdentificacion(query, pageable);
+    }
 }

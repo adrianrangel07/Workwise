@@ -10,12 +10,21 @@ document.getElementById('show-password').addEventListener('click', function () {
     }
 });
 
-// mensaje de error cuando la contraseña es incorrecta
+// Mensajes de error según el tipo
 document.addEventListener("DOMContentLoaded", function () {
     const urlParams = new URLSearchParams(window.location.search);
     const error = urlParams.get("error");
+    const cuentaDesactivada = urlParams.get("desactivada");
 
-    if (error) {
+    if (cuentaDesactivada) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Cuenta deshabilitada',
+            html: 'Tu cuenta ha sido deshabilitada. <br>Por favor, ponte en contacto con nuestro soporte.',
+            confirmButtonText: 'Entendido',
+            confirmButtonColor: '#3085d6'
+        });
+    } else if (error) {
         Swal.fire({
             icon: 'error',
             title: 'Oops...',

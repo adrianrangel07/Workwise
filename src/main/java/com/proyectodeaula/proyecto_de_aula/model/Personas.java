@@ -55,6 +55,9 @@ public class Personas {
 	@Column(name = "genero", columnDefinition = "VARCHAR(20)", nullable = false)
 	private String genero;
 
+	@Column(name = "activo")
+    private boolean activo = true; // Valor por defecto
+
 	@Lob
 	@Column(name = "foto", columnDefinition = "LONGBLOB")
 	private byte[] foto;
@@ -173,5 +176,13 @@ public class Personas {
 	public void setHvd(HvD hvd) {
 		this.hvd = hvd;
 	}
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
 }
 

@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proyectodeaula.proyecto_de_aula.interfaces.Personas.Interfaz_Per;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Personas.Interfaz_Persona;
@@ -91,6 +92,7 @@ public class PersonaController {
 
     @PostMapping("/login/personas")
     public String iniciarSesion(HttpSession session, Model model,
+            RedirectAttributes redirectAttributes,
             @RequestParam String email,
             @RequestParam String contraseña) {
 
@@ -110,6 +112,11 @@ public class PersonaController {
             System.out.println("No se encontró usuario con el email: " + email);
             model.addAttribute("error", "Credenciales incorrectas");
             return "redirect:/login/personas?error=true";
+        }
+        
+        if (!persona.isActivo()) {
+            redirectAttributes.addAttribute("desactivada", true);
+            return "redirect:/login/personas";
         }
 
         if (passwordEncoder.matches(contraseña, persona.getContraseña())) {

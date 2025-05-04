@@ -12,6 +12,7 @@ import com.proyectodeaula.proyecto_de_aula.interfaces.Empresas.Interfaz_Emp;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Empresas.Interfaz_Empresa;
 import com.proyectodeaula.proyecto_de_aula.model.Empresas;
 
+
 @Service
 public class EmpresaService implements IempresaService {
 
@@ -81,7 +82,7 @@ public class EmpresaService implements IempresaService {
 
         // Encriptar contraseña solo si es nueva o no está encriptada
         if (empresa.getContraseña() != null && !empresa.getContraseña().isEmpty()) {
-            if (!empresa.getContraseña().startsWith("$2a$10$")) {
+            if (!empresa.getContraseña().startsWith("List<empresas>a$")) {
                 System.out.println("Encriptando nueva contraseña...");
                 emp.setContraseña(passwordEncoder.encode(empresa.getContraseña()));
             } else {
@@ -96,6 +97,10 @@ public class EmpresaService implements IempresaService {
 
     public long contarEmpresas() {
         return dataemp.count();
+    }
+
+    public List<Empresas> obtenerEmpresasRecientes(int limit) {
+        return Emp.findTopNByOrderByIdDesc(limit);
     }
 
 }

@@ -1,61 +1,93 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Inicializar tooltips
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
+document.addEventListener('DOMContentLoaded', function () {
+    // Mobile menu toggle
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const adminSidebar = document.querySelector('.admin-sidebar');
+    const adminLogo = document.querySelector('.admin-logo');
 
-    // Confirmación para acciones importantes
-    document.querySelectorAll('.admin-action').forEach(button => {
-        button.addEventListener('click', function(e) {
-            if (!confirm('¿Estás seguro de realizar esta acción?')) {
-                e.preventDefault();
+    // Toggle sidebar on mobile
+    if (mobileMenuToggle && adminSidebar) {
+        mobileMenuToggle.addEventListener('click', function () {
+            adminSidebar.classList.toggle('active');
+            this.classList.toggle('active');
+        });
+    }
+
+    // Toggle sidebar when clicking logo (desktop)
+    if (adminLogo) {
+        adminLogo.addEventListener('click', function () {
+            if (window.innerWidth > 992) {
+                adminSidebar.classList.toggle('collapsed');
+                document.querySelector('.admin-main').classList.toggle('collapsed');
             }
         });
+    }
+
+    // Logout confirmation
+    const logoutBtn = document.querySelector('.logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: '¿Cerrar sesión?',
+                text: "Estás a punto de cerrar tu sesión como administrador",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, cerrar sesión',
+                cancelButtonText: 'Cancelar',
+                backdrop: 'rgba(0,0,0,0.4)'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = e.target.href;
+                }
+            });
+        });
+    }
+
+    // Active nav link highlight
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('.admin-nav a');
+
+    navLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPath) {
+            link.parentElement.classList.add('active');
+        }
     });
 
-    // Mostrar notificación si viene de logout
+    // Add animation to cards on load
+    const cards = document.querySelectorAll('.admin-card');
+    cards.forEach((card, index) => {
+        setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 100);
+    });
+
+    // Show logout success message
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('adminLogout')) {
+    if (urlParams.has('logoutSuccess')) {
         Swal.fire({
             icon: 'success',
             title: 'Sesión cerrada',
-            text: 'Has cerrado sesión como administrador correctamente.',
+            text: 'Has cerrado sesión correctamente.',
             timer: 3000,
-            showConfirmButton: false
+            showConfirmButton: false,
+            backdrop: 'rgba(0,0,0,0.4)'
+        }).then(() => {
+            window.location.href = '/login/personas';
         });
     }
 
-    // Gráficos (si decides implementar Chart.js)
-    if (typeof Chart !== 'undefined') {
-        initCharts();
-    }
-
-    // Función para inicializar gráficos
-    function initCharts() {
-        // Ejemplo de gráfico de usuarios registrados por mes
-        const ctx = document.getElementById('usersChart');
-        if (ctx) {
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
-                    datasets: [{
-                        label: 'Usuarios registrados',
-                        data: [12, 19, 3, 5, 2, 3],
-                        backgroundColor: 'rgba(0, 123, 255, 0.5)',
-                        borderColor: 'rgba(0, 123, 255, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
+    // Resize observer for sidebar
+    const resizeObserver = new ResizeObserver(entries => {
+        if (window.innerWidth <= 576) {
+            mobileMenuToggle.style.display = 'flex';
+        } else {
+            mobileMenuToggle.style.display = 'none';
+            adminSidebar.classList.remove('active');
         }
-    }
+    });
+
+    resizeObserver.observe(document.body);
 });
