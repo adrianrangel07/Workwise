@@ -84,71 +84,51 @@ document.addEventListener("DOMContentLoaded", () => {
             resultado.innerHTML = '';
         }
         // 🔍 Obtener y mostrar recomendaciones visuales
+        const usuarioData = {
+            tipoEmpleoDeseado: datos.tipo_empleo_deseado,
+            preferenciaModalidad: datos.preferencia_modalidad,
+            preferenciaContrato: datos.preferencia_contrato,
+            experienciaPersona: parseFloat(datos.experiencia_persona),
+            nivelEstudioPersona: datos.nivel_estudio_persona,
+            sectorPersona: datos.sector_persona,
+            edadPersona: parseFloat(datos.edad_persona),
+        };
+
         try {
-
-            const normalizarTexto = (texto) => texto.trim().replace(/\s+/g, "_");
-
-            const datosFinales = {
-                tipoEmpleoDeseado: datos.tipo_empleo_deseado,
-                preferenciaModalidad: datos.preferencia_modalidad,
-                preferenciaContrato: datos.preferencia_contrato,
-                experienciaPersona: parseFloat(datos.experiencia_persona),
-                nivelEstudioPersona: datos.nivel_estudio_persona,
-                sectorPersona: datos.sector_persona,
-                edadPersona: parseFloat(datos.edad_persona),
-            };
-
-            console.log("Datos enviados al backend:", datosFinales);
-
-            const recomendacionResponse = await fetch("/api/prediccion/recomendar", {
+            const response = await fetch("/api/prediccion/recomendar", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(datosFinales)
+                body: JSON.stringify(usuarioData)
             });
 
-            const recomendaciones = await recomendacionResponse.json();
-            const container = document.getElementById("recomendadas-container");
-            container.innerHTML = ""; // Limpiar previas
+            const recomendaciones = await response.json();
+            mostrarRecomendaciones(recomendaciones);
+
+        } catch (error) {
+            console.error("Error:", error);
+            mostrarError(error);
+        }
+
+        function mostrarRecomendaciones(recomendaciones) {
+            const container = document.getElementById("recomendaciones-container");
+            container.innerHTML = "";
 
             if (recomendaciones.length === 0) {
-                container.innerHTML = "<p>No se encontraron ofertas recomendadas.</p>";
-            } else {
-                recomendaciones.forEach(({ oferta, confianza }) => {
-                    const card = document.createElement("div");
-                    card.classList.add("card");
-
-                    card.innerHTML = `
-                        <div class="offer-content" data-id="${oferta.id}">
-                            <h3>${oferta.titulo}</h3>
-                            <p>${oferta.descripcion}</p>
-
-                            <div class="info">
-                                <div class="empresa"><strong>Empresa: </strong><span>${oferta.empresa}</span></div>
-                                <div class="salario"><strong>Salario: </strong><span>${oferta.salario}</span></div>
-                                <div class="moneda"><strong>Moneda: </strong><span>${oferta.moneda}</span></div>
-                                <div class="duracion"><strong>Duración: </strong><span>${oferta.duracion}</span></div>
-                                <div class="periodo"><strong>Periodo: </strong><span>${oferta.periodo}</span></div>
-                                <div class="tipo_empleo"><strong>Tipo: </strong><span>${oferta.tipoEmpleo}</span></div>
-                                <div class="modalidad"><strong>Modalidad: </strong><span>${oferta.modalidad}</span></div>
-                                <div class="tipo_contrato"><strong>Contrato: </strong><span>${oferta.tipoContrato}</span></div>
-                                <div class="confianza"><strong>Confianza del modelo: </strong>${(confianza * 100).toFixed(2)}%</div>
-                            </div>
-
-                            <div class="favorite-icon" data-id="${oferta.id}"><i class="far fa-heart"></i></div>
-                        </div>
-                    `;
-
-                    container.appendChild(card);
-                });
-
-                // Reaplicar funcionalidades existentes
-                loadAppliedStatus();      // Mostrar iconos de postulado
-                setupFavorites();         // Habilitar favoritos
-                reloadFavorites();        // Sincronizar estado
-                bindCardClickEvents();    // Abrir modal al hacer clic en la tarjeta
+                container.innerHTML = "<p>No se encontraron ofertas compatibles con tu perfil.</p>";
+                return;
             }
-        } catch (error) {
-            console.error("Error al cargar recomendaciones:", error);
+
+            recomendaciones.forEach(oferta => {
+                const card = document.createElement("div");
+                card.className = "oferta-card";
+                card.innerHTML = `
+                <h3>${oferta.titulo}</h3>
+                <p>${oferta.empresa} - ${oferta.modalidad}</p>
+                <p>Confianza: ${(oferta.confianza * 100).toFixed(1)}%</p>
+                <!-- Más detalles de la oferta -->
+            `;
+                container.appendChild(card);
+            });
         }
     });
 });

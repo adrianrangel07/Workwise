@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.proyectodeaula.proyecto_de_aula.model.Ofertas;
 import com.proyectodeaula.proyecto_de_aula.model.prediccion;
+import com.proyectodeaula.proyecto_de_aula.dto.OfertaRecomendadaDTO;
 
 import weka.classifiers.Classifier;
 import weka.core.DenseInstance;
@@ -44,17 +46,28 @@ public class PrediccionController {
     private Instances estructura;
 
     public PrediccionController() {
-        try (InputStream arffStream = getClass().getClassLoader().getResourceAsStream("weka/empleo_recomendacion_simplificado.arff")) {
-            if (arffStream == null) {
-                throw new FileNotFoundException("Archivo ARFF no encontrado en resources");
+        try {
+            // 1. Cargar modelo
+            try (ObjectInputStream ois = new ObjectInputStream(
+                    getClass().getClassLoader().getResourceAsStream("weka/Modelo_entrenado_empleo.model"))) {
+                clasificador = (Classifier) ois.readObject();
             }
-
-            // Reiniciar el stream
-            InputStream arffStream2 = getClass().getClassLoader().getResourceAsStream("weka/empleo_recomendacion_simplificado.arff");
-
-            estructura = new Instances(new BufferedReader(new InputStreamReader(arffStream2, StandardCharsets.UTF_8)));
-            estructura.setClassIndex(estructura.numAttributes() - 1);
-        } catch (IOException e) {
+    
+            // 2. Cargar estructura ARFF
+            try (InputStream arffStream = getClass().getClassLoader()
+                    .getResourceAsStream("weka/empleo_recomendacion_simplificado.arff")) {
+                
+                if (arffStream == null) {
+                    throw new FileNotFoundException("Archivo ARFF no encontrado en resources");
+                }
+    
+                estructura = new Instances(new BufferedReader(
+                        new InputStreamReader(arffStream, StandardCharsets.UTF_8)));
+                estructura.setClassIndex(estructura.numAttributes() - 1);
+            }
+    
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException("Error al cargar recursos", e);
         }
     }
 
@@ -113,8 +126,9 @@ public class PrediccionController {
             // Obtener todas las ofertas de la base de datos
             List<Ofertas> ofertas = ofertaRepository.findAll();
             System.out.println("Ofertas: " + ofertas);
-            List<OfertaRecomendada> recomendadas = new ArrayList<>();
+            List<OfertaRecomendadaDTO> recomendadas = new ArrayList<>();
 
+            
             for (Ofertas oferta : ofertas) {
                 // Crear una instancia de WEKA para cada oferta
                 Instance instancia = new DenseInstance(estructura.numAttributes());
@@ -135,55 +149,94 @@ public class PrediccionController {
                 instancia.setValue(10, datos.getNivelEstudioPersona());
                 instancia.setValue(11, datos.getSectorPersona());
                 instancia.setValue(12, datos.getEdadPersona());
+                // Atributo 13: coincide_tipo_empleo
+                instancia.setValue(estructura.attribute("coincide_tipo_empleo"), 
+                estructura.attribute("coincide_tipo_empleo").indexOfValue(
+                    oferta.getTipo_empleo().equals(datos.getTipoEmpleoDeseado()) ? "Si" : "No"
+                ));
 
-                // Obtener la distribución de probabilidades y la clase predicha
+                // Atributo 14: coincide_modalidad
+                instancia.setValue(estructura.attribute("coincide_modalidad"), 
+                estructura.attribute("coincide_modalidad").indexOfValue(
+                    oferta.getModalidad().equals(datos.getPreferenciaModalidad()) ? "Si" : "No"
+                ));
+
+                // Atributo 15: coincide_contrato
+                instancia.setValue(estructura.attribute("coincide_contrato"), 
+                estructura.attribute("coincide_contrato").indexOfValue(
+                    oferta.getTipo_contrato().equals(datos.getPreferenciaContrato()) ? "Si" : "No"
+                ));
+
+                // Atributo 16: coincide_estudios
+                instancia.setValue(estructura.attribute("coincide_estudios"), 
+                estructura.attribute("coincide_estudios").indexOfValue(
+                    datos.getNivelEstudioPersona().equals(oferta.getNivel_educativo()) ? "Si" : "No"
+                ));
+
+                // Atributo 17: coincide_sector
+                instancia.setValue(estructura.attribute("coincide_sector"), 
+                estructura.attribute("coincide_sector").indexOfValue(
+                    oferta.getSector_oferta().equals(datos.getSectorPersona()) ? "Si" : "No"
+                ));
+
+                // Atributo 18: experiencia_suficiente
+                instancia.setValue(estructura.attribute("experiencia_suficiente"), 
+                estructura.attribute("experiencia_suficiente").indexOfValue(
+                    datos.getExperienciaPersona() >= oferta.getExperiencia() ? "Si" : "No"
+                ));
+
                 double[] distribucion = clasificador.distributionForInstance(instancia);
                 double clase = clasificador.classifyInstance(instancia);
+                String clasePredicha = estructura.classAttribute().value((int) clase);
                 double confianza = distribucion[(int) clase];
 
                 // Si la clase es "compatible", agregar a la lista de recomendadas
-                if (estructura.classAttribute().value((int) clase).equals("compatible")) {
-                    recomendadas.add(new OfertaRecomendada(oferta, confianza));
+                if ("Si".equalsIgnoreCase(clasePredicha)) {
+                    OfertaRecomendadaDTO dto = new OfertaRecomendadaDTO(oferta, confianza);
+                    dto.setIdOferta(oferta.getId());
+                    dto.setTitulo(oferta.getTitulo_puesto());
+                    dto.setDescripcion(oferta.getDescripcion());
+                    dto.setDuracion(oferta.getDuracion());
+                    dto.setSalario(oferta.getSalario());
+                    dto.setTipoEmpleo(oferta.getTipo_empleo());
+                    dto.setModalidad(oferta.getModalidad());
+                    dto.setTipoContrato(oferta.getTipo_contrato());
+                    dto.setExperiencia(oferta.getExperiencia());
+                    dto.setMoneda(oferta.getMoneda());
+                    dto.setPeriodo(oferta.getPeriodo());
+                    dto.setSector(oferta.getSector_oferta());
+                    dto.setNivelEstudio(oferta.getNivel_educativo());
+                    dto.setConfianza(confianza);
+
+                    if (oferta.getEmpresa() != null) {
+                        dto.setIdEmpresa(oferta.getEmpresa().getId());
+                        dto.setNombreEmpresa(oferta.getEmpresa().getNombreEmp());
+                    }
+                    recomendadas.add(dto);
                 }
-                System.out.println("Clase predicha: " + estructura.classAttribute().value((int) clase));
+                else {
+                    System.out.println("Oferta NO recomendada: " + oferta.getId() + " | Clase: " + clasePredicha+ " | Confianza: " + distribucion[(int) clase]);
+                }
             }
+            
 
-            // Ordenar las ofertas recomendadas por la confianza en orden descendente
-            recomendadas.sort(Comparator.comparingDouble(OfertaRecomendada::getConfianza).reversed());
-
-            // Limitar las recomendaciones a las 6 más compatibles
-            List<OfertaRecomendada> top6Recomendadas = recomendadas.stream()
-                    .limit(6) // Limitar a 6 ofertas
-                    .collect(Collectors.toList());
-
-            return ResponseEntity.ok(top6Recomendadas);
-
+            recomendadas.sort(Comparator.comparingDouble(OfertaRecomendadaDTO::getConfianza).reversed());
+            return ResponseEntity.ok(recomendadas.stream().limit(6).collect(Collectors.toList()));
+    
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("error", "Error al generar recomendaciones", "detalle", e.getMessage()));
+            // Log detallado
+            System.err.println("Error en predicción: " + e.getMessage());
+            e.printStackTrace();
+            
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                Map.of(
+                    "error", "Datos inválidos",
+                    "detalle", (e.getMessage() != null) ? e.getMessage() : "Campo 'value' es nulo"
+                )
+            );
         }
     }
 
     public record DetallePrediccion(String actual, String predicho, double confianzaWeka) {
-
-    }
-
-    public static class OfertaRecomendada {
-
-        private Ofertas oferta;
-        private double confianza;
-
-        public OfertaRecomendada(Ofertas oferta, double confianza) {
-            this.oferta = oferta;
-            this.confianza = confianza;
-        }
-
-        public Ofertas getOferta() {
-            return oferta;
-        }
-
-        public double getConfianza() {
-            return confianza;
-        }
     }
 }
