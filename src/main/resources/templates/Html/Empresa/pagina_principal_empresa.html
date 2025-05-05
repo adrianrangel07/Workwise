@@ -89,30 +89,31 @@
                         </div>
 
                     </form>
-                    
+
 
                     <ul class="navbar-nav flex-nowrap ms-auto">
                         <!-- boton idioma -->
-                    <div class="language-selector d-flex align-items-center position-relative" style="margin-right: 30px;">
-                        <span class="me-2 fw-bold" data-trad="idioma.etiqueta">Idioma:</span>
+                        <div class="language-selector d-flex align-items-center position-relative"
+                            style="margin-right: 30px;">
+                            <span class="me-2 fw-bold" data-trad="idioma.etiqueta">Idioma:</span>
 
-                        <!-- Botón que muestra icono y al hacer clic despliega selector -->
-                        <div id="language-display" class="d-flex align-items-center" style="cursor: pointer;">
-                            <i class="fas fa-language" id="language-toggle"></i>
-                        </div>
+                            <!-- Botón que muestra icono y al hacer clic despliega selector -->
+                            <div id="language-display" class="d-flex align-items-center" style="cursor: pointer;">
+                                <i class="fas fa-language" id="language-toggle"></i>
+                            </div>
 
-                        <!-- Menú desplegable -->
-                        <div id="language-options" class="dropdown-menu show p-2"
-                            style="display: none; position: absolute; top: 100%; left: 0; z-index: 1000;">
-                            <div class="dropdown-item d-flex align-items-center" onclick="selectLanguage('es')">
-                                <img src="https://flagcdn.com/w20/es.png" alt="ES" class="me-2"> ES
-                            </div>
-                            <div class="dropdown-item d-flex align-items-center" onclick="selectLanguage('en')">
-                                <img src="https://flagcdn.com/w20/us.png" alt="EN" class="me-2"> ENG
+                            <!-- Menú desplegable -->
+                            <div id="language-options" class="dropdown-menu show p-2"
+                                style="display: none; position: absolute; top: 100%; left: 0; z-index: 1000;">
+                                <div class="dropdown-item d-flex align-items-center" onclick="selectLanguage('es')">
+                                    <img src="https://flagcdn.com/w20/es.png" alt="ES" class="me-2"> ES
+                                </div>
+                                <div class="dropdown-item d-flex align-items-center" onclick="selectLanguage('en')">
+                                    <img src="https://flagcdn.com/w20/us.png" alt="EN" class="me-2"> ENG
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- fin boton idioma -->
+                        <!-- fin boton idioma -->
                         <li class="nav-item dropdown no-arrow">
                             <div class="nav-item dropdown no-arrow" id="empresa-container">
                                 <img id="user-avatar" src="../Imagenes/imagenempresa.png" alt="Empresa Logo">
@@ -122,8 +123,7 @@
 
                                 <a class="dropdown-toggle nav-link mi-link" aria-expanded="false"
                                     data-bs-toggle="dropdown" href="#">
-                                    <span id="empresa" th:text="${empresa.nombreEmp}"
-                                        data-trad="navbar.cuenta">Cuenta</span>
+                                    <span id="empresa" th:text="${empresa.nombreEmp}">Cuenta</span>
                                 </a>
 
                                 <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
@@ -353,54 +353,68 @@
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="edit-typeContract" class="form-label" data-trad="form.contractTypeLabel">Tipo de Contrato*</label>
+                                    <label for="edit-typeContract" class="form-label"
+                                        data-trad="form.contractTypeLabel">Tipo de Contrato*</label>
                                     <select id="edit-typeContract" class="form-select" required>
-                                        <option value="Contrato obra o labor" data-trad="form.contractTypeWorkOrLabor">Contrato obra o labor</option>
-                                        <option value="Contrato fijo" data-trad="form.contractTypePermanent">Contrato fijo</option>
-                                        <option value="Contrato indefinido" data-trad="form.contractTypeIndefinite">Contrato indefinido</option>
-                                        <option value="Contrato por prácticas" data-trad="form.contractTypeInternship">Contrato por prácticas</option>
-                                        <option value="Contrato temporal" data-trad="form.contractTypeTemporary">Contrato temporal</option>
+                                        <option value="Contrato obra o labor" data-trad="form.contractTypeWorkOrLabor">
+                                            Contrato obra o labor</option>
+                                        <option value="Contrato fijo" data-trad="form.contractTypePermanent">Contrato
+                                            fijo</option>
+                                        <option value="Contrato indefinido" data-trad="form.contractTypeIndefinite">
+                                            Contrato indefinido</option>
+                                        <option value="Contrato por prácticas" data-trad="form.contractTypeInternship">
+                                            Contrato por prácticas</option>
+                                        <option value="Contrato temporal" data-trad="form.contractTypeTemporary">
+                                            Contrato temporal</option>
                                     </select>
                                 </div>
-                            
+
                                 <div class="col-md-6 mb-3">
-                                    <label for="edit-duration" class="form-label" data-trad="form.contractDurationLabel">Duración del Contrato*</label>
+                                    <label for="edit-duration" class="form-label"
+                                        data-trad="form.contractDurationLabel">Duración del Contrato*</label>
                                     <select id="edit-duration" class="form-select" required>
                                         <option value="1 mes" data-trad="form.duration1Month">1 Mes</option>
                                         <option value="3 meses" data-trad="form.duration3Months">3 Meses</option>
                                         <option value="6 meses" data-trad="form.duration6Months">6 Meses</option>
                                         <option value="1 año" data-trad="form.duration1Year">1 Año</option>
-                                        <option value="Indefinido" data-trad="form.durationIndefinite">Indefinido</option>
+                                        <option value="Indefinido" data-trad="form.durationIndefinite">Indefinido
+                                        </option>
                                     </select>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
 
                         <!-- Sección de Salario -->
                         <div class="form-section">
-                            <h4 class="section-title" data-trad="form.salaryInfoTitle"><i class="fas fa-money-bill-wave"></i> Información Salarial</h4>
-                        
+                            <h4 class="section-title" data-trad="form.salaryInfoTitle"><i
+                                    class="fas fa-money-bill-wave"></i> Información Salarial</h4>
+
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="edit-salary" class="form-label" data-trad="form.salaryLabel">Salario*</label>
+                                    <label for="edit-salary" class="form-label"
+                                        data-trad="form.salaryLabel">Salario*</label>
                                     <div class="input-group">
                                         <span class="input-group-text" data-trad="form.currencySymbol">$</span>
-                                        <input type="number" id="edit-salary" class="form-control" placeholder="Ej: 3000000" required>
+                                        <input type="number" id="edit-salary" class="form-control"
+                                            placeholder="Ej: 3000000" required>
                                     </div>
-                                    <div class="form-text" data-trad="form.salaryInfoText">Valor numérico sin puntos ni comas</div>
+                                    <div class="form-text" data-trad="form.salaryInfoText">Valor numérico sin puntos ni
+                                        comas</div>
                                 </div>
-                        
+
                                 <div class="col-md-3 mb-3">
-                                    <label for="edit-currency" class="form-label" data-trad="form.currencyLabel">Moneda*</label>
+                                    <label for="edit-currency" class="form-label"
+                                        data-trad="form.currencyLabel">Moneda*</label>
                                     <select id="edit-currency" class="form-select" required>
                                         <option value="COP" data-trad="form.currencyCOP">COP</option>
                                         <option value="USD" data-trad="form.currencyUSD">USD</option>
                                         <option value="EUR" data-trad="form.currencyEUR">EUR</option>
                                     </select>
                                 </div>
-                        
+
                                 <div class="col-md-3 mb-3">
-                                    <label for="edit-period" class="form-label" data-trad="form.periodLabel">Periodo*</label>
+                                    <label for="edit-period" class="form-label"
+                                        data-trad="form.periodLabel">Periodo*</label>
                                     <select id="edit-period" class="form-select" required>
                                         <option value="Mensual" data-trad="form.periodMonthly">Mensual</option>
                                         <option value="Quincenal" data-trad="form.periodBiweekly">Quincenal</option>
@@ -410,15 +424,17 @@
                                 </div>
                             </div>
                         </div>
-                        
+
 
                         <!-- Sección de Requisitos -->
                         <div class="form-section">
-                            <h4 class="section-title" data-trad="form.requirementsTitle"><i class="fas fa-graduation-cap"></i> Requisitos</h4>
-                        
+                            <h4 class="section-title" data-trad="form.requirementsTitle"><i
+                                    class="fas fa-graduation-cap"></i> Requisitos</h4>
+
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="edit-experience" class="form-label" data-trad="form.experienceLabel">Experiencia Requerida (años)*</label>
+                                    <label for="edit-experience" class="form-label"
+                                        data-trad="form.experienceLabel">Experiencia Requerida (años)*</label>
                                     <select id="edit-experience" class="form-select" required>
                                         <option value="0" data-trad="form.experienceNone">Sin experiencia</option>
                                         <option value="1" data-trad="form.experience1Year">1 año</option>
@@ -427,29 +443,36 @@
                                         <option value="5" data-trad="form.experience5Years">5 años o más</option>
                                     </select>
                                 </div>
-                        
+
                                 <div class="col-md-6 mb-3">
-                                    <label for="edit-educationLevel" class="form-label" data-trad="form.educationLevelLabel">Nivel Educativo*</label>
+                                    <label for="edit-educationLevel" class="form-label"
+                                        data-trad="form.educationLevelLabel">Nivel Educativo*</label>
                                     <select id="edit-educationLevel" class="form-select" required>
-                                        <option value="Bachiller" data-trad="form.educationHighSchool">Bachiller</option>
+                                        <option value="Bachiller" data-trad="form.educationHighSchool">Bachiller
+                                        </option>
                                         <option value="Técnico" data-trad="form.educationTechnical">Técnico</option>
-                                        <option value="Tecnólogo" data-trad="form.educationTechnologist">Tecnólogo</option>
-                                        <option value="Profesional" data-trad="form.educationProfessional">Profesional</option>
-                                        <option value="Posgrado" data-trad="form.educationPostgraduate">Posgrado</option>
+                                        <option value="Tecnólogo" data-trad="form.educationTechnologist">Tecnólogo
+                                        </option>
+                                        <option value="Profesional" data-trad="form.educationProfessional">Profesional
+                                        </option>
+                                        <option value="Posgrado" data-trad="form.educationPostgraduate">Posgrado
+                                        </option>
                                         <option value="Ninguno" data-trad="form.educationNone">Ninguno</option>
                                     </select>
                                 </div>
                             </div>
-                        
+
                             <div class="row">
                                 <div class="col-md-12 mb-3">
-                                    <label for="edit-sector_oferta" class="form-label" data-trad="form.sectorLabel">Sector de la Oferta*</label>
+                                    <label for="edit-sector_oferta" class="form-label"
+                                        data-trad="form.sectorLabel">Sector de la Oferta*</label>
                                     <select id="edit-sector_oferta" class="form-select" required>
                                         <option value="Tecnología" data-trad="form.sectorTech">Tecnología</option>
                                         <option value="Salud" data-trad="form.sectorHealth">Salud</option>
                                         <option value="Educación" data-trad="form.sectorEducation">Educación</option>
                                         <option value="Finanzas" data-trad="form.sectorFinance">Finanzas</option>
-                                        <option value="Manufactura" data-trad="form.sectorManufacturing">Manufactura</option>
+                                        <option value="Manufactura" data-trad="form.sectorManufacturing">Manufactura
+                                        </option>
                                         <option value="Comercio" data-trad="form.sectorCommerce">Comercio</option>
                                         <option value="Servicios" data-trad="form.sectorServices">Servicios</option>
                                         <option value="Otro" data-trad="form.sectorOther">Otro</option>
@@ -484,11 +507,11 @@
                     <a href="https://www.facebook.com/profile.php?id=61558650706843" target="_blank">
                         <i class="fab fa-facebook" data-trad="footer.facebook"></i>
                     </a>
-    
+
                     <a href="https://twitter.com" target="_blank">
                         <i class="fab fa-twitter" data-trad="footer.twitter"></i>
                     </a>
-    
+
                     <a href="https://instagram.com" target="_blank">
                         <i class="fab fa-instagram" data-trad="footer.instagram"></i>
                     </a>
