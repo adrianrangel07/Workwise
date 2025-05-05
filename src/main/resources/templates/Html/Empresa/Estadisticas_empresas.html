@@ -23,35 +23,55 @@
 <body>
     <div class="contenedor">
         <header class="top-bar">
-            <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark"
-                style="background: #343A40 !important;">
-                <div class="container-fluid d-flex flex-column p-0"><a
-                        class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
-                        th:href="@{/empresas/pagina_principal}"><img src="/Imagenes/wwk_white.png" width="61"
-                            height="58" style="width: 50px;height: 50px;">
+            <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark">
+                <div class="container-fluid d-flex flex-column p-0">
+                    <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
+                        th:href="@{/empresas/pagina_principal}">
+                        <img src="/Imagenes/wwk_white.png" width="61" height="58" style="width: 50px;height: 50px;">
                         <div class="sidebar-brand-icon rotate-n-15"></div>
-                        <div class="sidebar-brand-text mx-3"><span>Workwise</span></div>
+                        <div class="sidebar-brand-text mx-3">
+                            <span data-trad="sidebar.workwise">Workwise</span>
+                        </div>
                     </a>
-                    <span style="font-size: 15px; text-align: center; color: white;">Solo empresas</span>
+                    <span style="font-size: 15px; text-align: center; color: white;" data-trad="sidebar.soloEmpresas">Solo
+                        empresas</span>
                     <hr class="sidebar-divider my-0">
                     <ul class="navbar-nav text-light" id="accordionSidebar">
-                        <li class="nav-item"><a class="nav-link" th:href="@{/empresas/pagina_principal}">
-                                <i class="fas fa-home"></i><span>Inicio</span></a>
+                        <li class="nav-item">
+                            <a class="nav-link active" th:href="@{/empresas/pagina_principal}">
+                                <i class="fas fa-home"></i>
+                                <span data-trad="sidebar.inicio">Inicio</span>
+                            </a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" th:href="@{/perfil/empresa}">
-                                <i class="far fa-user-circle"></i><span>Perfil</span></a>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/perfil/empresa}">
+                                <i class="far fa-user-circle"></i>
+                                <span data-trad="sidebar.perfil">Perfil</span>
+                            </a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" th:href="@{/empresas/oferta}">
-                                <i class="fas fa-plus-circle"></i><span>Crear oferta</span></a>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/empresas/oferta}">
+                                <i class="fas fa-plus-circle"></i>
+                                <span data-trad="sidebar.crearOferta">Crear oferta</span>
+                            </a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" th:href="@{/empresas/published-offers}">
-                                <i class="fas fa-check-circle"></i><span>Ofertas publicadas</span></a>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/empresas/published-offers}">
+                                <i class="fas fa-check-circle"></i>
+                                <span data-trad="sidebar.ofertasPublicadas">Ofertas publicadas</span>
+                            </a>
                         </li>
-                        <li class="nav-item"><a class="nav-link active" th:href="@{/Estadisticas/empresas}">
-                                <i class="fas fa-chart-bar"></i><span>Estadisticas</span></a>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/Estadisticas/empresas}">
+                                <i class="fas fa-chart-bar"></i>
+                                <span data-trad="sidebar.estadisticas">Estadísticas</span>
+                            </a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" th:href="@{/login/personas}">
-                                <i class="fas fa-user"></i><span>Quieres postularte a ofertas?</span></a>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/login/personas}">
+                                <i class="fas fa-user"></i>
+                                <span data-trad="sidebar.quieresPostularte">¿Quieres postularte a ofertas?</span>
+                            </a>
                         </li>
                     </ul>
                 </div>
