@@ -60,17 +60,24 @@
         <div class="col-lg-10">
             <div class="dashboard-container p-4">
                 <div class="dashboard-header text-center mb-5">
-                    <h1 class="display-5 fw-bold text-primary">Estadísticas de la Plataforma</h1>
-                    <p class="lead text-muted">Datos y métricas clave para entender el mercado laboral</p>
+                    <h1 class="display-5 fw-bold text-primary" data-trad="estadisticas.title">Estadísticas de la
+                        Plataforma</h1>
+                    <p class="lead text-muted" data-trad="estadisticas.subtitle">Datos y métricas clave para entender el
+                        mercado laboral</p>
                 </div>
 
                 <div class="powerbi-container shadow-lg rounded-4 overflow-hidden">
                     <div class="powerbi-toolbar bg-light p-2 d-flex justify-content-between align-items-center">
-                        <span class="text-muted small"><i class="fas fa-info-circle me-2"></i>Visualización interactiva
-                            - Actualizado diariamente</span>
+                        <span class="text-muted small">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <span data-trad="estadisticas.visualizacion">Visualización interactiva - Actualizado
+                                diariamente</span>
+                        </span>
                         <button class="btn btn-sm btn-outline-primary" id="fullscreen-btn">
-                            <i class="fas fa-expand me-1"></i> Pantalla completa
-                        </button>
+                            <i class="fas fa-expand me-1"></i>
+                            <span data-trad="estadisticas.fullscreen">Pantalla completa</span>
+                          </button>
+                          
                     </div>
                     <div class="powerbi-iframe-container" id="powerbi-wrapper">
                         <iframe id="powerBi"
@@ -82,22 +89,29 @@
             </div>
         </div>
     </div>
-    <footer class="custom-footer text-center py-4 sticky-footer" style="background: #343A40 !important;">
+    <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-left">
-                    <p class="mb-1">PBX: (605) 123-4567 | Email: contacto@workwise.com</p>
+                    <p class="mb-1" data-trad="footer.contacto">PBX: (605) 123-4567 | Email:
+                        contacto@workwise.com</p>
                 </div>
                 <div class="footer-center">
-                    <p class="mb-1">© 2024 WorkWise. Todos los derechos reservados.</p>
+                    <p class="mb-1" data-trad="footer.derechos">© 2024 WorkWise. Todos los derechos reservados.
+                    </p>
                 </div>
                 <div class="footer-right">
-                    <a href="https://www.facebook.com/profile.php?id=61558650706843" target="_blank"><i
-                            class="fab fa-facebook"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61558650706843" target="_blank">
+                        <i class="fab fa-facebook"></i>
+                    </a>
 
-                    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://twitter.com" target="_blank">
+                        <i class="fab fa-twitter"></i>
+                    </a>
 
-                    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://instagram.com" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -144,6 +158,7 @@
             }
         });
     </script>
+    <script src="/js/idioma.js"></script>
 </body>
 
 </html>
