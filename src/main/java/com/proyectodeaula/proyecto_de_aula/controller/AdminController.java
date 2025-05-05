@@ -1,5 +1,8 @@
 package com.proyectodeaula.proyecto_de_aula.controller;
 
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,6 +27,7 @@ import com.proyectodeaula.proyecto_de_aula.interfaces.Personas.Interfaz_Per;
 import com.proyectodeaula.proyecto_de_aula.model.Empresas;
 import com.proyectodeaula.proyecto_de_aula.model.Ofertas;
 import com.proyectodeaula.proyecto_de_aula.model.Personas;
+import com.proyectodeaula.proyecto_de_aula.model.Postulacion;
 import com.proyectodeaula.proyecto_de_aula.service.EmpresaService;
 import com.proyectodeaula.proyecto_de_aula.service.OfertaService;
 import com.proyectodeaula.proyecto_de_aula.service.PersonaService;
@@ -185,5 +189,55 @@ public class AdminController {
         model.addAttribute("searchQuery", query); // Para mantener el término de búsqueda
 
         return "Html/Admin/usuarios";
+    }
+
+    @GetMapping("/admin/usuarios/{id}/datos")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> obtenerDatosUsuario(@PathVariable Long id) {
+        return user.findById(id)
+                .map(usuario -> {
+                    Map<String, Object> response = new HashMap<>();
+
+                    // Datos básicos
+                    response.put("id", usuario.getId());
+                    response.put("nombre", usuario.getNombre());
+                    response.put("apellido", usuario.getApellido());
+                    response.put("email", usuario.getEmail());
+                    response.put("identificacion", usuario.getIdentificacion());
+                    response.put("tipoIdentificacion", usuario.getTipoIdentificacion());
+                    response.put("fecha_nacimiento", usuario.getFecha_nacimiento());
+                    response.put("genero", usuario.getGenero());
+                    response.put("activo", usuario.isActivo());
+
+                    // Número de postulaciones
+                    int numPostulaciones = usuario.getPostulaciones() != null ? usuario.getPostulaciones().size() : 0;
+                    response.put("numPostulaciones", numPostulaciones);
+
+                    // En el AdminController
+                    List<Map<String, Object>> postulacionesInfo = new ArrayList<>();
+                    if (usuario.getPostulaciones() != null) {
+                        for (Postulacion postulacion : usuario.getPostulaciones()) {
+                            Map<String, Object> postInfo = new HashMap<>();
+                            postInfo.put("ofertaId", postulacion.getOfertas().getId());
+                            postInfo.put("ofertaTitulo", postulacion.getOfertas().getTitulo_puesto());
+                            postInfo.put("estado", postulacion.getEstado());
+                            postulacionesInfo.add(postInfo);
+                        }
+                    }
+                    response.put("postulaciones", postulacionesInfo);
+
+                    // Convertir foto a Base64 si existe
+                    if (usuario.getFoto() != null && usuario.getFoto().length > 0) {
+                        response.put("foto", Base64.getEncoder().encodeToString(usuario.getFoto()));
+                    }
+
+                    // Convertir CV a Base64 si existe
+                    if (usuario.getCv() != null && usuario.getCv().length > 0) {
+                        response.put("cv", Base64.getEncoder().encodeToString(usuario.getCv()));
+                    }
+
+                    return ResponseEntity.ok(response);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

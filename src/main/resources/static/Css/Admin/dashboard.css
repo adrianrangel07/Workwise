@@ -104,7 +104,7 @@ body {
 
 /* ========== MAIN CONTENT ========== */
 .admin-main {
-  margin-left: 280px;
+  margin-left: 220px;
   flex: 1;
   padding: 25px;
   transition: var(--transition);

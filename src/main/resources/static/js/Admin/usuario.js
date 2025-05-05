@@ -33,13 +33,163 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Event listeners para botones de información de usuario
+    document.addEventListener('click', function (e) {
+        // Botón de información de usuario
+        if (e.target.closest('.btn-info-user')) {
+            const userId = e.target.closest('tr').querySelector('td:first-child').textContent;
+            obtenerDatosUsuario(userId);
+        }
+
+        // Botón de desactivar/activar
+        if (e.target.closest('.toggle-status')) {
+            const userId = e.target.closest('tr').querySelector('td:first-child').textContent;
+            desactivarUsuario(userId);
+        }
+    });
+
     // Verificar si no hay resultados después de una búsqueda
     checkForEmptyResults();
+
+    // Event listeners para el buscador
+    document.getElementById('searchButton').addEventListener('click', handleSearch);
+    document.getElementById('searchInput').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
+    });
 });
 
 window.addEventListener('load', function () {
     document.body.classList.add('loaded');
 });
+
+// Función para obtener datos del usuario
+function obtenerDatosUsuario(idUsuario) {
+    fetch(`/admin/usuarios/${idUsuario}/datos`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al obtener datos del usuario');
+            }
+            return response.json();
+        })
+        .then(data => {
+            mostrarInformacionUsuario(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'No se pudieron obtener los datos del usuario',
+                icon: 'error'
+            });
+        });
+}
+
+function mostrarInformacionUsuario(usuario) {
+    // Formatear la fecha de nacimiento
+    const fechaNacimiento = new Date(usuario.fecha_nacimiento);
+    const opcionesFecha = { year: 'numeric', month: 'long', day: 'numeric' };
+    const fechaFormateada = fechaNacimiento.toLocaleDateString('es-ES', opcionesFecha);
+
+    // Llenar los campos del modal
+    document.getElementById('userFullName').textContent = `${usuario.nombre} ${usuario.apellido}`;
+    document.getElementById('userEmail').textContent = usuario.email;
+    document.getElementById('userIdentificacion').textContent = usuario.identificacion;
+    document.getElementById('userTipoIdentificacion').textContent = usuario.tipoIdentificacion;
+    document.getElementById('userFechaNacimiento').textContent = fechaFormateada;
+    document.getElementById('userGenero').textContent = usuario.genero;
+    document.getElementById('userId').textContent = usuario.id;
+
+    // Estado del usuario
+    const statusBadge = document.getElementById('userStatus');
+    statusBadge.textContent = usuario.activo ? 'Activo' : 'Inactivo';
+    statusBadge.className = usuario.activo ? 'badge bg-success' : 'badge bg-danger';
+
+    // Foto de perfil
+    const userPhoto = document.getElementById('userPhoto');
+    if (usuario.foto) {
+        userPhoto.src = `data:image/jpeg;base64,${usuario.foto}`;
+    } else {
+        userPhoto.src = '/Imagenes/default-user.png'; // Imagen por defecto
+        userPhoto.alt = 'Foto no disponible';
+    }
+
+    // Configurar botones para el CV
+    const viewCvBtn = document.getElementById('viewCvBtn');
+    const downloadCvBtn = document.getElementById('downloadCvBtn');
+
+    if (usuario.cv) {
+        const cvBlob = base64ToBlob(usuario.cv, 'application/pdf');
+        const cvUrl = URL.createObjectURL(cvBlob);
+
+        viewCvBtn.onclick = () => window.open(cvUrl, '_blank');
+        downloadCvBtn.onclick = () => {
+            const a = document.createElement('a');
+            a.href = cvUrl;
+            a.download = `CV_${usuario.nombre}_${usuario.apellido}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        };
+
+        viewCvBtn.disabled = false;
+        downloadCvBtn.disabled = false;
+        viewCvBtn.classList.remove('disabled');
+        downloadCvBtn.classList.remove('disabled');
+    } else {
+        viewCvBtn.disabled = true;
+        downloadCvBtn.disabled = true;
+        viewCvBtn.classList.add('disabled');
+        downloadCvBtn.classList.add('disabled');
+    }
+
+    // Mostrar número de postulaciones
+    const postulacionesElement = document.getElementById('userPostulaciones');
+    postulacionesElement.textContent = usuario.numPostulaciones || 0;
+    // Crear una lista de postulaciones
+    if (usuario.postulaciones && usuario.postulaciones.length > 0) {
+        const postulacionesList = document.createElement('ul');
+        postulacionesList.className = 'postulaciones-list';
+
+        usuario.postulaciones.forEach(post => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+            <strong>${post.ofertaTitulo || 'Oferta sin título'}</strong>
+            <span class="badge ${getEstadoBadgeClass(post.estado)}">${post.estado}</span>
+           
+        `;
+            postulacionesList.appendChild(li);
+        });
+
+        document.getElementById('userPostulaciones').appendChild(postulacionesList);
+    }
+
+    // Función auxiliar para clases de badge según estado
+    function getEstadoBadgeClass(estado) {
+        switch (estado.toLowerCase()) {
+            case 'activo': return 'bg-primary';
+            case 'aceptado': return 'bg-success';
+            case 'rechazado': return 'bg-danger';
+            case 'en proceso': return 'bg-warning';
+            default: return 'bg-secondary';
+        }
+    }
+    // Mostrar el modal
+    const userInfoModal = new bootstrap.Modal(document.getElementById('userInfoModal'));
+    userInfoModal.show();
+}
+
+// Función para convertir Base64 a Blob
+function base64ToBlob(base64, contentType) {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: contentType });
+}
 
 function desactivarUsuario(idUsuario) {
     Swal.fire({
@@ -154,11 +304,3 @@ function handleSearch() {
         searchButton.disabled = false;
     }, 3000);
 }
-
-// Event listeners para el buscador
-document.getElementById('searchButton').addEventListener('click', handleSearch);
-document.getElementById('searchInput').addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') {
-        handleSearch();
-    }
-});
