@@ -138,6 +138,7 @@
   font-weight: 500;
   padding: 5px 10px;
   border-radius: 50px;
+  background-color: var(--info-color) !important;
 }
 
 .btn-sm {
@@ -170,7 +171,6 @@
 }
 
 /* Aplicar animaciones */
-
 
 .admin-content {
   animation: fadeIn 0.7s ease-out 0.1s both;
@@ -329,7 +329,6 @@ body.loaded {
   animation: pulse 1.5s infinite ease-in-out;
   pointer-events: none;
 }
-
 
 /* ========== FOOTER ========== */
 .custom-footer {
@@ -586,4 +585,175 @@ body.loaded {
 .dropdown-item:hover {
   background-color: rgba(52, 152, 219, 0.1);
   color: var(--accent-color);
+}
+
+/* Estilos para el modal de información de usuario */
+.user-avatar-container {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--accent-color);
+  background-color: #f8f9fa; /* Fondo por si la imagen no carga */
+}
+
+.user-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block; /* Elimina espacio inferior */
+}
+
+.info-item {
+  background-color: #f8f9fa;
+  padding: 12px;
+  border-radius: 8px;
+  border-left: 3px solid var(--accent-color);
+}
+
+.info-label {
+  font-size: 0.8rem;
+  color: var(--text-gray);
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.info-value {
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  font-weight: 500;
+  margin: 0;
+}
+
+.section-title {
+  font-size: 1rem;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Estilo para el botón de información */
+.btn-info-user {
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  padding: 5px 8px;
+  border-radius: 50%;
+}
+
+.btn-info-user:hover {
+  background-color: rgba(52, 152, 219, 0.1);
+  transform: scale(1.1);
+}
+/* Estilos para la sección de actividad */
+.activity-stats {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.stat-card {
+  flex: 1;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  border-left: 3px solid var(--accent-color);
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-gray);
+}
+
+/* Estilos para la sección de postulaciones */
+.postulaciones-section {
+  margin-top: 1.5rem;
+  background-color: #f8fafc;
+  border-radius: 10px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.postulaciones-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.postulaciones-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.postulaciones-title i {
+  color: #4a5568;
+}
+
+.postulaciones-count {
+  background-color: #4299e1;
+  color: white;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.postulaciones-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.postulacion-item {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  border-left: 3px solid #4299e1;
+}
+
+.postulacion-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.postulacion-oferta {
+  font-weight: 600;
+  color: #2b6cb0;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.postulacion-estado {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 500;
 }

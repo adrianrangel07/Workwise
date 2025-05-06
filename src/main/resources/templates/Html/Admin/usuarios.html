@@ -31,7 +31,8 @@
                 <ul>
                     <li><a th:href="@{/admin/dashboard}"><i class="fas fa-tachometer-alt"></i>
                             <span>Dashboard</span></a></li>
-                    <li class="active"><a th:href="@{/admin/usuarios}"><i class="fas fa-users"></i> <span>Usuarios</span></a></li>
+                    <li class="active"><a th:href="@{/admin/usuarios}"><i class="fas fa-users"></i>
+                            <span>Usuarios</span></a></li>
                     <li><a th:href="@{/admin/ofertas}"><i class="fas fa-briefcase"></i> <span>Ofertas</span></a></li>
                     <li><a th:href="@{/admin/empresas}"><i class="fas fa-building"></i> <span>Empresas</span></a></li>
                     <li><a href="#"><i class="fas fa-chart-line"></i> <span>Estadísticas</span></a></li>
@@ -108,6 +109,11 @@
                                             class="btn btn-sm toggle-status">
                                             <span th:text="${usuario.activo} ? 'Desactivar' : 'Activar'"></span>
                                         </button>
+
+                                        <button class="btn btn-info-user view-user-info"
+                                            th:data-user-id="${usuario.id}">
+                                            <i class="fas fa-info-circle"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -146,7 +152,87 @@
             </div>
         </div>
     </div>
-
+    <!-- Modal de Información de Usuario -->
+    <div class="modal fade" id="userInfoModal" tabindex="-1" aria-labelledby="userInfoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="userInfoModalLabel">Información Detallada del Usuario</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <div class="user-avatar-container mb-3">
+                                <img id="userPhoto" src="" alt="Foto de perfil"
+                                    class="img-thumbnail rounded-circle user-photo">
+                            </div>
+                            <h4 id="userFullName" class="mb-2"></h4>
+                            <span id="userStatus" class="badge mb-3"></span>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="info-item mb-3">
+                                        <h6 class="info-label">Email</h6>
+                                        <p id="userEmail" class="info-value"></p>
+                                    </div>
+                                    <div class="info-item mb-3">
+                                        <h6 class="info-label">Tipo de Identificación</h6>
+                                        <p id="userTipoIdentificacion" class="info-value"></p>
+                                    </div>
+                                    <div class="info-item mb-3">
+                                        <h6 class="info-label">Fecha de Nacimiento</h6>
+                                        <p id="userFechaNacimiento" class="info-value"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info-item mb-3">
+                                        <h6 class="info-label">Identificación</h6>
+                                        <p id="userIdentificacion" class="info-value"></p>
+                                    </div>
+                                    <div class="info-item mb-3">
+                                        <h6 class="info-label">Género</h6>
+                                        <p id="userGenero" class="info-value"></p>
+                                    </div>
+                                    <div class="info-item mb-3">
+                                        <h6 class="info-label">ID de Usuario</h6>
+                                        <p id="userId" class="info-value"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h5 class="section-title">Documentos</h5>
+                            <div class="d-flex gap-3">
+                                <button id="viewCvBtn" class="btn btn-outline-primary">
+                                    <i class="fas fa-file-pdf me-2"></i>Ver Hoja de Vida
+                                </button>
+                                <button id="downloadCvBtn" class="btn btn-outline-success">
+                                    <i class="fas fa-download me-2"></i>Descargar HV
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h5 class="section-title">Actividad</h5>
+                            <div class="info-item">
+                                <h6 class="info-label">Postulaciones realizadas</h6>
+                                <p id="userPostulaciones" class="info-value"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <footer class="custom-footer bg-dark text-light text-center  sticky-footer ">
         <div class="container">
             <div class="footer-content">

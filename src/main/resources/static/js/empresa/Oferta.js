@@ -275,7 +275,7 @@ function llenarVistaPrevia() {
     const experiencia = obtenerValorExperiencia();
     const sector = document.querySelector('select[name="sector_oferta"]').value;
     const salario = document.querySelector('input[name="salario"]').value;
-    const nivelEstudio = document.querySelector('select[name="nivel-estudio"]').value;
+    const nivelEstudio = document.querySelector('select[name="nivel_educativo"]').value;
 
     // Descripción con formato (desde contenteditable)
     const editor = document.getElementById('editorContent');
