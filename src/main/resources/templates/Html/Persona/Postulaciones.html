@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="/Css/general/styles.min.css" />
     <link rel="stylesheet" href="/Css/persona/Postulaciones.css" />
     <link rel="stylesheet" href="/Css/persona/Perfil.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=1.0, user-scalable=no">
 
 </head>
 
@@ -28,21 +29,40 @@
                 </a>
                 <hr class="sidebar-divider my-0" />
                 <ul class="navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item"><a class="nav-link " th:href="@{/personas/pagina_principal}"><i
-                                class="fas fa-home"></i><span>Inicio</span></a></li>
-                    <li class="nav-item"><a class="nav-link" th:href="@{/perfil/persona}"><i
-                                class="far fa-user-circle"></i><span>Perfil</span></a></li>
-                    <li class="nav-item"><a class="nav-link active" th:href="@{/persona/Postulaciones}"><i
-                                class="fas fa-file-alt"></i><span>Mis postulaciones</span>
-                    <li class="nav-item"><a class="nav-link" th:href="@{/persona/hdv}"><i
-                                class="fas fa-file-signature"></i><span>Crear Hoja de Vida</span>
-                    <li class="nav-item"><a class="nav-link" th:href="@{/personas/recursos}"><i
-                                class="fas fa-file"></i><span>Como buscar empleo?</span></a></li>
-                    <li class="nav-item"><a class="nav-link" th:href="@{/Estadisticas/personas}"><i
-                                class="fas fa-chart-bar"></i><span>Estadisticas</span></a></li>
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/personas/pagina_principal}">
+                            <i class="fas fa-home"></i><span data-trad="sidebar.home">Inicio</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/perfil/persona}">
+                            <i class="far fa-user-circle"></i><span data-trad="sidebar.profile">Perfil</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/persona/Postulaciones}">
+                            <i class="fas fa-file-alt"></i><span data-trad="sidebar.applications">Mis
+                                postulaciones</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/persona/hdv}">
+                            <i class="fas fa-file-signature"></i><span data-trad="sidebar.cv">Crear Hoja de Vida</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/personas/recursos}">
+                            <i class="fas fa-file"></i><span data-trad="sidebar.resources">Como buscar empleo?</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/Estadisticas/personas}">
+                            <i class="fas fa-chart-bar"></i><span data-trad="sidebar.stats">Estadisticas</span>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout" onclick="cerrarSesionYRedirigir(event)">
-                            <i class="fas fa-building"></i><span>Tienes una empresa?</span>
+                            <i class="fas fa-building"></i><span data-trad="sidebar.company">Tienes una empresa?</span>
                         </a>
                     </li>
                 </ul>
@@ -56,32 +76,61 @@
                         <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button">
                             <i class="fas fa-bars"></i>
                         </button>
+
+
                         <ul class="navbar-nav flex-nowrap ms-auto">
-                           
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow" id="usuario-container">
 
+                                    <!-- boton idioma -->
+                                    <div class="language-selector d-flex align-items-center position-relative">
+                                        <span class="me-2 fw-bold" data-trad="idioma.etiqueta">Idioma:</span>
+
+                                        <!-- Botón que muestra icono y al hacer clic despliega selector -->
+                                        <div id="language-display" class="d-flex align-items-center"
+                                            style="cursor: pointer;">
+                                            <i class="fas fa-language" id="language-toggle"></i>
+                                        </div>
+
+                                        <!-- Menú desplegable -->
+                                        <div id="language-options" class="dropdown-menu show p-2"
+                                            style="display: none; position: absolute; top: 100%; left: 0; z-index: 1000;">
+                                            <div class="dropdown-item d-flex align-items-center"
+                                                onclick="selectLanguage('es')">
+                                                <img src="https://flagcdn.com/w20/es.png" alt="ES" class="me-2"> ES
+                                            </div>
+                                            <div class="dropdown-item d-flex align-items-center"
+                                                onclick="selectLanguage('en')">
+                                                <img src="https://flagcdn.com/w20/us.png" alt="EN" class="me-2"> ENG
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- fin boton idioma -->
+
                                     <img id="user-avatar" src="/imagen/perfil" alt="Persona Logo"
                                         onerror="this.onerror=null;this.src='/Imagenes/imagenperfil.png';">
-            
-                                    <input type="hidden" id="subirFoto" accept="image/*" style="display: block; margin-top: 10px;">
-            
-                                    <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
+
+                                    <input type="hidden" id="subirFoto" accept="image/*"
+                                        style="display: block; margin-top: 10px;">
+
+                                    <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
+                                        href="#">
                                         <span id="usuario" th:text="${persona.nombre}">Account</span>
                                     </a>
                                     <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
                                         <a class="dropdown-item" th:href="@{/perfil/persona}" style="color: #0a1128;">
                                             <i class="fas fa-user fa-sm fa-fw me-2 "></i>&nbsp;Perfil
                                         </a>
-                                        <a class="dropdown-item" th:href="@{/persona/Postulaciones}" style="color: #0a1128;">
+                                        <a class="dropdown-item" th:href="@{/persona/Postulaciones}"
+                                            style="color: #0a1128;">
                                             <i class="fas fa-file-alt fa-sm fa-fw me-2"></i>&nbsp;Postulaciones
                                         </a>
                                         <a class="dropdown-item" href="#" style="color: #0a1128;">
                                             <i class="fas fa-briefcase fa-sm fa-fw me-2 "></i>&nbsp;Hoja de vida
                                         </a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="/logout" id="logout" onclick="cerrarSesion(event)"
-                                            style="color: #0a1128;">
+                                        <a class="dropdown-item" href="/logout" id="logout"
+                                            onclick="cerrarSesion(event)" style="color: #0a1128;">
                                             <i class="fas fa-sign-out-alt fa-sm fa-fw me-2"></i>Cerrar sesión
                                         </a>
                                     </div>
@@ -97,11 +146,13 @@
                             <div class="col-lg-12">
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3">
-                                        <h6 class="text-primary m-0 fw-bold">Postulaciones pendientes</h6>
+                                        <h6 class="text-primary m-0 fw-bold" data-trad="postulaciones.titulo">
+                                            Postulaciones pendientes</h6>
                                     </div>
                                     <div class="card-body">
                                         <div th:if="${postulaciones.isEmpty()}">
-                                            <p class="text-muted">No tienes postulaciones pendiente actualmente</p>
+                                            <p class="text-muted" data-trad="postulaciones.vacio">No tienes
+                                                postulaciones pendiente actualmente</p>
                                         </div>
                                         <div th:unless="${postulaciones.isEmpty()}">
                                             <div class="offer-container">
@@ -114,32 +165,40 @@
 
                                                         <p id="estadoPerfil" class="estado"
                                                             th:data-id="${postulacion.id}">
-                                                            Estado: <span th:text="${postulacion.estado}"></span></p>
+                                                            <span data-trad="postulaciones.estado">Estado:</span> <span
+                                                                th:text="${postulacion.estado}"></span>
+                                                        </p>
 
                                                         <div class="hidden-info">
                                                             <p class="salario">
-                                                                <strong>Salario:</strong>
+                                                                <strong
+                                                                    data-trad="postulaciones.salario">Salario:</strong>
                                                                 <span th:text="${postulacion.ofertas.salario}"></span>
                                                             </p>
                                                             <p class="duracion">
-                                                                <strong>Duracion:</strong>
+                                                                <strong
+                                                                    data-trad="postulaciones.duracion">Duración:</strong>
                                                                 <span th:text="${postulacion.ofertas.duracion}"></span>
                                                             </p>
                                                             <p class="periodo">
-                                                                <strong>Periodo:</strong>
+                                                                <strong
+                                                                    data-trad="postulaciones.periodo">Periodo:</strong>
                                                                 <span th:text="${postulacion.ofertas.periodo}"></span>
                                                             </p>
                                                             <p class="tipo_empleo">
-                                                                <strong>Tipo de empleo:</strong>
+                                                                <strong data-trad="postulaciones.tipo_empleo">Tipo de
+                                                                    empleo:</strong>
                                                                 <span
                                                                     th:text="${postulacion.ofertas.tipo_empleo}"></span>
                                                             </p>
                                                             <p class="modalidad">
-                                                                <strong>Modalidad:</strong>
+                                                                <strong
+                                                                    data-trad="postulaciones.modalidad">Modalidad:</strong>
                                                                 <span th:text="${postulacion.ofertas.modalidad}"></span>
                                                             </p>
                                                             <p class="tipo_contrato">
-                                                                <strong>Tipo de contrato:</strong>
+                                                                <strong data-trad="postulaciones.tipo_contrato">Tipo de
+                                                                    contrato:</strong>
                                                                 <span
                                                                     th:text="${postulacion.ofertas.tipo_contrato}"></span>
                                                             </p>
@@ -147,7 +206,8 @@
 
                                                         <!-- Botón para eliminar la postulación -->
                                                         <button class="btn btn-danger" th:data-id="${postulacion.id}"
-                                                            onclick="eliminarPostulacion(this)">
+                                                            onclick="eliminarPostulacion(this)"
+                                                            data-trad="postulaciones.borrar">
                                                             Borrar postulación
                                                         </button>
                                                     </div>
@@ -158,16 +218,17 @@
                                 </div>
                             </div>
                         </div>
+
                         <!-- cuadro de postulaciones resueltas -->
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3">
-                                        <h6 class="text-primary m-0 fw-bold">Postulaciones Resueltas</h6>
+                                        <h6 class="text-primary m-0 fw-bold" data-trad="postulaciones_resueltas.titulo">Postulaciones Resueltas</h6>
                                     </div>
                                     <div class="card-body">
                                         <div id="resolved-applications-container">
-                                            <p class="text-muted no-resolved">No tienes postulaciones resueltas actualmente</p>
+                                            <p class="text-muted no-resolved" data-trad="postulaciones_resueltas.vacio">No tienes postulaciones resueltas actualmente</p>
                                         </div>
                                     </div>
                                 </div>
@@ -176,22 +237,31 @@
                     </div>
                 </div>
             </div>
+
+
             <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer">
                 <div class="container">
                     <div class="footer-content">
                         <div class="footer-left">
-                            <p class="mb-1">PBX: (605) 123-4567 | Email: contacto@workwise.com</p>
+                            <p class="mb-1" data-trad="footer.contacto">PBX: (605) 123-4567 | Email:
+                                contacto@workwise.com</p>
                         </div>
                         <div class="footer-center">
-                            <p class="mb-1">© 2024 WorkWise. Todos los derechos reservados.</p>
+                            <p class="mb-1" data-trad="footer.derechos">© 2024 WorkWise. Todos los derechos reservados.
+                            </p>
                         </div>
                         <div class="footer-right">
-                            <a href="https://www.facebook.com/profile.php?id=61558650706843" target="_blank"><i
-                                    class="fab fa-facebook"></i></a>
+                            <a href="https://www.facebook.com/profile.php?id=61558650706843" target="_blank">
+                                <i class="fab fa-facebook"></i>
+                            </a>
 
-                            <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                            <a href="https://twitter.com" target="_blank">
+                                <i class="fab fa-twitter"></i>
+                            </a>
 
-                            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                            <a href="https://instagram.com" target="_blank">
+                                <i class="fab fa-instagram"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -204,6 +274,7 @@
         <script src="/js/General/theme.js"></script>
         <script src="/js/persona/postulaciones.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="/js/idioma.js"></script>
 
 </body>
 
