@@ -113,7 +113,15 @@
                     
                             <div class="campo">
                                 <label>Experiencia Requerida (años)</label>
-                                <input type="number" name="experiencia_requerida" min="0" id="experienciaRequerida" th:value="${oferta.experiencia}" readonly  required>
+                                <input type="text" min="0" id="experienciaRequerida" th:value="${{
+                                    0: 'Sin experiencia',
+                                    1: 'Menos de 1 año',
+                                    2: 'Entre 1 y 3 años',
+                                    3: 'Entre 3 y 5 años',
+                                    4: 'Entre 5 y 10 años',
+                                    5: 'Más de 10 años'
+                                }[oferta.experiencia] ?: 'No especificado'}" readonly  required>
+                                <input type="hidden" name="experiencia_requerida" th:value="${oferta.experiencia}" style="display: none;">
                             </div>
                     
                             <div class="campo">
@@ -162,7 +170,14 @@
                     
                             <div class="campo">
                                 <label>Experiencia Persona (años)</label>
-                                <input type="number" name="experiencia_persona" min="0" required>
+                                <select id="experiencia" name="experiencia_persona" required>
+                                    <option value=0 >Sin experiencia</option>
+                                    <option value=1 >Menos de 1 año</option>
+                                    <option value=2 >Entre 1 y 3 años</option>
+                                    <option value=3 >Entre 3 y 5 años</option>
+                                    <option value=4 >Entre 5 y 10 años</option>
+                                    <option value=5 >Más de 10 años</option>
+                                </select>
                             </div>
                     
                             <div class="campo">
@@ -218,7 +233,6 @@
                                     <option value="Turismo">Turismo</option>
                                 </select>
                             </div>
-                    
                             <div class="campo">
                                 <label>Edad</label>
                                 <input type="number" name="edad_persona" min="18" required>

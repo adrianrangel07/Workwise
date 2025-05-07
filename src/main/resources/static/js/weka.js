@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(datos.sector_oferta);
         console.log(datos.experiencia_requerida);
 
+
         // Calcular coincidencias
         const coincidencias = {
             coincide_tipo_empleo: datos.tipo_empleo_deseado === datos.tipo_empleo_deseado ? "Si" : "No",
@@ -244,6 +245,140 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    const edadInput = document.querySelector('input[name="edad_persona"]');
+    const experienciaSelect = document.getElementById('experiencia');
 
 
+    const opcionesExperiencia = [
+        { value: 5, text: "Coloque una edad validad", minAge: -1000, maxAge: 17 },
+        { value: 0, text: "Sin experiencia", minAge: 18, maxAge: 150 },
+        { value: 1, text: "Menos de 1 año", minAge: 18, maxAge: 150 },
+        { value: 2, text: "Entre 1 y 3 años", minAge: 19, maxAge: 150 },
+        { value: 3, text: "Entre 3 y 5 años", minAge: 21, maxAge: 150 },
+        { value: 4, text: "Entre 5 y 10 años", minAge: 23, maxAge: 150 },
+        { value: 5, text: "Más de 10 años", minAge: 28, maxAge: 150 }
+    ];
+
+    function actualizarOpcionesExperiencia() {
+        const edad = parseInt(edadInput.value) || 18;
+
+        experienciaSelect.innerHTML = '';
+
+
+        opcionesExperiencia.forEach(opcion => {
+            if (edad >= opcion.minAge && edad <= opcion.maxAge) {
+                const option = document.createElement('option');
+                option.value = opcion.value;
+                option.textContent = opcion.text;
+                experienciaSelect.appendChild(option);
+            }
+        });
+
+        // Validación adicional para edades muy jóvenes
+        if (edad < 18) {
+            experienciaSelect.value = "5"; // Auto-seleccionar "Sin experiencia"
+        }
+        else if (edad < 19) {
+            experienciaSelect.value = "0"
+        }
+    }
+
+    // Event listeners
+    edadInput.addEventListener('input', actualizarOpcionesExperiencia);
+
+    // Validación al enviar el formulario
+    document.querySelector('form').addEventListener('submit', function (e) {
+        const edad = parseInt(edadInput.value);
+        const experiencia = parseInt(experienciaSelect.value);
+
+        if (isNaN(edad) || isNaN(experiencia)) {
+            e.preventDefault();
+            alert('Por favor completa todos los campos requeridos');
+            return;
+        }
+
+        // Validación cruzada final
+        const opcionSeleccionada = opcionesExperiencia.find(op => op.value === experiencia);
+        if (edad < opcionSeleccionada.minAge || edad > opcionSeleccionada.maxAge) {
+            e.preventDefault();
+            alert('La experiencia seleccionada no es coherente con tu edad');
+            experienciaSelect.focus();
+        }
+    });
+
+    // Inicializar al cargar
+    actualizarOpcionesExperiencia();
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const edadInput = document.querySelector('input[name="edad_persona"]');
+    const estudioSelect = document.querySelector('select[name="nivel_estudio_persona"]');
+
+    // Relación edad-nivel de estudio (edad mínima para cada nivel)
+    const opcionesEstudio = [
+        { value: "Coloque una edad validad", text: "Coloque una edad validad", minAge: -1000, maxAge: 17 },
+        { value: "Sin_estudios", text: "Sin estudios", minAge: 18, maxAge: 150 },
+        { value: "Bachiller", text: "Bachiller", minAge: 18, maxAge: 150 },
+        { value: "Tecnico_Tecnologo", text: "Técnico/Tecnólogo", minAge: 18, maxAge: 150 },
+        { value: "Tecnologo_Universitario", text: "Tecnólogo o Universitario", minAge: 18, maxAge: 150 },
+        { value: "Universitario", text: "Universitario", minAge: 22, maxAge: 150 },
+        { value: "Master", text: "Master", minAge: 27, maxAge: 150 },
+        { value: "Doctorado", text: "Doctorado", minAge: 33, maxAge: 150 }
+    ];
+
+    function actualizarOpcionesEstudio() {
+        const edad = parseInt(edadInput.value) || 18;
+
+        // Guardar selección actual
+        const selectedValue = estudioSelect.value;
+
+        // Limpiar y repoblar opciones
+        estudioSelect.innerHTML = '';
+
+        // Agregar opciones válidas para la edad
+        opcionesEstudio.forEach(opcion => {
+            if (edad >= opcion.minAge && edad <= opcion.maxAge) {
+                const option = document.createElement('option');
+                option.value = opcion.value;
+                option.textContent = opcion.text;
+                estudioSelect.appendChild(option);
+            }
+        });
+
+        // Restaurar selección si sigue siendo válida
+        if (Array.from(estudioSelect.options).some(opt => opt.value === selectedValue)) {
+            estudioSelect.value = selectedValue;
+        } else if (edad < 18) {
+            estudioSelect.value = "Coloque una edad validad";
+        }
+    }
+
+    // Validación al cambiar edad
+    edadInput.addEventListener('input', actualizarOpcionesEstudio);
+
+    // Validación al enviar el formulario
+    document.querySelector('form').addEventListener('submit', function (e) {
+        const edad = parseInt(edadInput.value);
+        const estudio = estudioSelect.value;
+
+        if (isNaN(edad)) {
+            e.preventDefault();
+            alert('Por favor ingresa una edad válida');
+            edadInput.focus();
+            return;
+        }
+
+        const opcionSeleccionada = opcionesEstudio.find(op => op.value === estudio);
+
+        if (!opcionSeleccionada || edad < opcionSeleccionada.minAge || edad > opcionSeleccionada.maxAge) {
+            e.preventDefault();
+            alert('El nivel de estudio seleccionado no es coherente con tu edad');
+            estudioSelect.focus();
+        }
+    });
+
+    // Inicializar al cargar
+    actualizarOpcionesEstudio();
+});
 
