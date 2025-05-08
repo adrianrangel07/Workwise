@@ -79,7 +79,7 @@ public class AdminController {
         model.addAttribute("ofertasRecientes", ofertasRecientes);
         model.addAttribute("empresasRecientes", empresasRecientes);
 
-        return "Html/admin/dashboard";
+        return "Html/Admin/dashboard";
     }
 
     @GetMapping("/admin/usuarios")
