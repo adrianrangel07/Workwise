@@ -33,18 +33,18 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Event listeners para botones de información de usuario
+    // Event listeners para botones de información de empresa
     document.addEventListener('click', function (e) {
-        // Botón de información de usuario
-        if (e.target.closest('.btn-info-user')) {
-            const userId = e.target.closest('tr').querySelector('td:first-child').textContent;
-            obtenerDatosUsuario(userId);
+        // Botón de información de empresa
+        if (e.target.closest('.view-empresa-info')) {
+            const empresaId = e.target.closest('tr').querySelector('td:first-child').textContent;
+            obtenerDatosEmpresa(empresaId);
         }
 
         // Botón de desactivar/activar
         if (e.target.closest('.toggle-status')) {
-            const userId = e.target.closest('tr').querySelector('td:first-child').textContent;
-            desactivarUsuario(userId);
+            const empresaId = e.target.closest('tr').querySelector('td:first-child').textContent;
+            desactivarEmpresa(empresaId);
         }
     });
 
@@ -64,136 +64,63 @@ window.addEventListener('load', function () {
     document.body.classList.add('loaded');
 });
 
-// Función para obtener datos del usuario
-function obtenerDatosUsuario(idUsuario) {
-    fetch(`/admin/usuarios/${idUsuario}/datos`)
+// Función para obtener datos de la empresa
+function obtenerDatosEmpresa(idEmpresa) {
+    fetch(`/admin/empresas/${idEmpresa}/datos`)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Error al obtener datos del usuario');
+                throw new Error('Error al obtener datos de la empresa');
             }
             return response.json();
         })
         .then(data => {
-            mostrarInformacionUsuario(data);
+            mostrarInformacionEmpresa(data);
         })
         .catch(error => {
             console.error('Error:', error);
             Swal.fire({
                 title: 'Error',
-                text: 'No se pudieron obtener los datos del usuario',
+                text: 'No se pudieron obtener los datos de la empresa',
                 icon: 'error'
             });
         });
 }
 
-function mostrarInformacionUsuario(usuario) {
-    // Formatear la fecha de nacimiento
-    const fechaNacimiento = new Date(usuario.fecha_nacimiento);
-    const opcionesFecha = { year: 'numeric', month: 'long', day: 'numeric' };
-    const fechaFormateada = fechaNacimiento.toLocaleDateString('es-ES', opcionesFecha);
-
+function mostrarInformacionEmpresa(empresa) {
     // Llenar los campos del modal
-    document.getElementById('userFullName').textContent = `${usuario.nombre} ${usuario.apellido}`;
-    document.getElementById('userEmail').textContent = usuario.email;
-    document.getElementById('userIdentificacion').textContent = usuario.identificacion;
-    document.getElementById('userTipoIdentificacion').textContent = usuario.tipoIdentificacion;
-    document.getElementById('userFechaNacimiento').textContent = fechaFormateada;
-    document.getElementById('userGenero').textContent = usuario.genero;
-    document.getElementById('userId').textContent = usuario.id;
+    document.getElementById('empresaNombre').textContent = empresa.nombreEmp;
+    document.getElementById('empresaEmail').textContent = empresa.email;
+    document.getElementById('empresaNit').textContent = empresa.nit;
+    document.getElementById('empresaRazonSocial').textContent = empresa.razon_social;
+    document.getElementById('empresaDireccion').textContent = empresa.direccion;
+    document.getElementById('empresaId').textContent = empresa.id;
 
-    // Estado del usuario
-    const statusBadge = document.getElementById('userStatus');
-    statusBadge.textContent = usuario.activo ? 'Activo' : 'Inactivo';
-    statusBadge.className = usuario.activo ? 'badge bg-success' : 'badge bg-danger';
+    // Estado de la empresa
+    const statusBadge = document.getElementById('empresaStatus');
+    statusBadge.textContent = empresa.activo ? 'Activo' : 'Inactivo';
+    statusBadge.className = empresa.activo ? 'badge bg-success' : 'badge bg-danger';
 
-    // Foto de perfil
-    const userPhoto = document.getElementById('userPhoto');
-    if (usuario.foto) {
-        userPhoto.src = `data:image/jpeg;base64,${usuario.foto}`;
+    // Logo de la empresa
+    const empresaLogo = document.getElementById('empresaLogo');
+    if (empresa.logo) {
+        empresaLogo.src = `data:image/jpeg;base64,${empresa.logo}`;
     } else {
-        userPhoto.src = '/Imagenes/default-user.png'; // Imagen por defecto
-        userPhoto.alt = 'Foto no disponible';
+        empresaLogo.src = '/Imagenes/default-company.png';
+        empresaLogo.alt = 'Logo no disponible';
     }
 
-    // Configurar botones para el CV
-    const viewCvBtn = document.getElementById('viewCvBtn');
-    const downloadCvBtn = document.getElementById('downloadCvBtn');
+    // Mostrar solo el número de ofertas
+    document.getElementById('empresaOfertas').textContent = empresa.numOfertas || 0;
 
-    if (usuario.cv) {
-        const cvBlob = base64ToBlob(usuario.cv, 'application/pdf');
-        const cvUrl = URL.createObjectURL(cvBlob);
-
-        viewCvBtn.onclick = () => window.open(cvUrl, '_blank');
-        downloadCvBtn.onclick = () => {
-            const a = document.createElement('a');
-            a.href = cvUrl;
-            a.download = `CV_${usuario.nombre}_${usuario.apellido}.pdf`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        };
-
-        viewCvBtn.disabled = false;
-        downloadCvBtn.disabled = false;
-        viewCvBtn.classList.remove('disabled');
-        downloadCvBtn.classList.remove('disabled');
-    } else {
-        viewCvBtn.disabled = true;
-        downloadCvBtn.disabled = true;
-        viewCvBtn.classList.add('disabled');
-        downloadCvBtn.classList.add('disabled');
-    }
-
-    // Mostrar número de postulaciones
-    const postulacionesElement = document.getElementById('userPostulaciones');
-    postulacionesElement.textContent = usuario.numPostulaciones || 0;
-    // Crear una lista de postulaciones
-    if (usuario.postulaciones && usuario.postulaciones.length > 0) {
-        const postulacionesList = document.createElement('ul');
-        postulacionesList.className = 'postulaciones-list';
-
-        usuario.postulaciones.forEach(post => {
-            const li = document.createElement('li');
-            li.innerHTML = `
-            <strong>${post.ofertaTitulo || 'Oferta sin título'}</strong>
-            <span class="badge ${getEstadoBadgeClass(post.estado)}">${post.estado}</span>
-        `;
-            postulacionesList.appendChild(li);
-        });
-
-        document.getElementById('userPostulaciones').appendChild(postulacionesList);
-    }
-
-    // Función auxiliar para clases de badge según estado
-    function getEstadoBadgeClass(estado) {
-        switch (estado.toLowerCase()) {
-            case 'activo': return 'bg-primary';
-            case 'aceptado': return 'bg-success';
-            case 'rechazado': return 'bg-danger';
-            case 'en proceso': return 'bg-warning';
-            default: return 'bg-secondary';
-        }
-    }
     // Mostrar el modal
-    const userInfoModal = new bootstrap.Modal(document.getElementById('userInfoModal'));
-    userInfoModal.show();
+    const empresaInfoModal = new bootstrap.Modal(document.getElementById('empresaInfoModal'));
+    empresaInfoModal.show();
 }
 
-// Función para convertir Base64 a Blob
-function base64ToBlob(base64, contentType) {
-    const byteCharacters = atob(base64);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-    return new Blob([byteArray], { type: contentType });
-}
-
-function desactivarUsuario(idUsuario) {
+function desactivarEmpresa(idEmpresa) {
     Swal.fire({
-        title: '¿Cambiar estado del usuario?',
-        text: "Estás a punto de cambiar el estado de este usuario",
+        title: '¿Cambiar estado de la empresa?',
+        text: "Estás a punto de cambiar el estado de esta empresa",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -203,7 +130,7 @@ function desactivarUsuario(idUsuario) {
         backdrop: 'rgba(0,0,0,0.4)'
     }).then((result) => {
         if (result.isConfirmed) {
-            fetch(`/usuarios/${idUsuario}/desactivar`, {
+            fetch(`/empresas/${idEmpresa}/desactivar`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -219,7 +146,7 @@ function desactivarUsuario(idUsuario) {
                 .then(data => {
                     Swal.fire({
                         title: '¡Éxito!',
-                        text: 'Estado del usuario actualizado correctamente',
+                        text: 'Estado de la empresa actualizado correctamente',
                         icon: 'success'
                     }).then(() => {
                         location.reload();
@@ -229,7 +156,7 @@ function desactivarUsuario(idUsuario) {
                     console.error('Error:', error);
                     Swal.fire({
                         title: 'Error',
-                        text: 'No se pudo actualizar el estado del usuario',
+                        text: 'No se pudo actualizar el estado de la empresa',
                         icon: 'error'
                     });
                 });
@@ -245,7 +172,7 @@ function checkForEmptyResults() {
     if (searchQuery) {
         // Esperar un breve momento para que la tabla se renderice completamente
         setTimeout(() => {
-            const tableBody = document.querySelector('#usersTable tbody');
+            const tableBody = document.querySelector('#empresasTable tbody');
             const visibleRows = tableBody.querySelectorAll('tr:not([style*="display: none"])');
 
             if (visibleRows.length === 0) {
@@ -259,7 +186,7 @@ function checkForEmptyResults() {
 function showNoResultsAlert(searchQuery) {
     Swal.fire({
         title: 'No se encontraron resultados',
-        html: `No existe ninguna persona que coincida con: <strong>${searchQuery}</strong>`,
+        html: `No existe ninguna empresa que coincida con: <strong>${searchQuery}</strong>`,
         icon: 'info',
         confirmButtonColor: '#3085d6',
         confirmButtonText: 'Entendido',
@@ -267,7 +194,7 @@ function showNoResultsAlert(searchQuery) {
     }).then(() => {
         // Vaciar el campo de búsqueda y recargar la página
         document.getElementById('searchInput').value = '';
-        window.location.href = '/admin/usuarios';
+        window.location.href = '/admin/empresas';
     });
 }
 
@@ -295,7 +222,7 @@ function handleSearch() {
     searchButton.disabled = true;
 
     // Realizar la búsqueda
-    window.location.href = `/admin/usuarios/buscar?query=${encodeURIComponent(searchTerm)}`;
+    window.location.href = `/admin/empresas/buscar?query=${encodeURIComponent(searchTerm)}`;
 
     // Restaurar el botón después de 3 segundos (como fallback)
     setTimeout(() => {

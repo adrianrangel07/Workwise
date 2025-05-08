@@ -118,18 +118,6 @@ public class AdminController {
         return "Html/admin/ofertas";
     }
 
-    @GetMapping("/admin/empresas")
-    public String gestionEmpresas(HttpSession session, Model model) {
-        if (session.getAttribute("isAdmin") == null) {
-            return "redirect:/login/personas";
-        }
-
-        List<Empresas> empresas = empresaService.listar_Emp();
-        model.addAttribute("empresas", empresas);
-
-        return "Html/admin/empresas";
-    }
-
     @GetMapping("/admin/logout")
     public String adminLogout(HttpSession session) {
         session.invalidate(); // Invalida toda la sesión completamente
@@ -240,4 +228,101 @@ public class AdminController {
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    // Agrega estos métodos al AdminController
+    @GetMapping("/admin/empresas")
+    public String gestionEmpresas(HttpSession session, Model model,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        if (session.getAttribute("isAdmin") == null) {
+            return "redirect:/login/personas";
+        }
+
+        // Obtener estadísticas
+        long totalEmpresas = empresaService.contarEmpresas();
+
+        // Obtener lista de empresas paginada
+        Page<Empresas> empresasPage = empresaService.listarEmpresasPaginadas(PageRequest.of(page, size));
+        List<Empresas> empresas = empresasPage.getContent();
+
+        model.addAttribute("empresas", empresas);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", empresasPage.getTotalPages());
+        model.addAttribute("totalEmpresas", totalEmpresas);
+
+        return "Html/admin/empresas";
+    }
+
+    @PutMapping("/empresas/{id}/desactivar")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> desactivarEmpresa(@PathVariable int id) {
+        Optional<Empresas> empresa = empresaService.obtenerEmpresaPorId(id);
+        if (empresa.isPresent()) {
+            Empresas e = empresa.get();
+            e.setActivo(!e.isActivo());
+            empresaService.guardarEmpresa(e);
+
+            return ResponseEntity.ok()
+                    .body(Map.of("message", "Estado de la empresa actualizado correctamente",
+                            "newStatus", e.isActivo() ? "Activo" : "Inactivo"));
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("error", "Empresa no encontrada"));
+        }
+    }
+
+    @GetMapping("/admin/empresas/buscar")
+    public String buscarEmpresas(
+            HttpSession session,
+            Model model,
+            @RequestParam String query,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        if (session.getAttribute("isAdmin") == null) {
+            return "redirect:/login/personas";
+        }
+
+        Page<Empresas> empresasPage = empresaService.buscarEmpresas(query, PageRequest.of(page, size));
+
+        model.addAttribute("empresas", empresasPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", empresasPage.getTotalPages());
+        model.addAttribute("totalEmpresas", empresasPage.getTotalElements());
+        model.addAttribute("searchQuery", query);
+
+        return "Html/admin/empresas";
+    }
+
+    @GetMapping("/admin/empresas/{id}/datos")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> obtenerDatosEmpresa(@PathVariable int id) {
+        return empresaService.obtenerEmpresaPorId(id)
+                .map(empresa -> {
+                    Map<String, Object> response = new HashMap<>();
+
+                    // Datos básicos
+                    response.put("id", empresa.getId());
+                    response.put("nombreEmp", empresa.getNombreEmp());
+                    response.put("email", empresa.getEmail());
+                    response.put("nit", empresa.getNit());
+                    response.put("razon_social", empresa.getRazon_social());
+                    response.put("direccion", empresa.getDireccion());
+                    response.put("activo", empresa.isActivo());
+
+                    // Número de ofertas (solo el contador)
+                    int numOfertas = empresa.getOfertas() != null ? empresa.getOfertas().size() : 0;
+                    response.put("numOfertas", numOfertas);
+
+                    // Convertir logo a Base64 si existe
+                    if (empresa.getFoto() != null && empresa.getFoto().length > 0) {
+                        response.put("logo", Base64.getEncoder().encodeToString(empresa.getFoto()));
+                    }
+
+                    return ResponseEntity.ok(response);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 }

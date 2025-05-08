@@ -54,6 +54,9 @@ public class Empresas {
 	@Column(name = "foto", columnDefinition = "LONGBLOB")
 	private byte[] foto;
 
+	@Column(name = "activo")
+    private boolean activo = true; // Valor por defecto
+
 	@OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Ofertas> ofertas = new ArrayList<>();
 
@@ -128,4 +131,12 @@ public class Empresas {
 	public void setOfertas(List<Ofertas> ofertas) {
 		this.ofertas = ofertas;
 	}
+
+	public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
 }

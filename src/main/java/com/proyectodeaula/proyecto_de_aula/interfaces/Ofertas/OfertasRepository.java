@@ -12,10 +12,14 @@ import com.proyectodeaula.proyecto_de_aula.model.Ofertas;
 
 @Repository
 public interface OfertasRepository extends JpaRepository<Ofertas, Long> {
-    
+
     List<Ofertas> findByEmpresa(Empresas empresa);
+
     Page<Ofertas> findByEmpresa(Empresas empresa, Pageable pageable);
 
     Page<Ofertas> findAllByOrderByIdDesc(Pageable pageable);
+
     long countByHabilitada(boolean b);
+
+    Page<Ofertas> findByHabilitadaTrue(Pageable pageable);
 }
