@@ -20,7 +20,7 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  border-left: 4px solid #0a1128;
+  border-left: 4px solid;
 }
 
 /* Estados de las tarjetas */
@@ -94,6 +94,17 @@
   text-align: center;
 }
 
+/* Asegurar que las tarjetas resueltas mantengan su estilo */
+#resolved-applications-container .card {
+  border-left-width: 4px;
+  border-left-style: solid;
+}
+
+/* Animación para tarjetas que cambian de estado */
+.card {
+  transition: border-left-color 0.3s ease;
+}
+
 /* Mensaje cuando no hay aplicaciones */
 .no-resolved {
   text-align: center;
@@ -103,7 +114,6 @@
   width: 100%;
 }
 
-/* Estilo para las ofertas */
 /* Contenedor principal de las ofertas */
 .offer-container {
   display: flex;
@@ -182,27 +192,40 @@
 }
 
 .estado {
-  padding: 5px 5px;
+  padding: 5px 10px;
   border-radius: 5px;
   font-weight: bold;
   display: inline-block;
+  margin: 5px 0;
+  text-align: center;
+  min-width: 100px;
 }
 
 .estado.pendiente {
-  background-color: yellow;
-  color: black;
+  background-color: #FFC107;
+  color: #000;
 }
 
 .estado.aceptado {
-  background-color: green;
-  color: white;
+  background-color: #28A745;
+  color: #FFF;
 }
 
 .estado.rechazado {
-  background-color: red;
-  color: white;
+  background-color: #DC3545;
+  color: #FFF;
 }
 
+/* Transición para las tarjetas movidas */
+.resolved-applications-container .card {
+  transition: all 0.3s ease;
+  opacity: 0.9;
+}
+
+.resolved-applications-container .card:hover {
+  opacity: 1;
+  transform: scale(1.02);
+}
 /* Botones */
 .btn-action-group {
   display: flex;
@@ -220,7 +243,10 @@
   border-color: #bd2130;
 }
 
-/* Animaciones */
+/* Animación para tarjetas resueltas */
+.resolved-card {
+  animation: fadeInUp 0.5s ease-out;
+}
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -230,10 +256,6 @@
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.resolved-card {
-  animation: fadeInUp 0.5s ease-out;
 }
 
 /* ========== FOOTER ========== */

@@ -41,7 +41,7 @@ public class OfertaService implements IofertaService {
 
     @Override
     public List<Ofertas> listar_ofertas() {
-        return (List<Ofertas>) oferr.findAll();
+        return oferr.findByHabilitadaTrue();
     }
 
     @Override
@@ -130,7 +130,7 @@ public class OfertaService implements IofertaService {
     @Override
     public Page<Ofertas> listar_ofertas_paginadas(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return ofertaRepository.findAll(pageable);
+        return ofertaRepository.findByHabilitadaTrue(pageable);
     }
 
     @Override

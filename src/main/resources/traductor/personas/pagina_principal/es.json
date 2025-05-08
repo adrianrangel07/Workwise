@@ -1,6 +1,6 @@
 {
   "sidebar.home": "Inicio",
-  "sidebar.profile": "Perfil",
+  "sidebar.profile": "Mi perfil",
   "sidebar.applications": "Mis postulaciones",
   "sidebar.cv": "Crear Hoja de Vida",
   "sidebar.resources": "Como buscar empleo?",
@@ -9,7 +9,7 @@
   "navbar.search.placeholder": "Puesto o palabra clave..",
   "idioma.etiqueta": "Idioma:",
   "navbar.account": "Cuenta",
-  "navbar.profile": "Perfil",
+  "navbar.profile": "Mi perfil",
   "navbar.applications": "Postulaciones",
   "navbar.cv": "Hoja de vida",
   "navbar.logout": "Cerrar sesión",

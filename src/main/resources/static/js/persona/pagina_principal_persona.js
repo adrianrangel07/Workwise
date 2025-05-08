@@ -550,3 +550,32 @@ function reloadFavorites() {
     setupFavorites();
 }
 
+// Toggle sidebar en móviles
+document.getElementById('sidebarToggle').addEventListener('click', function () {
+    document.getElementById('sidebar').classList.toggle('show');
+});
+
+// Cerrar sidebar al hacer clic fuera en móviles
+document.addEventListener('click', function (event) {
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+
+    if (window.innerWidth <= 992 &&
+        !sidebar.contains(event.target) &&
+        event.target !== sidebarToggle &&
+        !sidebarToggle.contains(event.target)) {
+        sidebar.classList.remove('show');
+    }
+});
+
+// Ajustar altura del contenedor de filtros para móviles
+function adjustFilterHeight() {
+    if (window.innerWidth <= 768) {
+        const filterMenu = document.getElementById('cont-menu');
+        const viewportHeight = window.innerHeight;
+        filterMenu.style.height = `${viewportHeight}px`;
+    }
+}
+
+window.addEventListener('resize', adjustFilterHeight);
+adjustFilterHeight(); // Ejecutar al cargar

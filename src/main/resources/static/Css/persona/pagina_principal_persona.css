@@ -229,6 +229,9 @@ body {
   text-align: right;
   border-top: 1px solid #eee;
   justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .apply-btn-modal {
@@ -925,67 +928,207 @@ body {
     position: relative;
 }
 
-/* ========== MEDIA QUERIES (RESPONSIVE) ========== */
+/* ========== RESPONSIVE DESIGN ========== */
+
+/* Sidebar responsive */
 @media (max-width: 992px) {
-  .modal-content {
-    max-width: 70%;
-  }
-}
-
-@media (max-width: 768px) {
   .sidebar {
-    display: none;
+      width: 80px;
+      position: fixed;
+      z-index: 1001;
+      height: 100vh;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
   }
-
-  .offer-container {
-    flex-direction: column;
-    align-items: center;
+  
+  .sidebar.show {
+      transform: translateX(0);
   }
-
-  .card {
-    width: 100%;
+  
+  .sidebar-brand-text {
+      display: none;
   }
-
-  .modal-content {
-    max-width: 85%;
+  
+  .sidebar .nav-link span {
+      display: none;
   }
-
-  .footer-content {
-    flex-direction: column;
-    text-align: center;
+  
+  .sidebar .nav-link {
+      text-align: center;
+      padding: 10px 5px;
   }
-
-  .footer-left,
-  .footer-center,
-  .footer-right {
-    margin-bottom: 15px;
-    text-align: center;
+  
+  .sidebar .nav-link i {
+      font-size: 1.2rem;
+      margin-right: 0;
+  }
+  
+  #content-wrapper {
+      margin-left: 0;
   }
 }
 
-@media (max-width: 576px) {
-  #formBusqueda .form-control {
-    width: 100%;
+/* Barra de navegación superior */
+@media (max-width: 768px) {
+  .navbar {
+      padding: 0.5rem 0.5rem;
+      flex-wrap: wrap;
   }
-
-  .modal-content {
-    width: 95%;
-    max-width: none;
+  
+  #formBusqueda {
+      order: 2;
+      width: 100%;
+      margin: 0.5rem 0;
   }
-
-  .modal-header h3 {
-    font-size: 1.5rem;
+  
+  .language-selector {
+      margin-left: auto;
+      margin-right: 10px;
   }
-
-  .modal-body {
-    font-size: 0.9rem;
+  
+  .btn-menu {
+      margin-left: 0;
   }
-
-  .apply-btn-modal {
-    width: 100%;
+  
+  #usuario-container {
+      margin-left: 0;
   }
+}
 
+/* Contenedor de ofertas */
+@media (max-width: 768px) {
+  .offer-container {
+      grid-template-columns: 1fr;
+      padding: 10px;
+      gap: 15px;
+  }
+  
+  .card {
+      padding: 15px;
+  }
+  
+  .offer-content h3 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+  }
+}
+
+/* Filtros responsive */
+@media (max-width: 768px) {
   #cont-menu {
-    max-width: 85%;
+      max-width: 280px;
   }
+  
+  .filter-section-header {
+      padding: 10px;
+  }
+  
+  .filter-section-body {
+      padding: 10px;
+  }
+  
+  .filter-actions {
+      padding: 5px 0;
+  }
+}
+
+/* Modal responsive */
+@media (max-width: 576px) {
+  .modal-content {
+      width: 95%;
+      margin: 20px auto;
+  }
+  
+  .modal-header {
+      padding: 15px;
+  }
+  
+  .modal-body {
+      padding: 15px;
+  }
+  
+  .modal-footer {
+      flex-direction: column;
+  }
+  
+  .apply-btn-modal {
+      width: 100%;
+      margin-top: 10px;
+  }
+}
+
+/* Footer responsive */
+@media (max-width: 768px) {
+  .footer-content {
+      flex-direction: column;
+      text-align: center;
+  }
+  
+  .footer-left, 
+  .footer-center, 
+  .footer-right {
+      text-align: center;
+      margin-bottom: 10px;
+  }
+  
+  .footer-right {
+      margin-top: 10px;
+  }
+}
+
+/* Mejoras generales para móviles */
+@media (max-width: 576px) {
+  body {
+      font-size: 14px;
+  }
+  
+  .section-title h2 {
+      font-size: 1.5rem;
+  }
+  
+  .section-title p {
+      font-size: 0.9rem;
+  }
+  
+  .pagination a {
+      padding: 6px 10px;
+      font-size: 0.8rem;
+  }
+  
+  /* Ajustes para el menú de usuario en móviles */
+  .dropdown-menu {
+      position: absolute;
+      right: 0;
+      left: auto;
+  }
+  
+  /* Mejor visualización de iconos en móviles */
+  .favorite-icon, .applied-icon {
+      font-size: 1.2rem;
+  }
+  
+  .applied-icon span {
+      display: none;
+  }
+}
+
+/* Dispositivos muy pequeños (ej: iPhone 5/SE) */
+@media (max-width: 320px) {
+  #termino {
+      width: 180px;
+  }
+  
+  .modal-body {
+      padding: 10px;
+  }
+  
+  .modal-info-item {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+}
+
+/* Scroll suave */
+html {
+  scroll-behavior: smooth;
 }
