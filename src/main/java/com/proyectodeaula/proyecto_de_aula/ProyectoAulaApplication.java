@@ -5,11 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class ProyectoAulaApplication {
- 
-	public static void main(String[] args) {
-		SpringApplication.run(ProyectoAulaApplication.class, args);
-	}
-	
+
+    public static void main(String[] args) {
+        SpringApplication.run(ProyectoAulaApplication.class, args);
+    }
+
 }
-
-

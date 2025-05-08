@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,6 @@ import com.proyectodeaula.proyecto_de_aula.interfaceService.IempresaService;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Empresas.Interfaz_Emp;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Empresas.Interfaz_Empresa;
 import com.proyectodeaula.proyecto_de_aula.model.Empresas;
-
 
 @Service
 public class EmpresaService implements IempresaService {
@@ -43,7 +44,6 @@ public class EmpresaService implements IempresaService {
         E.setContraseña(passwordEncoder.encode(E.getContraseña()));
 
         if (emp != null) {
-            res = 1;
         }
 
         return res;
@@ -101,6 +101,29 @@ public class EmpresaService implements IempresaService {
 
     public List<Empresas> obtenerEmpresasRecientes(int limit) {
         return Emp.findTopNByOrderByIdDesc(limit);
+    }
+
+    public Page<Empresas> listarEmpresasPaginadas(Pageable pageable) {
+        return Emp.findAll(pageable);
+    }
+    
+    public Optional<Empresas> obtenerEmpresaPorId(int id) {
+        return dataemp.findById(id);
+    }
+    
+    public Empresas guardarEmpresa(Empresas empresa) {
+        return dataemp.save(empresa);
+    }
+    
+    public Page<Empresas> buscarEmpresas(String query, Pageable pageable) {
+        return Emp.buscarPorNombreNitOEmail(query, pageable);
+    }
+    
+    public void cambiarEstadoEmpresa(int id) {
+        Empresas empresa = dataemp.findById(id)
+                .orElseThrow(() -> new RuntimeException("Empresa no encontrada"));
+        empresa.setActivo(!empresa.isActivo());
+        dataemp.save(empresa);
     }
 
 }

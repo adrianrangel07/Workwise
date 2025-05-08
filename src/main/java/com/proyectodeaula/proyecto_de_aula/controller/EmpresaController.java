@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proyectodeaula.proyecto_de_aula.interfaceService.IofertaService;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Empresas.Interfaz_Emp;
@@ -88,7 +89,7 @@ public class EmpresaController {
     // Procesa el inicio de sesión de una empresa
     @PostMapping("/login/Empresa")
     public String iniciarSesionEmpresa(HttpSession session, Model model,
-            @RequestParam String email,
+            @RequestParam String email, RedirectAttributes redirectAttributes,
             @RequestParam String contraseña) {
 
         Empresas empresa = uEmp.findByEmail(email);
@@ -97,6 +98,11 @@ public class EmpresaController {
             System.out.println("No se encontró empresa con el email: " + email);
             model.addAttribute("error", "Credenciales incorrectas");
             return "redirect:/login/Empresa?error=true";
+        }
+
+        if (!empresa.isActivo()) {
+            redirectAttributes.addAttribute("desactivada", true);
+            return "redirect:/login/personas";
         }
 
         System.out.println("Empresa encontrada: " + empresa.getEmail());
