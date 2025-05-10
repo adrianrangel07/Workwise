@@ -270,3 +270,4 @@ document.getElementById("ocultarNavBar").addEventListener("click", function () {
     sidebar.classList.toggle("toggled");
 
 });
+

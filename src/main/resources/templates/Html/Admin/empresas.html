@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/Css/admin/dashboard.css">
     <link rel="stylesheet" href="/Css/admin/empresa.css">
     <link rel="stylesheet" href="/Css/admin/usuario.css">
+    <link rel="stylesheet" href="/Css/Admin/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
@@ -35,8 +36,9 @@
                             <span>Usuarios</span></a></li>
                     <li class="active"><a th:href="@{/admin/empresas}"><i class="fas fa-building"></i>
                             <span>Empresas</span></a></li>
-                    <li><a href="#"><i class="fas fa-chart-line"></i> <span>Estadísticas</span></a></li>
-                    <li><a href="#"><i class="fas fa-cog"></i> <span>Configuración</span></a></li>
+                    <li><a th:href="@{/admin/estadisticas}"><i class="fas fa-chart-line"></i>
+                            <span>Estadísticas</span></a></li>
+
                 </ul>
             </nav>
         </div>
@@ -99,19 +101,23 @@
                                     <td th:text="${empresa.email}"></td>
                                     <td th:text="${empresa.nit}"></td>
                                     <td>
-                                        <span th:class="${empresa.activo} ? 'badge bg-success' : 'badge bg-danger'"
+                                        <span
+                                            th:class="${empresa.activo} ? 'status-badge active' : 'status-badge inactive'"
                                             th:text="${empresa.activo} ? 'Activo' : 'Inactivo'"></span>
+                                        <i
+                                            th:class="${empresa.activo} ? 'fas fa-check-circle text-success' : 'fas fa-times-circle text-danger'"></i>
                                     </td>
                                     <td>
                                         <button th:classappend="${empresa.activo} ? 'btn-danger' : 'btn-success'"
                                             th:onclick="'desactivarEmpresa(' + ${empresa.id} + ')'"
-                                            class="btn btn-sm toggle-status">
+                                            class="btn btn-sm toggle-status action-btn">
                                             <span th:text="${empresa.activo} ? 'Desactivar' : 'Activar'"></span>
                                         </button>
 
-                                        <button class="btn btn-info-user view-empresa-info"
+
+                                        <button class="btn btn-primary btn-sm view-empresa-info"
                                             th:data-empresa-id="${empresa.id}">
-                                            <i class="fas fa-info-circle"></i>
+                                            <i class="fas fa-eye"></i> Ver
                                         </button>
                                     </td>
                                 </tr>
