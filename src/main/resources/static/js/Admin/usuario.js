@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Event listeners para botones de información de usuario
     document.addEventListener('click', function (e) {
         // Botón de información de usuario
-        if (e.target.closest('.btn-info-user')) {
+        if (e.target.closest('.view-user-info')) {
             const userId = e.target.closest('tr').querySelector('td:first-child').textContent;
             obtenerDatosUsuario(userId);
         }
@@ -48,16 +48,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Configura el buscador en tiempo real
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', debounce(handleRealTimeSearch, 300));
+
     // Verificar si no hay resultados después de una búsqueda
     checkForEmptyResults();
-
-    // Event listeners para el buscador
-    document.getElementById('searchButton').addEventListener('click', handleSearch);
-    document.getElementById('searchInput').addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            handleSearch();
-        }
-    });
 });
 
 window.addEventListener('load', function () {
@@ -66,6 +62,7 @@ window.addEventListener('load', function () {
 
 // Función para obtener datos del usuario
 function obtenerDatosUsuario(idUsuario) {
+    showLoadingModal();
     fetch(`/admin/usuarios/${idUsuario}/datos`)
         .then(response => {
             if (!response.ok) {
@@ -74,7 +71,9 @@ function obtenerDatosUsuario(idUsuario) {
             return response.json();
         })
         .then(data => {
-            mostrarInformacionUsuario(data);
+            setTimeout(() => {
+                mostrarInformacionUsuario(data);
+            }, 2000);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -87,6 +86,21 @@ function obtenerDatosUsuario(idUsuario) {
 }
 
 function mostrarInformacionUsuario(usuario) {
+    const modalBody = document.querySelector('#userInfoModal .modal-body');
+
+    // Quitar el spinner si existe
+    const loadingDiv = document.getElementById('userLoadingTemp');
+    if (loadingDiv) {
+        loadingDiv.remove();
+    }
+
+    // Restaurar la visibilidad del contenido original
+    [...modalBody.children].forEach((child) => {
+        if (child.id !== 'userLoadingTemp') {
+            child.style.display = "";
+        }
+    });
+
     // Formatear la fecha de nacimiento
     const fechaNacimiento = new Date(usuario.fecha_nacimiento);
     const opcionesFecha = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -111,7 +125,7 @@ function mostrarInformacionUsuario(usuario) {
     if (usuario.foto) {
         userPhoto.src = `data:image/jpeg;base64,${usuario.foto}`;
     } else {
-        userPhoto.src = '/Imagenes/default-user.png'; // Imagen por defecto
+        userPhoto.src = '/Imagenes/default-user.png';
         userPhoto.alt = 'Foto no disponible';
     }
 
@@ -147,6 +161,7 @@ function mostrarInformacionUsuario(usuario) {
     // Mostrar número de postulaciones
     const postulacionesElement = document.getElementById('userPostulaciones');
     postulacionesElement.textContent = usuario.numPostulaciones || 0;
+    
     // Crear una lista de postulaciones
     if (usuario.postulaciones && usuario.postulaciones.length > 0) {
         const postulacionesList = document.createElement('ul');
@@ -155,25 +170,15 @@ function mostrarInformacionUsuario(usuario) {
         usuario.postulaciones.forEach(post => {
             const li = document.createElement('li');
             li.innerHTML = `
-            <strong>${post.ofertaTitulo || 'Oferta sin título'}</strong>
-            <span class="badge ${getEstadoBadgeClass(post.estado)}">${post.estado}</span>
-        `;
+                <strong>${post.ofertaTitulo || 'Oferta sin título'}</strong>
+                <span class="badge ${getEstadoBadgeClass(post.estado)}">${post.estado}</span>
+            `;
             postulacionesList.appendChild(li);
         });
 
         document.getElementById('userPostulaciones').appendChild(postulacionesList);
     }
 
-    // Función auxiliar para clases de badge según estado
-    function getEstadoBadgeClass(estado) {
-        switch (estado.toLowerCase()) {
-            case 'activo': return 'bg-primary';
-            case 'aceptado': return 'bg-success';
-            case 'rechazado': return 'bg-danger';
-            case 'en proceso': return 'bg-warning';
-            default: return 'bg-secondary';
-        }
-    }
     // Mostrar el modal
     const userInfoModal = new bootstrap.Modal(document.getElementById('userInfoModal'));
     userInfoModal.show();
@@ -271,35 +276,150 @@ function showNoResultsAlert(searchQuery) {
     });
 }
 
-// Función para manejar la búsqueda
-function handleSearch() {
-    const searchInput = document.getElementById('searchInput');
+// Función para manejar la búsqueda en tiempo real
+function handleRealTimeSearch() {
+    const searchTerm = document.getElementById('searchInput').value.trim();
     const searchButton = document.getElementById('searchButton');
-    const searchTerm = searchInput.value.trim();
-
+    
     if (searchTerm.length === 0) {
-        Swal.fire({
-            title: 'Campo vacío',
-            text: 'Por favor ingresa un término de búsqueda',
-            icon: 'warning',
-            confirmButtonText: 'Entendido',
-            confirmButtonColor: '#3085d6'
-        }).then(() => {
-            document.getElementById('searchInput').value = '';
-        });
+        // Si el campo está vacío, recarga la página sin parámetros de búsqueda
+        window.location.href = '/admin/usuarios';
+        return;
     }
-
+    
     // Mostrar estado de carga
     const originalContent = searchButton.innerHTML;
     searchButton.innerHTML = '<i class="fas fa-spinner fa-pulse"></i>';
     searchButton.disabled = true;
-
-    // Realizar la búsqueda
-    window.location.href = `/admin/usuarios/buscar?query=${encodeURIComponent(searchTerm)}`;
-
-    // Restaurar el botón después de 3 segundos (como fallback)
-    setTimeout(() => {
-        searchButton.innerHTML = originalContent;
-        searchButton.disabled = false;
-    }, 3000);
+    
+    // Realiza la búsqueda sin recargar la página completa
+    fetch(`/admin/usuarios/buscar?query=${encodeURIComponent(searchTerm)}&page=0&size=10`, {
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error en la respuesta");
+            }
+            return response.text();
+        })
+        .then(html => {
+            // Parsear el HTML y extraer solo la tabla
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, "text/html");
+            const newTable = doc.querySelector("#usersTable");
+            const newPagination = doc.querySelector(".pagination");
+            
+            if (newTable) {
+                // Reemplazar solo la tabla y la paginación
+                const currentTable = document.querySelector("#usersTable");
+                const currentPagination = document.querySelector(".pagination");
+                
+                if (currentTable && newTable) {
+                    currentTable.innerHTML = newTable.innerHTML;
+                }
+                
+                if (currentPagination && newPagination) {
+                    currentPagination.innerHTML = newPagination.innerHTML;
+                }
+                
+                // Actualizar la información de paginación
+                const pageInfo = doc.querySelector("#usersTable_info");
+                if (pageInfo) {
+                    document.querySelector("#usersTable_info").innerHTML = pageInfo.innerHTML;
+                }
+            }
+        })
+        .catch(error => {
+            console.error("Error en la búsqueda:", error);
+            Swal.fire({
+                title: "Error",
+                text: "Ocurrió un error al realizar la búsqueda",
+                icon: "error",
+            });
+        })
+        .finally(() => {
+            // Restaurar el botón de búsqueda
+            searchButton.innerHTML = originalContent;
+            searchButton.disabled = false;
+        });
 }
+
+function showLoadingModal() {
+    const modalBody = document.querySelector("#userInfoModal .modal-body");
+
+    if (modalBody) {
+        // Oculta el contenido actual del modal (pero no lo borra)
+        [...modalBody.children].forEach((child) => {
+            child.style.display = "none";
+        });
+
+        // Crea el spinner dinámicamente
+        const loadingDiv = document.createElement("div");
+        loadingDiv.id = "userLoadingTemp";
+        loadingDiv.className = "text-center py-4";
+        loadingDiv.innerHTML = `
+            <div class="spinner-border text-primary" role="status" aria-live="polite" aria-busy="true">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="mt-2">Cargando información del usuario...</p>
+        `;
+
+        modalBody.appendChild(loadingDiv);
+
+        const modalElement = document.getElementById("userInfoModal");
+        if (!bootstrap.Modal.getInstance(modalElement)) {
+            const modalInstance = new bootstrap.Modal(modalElement);
+            modalInstance.show();
+        } else {
+            bootstrap.Modal.getInstance(modalElement).show();
+        }
+    }
+}
+
+function debounce(func, wait) {
+    let timeout;
+    return function () {
+        const context = this, args = arguments;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), wait);
+    };
+}
+
+// Función auxiliar para clases de badge según estado
+function getEstadoBadgeClass(estado) {
+    switch (estado.toLowerCase()) {
+        case 'activo': return 'bg-primary';
+        case 'aceptado': return 'bg-success';
+        case 'rechazado': return 'bg-danger';
+        case 'en proceso': return 'bg-warning';
+        default: return 'bg-secondary';
+    }
+}
+
+document.getElementById("userInfoModal").addEventListener("hidden.bs.modal", function () {
+    // Elimina el spinner si quedó
+    const loadingDiv = document.getElementById("userLoadingTemp");
+    if (loadingDiv) {
+        loadingDiv.remove();
+    }
+
+    // Restaura la visibilidad por si quedó oculta
+    const modalBody = this.querySelector(".modal-body");
+    if (modalBody) {
+        [...modalBody.children].forEach(child => {
+            child.style.display = "";
+        });
+    }
+
+    // Limpieza de backdrop (por si queda pegado)
+    const backdrop = document.querySelector(".modal-backdrop");
+    if (backdrop) {
+        backdrop.remove();
+    }
+
+    // Quita la clase que deshabilita el scroll del body
+    document.body.classList.remove("modal-open");
+    document.body.style.paddingRight = "";
+});
