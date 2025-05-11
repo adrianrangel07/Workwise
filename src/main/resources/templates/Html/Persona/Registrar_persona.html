@@ -181,6 +181,13 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Botón para abrir modal de verificación (visible solo en móviles) -->
+                        <button type="button" class="btn btn-primary verification-mobile-trigger"
+                            id="mobile-verification-trigger">
+                            <i class="fas fa-envelope"></i> Verificar Correo
+                        </button>
+
                         <button class="btn btn-primary d-block btn-user w-100" type="submit" id="btn-register"
                             data-trad="register.registerButton">
                             Registrarse
@@ -195,6 +202,23 @@
         </div>
         <div class="curva">
             <div class="container-img"></div>
+        </div>
+        <!-- Modal para verificación en móviles -->
+        <div class="modal fade" id="verificationModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fas fa-envelope verification-icon"></i>
+                            Verificación de Correo
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="mobile-verification-content">
+                        <!-- Contenido se insertará dinámicamente -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
