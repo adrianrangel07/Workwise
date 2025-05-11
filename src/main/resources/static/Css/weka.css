@@ -136,25 +136,92 @@ form{
   align-items: center;
 }
 
-form .campo {
-  margin-bottom: 15px;
+
+.mb-3 {
+  position: relative;
+  width: 100% !important;
+  margin-bottom: 2rem !important;
 }
 
-form label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
 
-form select,
-form input[type="number"],
-form input[type="text"] {
+.mb-3 input {
   width: 100%;
-  height: 37px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  box-sizing: border-box;
+  font-size: 1.0rem;
+  line-height: 1.33333;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.9) !important;
+  height: 52px;
+  padding: 0px 15px !important;
+  border-radius: 6px !important;
+  border: 2px solid #e3e6f0;
+}
+
+.mb-3 input:focus{
+  border: 2px solid #0a1128;
+  box-shadow: none;
+}
+
+.mb-3 select {
+  width: 100%;
+  line-height: 1.33333;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.9) !important;
+  height: 52px;
+  padding: 0px 15px !important;
+  border-radius: 6px !important;
+  border: 2px solid #e3e6f0;
+}
+
+.mb-3 select:focus{
+  border: 2px solid #0a1128;
+  box-shadow: none;
+  border-radius: 6px !important;
+}
+
+.label {
+  position: absolute;
+  left: 15px;
+  transform: translateY(-50%);
+  color: rgba(0, 0, 0, 0.9);
+  font-size: 15px;
+  pointer-events: none;
+  transition: 0.3s;
+  top: 0;
+  font-size: 16px;
+  padding: 0 2px;
+  background: #fff;
+}
+
+.label-active{
+  position: absolute;
+  padding: 3px !important;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: rgba(0, 0, 0, 0.9);
+  font-size: 15px;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+.mb-3 input:focus ~ .label-active,
+.mb-3 input:not(:placeholder-shown) ~ .label-active {
+  top: 0;
+  font-size: 16px;
+  padding: 0 15px;
+  background: #fff;
+}
+
+.mb-3:has(select:focus) label,
+.mb-3:has(select option:checked:not([value="6"])) label {
+  top: 0;
+  font-size: 16px;
+  padding: 0 15px;
+  background: #fff;
+}
+
+.invalid {
+  border: 2px solid red !important;
 }
 
 .data{
@@ -167,7 +234,7 @@ form input[type="text"] {
   border: 1px solid #e0e0e0;
   border-radius: 16px;
   padding: 2rem;
-  width: 45%;
+  width: 40%;
   margin: 2rem auto;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
