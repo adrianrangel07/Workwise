@@ -96,24 +96,29 @@
                             <div class="data-title">
                                 <h2>Datos de la oferta</h2>
                             </div>
-                            <div class="campo" id="tipoEmpleo">
-                                <label>Tipo Empleo Oferta</label>
-                                <input type="text" name="tipo_empleo_oferta" id="tipoEmpleoOferta" th:value="${oferta.tipo_empleo}" readonly required>
+                            <div class="mb-3" id="tipoEmpleo">
+                                <input class="form-control form-control-user" type="text" min="0" id="tipoEmpleoOferta" th:value="${{
+                                    Tiempo_Completo: 'Tiempo Completo',
+                                    Medio_Tiempo: 'Medio Tiempo',
+                                    Por_Horas: 'Por horas',
+                                    Freelance: 'Freelance'
+                                }[oferta.tipo_empleo] ?: 'No especificado'}" readonly  required>
+                                <label class="label">Tipo Empleo Oferta</label>
+                                <input type="text" name="tipo_empleo_oferta"  th:value="${oferta.tipo_empleo}" style="display: none;">
                             </div>
             
-                            <div class="campo">
-                                <label>Modalidad Oferta</label>
-                                <input type="text" name="modalidad_oferta" id="modalidadOferta" th:value="${oferta.modalidad}" readonly required>
+                            <div class="mb-3">
+                                <input class="form-control form-control-user" type="text" name="modalidad_oferta" id="modalidadOferta" th:value="${oferta.modalidad}" readonly required>
+                                <label class="label">Modalidad Oferta</label>
                             </div>
                             
-                            <div class="campo">
-                                <label>Tipo Contrato Oferta</label>
-                                <input type="text" name="tipo_contrato_oferta" id="tipoContratoOferta" th:value="${oferta.tipo_contrato}" readonly required>
+                            <div class="mb-3">
+                                <input class="form-control form-control-user" type="text" name="tipo_contrato_oferta" id="tipoContratoOferta" th:value="${oferta.tipo_contrato}" readonly required>
+                                <label class="label">Tipo Contrato Oferta</label>
                             </div>
                     
-                            <div class="campo">
-                                <label>Experiencia Requerida (años)</label>
-                                <input type="text" min="0" id="experienciaRequerida" th:value="${{
+                            <div class="mb-3">
+                                <input class="form-control form-control-user" type="text" min="0" id="experienciaRequerida" th:value="${{
                                     0: 'Sin experiencia',
                                     1: 'Menos de 1 año',
                                     2: 'Entre 1 y 3 años',
@@ -121,56 +126,68 @@
                                     4: 'Entre 5 y 10 años',
                                     5: 'Más de 10 años'
                                 }[oferta.experiencia] ?: 'No especificado'}" readonly  required>
+                                <label class="label">Experiencia Requerida (años)</label>
                                 <input type="hidden" name="experiencia_requerida" th:value="${oferta.experiencia}" style="display: none;">
                             </div>
                     
-                            <div class="campo">
-                                <label>Nivel Estudio Requerido</label>
-                                <input type="text" name="nivel_estudio_requerido" id="nivelEstudioRequerido" th:value="${oferta.nivel_educativo}" readonly required>
+                            <div class="mb-3">
+                                <input class="form-control form-control-user" type="text" min="0" id="nivelEstudioRequerido" th:value="${{
+                                    Sin_estudios: 'Sin estudios',
+                                    Bachiller: 'Bachiller',
+                                    Tecnico_Tecnologo: 'Técnico/Tecnólogo',
+                                    Tecnologo_Universitario: 'Tecnólogo o Universitario',
+                                    Universitario: 'Universitario',
+                                    Master: 'Máster',
+                                    Doctorado: 'Doctorado'
+                                }[oferta.nivel_educativo] ?: 'No especificado'}" readonly  required>
+                                <label class="label">Nivel Estudio Requerido</label>
+                                <input type="text" name="nivel_estudio_requerido"  th:value="${oferta.nivel_educativo}" style="display: none;">
                             </div>
                     
-                            <div class="campo">
-                                <label>Sector Oferta</label>
-                                <input type="text" name="sector_oferta" id="sectorOferta" th:value="${oferta.sector_oferta}"  readonly required>
+                            <div class="mb-3">
+                                <input class="form-control form-control-user" type="text" name="sector_oferta" id="sectorOferta" th:value="${oferta.sector_oferta}"  readonly required>
+                                <label class="label">Sector Oferta</label>
                             </div>
                         </div>
-                        
                         <div class="data-persona tarjeta">
                             <div class="data-title">
                                 <h2>Ingresa tus Datos</h2>
                             </div>
-                            <div class="campo">
-                                <label>Tipo Empleo Deseado</label>
-                                <select name="tipo_empleo_deseado">
-                                    <option value="Tiempo_Completo">Tiempo Completo</option>
+                            <div class="mb-3">
+                                <select name="tipo_empleo_deseado" required>
+                                    <option value="6" hidden disabled selected></option>
+                                    <option value="Tiempo_Completo" class="option">Tiempo Completo</option>
                                     <option value="Medio_Tiempo">Medio Tiempo</option>
                                     <option value="Por_Horas">Por horas</option>
                                     <option value="Freelance">Freelance</option>
                                 </select>
+                                <label class="label-active">Tipo De Empleo Deseado</label>
                             </div>
                     
-                            <div class="campo">
-                                <label>Modalidad Preferida</label>
-                                <select name="preferencia_modalidad">
+                            <div class="mb-3">
+                                <select name="preferencia_modalidad" required>
+                                    <option value="6" hidden disabled selected></option>
                                     <option value="Presencial">Presencial</option>
                                     <option value="Remoto">Remoto</option>
                                     <option value="Hibrido">Híbrido</option>
                                 </select>
+                                <label class="label-active">Tipo De Modalidad Deseada</label>
                             </div>
                     
-                            <div class="campo">
-                                <label>Tipo Contrato Preferido</label>
-                                <select name="preferencia_contrato">
+                            <div class="mb-3">
+                                <select name="preferencia_contrato" required>
+                                    <option value="6" hidden disabled selected></option>
                                     <option value="Obra_Labor">Obra o Labor</option>
                                     <option value="Fijo">Fijo</option>
                                     <option value="Indefinido">Indefinido</option>
                                     <option value="Practicas">Prácticas</option>
                                 </select>
+                                <label class="label-active">Tipo De Contrato Deseado</label>
                             </div>
                     
-                            <div class="campo">
-                                <label>Experiencia Persona (años)</label>
+                            <div class="mb-3">
                                 <select id="experiencia" name="experiencia_persona" required>
+                                    <option value="6" hidden disabled selected></option>
                                     <option value=0 >Sin experiencia</option>
                                     <option value=1 >Menos de 1 año</option>
                                     <option value=2 >Entre 1 y 3 años</option>
@@ -178,11 +195,12 @@
                                     <option value=4 >Entre 5 y 10 años</option>
                                     <option value=5 >Más de 10 años</option>
                                 </select>
+                                <label class="label-active" id="label-experiencia">Seleccione Su Experiencia Laboral</label>
                             </div>
                     
-                            <div class="campo">
-                                <label>Nivel Estudio Persona</label>
-                                <select name="nivel_estudio_persona">
+                            <div class="mb-3">
+                                <select id="nivel_educativo" name="nivel_estudio_persona" required>
+                                    <option value="6" hidden disabled selected></option>
                                     <option value= "Sin_estudios">Sin estudios</option>
                                     <option value= "Bachiller">Bachiller</option>
                                     <option value= "Tecnico_Tecnologo">Tecnico/Tecnologo</option>
@@ -191,11 +209,12 @@
                                     <option value= "Master">Master</option>
                                     <option value= "Doctorado" >Doctorado</option>
                                 </select>
+                                <label id="label-estudio" class="label-active">Seleccione Su Nivel De Estudio</label>
                             </div>
                     
-                            <div class="campo">
-                                <label>Sector Persona</label>
-                                <select name="sector_persona">
+                            <div class="mb-3">
+                                <select name="sector_persona" required>
+                                    <option value="6" hidden disabled selected></option>
                                     <option value="Aeroespacial">Aeroespacial</option>
                                     <option value="Agricultura">Agricultura</option>
                                     <option value="Agroindustria">Agroindustria</option>
@@ -232,10 +251,11 @@
                                     <option value="Transporte">Transporte</option>
                                     <option value="Turismo">Turismo</option>
                                 </select>
+                                <label class="label-active">Seleccione Su Tipo De Sector</label>                                
                             </div>
-                            <div class="campo">
-                                <label>Edad</label>
-                                <input type="number" name="edad_persona" min="18" required>
+                            <div class="mb-3">
+                                <input class="form-control form-control-user" type="number" name="edad_persona" min="18" max="65" placeholder="" required>
+                                <label class="label-active">Ingresa tu edad</label>
                             </div>
                         </div>
                     </div>
@@ -253,7 +273,9 @@
                         Hemos encontrado estas oportunidades que coinciden con tu perfil
                     </p>
                 </div>
-                <div id="recomendaciones-container"></div>
+                <div id="recomendaciones-container">
+                    <div class="offer-container" id="contenedor-tarjeta"></div>
+                </div>
 
                 <div class="usuarioId" style="display: none;">
                     <input type="hidden" id="usuarioId" th:value="${persona.id}">
@@ -277,6 +299,9 @@
                             <div class="modal-info-item" id="modal-modalidad"></div>
                             <div class="modal-info-item" id="modal-type"></div>
                             <div class="modal-info-item" id="modal-typeContract"></div>
+                            <div class="modal-info-item" id="modal-experience"></div>
+                            <div class="modal-info-item" id="modal-sector"></div>
+                            <div class="modal-info-item" id="modal-education"></div>
                             <div class="modal-info-item" id="modal-empresa"></div>
 
                         </div>
