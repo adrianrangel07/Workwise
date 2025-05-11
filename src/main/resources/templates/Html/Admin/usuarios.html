@@ -8,7 +8,7 @@
     <link rel="icon" type="image/png" href="/Imagenes/wknlogo2.png">
     <link rel="stylesheet" href="/Css/general/bootstrap.min.css">
     <link rel="stylesheet" href="/Css/Admin/usuario.css">
-
+    <link rel="stylesheet" href="/Css/Admin/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
@@ -34,8 +34,9 @@
                     <li class="active"><a th:href="@{/admin/usuarios}"><i class="fas fa-users"></i>
                             <span>Usuarios</span></a></li>
                     <li><a th:href="@{/admin/empresas}"><i class="fas fa-building"></i> <span>Empresas</span></a></li>
-                    <li><a href="#"><i class="fas fa-chart-line"></i> <span>Estadísticas</span></a></li>
-                    <li><a href="#"><i class="fas fa-cog"></i> <span>Configuración</span></a></li>
+                    <li><a th:href="@{/admin/estadisticas}"><i class="fas fa-chart-line"></i>
+                            <span>Estadísticas</span></a></li>
+
                 </ul>
             </nav>
         </div>
@@ -99,19 +100,22 @@
                                     <td th:text="${usuario.email}"></td>
                                     <td th:text="${usuario.identificacion}"></td>
                                     <td>
-                                        <span th:class="${usuario.activo} ? 'badge bg-success' : 'badge bg-danger'"
+                                        <span
+                                            th:class="${usuario.activo} ? 'status-badge active' : 'status-badge inactive'"
                                             th:text="${usuario.activo} ? 'Activo' : 'Inactivo'"></span>
+                                        <i
+                                            th:class="${usuario.activo} ? 'fas fa-check-circle text-success' : 'fas fa-times-circle text-danger'"></i>
                                     </td>
                                     <td>
                                         <button th:classappend="${usuario.activo} ? 'btn-danger' : 'btn-success'"
                                             th:onclick="'desactivarUsuario(' + ${usuario.id} + ')'"
-                                            class="btn btn-sm toggle-status">
+                                            class="btn btn-sm toggle-status action-btn">
                                             <span th:text="${usuario.activo} ? 'Desactivar' : 'Activar'"></span>
                                         </button>
 
-                                        <button class="btn btn-info-user view-user-info"
+                                        <button class="btn btn-primary btn-sm view-user-info"
                                             th:data-user-id="${usuario.id}">
-                                            <i class="fas fa-info-circle"></i>
+                                            <i class="fas fa-eye"></i> Ver
                                         </button>
                                     </td>
                                 </tr>

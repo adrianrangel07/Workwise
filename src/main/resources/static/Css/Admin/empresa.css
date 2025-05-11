@@ -89,24 +89,6 @@
     text-align: center;
 }
 
-/* Responsive para tabla */
-@media (max-width: 768px) {
-    #empresasTable {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
-
-    .admin-filters .row {
-        flex-direction: column;
-    }
-
-    .admin-filters .col-md-6 {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-}
-
 /* Mejoras para el modal de empresa */
 .empresa-info-section {
     margin-bottom: 1.5rem;
@@ -222,4 +204,49 @@
 .pagination-empresas .page-link:hover {
     color: var(--accent-color);
     background-color: rgba(52, 152, 219, 0.1);
+}
+
+/* Agrega esto a tu archivo CSS */
+.status-badge {
+    color: black;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+    text-align: center;
+    margin-right: 5px;
+}
+
+.status-badge.active {
+    background-color: transparent;
+}
+
+.status-badge.inactive {
+    background-color: transparent;
+}
+
+#empresasTable td:nth-child(5) {
+    text-align: center;
+    display: flex;
+    align-items: center;
+   
+}
+
+#empresasTable td:nth-child(5) i {
+    margin-left: 5px;
+    font-size: 1.1rem;
+}
+
+/* Agrega esto a tu archivo CSS */
+.action-btn {
+    min-width: 90px;
+    padding: 0.375rem 0.75rem;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.view-empresa-info {
+    min-width: 40px;
+    padding: 0.375rem 0.75rem;
+    text-align: center;
 }

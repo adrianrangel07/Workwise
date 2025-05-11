@@ -324,4 +324,12 @@ public class AdminController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/admin/estadisticas")
+    public String mostrarEstadisticas(HttpSession session, Model model) {
+        if (session.getAttribute("isAdmin") == null) {
+            return "redirect:/login/personas";
+        }
+        return "Html/admin/estadisticas";
+    }
+
 }
