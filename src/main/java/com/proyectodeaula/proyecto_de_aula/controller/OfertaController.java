@@ -97,7 +97,7 @@ public class OfertaController {
         model.addAttribute("paginaActual", page);
         model.addAttribute("totalPaginas", ofertasPage.getTotalPages());
         model.addAttribute("Ofertas", Ofertas);
-        return "Html/pagina_principal";
+        return "html/pagina_principal";
     }
 
     @GetMapping("/buscar_ofertas")
