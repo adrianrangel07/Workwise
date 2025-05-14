@@ -23,19 +23,23 @@
 /* Efecto flotante en hover */
 .card.shadow:hover {
   box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.25),
-    /* Sombra externa más intensa */ inset 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra interna más intensa */
+    /* Sombra externa más intensa */
+    inset 0px 4px 8px rgba(0, 0, 0, 0.3);
+  /* Sombra interna más intensa */
 }
 
 /* Inputs del formulario */
 .form-control {
   border: 1px solid #ced4da;
   border-radius: 8px;
-  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra interna */
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.1);
+  /* Sombra interna */
   transition: box-shadow 0.3s ease;
 }
 
 .form-control:focus {
-  box-shadow: 0px 0px 5px rgba(38, 143, 255, 0.5); /* Sombra externa al enfocar */
+  box-shadow: 0px 0px 5px rgba(38, 143, 255, 0.5);
+  /* Sombra externa al enfocar */
   border-color: #268fff;
 }
 
@@ -61,7 +65,7 @@
 
 /* Contenedor específico de la Hoja de Vida */
 .card-body button {
-  background-color: #007bff; 
+  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 6px;
@@ -70,21 +74,27 @@
   font-weight: bold;
   text-align: center;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Efecto hover: cambia el color de fondo y la sombra */
 .card-body button:hover {
-  background-color: #0056b3; /* Azul más oscuro */
-  transform: scale(1.05); /* Efecto de zoom */
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Sombra externa más fuerte */
+  background-color: #0056b3;
+  /* Azul más oscuro */
+  transform: scale(1.05);
+  /* Efecto de zoom */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  /* Sombra externa más fuerte */
 }
 
 /* Efecto activo: reduce el tamaño y cambia la sombra */
 .card-body button:active {
-  background-color: #004494; /* Azul aún más oscuro */
-  transform: scale(0.95); /* Efecto de reducción */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra externa más pequeña */
+  background-color: #004494;
+  /* Azul aún más oscuro */
+  transform: scale(0.95);
+  /* Efecto de reducción */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  /* Sombra externa más pequeña */
 }
 
 #cancelUploadBtn {
@@ -94,11 +104,9 @@
 /* ========== FOOTER ========== */
 .custom-footer {
   margin-top: auto;
-  background: linear-gradient(
-    90deg,
-    var(--primary-color),
-    var(--secondary-color)
-  );
+  background: linear-gradient(90deg,
+      var(--primary-color),
+      var(--secondary-color));
   color: var(--text-light);
   padding: 20px 0;
 }
@@ -162,38 +170,50 @@
 #usuario-container {
   display: flex;
   align-items: center;
-  gap: 10px; /* Espaciado entre la imagen y el nombre */
-  margin-left: -15px; /* Mover hacia la izquierda */
+  gap: 10px;
+  /* Espaciado entre la imagen y el nombre */
+  margin-left: -15px;
+  /* Mover hacia la izquierda */
 }
 
 #user-avatar {
-  width: 30px; /* Hacer la imagen más pequeña */
+  width: 30px;
+  /* Hacer la imagen más pequeña */
   height: 30px;
-  border-radius: 50%; /* Mantener forma circular */
-  border: 1px solid #000; /* Borde opcional */
-  cursor: pointer; /* Cambiar cursor al pasar el mouse */
+  border-radius: 50%;
+  /* Mantener forma circular */
+  border: 1px solid #000;
+  /* Borde opcional */
+  cursor: pointer;
+  /* Cambiar cursor al pasar el mouse */
   transition: transform 0.2s ease-in-out;
 }
 
 #user-avatar:hover {
-  transform: scale(1.1); /* Aumentar tamaño al pasar el mouse */
+  transform: scale(1.1);
+  /* Aumentar tamaño al pasar el mouse */
 }
 
 #usuario {
-  font-size: 18px; /* Tamaño del texto */
+  font-size: 18px;
+  /* Tamaño del texto */
   font-weight: bold;
-  color: black; /* Color negro */
-  cursor: pointer; /* Cambiar cursor al pasar el mouse */
+  color: black;
+  /* Color negro */
+  cursor: pointer;
+  /* Cambiar cursor al pasar el mouse */
   transition: color 0.2s ease-in-out;
 }
 
 #usuario:hover {
-  color: #555; /* Cambia de color al pasar el mouse */
+  color: #555;
+  /* Cambia de color al pasar el mouse */
 }
 
 /* Efecto al pasar el mouse */
 .sidebar .nav-item:hover {
-  background: rgba(255, 255, 255, 0.2); /* Un ligero brillo */
+  background: rgba(255, 255, 255, 0.2);
+  /* Un ligero brillo */
   border-left: 4px solid #1e88e5;
   transition: all 0.3s ease-in-out;
 }
@@ -263,6 +283,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -273,10 +294,12 @@
 }
 
 @keyframes shake {
+
   from,
   to {
     transform: translate3d(0, 0, 0);
   }
+
   10%,
   30%,
   50%,
@@ -284,6 +307,7 @@
   90% {
     transform: translate3d(-5px, 0, 0);
   }
+
   20%,
   40%,
   60%,
@@ -302,7 +326,7 @@
     padding: 1rem;
   }
 
-  .row > .col {
+  .row>.col {
     flex: 0 0 100%;
     max-width: 100%;
   }
@@ -337,3 +361,142 @@ input:focus {
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 
+/* ========== VERIFICACIÓN DE EMAIL ========== */
+#verifyEmailBtn {
+    background: linear-gradient(135deg, #0a1128, #1a2a57);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#verifyEmailBtn:hover {
+    background: linear-gradient(135deg, #1a2a57, #0a1128);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(10, 17, 40, 0.2);
+}
+
+#verifyEmailBtn i {
+    font-size: 16px;
+}
+
+/* Modal de verificación */
+#verificationModal .modal-content {
+    border-radius: 12px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+#verificationModal .modal-header {
+    background: linear-gradient(135deg, #0a1128, #1a2a57);
+    color: white;
+    padding: 1.2rem 1.5rem;
+    border-bottom: none;
+}
+
+#verificationModal .modal-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+#verificationModal .modal-body {
+    padding: 2rem;
+    background-color: #f8f9fa;
+}
+
+#verificationModal .btn-close {
+    filter: invert(1);
+    opacity: 0.8;
+    transition: all 0.2s ease;
+}
+
+#verificationModal .btn-close:hover {
+    opacity: 1;
+    transform: rotate(90deg);
+}
+
+/* Pasos de verificación */
+#step1, #step2 {
+    transition: all 0.4s ease;
+}
+
+#step1 p, #step2 p {
+    color: #495057;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+#verificationCode {
+    padding: 12px 15px;
+    border: 2px solid #e3e6f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+#verificationCode:focus {
+    border-color: #0a1128;
+    box-shadow: 0 0 0 3px rgba(10, 17, 40, 0.1);
+}
+
+/* Botones del modal */
+#verificationModal .btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#verificationModal .btn-primary {
+    background: linear-gradient(135deg, #0a1128, #1a2a57);
+    border: none;
+}
+
+#verificationModal .btn-primary:hover {
+    background: linear-gradient(135deg, #1a2a57, #0a1128);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(10, 17, 40, 0.2);
+}
+
+#verificationModal .btn-success {
+    background: linear-gradient(135deg, #28a745, #1e7e34);
+    border: none;
+}
+
+#verificationModal .btn-success:hover {
+    background: linear-gradient(135deg, #1e7e34, #28a745);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
+}
+
+/* Mensajes de estado */
+#verificationResult .alert {
+    border-radius: 8px;
+    border: none;
+    padding: 12px 16px;
+    margin-bottom: 1.5rem;
+}
+
+
+
+/* Efecto de carga */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.pulse {
+    animation: pulse 1.5s infinite;
+}

@@ -1,5 +1,6 @@
 package com.proyectodeaula.proyecto_de_aula.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -18,16 +19,30 @@ public class VerificationController {
     @Autowired
     private EmailService emailService;
 
-    // Almacenamiento temporal de códigos (en producción usa Redis o DB)
     private static final Map<String, String> verificationCodes = new ConcurrentHashMap<>();
     private static final Map<String, Boolean> verifiedEmails = new ConcurrentHashMap<>();
 
-    @PostMapping("/send-verification-email")
-    public ResponseEntity<String> sendVerificationEmail(@RequestParam String email) {
+    @PostMapping(value = "/send-verification-email", consumes = { "application/json",
+            "application/x-www-form-urlencoded" })
+    public ResponseEntity<Map<String, String>> sendVerificationEmail(
+            @RequestParam(required = false, name = "email") String emailParam,
+            @RequestBody(required = false) Map<String, String> body) {
+
+        Map<String, String> response = new HashMap<>();
+
+        // Obtener el email de cualquiera de las dos fuentes
+        String email = emailParam != null ? emailParam : (body != null ? body.get("email") : null);
+
+        if (email == null || email.isEmpty()) {
+            response.put("error", "El correo electrónico es requerido");
+            return ResponseEntity.badRequest().body(response);
+        }
+
         try {
             // Validar el formato del email
             if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
-                return ResponseEntity.badRequest().body("Correo electrónico inválido");
+                response.put("error", "Correo electrónico inválido");
+                return ResponseEntity.badRequest().body(response);
             }
 
             String verificationCode = VerificationCodeGenerator.generateVerificationCode();
@@ -36,33 +51,36 @@ public class VerificationController {
 
             emailService.sendVerificationEmail(email, verificationCode);
 
-            return ResponseEntity.ok("Código de verificación enviado a " + email);
+            response.put("message", "Código de verificación enviado a " + email);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             verificationCodes.remove(email);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error al enviar el correo: " + e.getMessage());
+            response.put("error", "Error al enviar el correo: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 
     @PostMapping("/verify-code")
-    public ResponseEntity<String> verifyCode(
+    public ResponseEntity<Map<String, String>> verifyCode(
             @RequestParam String email,
             @RequestParam String code) {
 
-        // Verificar si el correo existe en los códigos generados
+        Map<String, String> response = new HashMap<>();
+
         String storedCode = verificationCodes.get(email);
         if (storedCode == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("No se encontró código para este correo. Por favor solicita uno nuevo.");
+            response.put("error", "No se encontró código para este correo. Por favor solicita uno nuevo.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
 
-        // Verificar si el código coincide
         if (storedCode.equals(code)) {
             verificationCodes.remove(email);
-            verifiedEmails.put(email, true); // Marcar como verificado
-            return ResponseEntity.ok("Código verificado con éxito");
+            verifiedEmails.put(email, true);
+            response.put("message", "Código verificado con éxito");
+            return ResponseEntity.ok(response);
         } else {
-            return ResponseEntity.badRequest().body("Código incorrecto. Por favor intenta nuevamente.");
+            response.put("error", "Código incorrecto. Por favor intenta nuevamente.");
+            return ResponseEntity.badRequest().body(response);
         }
     }
 

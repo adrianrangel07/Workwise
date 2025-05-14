@@ -15,20 +15,12 @@ public class EmailService {
     @Value("${spring.mail.username}")
     private String fromEmail;
 
-    public void sendVerificationEmail(String toEmail, String verificationCode) {
+    public void sendVerificationEmail(String to, String code) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(fromEmail);
-        message.setTo(toEmail);
-        message.setSubject("Código de Verificación para tu Registro");
-
-        String emailText = String.format(
-                "¡Gracias por registrarte!\n\n"
-                + "Tu código de verificación es: %s\n\n"
-                + "Este código expirará en 10 minutos.\n\n"
-                + "Si no solicitaste este código, por favor ignora este mensaje.",
-                verificationCode);
-
-        message.setText(emailText);
+        message.setTo(to);
+        message.setSubject("Código de verificación - Workwise");
+        message.setText("Tu código de verificación es: " + code + "\n\n" +
+                "Este código expirará en 10 minutos.");
 
         mailSender.send(message);
     }

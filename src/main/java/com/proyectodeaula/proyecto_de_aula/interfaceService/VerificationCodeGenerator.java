@@ -1,12 +1,20 @@
 package com.proyectodeaula.proyecto_de_aula.interfaceService;
 
-import java.util.Random;
+import java.security.SecureRandom;
 
 public class VerificationCodeGenerator {
+    private static final String NUMBERS = "0123456789";
+    private static final int CODE_LENGTH = 6;
+
     public static String generateVerificationCode() {
-        Random rand = new Random();
-        int code = 100000 + rand.nextInt(900000); // 6 dígitos
-        return String.valueOf(code);
+        StringBuilder code = new StringBuilder(CODE_LENGTH);
+        SecureRandom random = new SecureRandom();
+        
+        for (int i = 0; i < CODE_LENGTH; i++) {
+            int index = random.nextInt(NUMBERS.length());
+            code.append(NUMBERS.charAt(index));
+        }
+        
+        return code.toString();
     }
 }
-

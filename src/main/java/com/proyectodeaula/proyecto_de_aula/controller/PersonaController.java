@@ -68,8 +68,7 @@ public class PersonaController {
 
     private static final Map<String, String> ADMIN_CREDENTIALS = Map.of(
             "admin@wkn.com", "admin123",
-            "superadmin@wkn.com", "superadmin456"
-    );
+            "superadmin@wkn.com", "superadmin456");
 
     @GetMapping("/Register/personas")
     public String agregar(Model model) {
@@ -113,7 +112,7 @@ public class PersonaController {
             model.addAttribute("error", "Credenciales incorrectas");
             return "redirect:/login/personas?error=true";
         }
-        
+
         if (!persona.isActivo()) {
             redirectAttributes.addAttribute("desactivada", true);
             return "redirect:/login/personas";
@@ -371,25 +370,25 @@ public class PersonaController {
     }
 
     @DeleteMapping("/eliminar-cuenta")
-    public ResponseEntity<String> eliminarCuenta(HttpSession session) {
-        String email = (String) session.getAttribute("email");
-
-        if (email == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Sesión expirada. Inicie sesión nuevamente.");
-        }
-
-        Personas persona = personaService.findByEmail(email);
-
-        if (persona == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado.");
-        }
-
+    public ResponseEntity<?> eliminarCuenta(HttpSession session) {
         try {
+            String email = (String) session.getAttribute("email");
+            if (email == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Sesión no encontrada");
+            }
+
+            Personas persona = personaService.findByEmail(email);
+            if (persona == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+            }
+
             personaService.eliminarPersona(persona.getId());
-            session.invalidate(); // Cerrar sesión después de eliminar la cuenta
-            return ResponseEntity.ok("Cuenta eliminada correctamente.");
+            session.invalidate();
+
+            return ResponseEntity.ok("Cuenta eliminada correctamente");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar la cuenta.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al eliminar la cuenta: " + e.getMessage());
         }
     }
 
