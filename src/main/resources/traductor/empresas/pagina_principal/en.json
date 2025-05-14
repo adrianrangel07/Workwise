@@ -1,4 +1,5 @@
 {
+    
     "sidebar.workwise": "Workwise",
     "sidebar.soloEmpresas": "Companies only",
     "sidebar.inicio": "Home",
@@ -12,6 +13,7 @@
     "navbar.ofertasPublicadas": "Published Offers",
     "navbar.estadisticas": "Statistics",
     "navbar.cerrarSesion": "Log Out",
+    "busqueda.placeholder": "Job title or keyword..",
     "published.title": "Published Offers",
     "published.subtitle": "Manage your published offers",
     "published.disabled": "Disabled",
