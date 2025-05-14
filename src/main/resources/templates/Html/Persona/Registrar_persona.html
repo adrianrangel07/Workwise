@@ -134,60 +134,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="verification-section">
-                            <div class="verification-header">
-                                <i class="fas fa-envelope verification-icon"></i>
-                                <h2>Verificación de Correo</h2>
-                            </div>
-
-                            <div class="verification-container">
-                                <!-- Paso 1: Botón para enviar código -->
-                                <div class="verification-step" id="step-send">
-                                    <button class="btn-send-code" type="button" id="send-code-btn">
-                                        <span class="btn-text">Enviar Código de Verificación</span>
-                                        <span class="btn-icon"><i class="fas fa-paper-plane"></i></span>
-                                    </button>
-                                    <p class="code-instructions">Se enviará un código al correo que ingresaste</p>
-                                </div>
-
-                                <!-- Paso 2: Ingresar código (oculto inicialmente) -->
-                                <div class="verification-step" id="step-code" style="display: none;">
-                                    <div class="code-input-container">
-                                        <p class="code-instructions">Ingresa el código de 6 dígitos enviado a tu correo
-                                        </p>
-
-                                        <div class="code-input-group">
-                                            <input type="text" id="verification-code" maxlength="6" placeholder=" "
-                                                class="code-input">
-                                            <label for="verification-code">Código de verificación</label>
-                                        </div>
-
-                                        <div class="code-actions">
-                                            <button class="btn-verify" type="button" id="verify-code-btn" disabled>
-                                                <span class="btn-text">Verificar</span>
-                                                <span class="btn-icon"><i class="fas fa-check"></i></span>
-                                            </button>
-                                            <a href="#" class="resend-link" id="resend-code-link">Reenviar código</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Estado de verificación -->
-                                <div class="verification-status" id="verification-status">
-                                    <div class="status-content">
-                                        <i class="status-icon"></i>
-                                        <span class="status-message"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Botón para abrir modal de verificación (visible solo en móviles) -->
-                        <button type="button" class="btn btn-primary verification-mobile-trigger"
-                            id="mobile-verification-trigger">
-                            <i class="fas fa-envelope"></i> Verificar Correo
-                        </button>
-
                         <button class="btn btn-primary d-block btn-user w-100" type="submit" id="btn-register"
                             data-trad="register.registerButton">
                             Registrarse
