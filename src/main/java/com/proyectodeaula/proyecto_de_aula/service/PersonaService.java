@@ -92,7 +92,7 @@ public class PersonaService implements IpersonaService {
     }
 
     @Override
-    public void eliminarPersona(Long id) { // Cambiamos int -> Long
+    public void eliminarPersona(Long id) { 
         if (!user.existsById(id)) {
             throw new RuntimeException("El usuario no existe.");
         }

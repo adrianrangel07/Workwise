@@ -220,12 +220,6 @@ main.container {
   background-color: #f8f9fa;
 }
 
-#powerBi {
-  width: 100%;
-  height: 75vh;
-  border: none;
-  display: block;
-}
 /* Responsive Design */
 @media (max-width: 992px) {
   .sidebar {
@@ -312,14 +306,4 @@ main.container {
     width: 100vw;
     height: 100vh;
     background: white;
-}
-
-/* Ajustar iframe dentro del contenedor */
-#powerBi {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
 }
