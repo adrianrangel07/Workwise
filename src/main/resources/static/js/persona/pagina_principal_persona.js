@@ -16,7 +16,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const modalModalidad = document.getElementById("modal-modalidad");
     const modalTypeContract = document.getElementById("modal-typeContract");
     const modalEmpresa = document.getElementById("modal-empresa");
-
+    const modalSector = document.getElementById("modal-sector")
+    const modalExperiencia = document.getElementById("modal-experience")
+    const modalEstudio = document.getElementById("modal-studyLevel")
     // Función para abrir el modal
     const openModal = (card) => {
         // Obtener los datos de la tarjeta
@@ -30,18 +32,24 @@ document.addEventListener("DOMContentLoaded", function () {
         const modalidad = card.querySelector(".modalidad span").innerText;
         const typeContract = card.querySelector(".tipo_contrato span").innerText;
         const empresa = card.querySelector(".empresa span").innerText;
+        const sector = card.querySelector(".sector span").innerText
+        const experience = card.querySelector(".experiencia span").innerText
+        const studyLevel = card.querySelector(".nivel_educativo span").innerText
 
         // Llenar el modal con los datos de la tarjeta
         modalTitle.innerText = title;
         modalDescription.innerText = description;
         modalSalary.innerHTML = `<strong>Salario: </strong> ${salary}`;
-        modalCurrency.innerHTML = `<strong>Moneda: </strong> ${currency}`;
-        modalDuration.innerHTML = `<strong>Duración: </strong> ${duration}`;
-        modalPeriod.innerHTML = `<strong>Periodo: </strong> ${period}`;
+        modalCurrency.innerHTML = `(${currency})`;
+        modalDuration.innerHTML = `(${duration})`;
+        modalPeriod.innerHTML = `(${period})`;
         modalType.innerHTML = `<strong>Tipo de empleo: </strong> ${type}`;
         modalModalidad.innerHTML = `<strong>Modalidad: </strong> ${modalidad}`;
         modalTypeContract.innerHTML = `<strong>Tipo de contrato: </strong> ${typeContract}`;
         modalEmpresa.innerHTML = `<strong>Empresa: </strong> ${empresa}`;
+        modalSector.innerHTML = `<strong>Sector:</strong>${sector}` || "No especificado";
+        modalExperiencia.innerHTML = `<strong>Experiencia:</strong>${experience}` || "No especificado";
+        modalEstudio.innerHTML = `<strong>Nivel de estudio:</strong>${studyLevel}` || "No especificado";
 
         const ofertaId = card.getAttribute("data-id"); // Obtener ID de la oferta
         postularseBtn.setAttribute("data-oferta-id", ofertaId); // Asignarlo al botón
