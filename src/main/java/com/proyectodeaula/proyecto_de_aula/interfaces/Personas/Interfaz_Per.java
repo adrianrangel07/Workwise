@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -25,4 +26,8 @@ public interface Interfaz_Per extends JpaRepository<Personas, Long> {
             + "LOWER(p.email) LIKE LOWER(CONCAT('%', :query, '%')) OR "
             + "p.identificacion LIKE CONCAT('%', :query, '%')")
     Page<Personas> buscarPorNombreEmailOIdentificacion(@Param("query") String query, Pageable pageable);
+
+    @Modifying
+    @Query("UPDATE Personas p SET p.emailVerificado = :verificado WHERE p.email = :email")
+    void actualizarEstadoVerificacion(@Param("email") String email, @Param("verificado") boolean verificado);
 }

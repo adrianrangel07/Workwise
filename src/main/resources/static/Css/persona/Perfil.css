@@ -363,140 +363,170 @@ input:focus {
 
 /* ========== VERIFICACIÓN DE EMAIL ========== */
 #verifyEmailBtn {
-    background: linear-gradient(135deg, #0a1128, #1a2a57);
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 6px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  background: linear-gradient(135deg, #0a1128, #1a2a57);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 #verifyEmailBtn:hover {
-    background: linear-gradient(135deg, #1a2a57, #0a1128);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(10, 17, 40, 0.2);
+  background: linear-gradient(135deg, #1a2a57, #0a1128);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(10, 17, 40, 0.2);
 }
 
 #verifyEmailBtn i {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 /* Modal de verificación */
 #verificationModal .modal-content {
-    border-radius: 12px;
-    overflow: hidden;
-    border: none;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 #verificationModal .modal-header {
-    background: linear-gradient(135deg, #0a1128, #1a2a57);
-    color: white;
-    padding: 1.2rem 1.5rem;
-    border-bottom: none;
+  background: linear-gradient(135deg, #0a1128, #1a2a57);
+  color: white;
+  padding: 1.2rem 1.5rem;
+  border-bottom: none;
 }
 
 #verificationModal .modal-title {
-    font-weight: 600;
-    font-size: 1.25rem;
+  font-weight: 600;
+  font-size: 1.25rem;
 }
 
 #verificationModal .modal-body {
-    padding: 2rem;
-    background-color: #f8f9fa;
+  padding: 2rem;
+  background-color: #f8f9fa;
 }
 
 #verificationModal .btn-close {
-    filter: invert(1);
-    opacity: 0.8;
-    transition: all 0.2s ease;
+  filter: invert(1);
+  opacity: 0.8;
+  transition: all 0.2s ease;
 }
 
 #verificationModal .btn-close:hover {
-    opacity: 1;
-    transform: rotate(90deg);
+  opacity: 1;
+  transform: rotate(90deg);
 }
 
 /* Pasos de verificación */
-#step1, #step2 {
-    transition: all 0.4s ease;
+#step1,
+#step2 {
+  transition: all 0.4s ease;
 }
 
-#step1 p, #step2 p {
-    color: #495057;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
+#step1 p,
+#step2 p {
+  color: #495057;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
 }
 
 #verificationCode {
-    padding: 12px 15px;
-    border: 2px solid #e3e6f0;
-    border-radius: 8px;
-    font-size: 1rem;
-    width: 100%;
-    margin-bottom: 1.5rem;
-    transition: all 0.3s ease;
+  padding: 12px 15px;
+  border: 2px solid #e3e6f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
 }
 
 #verificationCode:focus {
-    border-color: #0a1128;
-    box-shadow: 0 0 0 3px rgba(10, 17, 40, 0.1);
+  border-color: #0a1128;
+  box-shadow: 0 0 0 3px rgba(10, 17, 40, 0.1);
 }
 
 /* Botones del modal */
 #verificationModal .btn {
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-verify {
+  background-color: #f0ad4e;
+  color: white;
+}
+
+.btn-verify:hover {
+  background-color: #ec971f;
+  color: white;
+}
+
+#emailStatus .fa-check-circle {
+  color: #28a745;
+  margin-right: 5px;
+}
+
+#verifiedEmailBtn {
+  cursor: default;
+  opacity: 1;
 }
 
 #verificationModal .btn-primary {
-    background: linear-gradient(135deg, #0a1128, #1a2a57);
-    border: none;
+  background: linear-gradient(135deg, #0a1128, #1a2a57);
+  border: none;
 }
 
 #verificationModal .btn-primary:hover {
-    background: linear-gradient(135deg, #1a2a57, #0a1128);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(10, 17, 40, 0.2);
+  background: linear-gradient(135deg, #1a2a57, #0a1128);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(10, 17, 40, 0.2);
 }
 
 #verificationModal .btn-success {
-    background: linear-gradient(135deg, #28a745, #1e7e34);
-    border: none;
+  background: linear-gradient(135deg, #28a745, #1e7e34);
+  border: none;
 }
 
 #verificationModal .btn-success:hover {
-    background: linear-gradient(135deg, #1e7e34, #28a745);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
+  background: linear-gradient(135deg, #1e7e34, #28a745);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
 }
 
 /* Mensajes de estado */
 #verificationResult .alert {
-    border-radius: 8px;
-    border: none;
-    padding: 12px 16px;
-    margin-bottom: 1.5rem;
+  border-radius: 8px;
+  border: none;
+  padding: 12px 16px;
+  margin-bottom: 1.5rem;
 }
 
 
 
 /* Efecto de carga */
 @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 .pulse {
-    animation: pulse 1.5s infinite;
+  animation: pulse 1.5s infinite;
 }

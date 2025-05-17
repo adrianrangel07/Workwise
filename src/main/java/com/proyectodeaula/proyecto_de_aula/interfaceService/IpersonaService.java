@@ -15,4 +15,6 @@ public interface IpersonaService {
     void eliminarPersona(Long id);
 
     Optional<Personas> obtenerPersonaPorId(Long id);
+    
+    void actualizarEstadoVerificacion(String email, boolean verificado);
 }
