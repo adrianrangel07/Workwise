@@ -55,8 +55,8 @@ public class Personas {
 	@Column(name = "genero", columnDefinition = "VARCHAR(20)", nullable = false)
 	private String genero;
 
-	@Column(name = "activo", columnDefinition = "int")
-	private boolean activo = true; // Valor por defecto
+	@Column(name = "activo")
+	private boolean activo = true;
 
 	@Column(name = "email_verificado", columnDefinition = "BOOLEAN DEFAULT FALSE")
 	private boolean emailVerificado;
