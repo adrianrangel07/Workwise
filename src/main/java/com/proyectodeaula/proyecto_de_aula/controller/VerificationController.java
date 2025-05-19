@@ -15,7 +15,6 @@ import com.proyectodeaula.proyecto_de_aula.interfaceService.VerificationCodeGene
 import com.proyectodeaula.proyecto_de_aula.interfaces.Personas.Interfaz_Per;
 import com.proyectodeaula.proyecto_de_aula.model.Personas;
 import com.proyectodeaula.proyecto_de_aula.service.EmailService;
-import com.proyectodeaula.proyecto_de_aula.service.PersonaService;
 
 @RestController
 @RequestMapping("/api")
