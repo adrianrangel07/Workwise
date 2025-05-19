@@ -39,33 +39,6 @@ document.addEventListener('DOMContentLoaded', function () {
     showCurrentStep();
 });
 
-// Configuración del editor
-function initEditor() {
-    const editor = document.getElementById('editorContent');
-    const textarea = document.getElementById('jobDescription');
-
-    // Copiar contenido en tiempo real
-    editor.addEventListener('input', function () {
-        textarea.value = this.innerHTML;
-
-        // Remover la clase de error si se empieza a escribir
-        if (this.textContent.trim() !== '' && !this.textContent.includes('Consejos: Haz un resumen')) {
-            this.classList.remove('error');
-            const errorMsg = this.nextElementSibling;
-            if (errorMsg && errorMsg.classList.contains('error-message')) {
-                errorMsg.remove();
-            }
-        }
-    });
-
-    // Manejar cuando el editor pierde el foco
-    editor.addEventListener('blur', function () {
-        if (this.textContent.trim() === '' || this.textContent.includes('Consejos: Haz un resumen')) {
-            this.classList.add('error');
-            showEditorError(this);
-        }
-    });
-}
 
 // Mostrar error en el editor
 function showEditorError(editorElement) {
@@ -73,11 +46,9 @@ function showEditorError(editorElement) {
 
     if (!errorMsg || !errorMsg.classList.contains('error-message')) {
         Swal.fire({
-            title: 'Completo los campos requeridos',
-            text: "Se perderán los cambios no guardados.",
+            title: 'campos requeridos',
+            text: "Complete por favor todos los campos requeridos.",
             icon: 'warning',
-            showCancelButton: true,
-            cancelButtonColor: '#3085d6',
         })
     }
 }
@@ -101,11 +72,9 @@ function validateStep(step) {
             if (selectedOption.disabled || !field.value) {
                 isFieldValid = false;
                 Swal.fire({
-                    title: 'Completo los campos requeridos',
-                    text: "Se perderán los cambios no guardados.",
+                    title: 'campos requeridos',
+                    text: "Complete por favor todos los campos requeridos.",
                     icon: 'warning',
-                    showCancelButton: true,
-                    cancelButtonColor: '#3085d6',
                 })
             }
         }
@@ -113,11 +82,9 @@ function validateStep(step) {
         else if (!field.value.trim()) {
             isFieldValid = false;
             Swal.fire({
-                title: 'Completo los campos requeridos',
-                text: "Se perderán los cambios no guardados.",
+                title: 'campos requeridos',
+                text: "Complete por favor todos los campos requeridos.",
                 icon: 'warning',
-                showCancelButton: true,
-                cancelButtonColor: '#3085d6',
             })
         }
 
@@ -126,35 +93,31 @@ function validateStep(step) {
             field.classList.add('error');
             isValid = false;
             Swal.fire({
-                title: 'Completo los campos requeridos',
-                text: "Se perderán los cambios no guardados.",
+                title: 'campos requeridos',
+                text: "Complete por favor todos los campos requeridos.",
                 icon: 'warning',
-                showCancelButton: true,
-                cancelButtonColor: '#3085d6',
             })
         }
     });
 
     // Validación especial para el editor en el paso 2
     if (step === 1) {
-        const editor = document.getElementById('editorContent');
         const textarea = document.getElementById('jobDescription');
 
-        // Actualizar el textarea por si acaso
-        textarea.value = editor.innerHTML;
+        // Validar contenido del textarea
+        const contenido = textarea.value.trim();
+        const placeholder = textarea.getAttribute('placeholder');
 
-        // Validar contenido
-        if (editor.textContent.trim() === '' || editor.textContent.includes('Consejos: Haz un resumen')) {
-            editor.classList.add('error');
-            showEditorError(editor);
+        if (contenido === '' || contenido === placeholder) {
+            textarea.classList.add('error');
+            showEditorError(textarea);
             isValid = false;
+
             Swal.fire({
-                title: 'Completo los campos requeridos',
-                text: "Se perderán los cambios no guardados.",
+                title: 'Campos requeridos',
+                text: "Complete por favor todos los campos requeridos.",
                 icon: 'warning',
-                showCancelButton: true,
-                cancelButtonColor: '#3085d6',
-            })
+            });
         }
     }
 
@@ -163,11 +126,9 @@ function validateStep(step) {
         if (!field.value.trim()) {
             isValid = false;
             Swal.fire({
-                title: 'Completo los campos requeridos',
-                text: "Se perderán los cambios no guardados.",
+                title: 'campos requeridos',
+                text: "Complete por favor todos los campos requeridos.",
                 icon: 'warning',
-                showCancelButton: true,
-                cancelButtonColor: '#3085d6',
             })
         }
     });
@@ -239,28 +200,73 @@ function llenarVistaPrevia() {
 
     forzarActualizarCampos();
 
-    const obtenerExperiencia = document.querySelector('select[name="experiencia"]');
-    function obtenerValorExperiencia() {
-        if (obtenerExperiencia.value === "0") {
-            return "Sin experiencia";
+    function convertirExperiencia(experiencia) {
+        switch (experiencia) {
+            case "0":
+                return "Sin experiencia";
+            case "1":
+                return "Menos de 1 año";
+            case "2":
+                return "Entre 1 y 3 años";
+            case "3":
+                return "Entre 3 y 5 años";
+            case "4":
+                return "Entre 5 y 10 años";
+            case "5":
+                return "Más de 10 años";
+            default:
+                return "No especificado";
         }
-        else if (obtenerExperiencia.value === "1") {
-            return "Menos de 1 año";
+    }
+
+    function convertirEducacion(nivelEducativo) {
+        switch (nivelEducativo) {
+            case "Sin_estudios":
+                return "Sin estudios";
+            case "Bachiller":
+                return "Bachiller";
+            case "Tecnico_Tecnologo":
+                return "Técnico/Tecnólogo";
+            case "Tecnologo_Universitario":
+                return "Tecnólogo o Universitario";
+            case "Universitario":
+                return "Universitario";
+            case "Master":
+                return "Máster";
+            case "Doctorado":
+                return "Doctorado";
+            default:
+                return "No especificada";
         }
-        else if (obtenerExperiencia.value === "2") {
-            return "Entre 1 y 3 años";
+    }
+
+    function convertirTipoEmpleo(tipoEmpleo) {
+        switch (tipoEmpleo) {
+            case "Tiempo_Completo":
+                return "Tiempo completo";
+            case "Medio_Tiempo":
+                return "Medio tiempo";
+            case "Por_oras":
+                return "Por horas";
+            case "Freelance":
+                return "Freelance";
+            default:
+                return "No especificado";
         }
-        else if (obtenerExperiencia.value === "3") {
-            return "Entre 3 y 5 años";
-        }
-        else if (obtenerExperiencia.value === "4") {
-            return "Entre 5 y 10 años";
-        }
-        else if (obtenerExperiencia.value === "5") {
-            return "Más de 10 años";
-        }
-        else {
-            return "No especificado";
+    }
+
+    function convertirTipoContrato(tipoContrato) {
+        switch (tipoContrato) {
+            case "Indefinido":
+                return "Indefinido";
+            case "Fijo":
+                return "Fijo";
+            case "Obra_labor":
+                return "Obra labor";
+            case "Practicas":
+                return "Prácticas";
+            default:
+                return "No espeficado";
         }
     }
 
@@ -269,30 +275,27 @@ function llenarVistaPrevia() {
     const moneda = document.querySelector('select[name="moneda"]').value;
     const periodo = document.querySelector('select[name="periodo"]').value;
     const modalidad = document.querySelector('select[name="modalidad"]').value;
-    const tipoContrato = document.querySelector('select[name="tipo_contrato"]').value;
+    const tipoContrato = convertirTipoContrato(document.querySelector('select[name="tipo_contrato"]').value);
     const duracion = document.querySelector('select[name="duracion"]').value;
-    const tipoEmpleo = document.querySelector('select[name="tipo_empleo"]').value;
-    const experiencia = obtenerValorExperiencia();
+    const tipoEmpleo = convertirTipoEmpleo(document.querySelector('select[name="tipo_empleo"]').value);
+    const experiencia = convertirExperiencia(document.querySelector('select[name="experiencia"]').value);
     const sector = document.querySelector('select[name="sector_oferta"]').value;
     const salario = document.querySelector('input[name="salario"]').value;
-    const nivelEstudio = document.querySelector('select[name="nivel_educativo"]').value;
-
-    // Descripción con formato (desde contenteditable)
-    const editor = document.getElementById('editorContent');
-    const descripcionHTML = editor.innerHTML;
+    const nivelEstudio = convertirEducacion(document.querySelector('select[name="nivel_educativo"]').value);
+    const descripcion = document.querySelector('textarea[name="descripcion"]').value;
 
     // Insertar los valores en la vista previa (modal)
     document.getElementById("modal-title").innerText = titulo || "Título del puesto";
-    document.getElementById("modal-currency").innerText = `(${moneda || ""})`;
-    document.getElementById("modal-period").innerText = `(${periodo || ""})`;
-    document.getElementById("modal-type").innerText = tipoEmpleo || "";
-    document.getElementById("modal-modalidad").innerText = modalidad || "";
-    document.getElementById("modal-typeContract").innerText = tipoContrato || "";
-    document.getElementById("modal-duration").innerText = `(${duracion || ""})`;
-    document.getElementById("modal-experience").innerText = experiencia || "";
-    document.getElementById("modal-sector").innerText = sector || "";
-    document.getElementById("modal-salary").innerText = salario || "";
-    document.getElementById("modal-studyLevel").innerText = nivelEstudio || "";
-    document.getElementById("modal-description").innerHTML = descripcionHTML || "<p>Descripción del puesto</p>";
+    document.getElementById("modal-currency").innerText = `(${moneda || "No especificado"})`;
+    document.getElementById("modal-period").innerText = `(${periodo || "No especificado"})`;
+    document.getElementById("modal-type").innerHTML = `<strong>Tipo de empleo:</strong>${tipoEmpleo}` || "otro";
+    document.getElementById("modal-modalidad").innerHTML = `<strong>Modalidad:</strong>${modalidad}` || "No especificado";
+    document.getElementById("modal-typeContract").innerHTML = `<strong>Tipo de contrato:</strong>${tipoContrato}` || "No especificado";
+    document.getElementById("modal-duration").innerText = `(${duracion || "No especificado"})`;
+    document.getElementById("modal-experience").innerHTML = `<strong>Experiencia:</strong>${experiencia}` || "No especificado";
+    document.getElementById("modal-sector").innerHTML = `<strong>Sector:</strong>${sector}` || "No especificado";
+    document.getElementById("modal-salary").innerHTML = `<strong>Salario:</strong>${salario}` || "No especificado";
+    document.getElementById("modal-studyLevel").innerHTML = `<strong>Nivel de estudio:</strong>${nivelEstudio}` || "No especificado";
+    document.getElementById("modal-description").innerHTML = descripcion || "<p>Descripción del puesto</p>";
     abrirModal();
 }
