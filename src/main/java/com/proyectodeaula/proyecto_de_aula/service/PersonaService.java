@@ -17,6 +17,8 @@ import com.proyectodeaula.proyecto_de_aula.interfaces.Personas.Interfaz_Per;
 import com.proyectodeaula.proyecto_de_aula.interfaces.Personas.Interfaz_Persona;
 import com.proyectodeaula.proyecto_de_aula.model.Personas;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class PersonaService implements IpersonaService {
 
@@ -142,5 +144,11 @@ public class PersonaService implements IpersonaService {
 
     public Page<Personas> buscarUsuarios(String query, Pageable pageable) {
         return user.buscarPorNombreEmailOIdentificacion(query, pageable);
+    }
+
+    @Override
+    @Transactional
+    public void actualizarEstadoVerificacion(String email, boolean verificado) {
+        user.actualizarEstadoVerificacion(email, verificado);
     }
 }
