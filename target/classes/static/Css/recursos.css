@@ -1,0 +1,356 @@
+/* ========== VARIABLES Y RESET ========== */
+:root {
+  --primary-color: #0a1128;
+  --secondary-color: #001f54;
+  --accent-color: #1e88e5;
+  --text-light: #ffffff;
+  --text-dark: #333333;
+  --text-gray: #6c757d;
+  --bg-light: #ffffff;
+  --bg-dark: #1c1c1c;
+  --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Nunito", sans-serif;
+  line-height: 1.6;
+  color: var(--text-dark);
+  background-color: #f8f9fa;
+}
+
+.recursos-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#pdf-viewer {
+  width: 100%;
+  height: 500px;
+  border: 1px solid #ddd;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+/* Estilos para las pestañas */
+.tabs {
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.tab-btn {
+  padding: 10px 20px;
+  background: #f1f1f1;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px 5px 0 0;
+  margin-right: 5px;
+}
+
+.tab-btn:hover {
+  background: #ddd;
+}
+
+.tab-btn.active {
+  background: #4caf50;
+  color: white;
+}
+
+/* Contenido de las pestañas */
+.tab-content {
+  display: none;
+  padding: 15px;
+  animation: fadeIn 0.5s;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Tarjetas de recursos */
+.recurso-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.recurso-card h3 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+
+.btn {
+  display: inline-block;
+  padding: 8px 15px;
+  background: #4caf50;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.btn:hover {
+  background: #45a049;
+}
+
+iframe {
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+/* Animación */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Miniaturas de videos */
+.video-thumbnail {
+  position: relative;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.video-thumbnail img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.video-thumbnail .play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 50px;
+  color: white;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content {
+  position: relative;
+  margin: 5% auto;
+  padding: 20px;
+  width: 80%;
+  max-width: 800px;
+  background: #fff;
+  border-radius: 10px;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 30px;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Contenedor del video */
+.video-container {
+  position: relative;
+  margin-top: 10px;
+}
+
+/* Botón para ampliar */
+.expand-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.expand-btn:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+/* ========== BARRA DE NAVEGACIÓN Y SIDEBAR ========== */
+.navbar {
+  background: var(--bg-light);
+  box-shadow: var(--shadow);
+}
+
+.sidebar {
+  background: var(--primary-color);
+  width: 100px;
+}
+
+.sidebar .nav-item:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-left: 4px solid #1e88e5;
+  transition: var(--transition);
+}
+
+.sidebar .nav-link.active {
+  background: rgba(255, 255, 255, 0.1);
+  border-left: 4px solid #59625e;
+}
+
+.sidebar a {
+  text-decoration: none;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+  transition: var(--transition);
+  font-size: 0.9rem !important;
+  color: var(--text-light);
+}
+
+.nav-rp {
+  border-radius: 8px;
+  width: 100%;
+}
+
+.nav-rp:hover {
+  color: var(--secondary-color);
+  background-color: var(--bg-light);
+}
+
+#logo {
+  width: 150px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+#logo:hover {
+  transform: scale(1.1);
+}
+
+/* ========== FOOTER ========== */
+.custom-footer {
+  margin-top: auto;
+  background: linear-gradient(
+    90deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  color: var(--text-light);
+  padding: 20px 0;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.footer-left,
+.footer-center,
+.footer-right {
+  flex: 1;
+}
+
+.footer-left {
+  text-align: left;
+}
+
+.footer-center {
+  text-align: center;
+}
+
+.footer-right {
+  text-align: right;
+}
+
+.custom-footer a {
+  text-decoration: none;
+  color: var(--text-light);
+  font-weight: bold;
+  transition: var(--transition);
+}
+
+.custom-footer a:hover {
+  color: #4db8ff;
+}
+
+.footer-right a {
+  display: inline-block;
+  background-color: #f0f0f0;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  margin: 0 10px;
+  font-size: 1.5rem;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.footer-right a:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+/* ==========  Estilos para la foto y el nombre del usuario  ========== */
+#usuario-container {
+  display: flex;
+  align-items: center;
+  margin-left: 15px; /* Mover hacia la izquierda */
+}
+
+#user-avatar {
+  width: 30px; /* Hacer la imagen más pequeña */
+  height: 30px;
+  border-radius: 50%; /* Mantener forma circular */
+  border: 1px solid #000; /* Borde opcional */
+  cursor: pointer; /* Cambiar cursor al pasar el mouse */
+  transition: transform 0.2s ease-in-out;
+}
+
+#user-avatar:hover {
+  transform: scale(1.1); /* Aumentar tamaño al pasar el mouse */
+}
+
+#usuario {
+  font-size: 18px; /* Tamaño del texto */
+  font-weight: bold;
+  color: black; /* Color negro */
+  cursor: pointer; /* Cambiar cursor al pasar el mouse */
+  transition: color 0.2s ease-in-out;
+}
+
+#usuario:hover {
+  color: #555; /* Cambia de color al pasar el mouse */
+}
+

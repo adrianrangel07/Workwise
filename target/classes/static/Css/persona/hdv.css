@@ -1,0 +1,146 @@
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Contenedor principal del formulario */
+.container {
+    max-width: 800px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative; /* Para que los elementos hijos absolutos se posicionen correctamente */
+}
+
+.container-back {
+    position: absolute;
+    top: 15px; /* Ajusta según el margen del modal */
+    left: 15px; /* Ajusta según la posición deseada */
+    z-index: 1050; /* Asegura que esté sobre el contenido */
+}
+
+.back_a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.back {
+    font-size: 24px; /* Tamaño de la flecha */
+    color: #333; /* Color ajustable */
+    padding: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.7); /* Fondo para que se vea bien sobre el modal */
+}
+
+.back {
+    transition: 0.3s;
+}
+
+.back:hover {
+    color: #007bff;
+}
+
+
+h2, h4 {
+    font-weight: bold;
+    color: #0a1128;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background: transparent;
+    outline: none;
+    appearance: none; /* Oculta el icono por defecto en algunos navegadores */
+}
+
+.form-group label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #666;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    background: transparent;
+    padding: 0 5px;
+}
+
+.form-group input:focus ~ label,
+.form-group input:valid ~ label,
+.form-group select:focus ~ label,
+.form-group select:valid ~ label,
+.form-group textarea:focus ~ label,
+.form-group textarea:valid ~ label {
+    top: 0;
+    font-size: 12px;
+    color: #0a1128;
+    background: #f8f9fa;
+    padding: 0 5px;
+}
+
+/* Botón principal */
+.btn-primary {
+    background: #007bff;
+    border: none;
+    padding: 7px 12px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.btn-primary:hover {
+    background: #0056b3;
+}
+
+.btn-agregar {
+    background: #1B2A4E; 
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    transition: background 0.3s ease, transform 0.2s ease;
+    margin-top: 15px; 
+    margin-bottom: 25px;
+}
+
+.btn-agregar:hover {
+    background: #0A1128; /* Azul oscuro */
+    transform: scale(1.05);
+}
+
+/* Asegura que haya un margen inferior para que no se pegue al siguiente título */
+#btnAgregarExperiencia, #btnAgregarIdioma {
+    display: block;
+    margin-bottom: 20px; /* Espacio extra después del botón */
+}
+
+.seccion {
+    display: none;
+}
+
+.seccion.activa {
+    display: block;
+}
+
+.botones-navegacion {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
