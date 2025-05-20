@@ -57,6 +57,7 @@ public class Empresas {
 	@Column(name = "activo", columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean activo = true;
 
+
 	@OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Ofertas> ofertas = new ArrayList<>();
 
