@@ -54,8 +54,8 @@ public class Empresas {
 	@Column(name = "foto", columnDefinition = "LONGBLOB")
 	private byte[] foto;
 
-	@Column(name = "activo")
-	private boolean activo = true;
+	@Column(name = "activo", columnDefinition = "TINYINT(1) DEFAULT 1")
+    private boolean activo = true;
 
 
 	@OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

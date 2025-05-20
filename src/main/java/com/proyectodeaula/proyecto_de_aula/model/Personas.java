@@ -55,10 +55,10 @@ public class Personas {
 	@Column(name = "genero", columnDefinition = "VARCHAR(20)", nullable = false)
 	private String genero;
 
-	@Column(name = "activo")
+	@Column(name = "activo", columnDefinition = "TINYINT(1) DEFAULT 1")
 	private boolean activo = true;
 
-	@Column(name = "email_verificado", columnDefinition = "BOOLEAN DEFAULT FALSE")
+	@Column(name = "email_verificado", columnDefinition = "TINYINT(1) DEFAULT 0")
 	private boolean emailVerificado;
 
 	@Lob
