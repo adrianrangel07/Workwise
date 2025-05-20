@@ -66,7 +66,7 @@ public class Ofertas {
     @Column(name = "sector_oferta", columnDefinition = "varchar(50)", nullable = false)
     String sector_oferta;
 
-    @Column(name = "habilitada", nullable = false, columnDefinition = "boolean default true")
+    @Column(name = "habilitada", columnDefinition = "TINYINT(1) DEFAULT 1")
     private Boolean habilitada = true;
 
     @Transient
