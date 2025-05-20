@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workwise Navigator</title>
+    <link rel="icon" type="image/png" href="../Imagenes/wknlogo2.png">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="/Css/general/bootstrap.min.css">
+    <link rel="stylesheet" href="/Css/general/styles.min.css">
+    <link rel="stylesheet" href="/Css/empresa/pagina_principal_empresa.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark">
+            <div class="container-fluid d-flex flex-column p-0">
+                <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
+                    th:href="@{/empresas/pagina_principal}">
+                    <img src="/Imagenes/wwk_white.png" width="61" height="58" style="width: 50px;height: 50px;">
+                    <div class="sidebar-brand-icon rotate-n-15"></div>
+                    <div class="sidebar-brand-text mx-3">
+                        <span data-trad="sidebar.workwise">Workwise</span>
+                    </div>
+                </a>
+                <span style="font-size: 15px; text-align: center; color: white;" data-trad="sidebar.soloEmpresas">Solo
+                    empresas</span>
+                <hr class="sidebar-divider my-0">
+                <ul class="navbar-nav text-light" id="accordionSidebar">
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/empresas/pagina_principal}">
+                            <i class="fas fa-home"></i>
+                            <span data-trad="sidebar.inicio">Inicio</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/perfil/empresa}">
+                            <i class="far fa-user-circle"></i>
+                            <span data-trad="sidebar.perfil">Perfil</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/empresas/oferta}">
+                            <i class="fas fa-plus-circle"></i>
+                            <span data-trad="sidebar.crearOferta">Crear oferta</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/empresas/published-offers}">
+                            <i class="fas fa-check-circle"></i>
+                            <span data-trad="sidebar.ofertasPublicadas">Ofertas publicadas</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/Estadisticas/empresas}">
+                            <i class="fas fa-chart-bar"></i>
+                            <span data-trad="sidebar.estadisticas">Estadísticas</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/login/personas}">
+                            <i class="fas fa-user"></i>
+                            <span data-trad="sidebar.quieresPostularte">¿Quieres postularte a ofertas?</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="d-flex flex-column" id="content-wrapper">
+
+            <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light"
+                style="background: var(--bs-body-bg);">
+                <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3"
+                        id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
+                    <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search"
+                        id="formBusqueda">
+                        <div class="input-group"
+                            style="text-align: center;margin: 500px;border-color: var(--bs-emphasis-color);">
+                            <input id="termino" name="termino" class=" bg-light form-control border-4 small" type="text"
+                                placeholder="Puesto o palabra clave..">
+                            <button class="btn btn-primary py-0" type="submit"
+                                style="background: #0a1128; border: none;">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+
+                    </form>
+
+
+                    <ul class="navbar-nav flex-nowrap ms-auto">
+                        <!-- boton idioma -->
+                        <div class="language-selector d-flex align-items-center position-relative"
+                            style="margin-right: 30px;">
+                            <span class="me-2 fw-bold" data-trad="idioma.etiqueta">Idioma:</span>
+
+                            <!-- Botón que muestra icono y al hacer clic despliega selector -->
+                            <div id="language-display" class="d-flex align-items-center" style="cursor: pointer;">
+                                <i class="fas fa-language" id="language-toggle"></i>
+                            </div>
+
+                            <!-- Menú desplegable -->
+                            <div id="language-options" class="dropdown-menu show p-2"
+                                style="display: none; position: absolute; top: 100%; left: 0; z-index: 1000;">
+                                <div class="dropdown-item d-flex align-items-center" onclick="selectLanguage('es')">
+                                    <img src="https://flagcdn.com/w20/es.png" alt="ES" class="me-2"> ES
+                                </div>
+                                <div class="dropdown-item d-flex align-items-center" onclick="selectLanguage('en')">
+                                    <img src="https://flagcdn.com/w20/us.png" alt="EN" class="me-2"> ENG
+                                </div>
+                            </div>
+                        </div>
+                        <!-- fin boton idioma -->
+                        <li class="nav-item dropdown no-arrow">
+                            <div class="nav-item dropdown no-arrow" id="empresa-container">
+                                <img id="user-avatar" src="../Imagenes/imagenempresa.png" alt="Empresa Logo">
+
+                                <input type="hidden" id="subirFoto" accept="image/*"
+                                    style="display: block; margin-top: 10px;">
+
+                                <a class="dropdown-toggle nav-link mi-link" aria-expanded="false"
+                                    data-bs-toggle="dropdown" href="#">
+                                    <span id="empresa" th:text="${empresa.nombreEmp}">Cuenta</span>
+                                </a>
+
+                                <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                                    <a class="dropdown-item" th:href="@{/perfil/empresa}" style="color: #0a1128;">
+                                        <i class="fas fa-user fa-sm fa-fw me-2"></i>&nbsp;
+                                        <span data-trad="navbar.perfil">Perfil</span>
+                                    </a>
+                                    <a class="dropdown-item" th:href="@{/empresas/published-offers}"
+                                        style="color: #0a1128;">
+                                        <i class="fas fa-briefcase fa-sm fa-fw me-2"></i>&nbsp;
+                                        <span data-trad="navbar.ofertasPublicadas">Ofertas Publicadas</span>
+                                    </a>
+                                    <a class="dropdown-item" th:href="@{/Estadisticas/empresas}"
+                                        style="color: #0a1128;">
+                                        <i class="fas fa-chart-line fa-sm fa-fw me-2"></i>&nbsp;
+                                        <span data-trad="navbar.estadisticas">Estadísticas</span>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#" id="logout" onclick="cerrarSesion(event)"
+                                        style="color: #0a1128;">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw me-2"></i>
+                                        <span data-trad="navbar.cerrarSesion">Cerrar Sesión</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="section-title text-center">
+                <h2 class="display-5 fw-bold" data-trad="published.title">Ofertas publicadas</h2>
+                <p class="text-muted" data-trad="published.subtitle">Gestiona tus ofertas publicadas</p>
+            </div>
+
+
+            <div class="content-area flex-grow-1 p-3">
+                <div id="resultadoBusqueda"></div>
+
+                <div class="offer-container">
+                    <div th:each="Oferta:${Ofertas}" class="card"
+                        th:classappend="${Oferta.habilitada == null or !Oferta.habilitada} ? 'disabled-offer' : ''">
+                        <div class="offer-content" th:data-id="${Oferta.id}">
+                            <span th:if="${Oferta.habilitada == null or !Oferta.habilitada}"
+                                class="badge badge-secondary" data-trad="published.disabled">Deshabilitada</span>
+                            <span class="badge-info" th:text="${Oferta.modalidad}"></span>
+
+                            <h3 th:text="${Oferta.titulo_puesto}"></h3>
+                            <p th:text="${Oferta.descripcion}"></p>
+
+                            <div class="visible-info">
+                                <p><strong data-trad="published.salary">Salario:</strong> <span
+                                        th:text="${Oferta.salario + ' ' + Oferta.moneda + ' ' + Oferta.periodo}"></span>
+                                </p>
+                                <p><strong data-trad="published.jobType">Tipo de empleo:</strong> <span
+                                        th:text="${Oferta.tipo_empleo}"></span></p>
+                            </div>
+
+                            <div class="hidden-info">
+                                <p><strong data-trad="published.salary">Salario:</strong> <span
+                                        th:text="${Oferta.salario}"></span></p>
+                                <p><strong data-trad="published.currency">Moneda:</strong> <span
+                                        th:text="${Oferta.moneda}"></span></p>
+                                <p><strong data-trad="published.duration">Duración:</strong> <span
+                                        th:text="${Oferta.duracion}"></span></p>
+                                <p><strong data-trad="published.period">Periodo:</strong> <span
+                                        th:text="${Oferta.periodo}"></span></p>
+                                <p><strong data-trad="published.jobType">Tipo de empleo:</strong> <span
+                                        th:text="${Oferta.tipo_empleo}"></span></p>
+                                <p><strong data-trad="published.mode">Modalidad:</strong> <span
+                                        th:text="${Oferta.modalidad}"></span></p>
+                                <p><strong data-trad="published.contractType">Tipo de contrato:</strong> <span
+                                        th:text="${Oferta.tipo_contrato}"></span></p>
+                                <p><strong data-trad="published.experience">Experiencia:</strong> <span
+                                        th:text="${Oferta.experiencia}"></span></p>
+                                <p><strong data-trad="published.educationLevel">Nivel de educación:</strong> <span
+                                        th:text="${Oferta.nivel_educativo}"></span></p>
+                                <p><strong data-trad="published.sector">Sector:</strong> <span
+                                        th:text="${Oferta.sector_oferta}"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="pagination">
+                <ul>
+                    <li th:if="${paginaActual > 0}">
+                        <a th:href="@{/empresas/pagina_principal(page=${paginaActual - 1})}"
+                            data-trad="pagination.previous">« Anterior</a>
+                    </li>
+
+                    <li th:each="i : ${#numbers.sequence(0, totalPaginas - 1)}"
+                        th:classappend="${i == paginaActual} ? 'active'">
+                        <a th:href="@{/empresas/pagina_principal(page=${i})}" th:text="${i + 1}">1</a>
+                    </li>
+
+                    <li th:if="${paginaActual < totalPaginas - 1}">
+                        <a th:href="@{/empresas/pagina_principal(page=${paginaActual + 1})}"
+                            data-trad="pagination.next">Siguiente »</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Modal que se mostrará al hacer clic en una tarjeta -->
+        <div id="modal" class="modal">
+            <div class="modal-content" id="modal-content">
+                <div class="container-span">
+                    <span class="close-btn">&times;</span>
+                </div>
+                <div class="modal-header">
+                    <h3 id="modal-title" class="modal-info-item"></h3>
+                    <div class="badge-modal" id="modal-badge"></div>
+                </div>
+
+                <div class="modal-body">
+                    <div class="description-container">
+                        <h4 data-trad="modal.description">Descripción del puesto</h4>
+                        <p id="modal-description" class="modal-info-item"></p>
+                    </div>
+
+                    <div class="modal-info-grid">
+                        <p id="modal-salary" class="modal-info-item" data-trad="modal.salary"></p>
+                        <p id="modal-currency" class="modal-info-item" data-trad="modal.currency"></p>
+                        <p id="modal-duration" class="modal-info-item" data-trad="modal.duration"></p>
+                        <p id="modal-period" class="modal-info-item" data-trad="modal.period"></p>
+                        <p id="modal-type" class="modal-info-item" data-trad="modal.type"></p>
+                        <p id="modal-modalidad" class="modal-info-item" data-trad="modal.modalidad"></p>
+                        <p id="modal-typeContract" class="modal-info-item" data-trad="modal.contractType"></p>
+                        <p id="modal-experience" class="modal-info-item" data-trad="modal.experience"></p>
+                        <p id="modal-educationLevel" class="modal-info-item" data-trad="modal.educationLevel"></p>
+                        <p id="modal-sector_oferta" class="modal-info-item" data-trad="modal.sector"></p>
+                    </div>
+
+                    <div id="postCount" class="postulaciones-container">
+                        <div class="postulaciones-count">
+                            <i class="fas fa-users"></i>
+                            <span id="postulaciones-count">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de editar y eliminar -->
+                <div class="modal-footer">
+                    <div class="modal-buttons">
+                        <button id="edit-button" class="btn btn-primary">
+                            <i class="fas fa-edit"></i> <span data-trad="modal.edit">Editar</span>
+                        </button>
+                        <button id="delete-button" class="btn btn-danger">
+                            <i class="fas fa-trash-alt"></i> <span data-trad="modal.delete">Eliminar</span>
+                        </button>
+                        <button id="info-button" class="btn btn-success">
+                            <i class="fas fa-info-circle"></i> <span data-trad="modal.details">Más detalles</span>
+                        </button>
+                    </div>
+                </div>
+
+
+                <div id="edit-form" style="display: none;">
+                    <div class="form-header">
+                        <h3><i class="fas fa-edit"></i> <span data-trad="form.editOffer">Editar Oferta Laboral</span>
+                        </h3>
+                        <p data-trad="form.editOfferDescription">Modifica los detalles de tu oferta laboral</p>
+                    </div>
+
+
+                    <div class="form-body">
+                        <!-- Sección de Información Básica -->
+                        <div class="form-section">
+                            <h4 class="section-title"><i class="fas fa-info-circle"></i> <span
+                                    data-trad="form.basicInfo">Información Básica</span></h4>
+
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <label for="edit-title" class="form-label" data-trad="form.jobTitleLabel">Título del
+                                        Puesto*</label>
+                                    <input type="text" id="edit-title" class="form-control"
+                                        placeholder="Ej: Desarrollador Frontend Senior" required>
+                                    <div class="form-text" data-trad="form.jobTitleHelp">Describe el puesto de manera
+                                        clara y atractiva</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <label for="edit-description" class="form-label"
+                                        data-trad="form.jobDescriptionLabel">Descripción del Puesto*</label>
+                                    <textarea id="edit-description" class="form-control" rows="5"
+                                        placeholder="Describe las responsabilidades, funciones y características del puesto..."
+                                        required></textarea>
+                                    <div class="form-text" data-trad="form.jobDescriptionHelp">Sé específico sobre lo
+                                        que implica el trabajo</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Sección de Detalles del Empleo -->
+                        <div class="form-section">
+                            <h4 class="section-title"><i class="fas fa-briefcase"></i> <span
+                                    data-trad="form.jobDetails">Detalles del Empleo</span></h4>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="edit-type" class="form-label" data-trad="form.jobTypeLabel">Tipo de
+                                        Empleo*</label>
+                                    <select id="edit-type" class="form-select" required>
+                                        <option value="Tiempo Completo" data-trad="form.fullTime">Tiempo Completo
+                                        </option>
+                                        <option value="Medio Tiempo" data-trad="form.partTime">Medio Tiempo</option>
+                                        <option value="Por Horas" data-trad="form.perHour">Por Horas</option>
+                                        <option value="Freelance" data-trad="form.freelance">Freelance</option>
+                                        <option value="Practicante" data-trad="form.intern">Practicante</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="edit-modalidad" class="form-label"
+                                        data-trad="form.workModalityLabel">Modalidad de Trabajo*</label>
+                                    <select id="edit-modalidad" class="form-select" required>
+                                        <option value="Presencial" data-trad="form.inPerson">Presencial</option>
+                                        <option value="Remoto" data-trad="form.remote">Remoto</option>
+                                        <option value="Híbrido" data-trad="form.hybrid">Híbrido</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="edit-typeContract" class="form-label"
+                                        data-trad="form.contractTypeLabel">Tipo de Contrato*</label>
+                                    <select id="edit-typeContract" class="form-select" required>
+                                        <option value="Contrato obra o labor" data-trad="form.contractTypeWorkOrLabor">
+                                            Contrato obra o labor</option>
+                                        <option value="Contrato fijo" data-trad="form.contractTypePermanent">Contrato
+                                            fijo</option>
+                                        <option value="Contrato indefinido" data-trad="form.contractTypeIndefinite">
+                                            Contrato indefinido</option>
+                                        <option value="Contrato por prácticas" data-trad="form.contractTypeInternship">
+                                            Contrato por prácticas</option>
+                                        <option value="Contrato temporal" data-trad="form.contractTypeTemporary">
+                                            Contrato temporal</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="edit-duration" class="form-label"
+                                        data-trad="form.contractDurationLabel">Duración del Contrato*</label>
+                                    <select id="edit-duration" class="form-select" required>
+                                        <option value="1 mes" data-trad="form.duration1Month">1 Mes</option>
+                                        <option value="3 meses" data-trad="form.duration3Months">3 Meses</option>
+                                        <option value="6 meses" data-trad="form.duration6Months">6 Meses</option>
+                                        <option value="1 año" data-trad="form.duration1Year">1 Año</option>
+                                        <option value="Indefinido" data-trad="form.durationIndefinite">Indefinido
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sección de Salario -->
+                        <div class="form-section">
+                            <h4 class="section-title" data-trad="form.salaryInfoTitle"><i
+                                    class="fas fa-money-bill-wave"></i> Información Salarial</h4>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="edit-salary" class="form-label"
+                                        data-trad="form.salaryLabel">Salario*</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" data-trad="form.currencySymbol">$</span>
+                                        <input type="number" id="edit-salary" class="form-control"
+                                            placeholder="Ej: 3000000" required>
+                                    </div>
+                                    <div class="form-text" data-trad="form.salaryInfoText">Valor numérico sin puntos ni
+                                        comas</div>
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="edit-currency" class="form-label"
+                                        data-trad="form.currencyLabel">Moneda*</label>
+                                    <select id="edit-currency" class="form-select" required>
+                                        <option value="COP" data-trad="form.currencyCOP">COP</option>
+                                        <option value="USD" data-trad="form.currencyUSD">USD</option>
+                                        <option value="EUR" data-trad="form.currencyEUR">EUR</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="edit-period" class="form-label"
+                                        data-trad="form.periodLabel">Periodo*</label>
+                                    <select id="edit-period" class="form-select" required>
+                                        <option value="Mensual" data-trad="form.periodMonthly">Mensual</option>
+                                        <option value="Quincenal" data-trad="form.periodBiweekly">Quincenal</option>
+                                        <option value="Diario" data-trad="form.periodDaily">Diario</option>
+                                        <option value="Anual" data-trad="form.periodAnnual">Anual</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Sección de Requisitos -->
+                        <div class="form-section">
+                            <h4 class="section-title" data-trad="form.requirementsTitle"><i
+                                    class="fas fa-graduation-cap"></i> Requisitos</h4>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="edit-experience" class="form-label"
+                                        data-trad="form.experienceLabel">Experiencia Requerida (años)*</label>
+                                    <select id="edit-experience" class="form-select" required>
+                                        <option value="0" data-trad="form.experienceNone">Sin experiencia</option>
+                                        <option value="1" data-trad="form.experience1Year">1 año</option>
+                                        <option value="2" data-trad="form.experience2Years">2 años</option>
+                                        <option value="3" data-trad="form.experience3Years">3 años</option>
+                                        <option value="5" data-trad="form.experience5Years">5 años o más</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="edit-educationLevel" class="form-label"
+                                        data-trad="form.educationLevelLabel">Nivel Educativo*</label>
+                                    <select id="edit-educationLevel" class="form-select" required>
+                                        <option value="Bachiller" data-trad="form.educationHighSchool">Bachiller
+                                        </option>
+                                        <option value="Técnico" data-trad="form.educationTechnical">Técnico</option>
+                                        <option value="Tecnólogo" data-trad="form.educationTechnologist">Tecnólogo
+                                        </option>
+                                        <option value="Profesional" data-trad="form.educationProfessional">Profesional
+                                        </option>
+                                        <option value="Posgrado" data-trad="form.educationPostgraduate">Posgrado
+                                        </option>
+                                        <option value="Ninguno" data-trad="form.educationNone">Ninguno</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <label for="edit-sector_oferta" class="form-label"
+                                        data-trad="form.sectorLabel">Sector de la Oferta*</label>
+                                    <select id="edit-sector_oferta" class="form-select" required>
+                                        <option value="Tecnología" data-trad="form.sectorTech">Tecnología</option>
+                                        <option value="Salud" data-trad="form.sectorHealth">Salud</option>
+                                        <option value="Educación" data-trad="form.sectorEducation">Educación</option>
+                                        <option value="Finanzas" data-trad="form.sectorFinance">Finanzas</option>
+                                        <option value="Manufactura" data-trad="form.sectorManufacturing">Manufactura
+                                        </option>
+                                        <option value="Comercio" data-trad="form.sectorCommerce">Comercio</option>
+                                        <option value="Servicios" data-trad="form.sectorServices">Servicios</option>
+                                        <option value="Otro" data-trad="form.sectorOther">Otro</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-footer">
+                        <button id="save-button" class="btn btn-primary" data-trad="form.saveChanges">
+                            <i class="fas fa-save"></i> Guardar Cambios
+                        </button>
+                        <button id="cancel-button" class="btn btn-secondary" data-trad="form.cancel">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="custom-footer text-light text-center py-4 sticky-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <p class="mb-1" data-trad="footer.contact">PBX: (605) 123-4567 | Email: contacto@workwise.com</p>
+                </div>
+                <div class="footer-center">
+                    <p class="mb-1" data-trad="footer.rights">© 2024 WorkWise. Todos los derechos reservados.</p>
+                </div>
+                <div class="footer-right">
+                    <a href="https://www.facebook.com/profile.php?id=61558650706843" target="_blank">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+
+                    <a href="https://twitter.com" target="_blank">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+
+                    <a href="https://instagram.com" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/General/Grid-and-List-view-V10-script.js"></script>
+    <script src="../js/General/script.min.js"></script>
+    <script src="../js/General/theme.js"></script>
+    <script src="../js/empresa/pagina_principal_empresa.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/idioma.js"></script>
+</body>
+
+</html>

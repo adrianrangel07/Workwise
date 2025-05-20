@@ -1,0 +1,13 @@
+{
+    "login_titulo": "Iniciar sesión",
+    "login_subtitulo": "Mantente al tanto del mundo profesional.",
+    "login_email": "Correo electrónico",
+    "login_contraseña": "Contraseña",
+    "login_mostrar_contraseña": "Mostrar",
+    "login_ocultar_contraseña": "Ocultar",
+    "login_boton": "Entrar",
+    "login_olvido": "¿Olvidaste tu contraseña?",
+    "registro_no_tienes_cuenta": "¿No tienes una cuenta?",
+    "registro_singup": "Regístrate"
+  }
+  

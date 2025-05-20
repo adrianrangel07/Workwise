@@ -1,0 +1,428 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Arial", sans-serif;
+}
+
+/* Centrar el contenido en la pantalla */
+body {
+    background: #f4f4f4;
+    overflow: hidden;
+    height: 100vh;
+    padding: 0;
+}
+
+/* Logo en la esquina superior izquierda */
+.logo {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    width: 80px;
+}
+
+/* Sidebar */
+.sidebar {
+    background: #343A40 !important;
+    color: white;
+    padding: 20px;
+    width: 250px;
+    height: 100vh;
+    position: fixed !important;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.sidebar .nav-link {
+    color: white;
+}
+
+.sidebar a:hover {
+    background: #495057;
+}
+
+.sidebar .nav-link.active {
+    background-color: #ffffff1a;
+    border-left: 4px solid #59625e;
+}
+
+/* Tarjeta contenedora */
+
+.main{
+    width: 84%;
+    height: 100vh;
+    overflow-y: hidden;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-left: auto;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 700px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+    position: relative;
+}
+
+.input-group {
+    margin-bottom: 1rem;
+}
+.custom-editor {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    max-width: 750px;
+}
+
+.editor-toolbar {
+    padding: 8px 12px;
+    display: flex;
+    gap: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.editor-toolbar button {
+    background: none;
+    border: none;
+    font-size: 16px;    
+    cursor: pointer;
+    color: #333;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.editor-toolbar button:hover {
+    background-color: #e0e0e0;
+}
+
+.editor-toolbar button.active {
+    background-color: #343a40;
+    color: #fff;
+}
+
+.editor-area {
+    padding: 12px;
+    min-width: 639px;
+    min-height: 200px;
+    outline: none;
+}
+
+.editor-area:empty::before {
+    content: attr(data-placeholder);
+    color: #999;
+    pointer-events: none;
+}
+
+.error{
+    font-size: 1rem  !important;
+}
+
+
+/*campos del formulario */
+.title {
+    text-align: center;
+    font-size: 24px;
+    margin: 20px 0;
+    color: #343A40;
+}
+
+.container-step{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.step-indicator {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+    width: 60%;
+}
+
+.step-line {
+    position: absolute;
+    top: 45px; /* justo debajo de los círculos */
+    left: 10%;
+    width: 80%;
+    height: 2px;
+    background-color: #000000;
+    z-index: 0; /* detrás de los círculos */
+}
+
+.step-dot {
+    z-index: 10; /* encima de la línea */
+    width: 70px;
+    height: 70px;
+    border: 2px solid #000000;
+    border-radius: 50%;
+    background: #828b94;
+    margin: 5px 30px;
+    transition: background 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* texto dentro del circulo */
+    color: white;
+    font-size: 30px;
+}
+
+.step-text{
+    width: 110px;
+    text-align: center;
+    margin: 5px 10px;
+}
+
+.step-dot.active {
+    background: #343A40;
+}
+
+.form-steps {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.step {
+    min-width: 100%;
+    padding: 30px;
+}
+
+.contenedor-input{
+    width: 50% !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.mb-3 {
+    position: relative;
+    width: 100% !important;
+}
+
+.mb-3 input{
+    width: 100%;
+    line-height: 1.33333;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.9) !important;
+    height: 45px;
+    padding: 0px 15px !important;
+    border-radius: 6px !important;
+}
+
+/* estilo de los input select */
+/* Estilos para el Select2 */
+.mb-3 select{
+    width: 100%;
+    line-height: 1.33333;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.9) !important;
+    height: 45px;
+    padding: 0px 15px !important;
+    border-radius: 6px !important;
+}
+
+.select2-container--default .select2-selection--single {
+    width: 100% !important;
+    line-height: 1.33333 !important;
+    font-weight: 400 !important;
+    color: rgba(0, 0, 0, 0.9) !important;
+    height: 45px !important;
+    padding: 0px 15px !important;
+    border-radius: 6px !important;
+    border: 1px solid #ced4da !important; 
+    display: flex !important;
+    align-items: center !important;
+    background-color: white;
+}
+
+/* Estilo del texto dentro del select */
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: rgba(0, 0, 0, 0.9) !important;
+    font-size: 1rem !important;
+    line-height: normal !important;
+    padding: 0 !important;
+}
+
+/* Estilo del ícono de flecha */
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 100% !important;
+    top: 0 !important;
+    right: 10px !important;
+}
+
+/* Para el dropdown */
+.select2-container--default .select2-dropdown {
+    font-size: 1rem;
+}
+
+/* Texto seleccionado */
+.select2-selection__rendered {
+    color: rgba(0, 0, 0, 0.9) !important;
+    font-size: 1rem !important;
+    padding-left: 0 !important;
+}
+
+/* Flecha del select */
+.select2-selection__arrow {
+    top: 10px !important;
+    right: 10px !important;
+}
+
+/* Evitar el padding extraño del input de búsqueda */
+.select2-search__field {
+    padding: 5px !important;
+    font-size: 1rem;
+    border-radius: 4px;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--single {
+    border: 2px solid #0a1128 !important;
+    box-shadow: none !important;
+}
+
+.select2{
+    width: 100% !important;
+}
+.label{
+    position: absolute;
+    padding: 3px !important;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: rgba(0, 0, 0, 0.9) ;
+    font-size: 15px;
+    pointer-events: none;
+    transition: .3s;
+}
+
+.mb-3 input:focus{
+    border: 2px solid #0a1128;
+    box-shadow: none;
+}
+
+.mb-3 select:focus{
+    border: 2px solid #0a1128;
+    box-shadow: none;
+}
+
+.mb-3 input:focus ~ .label,
+.mb-3 input:not(:placeholder-shown) ~ .label{
+    top: 0;
+    font-size: 16px;
+    padding: 0 15px;
+    background: #fff;
+}
+
+/* Hacer que la descripción ocupe ambas columnas */
+
+/* Estilos para los botones */
+.btn-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.btn-primary {
+    height: 100%;
+    background-color: #0d6efd; /* Azul estilo Bootstrap */
+    text-align: center;
+    color: white;
+    border: none;
+    padding: 5px 20px;
+    font-weight: bold;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #0050c7;
+}
+
+.btn-secondary {
+    height: 100%;
+    background-color: white;
+    text-align: center;
+    color: #000;
+    border: 2px solid #000;
+    padding: 5px 20px;
+    font-weight: bold;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #f0f0f0;
+}
+
+.btn-submit{
+    height: 100%;
+    background-color: rgb(97 237 69);
+    text-align: center;
+    color: #000;
+    border: none;
+    padding: 5px 20px;
+    font-weight: bold;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+
+.btn-submit:hover{
+    background-color: #269f1d;
+}
+
+.btn-cancel {
+    height: 32px;
+    background-color: #d9534f; 
+    color: white;
+    border: none;
+    padding: 5px 20px;
+    font-weight: bold;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-cancel:hover {
+    background-color: #fd0d0d;
+}
+
+.btnVista {
+    background: none;
+    border: none;
+    border-radius:  20px;
+    color: #5d5f61; /* Gris medio de Bootstrap */
+    font-weight: 600;
+    cursor: pointer !important;
+    padding: 5px 20px;
+    margin-right: auto;
+    text-decoration: none !important;
+    font-size: 16px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.btnVista:hover {
+    color: #343a40; /* Gris oscuro de Bootstrap */
+    background-color: #9fa4a9; ;
+    border-radius: 20px;
+}
