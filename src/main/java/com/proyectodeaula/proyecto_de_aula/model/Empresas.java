@@ -47,7 +47,7 @@ public class Empresas {
 	@Column(name = "email", columnDefinition = "VARCHAR(45)", nullable = false)
 	String email;
 	// Columna contraseña para iniciar sesion la empresa
-	@Column(name = "contraseña", columnDefinition = "VARCHAR(300)", nullable = false)
+	@Column(name = "contrasena", columnDefinition = "VARCHAR(300)", nullable = false)
 	String contraseña;
 
 	@Lob
