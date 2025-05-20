@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title data-trad="login_titulo">Login users</title>
+    <link rel="icon" type="image/png" href="/Imagenes/wknlogo2.png">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="/Css/general/bootstrap.min.css">
+    <link rel="stylesheet" href="/Css/general/Grid-and-List-view-V10-style.css">
+    <link rel="stylesheet" href="/Css/general/Grid-and-List-view-V10.css">
+    <link rel="stylesheet" href="/Css/general/Nunito.css">
+    <link rel="stylesheet" href="/Css/general/styles.min.css">
+    <link rel="stylesheet" href="/Css/persona/inicio_sesion_persona.css">
+</head>
+
+<body>
+    <div class="container-logo">
+        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" th:href="@{/pagina/inicio}">
+            <img class="logo" id="logo" src="/Imagenes/wknblack.png">
+        </a>
+    </div>
+    <div class="contenedor">
+        <div class="container-login">
+            <div class="card">
+                <div class="head-card">
+                    <h1 data-trad="login_titulo">Inicio de sesión</h1>
+                    <div class="container-back">
+                        <a th:href="@{/pagina/inicio}" class="back_a">
+                            <i class="fas fa-arrow-left back"></i>
+                        </a>
+                    </div>
+                </div>
+                <p data-trad="login_subtitulo">Mantente al día en tu mundo profesional.</p>
+                <div class="formulario">
+                    <form class="user" th:action="@{/login/personas}" th:object="${Usuario}" method="post" onsubmit="return validarFormulario()">
+                        <div class="mb-3">
+                            <input class="form-control form-control-user" type="email" id="InputEmail"
+                                aria-describedby="emailHelp" name="email" placeholder="" required>
+                            <label for="InputEmail" class="floating-label" data-trad="login_email">Correo electronico</label>
+                        </div>
+                        <div class="mb-3">
+                            <input class="form-control form-control-user" type="password" id="password" name="contraseña"
+                                placeholder="" required>
+                            <label for="password" class="floating-label" data-trad="login_contraseña">Contraseña</label>
+                            <button id="show-password" class="show-password" type="button" data-trad="login_mostrar_contraseña">Mostrar</button>
+                        </div>
+                        <button class="btn btn-primary d-block btn-user w-100" type="submit" id="validar" onclick="validar" data-trad="login_boton">
+                            Iniciar sesión
+                        </button>
+                        <br>
+                        <p><a th:href="@{/Contrasena-olvidada}" data-trad="login_olvido">Olvidaste tu contraseña?</a></p>
+                    </form>
+                </div>
+            </div>
+            <div class="register">
+                <p data-trad="registro_no_tienes_cuenta" style="padding-right: 10px;">No tienes cuenta?</p> <a th:href="@{/Register/personas}" data-trad="registro_singup">Registrate!</a>
+            </div>
+        </div>
+        <div class="curva">
+            <div class="container-img"></div>
+        </div>
+    </div>
+
+    <script src="/js/general/inicio_sesion.js"></script>
+    <script src="/js/General/script.min.js"></script>
+    <script src="/js/General/theme.js"></script>
+    <script src="/js/General/sweetalert2.all.min.js"></script>
+    <script src="/js/idioma.js"></script>
+</body>
+
+</html>

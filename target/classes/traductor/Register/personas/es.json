@@ -1,0 +1,24 @@
+{
+    "register.title": "Registrar usuario",
+    "register.createAccount": "Crea una cuenta!",
+    "register.firstStep": "Da el primer paso al mundo profesional.",
+    "register.name": "Nombre(s)",
+    "register.surname": "Apellido(s)",
+    "register.email": "Correo electrónico",
+    "register.password": "Contraseña",
+    "register.confirmPassword": "Repetir contraseña",
+    "register.documentNumber": "Número de Documento",
+    "register.idType.cc": "Cédula de Ciudadanía",
+    "register.idType.ce": "Cédula de Extranjería",
+    "register.idType.rc": "Registro Civil",
+    "register.idType.dni": "Documento de Identidad",
+    "register.birthDate": "F. Nacimiento",
+    "register.gender.choose": "Género...",
+    "register.gender.female": "Femenino",
+    "register.gender.male": "Masculino",
+    "register.gender.noSpecify": "Prefiero no decirlo",
+    "register.registerButton": "Registrarse",
+    "register.haveAccount": "¿Ya tienes una cuenta?",
+    "register.loginHere": "Inicia sesión!"
+  }
+  

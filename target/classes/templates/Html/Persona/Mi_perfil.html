@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Profile</title>
+    <link rel="icon" type="image/png" href="../Imagenes/wknlogo2.png">
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css?h=97380e22c8933e9aa79cbc2390b9f15a">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="../Css/general/bootstrap.min.css">
+    <link rel="stylesheet" href="../Css/general/styles.min.css">
+    <link rel="stylesheet" href="../Css/persona/Perfil.css">
+
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark"
+            style="background: #0a1128">
+            <div class="container-fluid d-flex flex-column p-0">
+                <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
+                    th:href="@{/personas/pagina_principal}">
+                    <img src="/Imagenes/wwk_white.png" width="61" height="58" style="width: 50px; height: 50px" />
+                    <div class="sidebar-brand-text mx-3"><span>Workwise</span></div>
+                </a>
+                <hr class="sidebar-divider my-0" />
+                <ul class="navbar-nav text-light" id="accordionSidebar">
+                    <li class="nav-item">
+                        <a class="nav-link " th:href="@{/personas/pagina_principal}">
+                            <i class="fas fa-home"></i><span data-trad="sidebar.home">Inicio</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/perfil/persona}">
+                            <i class="far fa-user-circle"></i><span data-trad="sidebar.profile">Perfil</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/persona/Postulaciones}">
+                            <i class="fas fa-file-alt"></i><span data-trad="sidebar.applications">Mis
+                                postulaciones</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/persona/hdv}">
+                            <i class="fas fa-file-signature"></i><span data-trad="sidebar.cv">Crear Hoja de Vida</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/personas/recursos}">
+                            <i class="fas fa-file"></i><span data-trad="sidebar.resources">Como buscar empleo?</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/Estadisticas/personas}">
+                            <i class="fas fa-chart-bar"></i><span data-trad="sidebar.stats">Estadisticas</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout" onclick="cerrarSesionYRedirigir(event)">
+                            <i class="fas fa-building"></i><span data-trad="sidebar.company">Tienes una empresa?</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light"
+                    style="background: var(--bs-body-bg);">
+                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3"
+                            id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
+                        <ul class="navbar-nav flex-nowrap ms-auto">
+
+                            <li class="nav-item dropdown no-arrow">
+                                <div class="nav-item dropdown no-arrow" id="usuario-container">
+                                    <!-- boton idioma -->
+                                    <div class="language-selector d-flex align-items-center position-relative">
+                                        <span class="me-2 fw-bold" data-trad="idioma.etiqueta">Idioma:</span>
+
+                                        <!-- Botón que muestra icono y al hacer clic despliega selector -->
+                                        <div id="language-display" class="d-flex align-items-center"
+                                            style="cursor: pointer;">
+                                            <i class="fas fa-language" id="language-toggle"></i>
+                                        </div>
+
+                                        <!-- Menú desplegable -->
+                                        <div id="language-options" class="dropdown-menu show p-2"
+                                            style="display: none; position: absolute; top: 100%; left: 0; z-index: 1000;">
+                                            <div class="dropdown-item d-flex align-items-center"
+                                                onclick="selectLanguage('es')">
+                                                <img src="https://flagcdn.com/w20/es.png" alt="ES" class="me-2"> ES
+                                            </div>
+                                            <div class="dropdown-item d-flex align-items-center"
+                                                onclick="selectLanguage('en')">
+                                                <img src="https://flagcdn.com/w20/us.png" alt="EN" class="me-2"> ENG
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- fin boton idioma -->
+                                    <img id="user-avatar" src="/imagen/perfil" alt="Persona Logo"
+                                        onerror="this.onerror=null;this.src='/Imagenes/imagenperfil.png';">
+
+                                    <input type="hidden" id="subirFoto" accept="image/*"
+                                        style="display: block; margin-top: 10px;">
+
+                                    <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
+                                        href="#">
+                                        <span id="usuario" th:text="${persona.nombre}">Account</span>
+                                    </a>
+                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                                        <a class="dropdown-item" th:href="@{/perfil/persona}" style="color: #0a1128;">
+                                            <i class="fas fa-user fa-sm fa-fw me-2 "></i>&nbsp;Perfil
+                                        </a>
+                                        <a class="dropdown-item" th:href="@{/persona/Postulaciones}"
+                                            style="color: #0a1128;">
+                                            <i class="fas fa-file-alt fa-sm fa-fw me-2"></i>&nbsp;Postulaciones
+                                        </a>
+                                        <a class="dropdown-item" href="#" style="color: #0a1128;">
+                                            <i class="fas fa-briefcase fa-sm fa-fw me-2 "></i>&nbsp;Hoja de vida
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="/logout" id="logout"
+                                            onclick="cerrarSesion(event)" style="color: #0a1128;">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw me-2"></i>Cerrar sesión
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="container-fluid">
+                    <h3 class="text-dark mb-4" data-trad="perfil.datos">Datos del perfil</h3>
+                    <div class="row mb-3">
+
+                        <!-- Desde aqui cargar imagen de perfil -->
+                        <div class="col-lg-4">
+                            <div class="card mb-3">
+                                <div class="card-body text-center shadow">
+                                    <!-- Imagen de perfil -->
+                                    <img id="profileImage" class="rounded-circle mb-3 mt-4" th:src="${base64Image}"
+                                        width="160" height="160" alt="Perfil">
+
+                                    <div class="mb-3">
+                                        <!-- Botón para cambiar la foto -->
+                                        <button id="changePhotoBtn" class="btn btn-primary btn-sm"> <i
+                                                class="fas fa-upload" data-trad="perfil.cambiarFoto">Cambiar
+                                                foto</i></button>
+                                        <br><br>
+                                        <!-- Formulario para subir la foto -->
+                                        <form id="uploadForm" action="/upload/photo" method="post"
+                                            enctype="multipart/form-data" style="display:none;">
+                                            <input type="hidden" name="id" value="${persona.id}">
+                                            <input type="file" class="fileInput" name="file" accept=".png, .jpg, .jpeg"
+                                                required>
+                                            <br><br>
+                                            <button class="btn btn-primary btn-sm" type="submit"
+                                                data-trad="perfil.enviar">Enviar</button>
+                                            <!-- Botón para cancelar el cambio de foto -->
+                                            <button id="cancelUploadBtn" class="btn btn-secondary btn-sm"
+                                                style="display:none;" data-trad="perfil.cancelar">Cancelar</button>
+                                        </form>
+                                        <br>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- fin cargar imagen de perfil -->
+                            <!-- Hoja de vida -->
+                            <div class="card mb-3">
+                                <div class="card-body text-center shadow">
+                                    <div class="mb-3">
+                                        <form id="uploadFormcv" enctype="multipart/form-data">
+                                            <input type="file" id="fileInput" name="file" accept="application/pdf"
+                                                required />
+                                            <br><br>
+                                            <button type="submit">
+                                                <i class="fas fa-upload"></i> <span data-trad="perfil.subirPdf">Subir
+                                                    PDF</span>
+                                            </button>
+
+                                            <!-- Botón de Eliminar PDF -->
+                                            <button class="delete-btn" onclick="eliminarHojaDeVida()">
+                                                <i class="fas fa-trash-alt"></i> <span
+                                                    data-trad="perfil.borrarHdv">Borrar Hoja de Vida</span>
+                                            </button>
+                                        </form>
+
+                                        <div id="message"></div>
+
+                                        <h3 data-trad="perfil.hojaDeVida">Hoja de Vida</h3>
+
+                                        <iframe id="pdfViewer" src="/perfil/verHDV" width="100%"
+                                            height="400px"></iframe>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- fin hoja de vida -->
+                        </div>
+
+                        <!-- Perfil de la persona  -->
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card shadow mb-3">
+                                        <div class="card-header py-3">
+                                            <p class="text-primary m-0 fw-bold" data-trad="perfil.datosPersonales">Datos
+                                                personales</p>
+                                        </div>
+                                        <div class="card-body">
+                                            <form th:action="@{/actualizar}" method="post">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="email">
+                                                                <strong>Correo electrónico</strong>
+                                                            </label>
+                                                            <div class="input-group">
+                                                                <input class="form-control" type="email" id="email"
+                                                                    name="email" th:value="${persona.email}" disabled>
+                                                                <button class="btn btn-verify" type="button"
+                                                                    id="verifyEmailBtn"
+                                                                    th:if="${!persona.emailVerificado}"
+                                                                    onclick="iniciarVerificacionEmail(event)">
+                                                                    <i class="fas fa-envelope me-1"></i> <span
+                                                                        data-trad="perfil.verificarCorreo">Verificar</span>
+                                                                </button>
+                                                                <button class="btn btn-success" type="button"
+                                                                    id="verifiedEmailBtn"
+                                                                    th:if="${persona.emailVerificado}" disabled>
+                                                                    <i class="fas fa-check-circle me-1"></i> <span
+                                                                        data-trad="perfil.correoVerificado">Verificado</span>
+                                                                </button>
+                                                            </div>
+                                                            <small id="emailStatus" class="form-text"
+                                                                th:if="${persona.emailVerificado}"
+                                                                style="color: green;">
+                                                                <i class="fas fa-check"></i> <span
+                                                                    data-trad="perfil.correoVerificado">Correo
+                                                                    verificado</span>
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="password">
+                                                                <strong
+                                                                    data-trad="perfil.contrasena">Contraseña</strong>
+                                                            </label>
+                                                            <input class="form-control" type="password" id="password"
+                                                                name="contraseña" th:value="${persona.contraseña}"
+                                                                disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="first_name">
+                                                                <strong data-trad="perfil.nombres">Nombre(s)</strong>
+                                                            </label>
+                                                            <input class="form-control" type="text" id="first_name"
+                                                                name="nombre" th:value="${persona.nombre}" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="last_name">
+                                                                <strong
+                                                                    data-trad="perfil.apellidos">Apellido(s)</strong>
+                                                            </label>
+                                                            <input class="form-control" type="text" id="last_name"
+                                                                name="apellido" th:value="${persona.apellido}" disabled>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="birthdate">
+                                                                <strong data-trad="perfil.fechaNacimiento">Fecha de
+                                                                    nacimiento</strong>
+                                                            </label>
+                                                            <input class="form-control" type="date" id="birthdate"
+                                                                name="fecha_nacimiento"
+                                                                th:value="${#dates.format(persona.fecha_nacimiento, 'yyyy-MM-dd')}"
+                                                                max="" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="gender">
+                                                                <strong data-trad="perfil.genero">Género</strong>
+                                                            </label>
+                                                            <select class="form-select" id="gender" name="genero"
+                                                                disabled>
+                                                                <option value="" data-trad="perfil.seleccionarOpcion">
+                                                                    Seleccione una opción</option>
+                                                                <option value="Hombre"
+                                                                    th:selected="${persona.genero == 'Hombre'}"
+                                                                    data-trad="perfil.hombre">Hombre</option>
+                                                                <option value="Mujer"
+                                                                    th:selected="${persona.genero == 'Mujer'}"
+                                                                    data-trad="perfil.mujer">Mujer</option>
+                                                                <option value="Prefiero no decir"
+                                                                    th:selected="${persona.genero == 'Prefiero no decir'}"
+                                                                    data-trad="perfil.prefieroNoDecir">Prefiero no decir
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div
+                                                            class="mb-3 d-flex justify-content-between align-items-center">
+                                                            <div>
+                                                                <button class="btn btn-primary btn-sm" type="button"
+                                                                    id="change_btn">
+                                                                    <i class="fas fa-pen"></i> <span
+                                                                        data-trad="perfil.cambiarDatos">Cambiar
+                                                                        datos</span>
+                                                                </button>
+                                                                <button class="btn btn-primary btn-sm" type="submit"
+                                                                    id="save_btn" disabled>
+                                                                    <i class="fas fa-save"></i> <span
+                                                                        data-trad="perfil.guardarCambios">Guardar
+                                                                        cambios</span>
+                                                                </button>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="confirmPassword" id="confirmPassword">
+                                            </form>
+                                            <button type="button" class="btn btn-danger" onclick="eliminarCuenta(event)"
+                                                style="background-color: red;">
+                                                <i class="fas fa-trash-alt"></i> Eliminar Cuenta
+                                            </button>
+                                        </div>
+                                        <!-- Modal para verificación -->
+                                        <div class="modal fade" id="verificationModal" tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Verificación de correo</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div id="step1">
+                                                            <p>Se enviará un código de verificación a tu correo
+                                                                electrónico.</p>
+                                                            <button class="btn btn-primary"
+                                                                onclick="enviarCodigoVerificacion(event)">
+                                                                <i class="fas fa-paper-plane me-2"></i> Enviar código
+                                                            </button>
+                                                        </div>
+                                                        <div id="step2" style="display:none;">
+                                                            <p>Ingresa el código que recibiste en tu correo:</p>
+                                                            <input type="text" id="verificationCode"
+                                                                class="form-control mb-3"
+                                                                placeholder="Código de 6 dígitos">
+                                                            <button class="btn btn-success"
+                                                                onclick="verificarCodigo(event)">
+                                                                <i class="fas fa-check-circle me-2"></i> Verificar
+                                                            </button>
+                                                        </div>
+                                                        <div id="verificationResult" class="mt-3"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer">
+                    <div class="container">
+                        <div class="footer-content">
+                            <div class="footer-left">
+                                <p class="mb-1" data-trad="footer.contacto">PBX: (605) 123-4567 | Email:
+                                    contacto@workwise.com</p>
+                            </div>
+                            <div class="footer-center">
+                                <p class="mb-1" data-trad="footer.derechos">© 2024 WorkWise. Todos los derechos
+                                    reservados.
+                                </p>
+                            </div>
+                            <div class="footer-right">
+                                <a href="https://www.facebook.com/profile.php?id=61558650706843" target="_blank">
+                                    <i class="fab fa-facebook"></i>
+                                </a>
+
+                                <a href="https://twitter.com" target="_blank">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+
+                                <a href="https://instagram.com" target="_blank">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+        <!-- Agrega esto antes de tus otros scripts -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../js/General/Grid-and-List-view-V10-script.js"></script>
+        <script src="../js/persona/mi_perfil.js"></script>
+        <script src="/js/idioma.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+</body>
+
+</html>

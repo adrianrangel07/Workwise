@@ -1,0 +1,246 @@
+html, body {
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* logo */
+.container-logo{
+    display: flex;
+    z-index: 50;
+    margin: 15px;
+    position: absolute;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.container-logo:hover {
+    transform: scale(1.1);
+}
+
+.logo{
+    height: 80px;
+    width: 80px;
+}
+
+/* contenedor */
+.contenedor{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.container-login{
+    width: 65%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* tarjeta de inicio de sesion */
+.head-card{
+    display: flex;
+    justify-content: space-between;
+}
+
+.back{
+    margin: 7px;
+    font-size: 30px;
+    color: #0a1128;
+}
+
+.container-back{
+    transition: all .3s;
+}
+
+.container-back:hover{
+    transform: scale(1.2);
+}
+
+.card{
+    display: flex;
+    justify-content: start;
+    width: 100%;
+    max-width: 350px;
+    height: 100%;
+    max-height: 370px;
+    border: none;
+    box-shadow: 0 4px 12px 4px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+}
+
+
+.card h1{
+    font-size: 30px;
+    color:#0a1128;
+    font-weight: bold; /* Hace el texto más grueso */
+}
+
+.formulario{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;   
+}
+
+.formulario form{
+    width: 100%;
+}
+
+.mb-3 {
+    position: relative;
+    width: 100% !important;
+}
+
+.mb-3 input{
+    width: 100%;
+    font-size: 1.8rem;
+    line-height: 1.33333;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.9) !important;
+    height: 52px;
+    padding: 0px 15px !important;
+    border-radius: 6px !important;
+}
+
+.mb-3 label{
+    position: absolute;
+    padding: 3px !important;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: rgba(0, 0, 0, 0.9) ;
+    font-size: 17px;
+    pointer-events: none;
+    transition: .3s;
+}
+
+.mb-3 input:focus{
+    border: 2px solid #0a1128;
+    box-shadow: none;
+}
+
+.mb-3 input:focus ~ label,
+.mb-3 input:not(:placeholder-shown) ~ label{
+    top: 0;
+    font-size: 16px;
+    padding: 0 15px;
+    background: #fff;
+}
+
+.show-password{
+    all: unset;
+    display: inline-block;
+    position: absolute;
+    padding: 0 8px !important;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color:#0a1128;
+    font-size: 17px;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.show-password:hover{
+    background-color: #cecfcf;
+    padding: 0 8px !important;
+    border-radius: 10px;
+}
+
+.btn{
+    margin-top: 20px;
+    background-color: #0a1128;
+    font-size: 15px !important;
+    border: none;
+}
+
+.btn:hover,.btn:active{
+    background-color: #05070f !important; 
+    border: none;
+}
+
+.register{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    color: #0a1128;
+    width: 100%;
+}
+
+
+/* contenedor de curva */
+.curva{
+    width: 40%;
+    height: 100%;
+    position: relative;
+    clip-path: ellipse(100% 90% at right);
+    box-shadow: 0 4px 12px 4px rgba(3, 3, 3, 0.15);
+}
+
+.curva::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(0,0,0,0.3) 0%,  /* Sombra en el lado izquierdo */
+        rgba(0,0,0,0.1) 20%, /* Transición */
+        transparent 100%       /* Desvanecimiento */
+    );
+    pointer-events: none; /* Permite interactuar con elementos debajo */
+    clip-path: inherit;   /* Hereda la misma curva que el contenedor */
+}
+
+.container-img{
+    height: 100%;
+    background: url("../../Imagenes/startup.png");
+    background-size: cover;
+    background-position: center;
+    filter: contrast(110%);
+    box-shadow: 0 4px 12px 4px rgba(3, 3, 3, 0.15);
+}
+
+
+/* responsive */
+
+@media (max-width: 600px) {
+    .card {
+        max-width: 100%;
+        box-shadow: none;
+    }
+    .container-logo{
+        width: 100px;
+        display: block;
+        position: sticky;
+        left: 1px;
+        margin: 5px;
+    }
+    .logo{
+        margin: 5px;
+        height: 60px;
+        width: 60px;
+    }
+
+    .container-login{
+        align-items: flex-start;
+        justify-content: flex-start;
+        width: 100vw;
+    }
+
+    .curva{
+        display: none;
+    }
+}

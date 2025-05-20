@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workwise Navigator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="/Css/Estadisticas.css">
+    <link rel="stylesheet" href="/Css/reportembed.bundle.min.7e84abf1a620ba409518.css">
+    <link rel="icon" type="image/png" href="/Imagenes/wknlogo2.png">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="/Css/general/bootstrap.min.css">
+    <link rel="stylesheet" href="/Css/general/Grid-and-List-view-V10-style.css">
+    <link rel="stylesheet" href="/Css/general/Grid-and-List-view-V10.css">
+    <link rel="stylesheet" href="/Css/general/Nunito.css">
+    <link rel="stylesheet" href="/Css/general/styles.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+</head>
+
+<body>
+    <div class="contenedor">
+        <header class="top-bar">
+            <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark"
+                style="background: #0a1128">
+                <div class="container-fluid d-flex flex-column p-0">
+                    <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
+                        th:href="@{/personas/pagina_principal}">
+                        <img src="/Imagenes/wwk_white.png" width="61" height="58" style="width: 50px; height: 50px" />
+                        <div class="sidebar-brand-text mx-3"><span>Workwise</span></div>
+                    </a>
+                    <hr class="sidebar-divider my-0" />
+                    <ul class="navbar-nav text-light" id="accordionSidebar">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/personas/pagina_principal}">
+                                <i class="fas fa-home"></i><span data-trad="sidebar.home">Inicio</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/perfil/persona}">
+                                <i class="far fa-user-circle"></i><span data-trad="sidebar.profile">Perfil</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/persona/Postulaciones}">
+                                <i class="fas fa-file-alt"></i><span data-trad="sidebar.applications">Mis
+                                    postulaciones</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/persona/hdv}">
+                                <i class="fas fa-file-signature"></i><span data-trad="sidebar.cv">Crear Hoja de
+                                    Vida</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/personas/recursos}">
+                                <i class="fas fa-file"></i><span data-trad="sidebar.resources">Como buscar
+                                    empleo?</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" th:href="@{/Estadisticas/personas}">
+                                <i class="fas fa-chart-bar"></i><span data-trad="sidebar.stats">Estadisticas</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout" onclick="cerrarSesionYRedirigir(event)">
+                                <i class="fas fa-building"></i><span data-trad="sidebar.company">Tienes una
+                                    empresa?</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div class="col-lg-10">
+            <div class="dashboard-container p-4">
+                <div class="dashboard-header text-center mb-5">
+                    <h1 class="display-5 fw-bold text-primary" data-trad="estadisticas.title">Estadísticas de la
+                        Plataforma</h1>
+                    <p class="lead text-muted" data-trad="estadisticas.subtitle">Datos y métricas clave para entender el
+                        mercado laboral</p>
+                </div>
+
+                <div class="powerbi-container shadow-lg rounded-4 overflow-hidden">
+                    <div class="powerbi-toolbar bg-light p-2 d-flex justify-content-between align-items-center">
+                        <span class="text-muted small">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <span data-trad="estadisticas.visualizacion">Visualización interactiva - Actualizado
+                                diariamente</span>
+                        </span>
+                        <button class="btn btn-sm btn-outline-primary" id="fullscreen-btn">
+                            <i class="fas fa-expand me-1"></i>
+                            <span data-trad="estadisticas.fullscreen">Pantalla completa</span>
+                        </button>
+                    </div>
+                    <div class="powerbi-iframe-container" id="powerbi-wrapper">
+                        <iframe id="powerBi"
+                            src="https://app.powerbi.com/view?r=eyJrIjoiY2UzOTgxNGEtYmEwZS00NmE2LTk1MmMtZWNiYWEzYmI2MTAwIiwidCI6IjlkMTJiZjNmLWU0ZjYtNDdhYi05MTJmLTFhMmYwZmM0OGFhNCIsImMiOjR9"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <p class="mb-1" data-trad="footer.contacto">PBX: (605) 123-4567 | Email:
+                        contacto@workwise.com</p>
+                </div>
+                <div class="footer-center">
+                    <p class="mb-1" data-trad="footer.derechos">© 2024 WorkWise. Todos los derechos reservados.
+                    </p>
+                </div>
+                <div class="footer-right">
+                    <a href="https://www.facebook.com/profile.php?id=61558650706843" target="_blank">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+
+                    <a href="https://twitter.com" target="_blank">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+
+                    <a href="https://instagram.com" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/css-doodle/0.39.0/css-doodle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/General/Grid-and-List-view-V10-script.js"></script>
+    <script src="/js/General/script.min.js"></script>
+    <script src="/js/General/theme.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const fullscreenBtn = document.getElementById('fullscreen-btn');
+            const powerbiWrapper = document.getElementById('powerbi-wrapper');
+
+            fullscreenBtn.addEventListener('click', function () {
+                if (powerbiWrapper.requestFullscreen) {
+                    powerbiWrapper.requestFullscreen();
+                } else if (powerbiWrapper.webkitRequestFullscreen) { /* Safari */
+                    powerbiWrapper.webkitRequestFullscreen();
+                } else if (powerbiWrapper.msRequestFullscreen) { /* IE11 */
+                    powerbiWrapper.msRequestFullscreen();
+                }
+            });
+
+            // Escuchar cambios en el estado de pantalla completa
+            document.addEventListener('fullscreenchange', exitHandler);
+            document.addEventListener('webkitfullscreenchange', exitHandler);
+            document.addEventListener('mozfullscreenchange', exitHandler);
+            document.addEventListener('MSFullscreenChange', exitHandler);
+
+            function exitHandler() {
+                if (!document.fullscreenElement && !document.webkitIsFullScreen &&
+                    !document.mozFullScreen && !document.msFullscreenElement) {
+                    // Acciones al salir de pantalla completa si son necesarias
+                }
+            }
+        });
+    </script>
+    <script src="/js/idioma.js"></script>
+</body>
+
+</html>

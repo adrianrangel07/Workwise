@@ -1,0 +1,16 @@
+{
+    "titulo": "Company Registration",
+    "crearCuenta": "Create an account",
+    "subtitulo": "Register your company and start growing with us.",
+    "nombreCompania": "Company Name",
+    "razonSocial": "Business Name",
+    "correoElectronico": "Email",
+    "contrasena": "Password",
+    "repetirContrasena": "Repeat Password",
+    "nit": "Tax ID",
+    "direccion": "Address",
+    "registrar": "Register",
+    "yaCuentaEmpresa": "Already have a company account?",
+    "iniciaSesion": "Sign in!"
+  }
+  
