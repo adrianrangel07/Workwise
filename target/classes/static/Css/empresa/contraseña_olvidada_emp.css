@@ -1,0 +1,335 @@
+:root {
+    --primary-color: #0a1128;
+    --secondary-color: #2a5db0;
+    --success-color: #28a745;
+    --error-color: #dc3545;
+    --warning-color: #ffc107;
+    --light-gray: #f8f9fa;
+    --medium-gray: #e9ecef;
+    --dark-gray: #6c757d;
+}
+
+html, body {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: auto;
+    min-height: 100vh;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #ece9e6, #ffffff);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: #333;
+}
+
+/* Logo */
+.container-logo {
+    display: flex;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    cursor: pointer;
+    transition: all .3s;
+    z-index: 50;
+}
+
+.container-logo:hover {
+    transform: scale(1.1);
+}
+
+.logo {
+    height: 80px;
+    width: 80px;
+}
+
+/* Progress steps */
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.progress-steps::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--medium-gray);
+    z-index: 1;
+}
+
+.progress-steps .step {
+    position: relative;
+    z-index: 2;
+    background: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    border: 2px solid var(--medium-gray);
+    color: var(--dark-gray);
+    font-weight: 500;
+}
+
+.progress-steps .step.active {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Container */
+.container {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    position: relative;
+    margin-top: 30px;
+}
+
+.container h1 {
+    font-size: 28px;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: var(--dark-gray);
+    margin-bottom: 30px;
+    font-size: 15px;
+}
+
+/* Form steps */
+.form-step {
+    display: none;
+}
+
+.form-step.active {
+    display: block;
+}
+
+/* Form groups */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+/* Inputs */
+input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 8px 0;
+    border: 2px solid var(--medium-gray);
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(10, 17, 40, 0.1);
+}
+
+/* Password input */
+.password-input {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--dark-gray);
+}
+
+/* Captcha */
+.captcha-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.captcha-box {
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    background: #f3f3f3;
+    padding: 15px;
+    flex-grow: 1;
+    text-align: center;
+    border-radius: 8px;
+    color: var(--primary-color);
+    border: 1px dashed var(--dark-gray);
+    user-select: none;
+}
+
+.btn-refresh {
+    background: var(--medium-gray);
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-refresh:hover {
+    background: var(--dark-gray);
+    color: white;
+}
+
+/* Buttons */
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex: 1;
+}
+
+.btn-primary:hover {
+    background-color: #05070f;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: white;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex: 1;
+}
+
+.btn-secondary:hover {
+    background-color: var(--light-gray);
+}
+
+/* Validation messages */
+.validation-message {
+    font-size: 13px;
+    margin-top: 5px;
+    min-height: 18px;
+}
+
+.password-strength {
+    height: 4px;
+    background: var(--medium-gray);
+    border-radius: 2px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.password-strength::after {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: var(--error-color);
+    transition: width 0.3s;
+}
+
+.password-strength.weak::after {
+    width: 30%;
+    background: var(--error-color);
+}
+
+.password-strength.medium::after {
+    width: 60%;
+    background: var(--warning-color);
+}
+
+.password-strength.strong::after {
+    width: 100%;
+    background: var(--success-color);
+}
+
+/* Success message */
+.success-message {
+    background: #e8f5e9;
+    border-left: 4px solid var(--success-color);
+    padding: 15px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+    border-radius: 4px;
+}
+
+.success-message i {
+    color: var(--success-color);
+    font-size: 20px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .container {
+        padding: 25px;
+        box-shadow: none;
+        border: 1px solid var(--medium-gray);
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+    
+    .progress-steps .step {
+        font-size: 14px;
+        padding: 5px 10px;
+    }
+    
+    .container-logo {
+        position: relative;
+        top: auto;
+        left: auto;
+        margin-bottom: 20px;
+    }
+    
+    .container-back {
+        position: absolute;
+        top: 25px;
+        left: 25px;
+    }
+}

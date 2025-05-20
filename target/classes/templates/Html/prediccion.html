@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Predicción de Compatibilidad</title>
+    <link rel="icon" type="image/png" href="/Imagenes/wknlogo2.png">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="/Css/general/bootstrap.min.css">
+    <link rel="stylesheet" href="/Css/general/styles.min.css">
+    <link rel="stylesheet" href="/Css/weka.css">
+    <link rel="stylesheet" href="/Css/general/Grid-and-List-view-V10.css">
+    <link rel="stylesheet" href="/Css/persona/pagina_principal_persona.css">
+    <link rel="stylesheet" href="https://cdsn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <meta id="loginSuccess" th:content="${session.loginSuccess ?: 'false'}">
+</head>
+
+
+<body>
+    <div id="wrapper">
+        <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark"
+            style="background: #0a1128; width: 100px;">
+            <div class="container-fluid d-flex flex-column p-0"><a
+                    class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
+                    th:href="@{/personas/pagina_principal}"><img src="/Imagenes/wwk_white.png" width="61" height="58"
+                        style="width: 50px;height: 50px;">
+                    <div class="sidebar-brand-icon rotate-n-15"></div>
+                    <div class="sidebar-brand-text mx-3"><span>Workwise</span></div>
+                </a>
+                <hr class="sidebar-divider my-0">
+                <ul class="navbar-nav text-light" id="accordionSidebar">
+                    <li class="nav-item"><a class="nav-link active" th:href="@{/personas/pagina_principal}"><i
+                                class="fas fa-home"></i><span>Inicio</span></a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/perfil/persona}"><i
+                                class="far fa-user-circle"></i><span>Perfil</span></a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/persona/Postulaciones}"><i
+                                class="fas fa-file-alt"></i><span>Mis postulaciones</span>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/persona/hdv}"><i
+                                class="fas fa-file-signature"></i><span>Crear Hoja de Vida</span>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/personas/recursos}"><i
+                                class="fas fa-file"></i><span>Como buscar empleo?</span></a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/Estadisticas/personas}"><i
+                                class="fas fa-chart-bar"></i><span>Estadisticas</span></a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout" onclick="cerrarSesionYRedirigir(event)">
+                            <i class="fas fa-building"></i><span>Tienes una empresa?</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="d-flex flex-column" id="content-wrapper"> 
+            <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light" style="background: var(--bs-body-bg);">
+                <div class="container-fluid">
+                    <div class="close-navbar">
+                        <button class="btn btn-link d-md-none rounded-circle me-3" id="ocultarNavBar" type="button">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+    
+                    <div class="nav-item dropdown no-arrow" id="usuario-container">
+    
+                        <img id="user-avatar" src="/imagen/perfil" alt="Persona Logo"
+                            onerror="this.onerror=null;this.src='/Imagenes/imagenperfil.png';">
+    
+                        <input type="hidden" id="subirFoto" accept="image/*" style="display: block; margin-top: 10px;">
+    
+                        <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
+                            <span id="usuario" th:text="${persona.nombre}">Account</span>
+                        </a>
+
+                        <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                            <a class="dropdown-item" th:href="@{/perfil/persona}" style="color: #0a1128;">
+                                <i class="fas fa-user fa-sm fa-fw me-2 "></i>&nbsp;Perfil
+                            </a>
+                            <a class="dropdown-item" th:href="@{/persona/Postulaciones}" style="color: #0a1128;">
+                                <i class="fas fa-file-alt fa-sm fa-fw me-2"></i>&nbsp;Postulaciones
+                            </a>
+                            <a class="dropdown-item" href="#" style="color: #0a1128;">
+                                <i class="fas fa-briefcase fa-sm fa-fw me-2 "></i>&nbsp;Hoja de vida
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/logout" id="logout" onclick="cerrarSesion(event)"
+                                style="color: #0a1128;">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw me-2"></i>Cerrar sesión
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="content-area flex-grow-1 p-3">
+                <h1>Compatibilidad con Oferta de Empleo</h1>
+                <form id="formPrediccion">
+                    <div class="data">
+                        <div class="data-oferta tarjeta">
+                            <div class="data-title">
+                                <h2>Datos de la oferta</h2>
+                            </div>
+                            <div class="mb-3" id="tipoEmpleo">
+                                <input class="form-control form-control-user" type="text" min="0" id="tipoEmpleoOferta" th:value="${{
+                                    Tiempo_Completo: 'Tiempo Completo',
+                                    Medio_Tiempo: 'Medio Tiempo',
+                                    Por_Horas: 'Por horas',
+                                    Freelance: 'Freelance'
+                                }[oferta.tipo_empleo] ?: 'No especificado'}" readonly  required>
+                                <label class="label">Tipo Empleo Oferta</label>
+                                <input type="text" name="tipo_empleo_oferta"  th:value="${oferta.tipo_empleo}" style="display: none;">
+                            </div>
+            
+                            <div class="mb-3">
+                                <input class="form-control form-control-user" type="text" name="modalidad_oferta" id="modalidadOferta" th:value="${oferta.modalidad}" readonly required>
+                                <label class="label">Modalidad Oferta</label>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <input class="form-control form-control-user" type="text" name="tipo_contrato_oferta" id="tipoContratoOferta" th:value="${oferta.tipo_contrato}" readonly required>
+                                <label class="label">Tipo Contrato Oferta</label>
+                            </div>
+                    
+                            <div class="mb-3">
+                                <input class="form-control form-control-user" type="text" min="0" id="experienciaRequerida" th:value="${{
+                                    0: 'Sin experiencia',
+                                    1: 'Menos de 1 año',
+                                    2: 'Entre 1 y 3 años',
+                                    3: 'Entre 3 y 5 años',
+                                    4: 'Entre 5 y 10 años',
+                                    5: 'Más de 10 años'
+                                }[oferta.experiencia] ?: 'No especificado'}" readonly  required>
+                                <label class="label">Experiencia Requerida (años)</label>
+                                <input type="hidden" name="experiencia_requerida" th:value="${oferta.experiencia}" style="display: none;">
+                            </div>
+                    
+                            <div class="mb-3">
+                                <input class="form-control form-control-user" type="text" min="0" id="nivelEstudioRequerido" th:value="${{
+                                    Sin_estudios: 'Sin estudios',
+                                    Bachiller: 'Bachiller',
+                                    Tecnico_Tecnologo: 'Técnico/Tecnólogo',
+                                    Tecnologo_Universitario: 'Tecnólogo o Universitario',
+                                    Universitario: 'Universitario',
+                                    Master: 'Máster',
+                                    Doctorado: 'Doctorado'
+                                }[oferta.nivel_educativo] ?: 'No especificado'}" readonly  required>
+                                <label class="label">Nivel Estudio Requerido</label>
+                                <input type="text" name="nivel_estudio_requerido"  th:value="${oferta.nivel_educativo}" style="display: none;">
+                            </div>
+                    
+                            <div class="mb-3">
+                                <input class="form-control form-control-user" type="text" name="sector_oferta" id="sectorOferta" th:value="${oferta.sector_oferta}"  readonly required>
+                                <label class="label">Sector Oferta</label>
+                            </div>
+                        </div>
+                        <div class="data-persona tarjeta">
+                            <div class="data-title">
+                                <h2>Ingresa tus Datos</h2>
+                            </div>
+                            <div class="mb-3">
+                                <select name="tipo_empleo_deseado" required>
+                                    <option value="6" hidden disabled selected></option>
+                                    <option value="Tiempo_Completo" class="option">Tiempo Completo</option>
+                                    <option value="Medio_Tiempo">Medio Tiempo</option>
+                                    <option value="Por_Horas">Por horas</option>
+                                    <option value="Freelance">Freelance</option>
+                                </select>
+                                <label class="label-active">Tipo De Empleo Deseado</label>
+                            </div>
+                    
+                            <div class="mb-3">
+                                <select name="preferencia_modalidad" required>
+                                    <option value="6" hidden disabled selected></option>
+                                    <option value="Presencial">Presencial</option>
+                                    <option value="Remoto">Remoto</option>
+                                    <option value="Hibrido">Híbrido</option>
+                                </select>
+                                <label class="label-active">Tipo De Modalidad Deseada</label>
+                            </div>
+                    
+                            <div class="mb-3">
+                                <select name="preferencia_contrato" required>
+                                    <option value="6" hidden disabled selected></option>
+                                    <option value="Obra_Labor">Obra o Labor</option>
+                                    <option value="Fijo">Fijo</option>
+                                    <option value="Indefinido">Indefinido</option>
+                                    <option value="Practicas">Prácticas</option>
+                                </select>
+                                <label class="label-active">Tipo De Contrato Deseado</label>
+                            </div>
+                    
+                            <div class="mb-3">
+                                <select id="experiencia" name="experiencia_persona" required>
+                                    <option value="6" hidden disabled selected></option>
+                                    <option value=0 >Sin experiencia</option>
+                                    <option value=1 >Menos de 1 año</option>
+                                    <option value=2 >Entre 1 y 3 años</option>
+                                    <option value=3 >Entre 3 y 5 años</option>
+                                    <option value=4 >Entre 5 y 10 años</option>
+                                    <option value=5 >Más de 10 años</option>
+                                </select>
+                                <label class="label-active" id="label-experiencia">Seleccione Su Experiencia Laboral</label>
+                            </div>
+                    
+                            <div class="mb-3">
+                                <select id="nivel_educativo" name="nivel_estudio_persona" required>
+                                    <option value="6" hidden disabled selected></option>
+                                    <option value= "Sin_estudios">Sin estudios</option>
+                                    <option value= "Bachiller">Bachiller</option>
+                                    <option value= "Tecnico_Tecnologo">Tecnico/Tecnologo</option>
+                                    <option value= "Tecnologo_Universitario">Tecnologo o Universitario</option>
+                                    <option value= "Universitario">Universitario</option>
+                                    <option value= "Master">Master</option>
+                                    <option value= "Doctorado" >Doctorado</option>
+                                </select>
+                                <label id="label-estudio" class="label-active">Seleccione Su Nivel De Estudio</label>
+                            </div>
+                    
+                            <div class="mb-3">
+                                <select name="sector_persona" required>
+                                    <option value="6" hidden disabled selected></option>
+                                    <option value="Aeroespacial">Aeroespacial</option>
+                                    <option value="Agricultura">Agricultura</option>
+                                    <option value="Agroindustria">Agroindustria</option>
+                                    <option value="Ambiental">Medio ambiente</option>
+                                    <option value="ArtesCreativas">Artes creativas</option>
+                                    <option value="Automotriz">Automotriz</option>
+                                    <option value="BienesRaices">Bienes raíces</option>
+                                    <option value="Biotecnologia">Biotecnología</option>
+                                    <option value="Comercio">Comercio</option>
+                                    <option value="Construccion">Construcción</option>
+                                    <option value="Consultoria">Consultoría</option>
+                                    <option value="Deportes">Deportes y recreación</option>
+                                    <option value="Diseno">Diseño</option>
+                                    <option value="Educacion">Educación</option>
+                                    <option value="Energia">Energía</option>
+                                    <option value="Finanzas">Finanzas</option>
+                                    <option value="Gobierno">Gobierno</option>
+                                    <option value="Investigacion">Investigación</option>
+                                    <option value="Legal">Legal</option>
+                                    <option value="Logistica">Logística</option>
+                                    <option value="Manufactura">Manufactura</option>
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="Medios">Medios de comunicación</option>
+                                    <option value="Mineria">Minería</option>
+                                    <option value="Naval">Naval</option>
+                                    <option value="Quimica">Química y farmacéutica</option>
+                                    <option value="RRHH">Recursos humanos</option>
+                                    <option value="Salud">Salud</option>
+                                    <option value="Seguros">Seguros</option>
+                                    <option value="Servicios">Servicios</option>
+                                    <option value="Social">Trabajo social</option>
+                                    <option value="Tecnologia">Tecnología</option>
+                                    <option value="Textil">Textil y confección</option>
+                                    <option value="Transporte">Transporte</option>
+                                    <option value="Turismo">Turismo</option>
+                                </select>
+                                <label class="label-active">Seleccione Su Tipo De Sector</label>                                
+                            </div>
+                            <div class="mb-3">
+                                <input class="form-control form-control-user" type="number" name="edad_persona" min="18" max="65" placeholder="" required>
+                                <label class="label-active">Ingresa tu edad</label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" style="width: 30%;">Predecir Compatibilidad</button>
+                </form>
+        
+                <div id="resultado"></div>
+                <div id="contenedor-error"></div>
+
+                <div class="recommendations-header" id="recommendations-header" style="display: none;">
+                    <h2 class="recommendations-title">
+                        <span class="highlight">Ofertas</span> seleccionadas para ti
+                    </h2>
+                    <p class="recommendations-description">
+                        Hemos encontrado estas oportunidades que coinciden con tu perfil
+                    </p>
+                </div>
+                <div id="recomendaciones-container">
+                    <div class="offer-container" id="contenedor-tarjeta"></div>
+                </div>
+
+                <div class="usuarioId" style="display: none;">
+                    <input type="hidden" id="usuarioId" th:value="${persona.id}">
+                </div>
+
+                <!-- modal que se abrira al presionar una tarjeta -->
+                <div id="modal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="modal-title"></h3>
+                            <span class="close-btn" id="close-btn">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <p id="modal-description"></p>
+
+
+                            <div class="modal-info-item" id="modal-salary"></div>
+                            <div class="modal-info-item" id="modal-currency"></div>
+                            <div class="modal-info-item" id="modal-duration"></div>
+                            <div class="modal-info-item" id="modal-period"></div>
+                            <div class="modal-info-item" id="modal-modalidad"></div>
+                            <div class="modal-info-item" id="modal-type"></div>
+                            <div class="modal-info-item" id="modal-typeContract"></div>
+                            <div class="modal-info-item" id="modal-experience"></div>
+                            <div class="modal-info-item" id="modal-sector"></div>
+                            <div class="modal-info-item" id="modal-education"></div>
+                            <div class="modal-info-item" id="modal-empresa"></div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="apply-btn-modal" id="postularse">Apply</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer">
+                <div class="container">
+                    <div class="footer-content">
+                        <div class="footer-left">
+                            <p class="mb-1">PBX: (605) 123-4567 | Email: contacto@workwise.com</p>
+                        </div>
+                        <div class="footer-center">
+                            <p class="mb-1">© 2024 WorkWise. Todos los derechos reservados.</p>
+                        </div>
+                        <div class="footer-right">
+                            <a href="https://www.facebook.com/profile.php?id=61558650706843" target="_blank"><i
+                                    class="fab fa-facebook"></i></a>
+
+                            <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+
+                            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+
+    <script src="/js/weka.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/General/Grid-and-List-view-V10-script.js"></script>
+    <script src="/js/General/script.min.js"></script>
+    <script src="/js/General/theme.js"></script>
+    <script src="/js/persona/pagina_principal_persona.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+
+</html>

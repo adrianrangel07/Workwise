@@ -1,0 +1,15 @@
+{
+  "sidebar.home": "Home",
+  "sidebar.profile": "Profile",
+  "sidebar.applications": "My Applications",
+  "sidebar.cv": "Create CV",
+  "sidebar.stats": "Statistics",
+  "sidebar.company": "Do you have a company?",
+  "sidebar.resources": "How to find a job?",
+  "footer.contacto": "PBX: (605) 123-4567 | Email: contacto@workwise.com",
+  "footer.derechos": "© 2024 WorkWise. All rights reserved.",
+  "estadisticas.title": "Platform Statistics",
+  "estadisticas.subtitle": "Key data and metrics to understand the job market",
+  "estadisticas.visualizacion": "Interactive visualization - Updated daily",
+  "estadisticas.fullscreen": "Fullscreen"
+}

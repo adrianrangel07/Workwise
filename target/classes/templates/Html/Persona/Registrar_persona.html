@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-trad="register.title">Register user</title>
+    <link rel="stylesheet" href="/Css/persona/Registrar_persona.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="/Imagenes/wknlogo2.png">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="/Css/general/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+
+<body>
+    <div class="container-logo">
+        <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" th:href="@{/}">
+            <img class="logo" id="logo" src="/Imagenes/wknblack.png">
+        </a>
+    </div>
+    <div class="contenedor">
+        <div class="container-register">
+            <div class="card">
+                <div class="head-card">
+                    <h1 data-trad="register.createAccount">Crea una cuenta!</h1>
+                    <div class="container-back">
+                        <a th:href="@{/pagina/inicio}" class="back_a">
+                            <i class="fas fa-arrow-left back"></i>
+                        </a>
+                    </div>
+                </div>
+                <p data-trad="register.firstStep">Da el primer paso al mundo profesional.</p>
+                <div class="formulario">
+                    <form id="registerForm" th:action="@{/Register/personas}" method="post" class="user">
+                        <div class="row">
+                            <div class="contenedor-input">
+                                <div class="col-sm-6 mb-3">
+                                    <input class="form-control form-control-user" type="text" id="nombre" placeholder=""
+                                        name="nombre" required>
+                                    <label for="nombre" class="label" data-trad="register.name">Nombre(s)</label>
+                                </div>
+                            </div>
+                            <div class="contenedor-input">
+                                <div class="col-sm-6 mb-3">
+                                    <input class="form-control form-control-user" type="text" id="apellido"
+                                        placeholder="" name="apellido" required>
+                                    <label for="apellido" class="label" data-trad="register.surname">Apellido(s)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input class="form-control form-control-user" type="email" aria-describedby="emailHelp"
+                                placeholder="" id="email" name="email" required>
+                            <label for="email" class="label" data-trad="register.email">Correo electrónico</label>
+                            <div class="validation-message" id="emailValidation" style="display: none;"></div>
+                        </div>
+                        <div class="row">
+                            <div class="contenedor-input">
+                                <div class="col-sm-6 mb-3">
+                                    <div class="password-input">
+                                        <input class="form-control form-control-user" type="password" placeholder=""
+                                            id="password" name="contraseña" minlength="6" maxlength="45" required>
+                                        <label for="password" class="label"
+                                            data-trad="register.password">Contraseña</label>
+                                        <i class="fas fa-eye toggle-password"
+                                            onclick="togglePasswordVisibility('password')"></i>
+                                    </div>
+                                    <div class="password-strength-container">
+                                        <div class="password-strength-bar" id="passwordStrengthBar"></div>
+                                        <div class="password-strength-text" id="passwordStrengthText"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="contenedor-input">
+                                <div class="col-sm-6 mb-3">
+                                    <div class="password-input">
+                                        <input class="form-control form-control-user" type="password" placeholder=""
+                                            id="confirm-password" name="confirm-password" minlength="6" maxlength="45"
+                                            required>
+                                        <label for="confirm-password" class="label"
+                                            data-trad="register.confirmPassword">Repetir contraseña</label>
+                                        <i class="fas fa-eye toggle-password"
+                                            onclick="togglePasswordVisibility('confirm-password')"></i>
+                                    </div>
+                                    <div class="password-match" id="passwordMatch">
+                                        <span id="passwordMatchIcon"></span>
+                                        <span id="passwordMatchText"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="contenedor-input">
+                                <div class="col-sm-6 mb-3">
+                                    <input class="form-control form-control-user" type="text" placeholder="" id="cedula"
+                                        name="identificacion" minlength="7" maxlength="10" required>
+                                    <label for="cedula" class="label" data-trad="register.documentNumber">Número de
+                                        Documento</label>
+                                </div>
+                            </div>
+                            <div class="contenedor-input">
+                                <div id="select" class="col-sm-6 mb-3 mb-sm-0">
+                                    <select id="tipo-identificacion" name="tipoIdentificacion"
+                                        class="form-control form-control-btn" required>
+                                        <option value="cc" data-trad="register.idType.cc">Cédula de Ciudadanía</option>
+                                        <option value="ce" data-trad="register.idType.ce">Cédula de Extranjería</option>
+                                        <option value="rc" data-trad="register.idType.rc">Registro Civil</option>
+                                        <option value="dni" data-trad="register.idType.dni">Documento de Identidad
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="contenedor-input">
+                                <div class="col-sm-6 mb-3">
+                                    <input class="form-control form-control-user" type="text" id="fecha"
+                                        name="fecha_nacimiento" required>
+                                    <label for="fecha" class="fecha-label" data-trad="register.birthDate">F.
+                                        Nacimiento</label>
+                                    <i class="fas fa-calendar-alt fecha" id="icono-calendario"></i>
+                                </div>
+                            </div>
+                            <div class="contenedor-input">
+                                <div id="select-genero" class="col-sm-6 mb-3">
+                                    <select name="genero" id="genero" class="form-control form-control-btn">
+                                        <option value="Choose" data-trad="register.gender.choose">Género...</option>
+                                        <option value="Female" data-trad="register.gender.female">Femenino</option>
+                                        <option value="Male" data-trad="register.gender.male">Masculino</option>
+                                        <option value="No-espefic" data-trad="register.gender.noSpecify">Prefiero no
+                                            decirlo</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary d-block btn-user w-100" type="submit" id="btn-register"
+                            data-trad="register.registerButton">
+                            Registrarse
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="login">
+                <p data-trad="register.haveAccount">Ya tienes una cuenta?</p> <a th:href="@{/login/personas}"
+                    data-trad="register.loginHere">Inicia sesión!</a>
+            </div>
+        </div>
+        <div class="curva">
+            <div class="container-img"></div>
+        </div>
+        <!-- Modal para verificación en móviles -->
+        <div class="modal fade" id="verificationModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fas fa-envelope verification-icon"></i>
+                            Verificación de Correo
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="mobile-verification-content">
+                        <!-- Contenido se insertará dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="/js/General/Grid-and-List-view-V10-script.js"></script>
+    <script src="/js/General/script.min.js"></script>
+    <script src="/js/General/theme.js"></script>
+    <script src="/js/idioma.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/persona/Registrar_persona.js"></script>
+</body>
+
+</html>

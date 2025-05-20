@@ -1,0 +1,320 @@
+/* ========== GLOBAL RESPONSIVE STYLES ========== */
+@media (max-width: 992px) {
+
+    /* Sidebar mobile behavior */
+    .admin-sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+    }
+
+    .admin-sidebar.active {
+        transform: translateX(0);
+    }
+
+    /* Main content adjustment */
+    .admin-main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    /* Footer adjustment */
+    .custom-footer {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    /* Mobile menu toggle button */
+    .mobile-menu-toggle {
+        display: flex;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1001;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Header adjustment */
+    .admin-header {
+        padding: 15px 20px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 900;
+    }
+
+    /* Content padding to avoid header overlap */
+    .admin-content {
+        padding-top: 80px;
+    }
+
+    /* Cards grid adjustment */
+    .admin-cards {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    /* Tables adjustment */
+    .recent-table {
+        overflow-x: auto;
+    }
+
+    .recent-table table {
+        width: 100%;
+        display: block;
+    }
+
+    /* Power BI iframe adjustment */
+    #powerBi {
+        height: 60vh;
+        min-height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* Header adjustments */
+    .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+    }
+
+    .page-title {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+    }
+
+    .admin-user {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    /* Cards adjustments */
+    .admin-card {
+        padding: 15px;
+    }
+
+    .card-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    /* Tables adjustments */
+    .table-responsive {
+        border: 0;
+    }
+
+    .table-responsive table {
+        font-size: 0.9rem;
+    }
+
+    .table-responsive th,
+    .table-responsive td {
+        padding: 8px;
+        white-space: nowrap;
+    }
+
+    /* Search input adjustment */
+    .admin-filters .input-group {
+        width: 100%;
+    }
+
+    /* Pagination adjustments */
+    .pagination {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .page-item {
+        margin: 2px;
+    }
+
+    /* Modal adjustments */
+    .modal-dialog {
+        margin: 10px;
+    }
+
+    /* Footer adjustments */
+    .footer-content {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .footer-left,
+    .footer-center,
+    .footer-right {
+        text-align: center;
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+
+    /* Header title smaller */
+    .page-title {
+        font-size: 1.1rem;
+    }
+
+    /* Cards adjustments */
+    .admin-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .card-icon {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+
+    /* Tables adjustments */
+    .table-responsive table {
+        font-size: 0.8rem;
+    }
+
+    /* Action buttons stack */
+    td .btn {
+        display: block;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    /* Power BI iframe adjustment */
+    #powerBi {
+        height: 50vh;
+        min-height: 300px;
+    }
+
+    /* Modal content stack */
+    .modal-body .row>div {
+        width: 100%;
+    }
+
+    .modal-body .col-md-4,
+    .modal-body .col-md-8 {
+        margin-bottom: 20px;
+    }
+}
+
+/* ========== DASHBOARD SPECIFIC RESPONSIVE ========== */
+@media (max-width: 992px) {
+    .admin-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .admin-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .section-title {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .section-title a {
+        margin-top: 10px;
+    }
+}
+
+/* ========== TABLES SPECIFIC RESPONSIVE ========== */
+@media (max-width: 768px) {
+
+    /* Hide less important columns on small screens */
+    #usersTable td:nth-child(4),
+    #usersTable th:nth-child(4),
+    #empresasTable td:nth-child(4),
+    #empresasTable th:nth-child(4) {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+
+    /* Hide more columns on very small screens */
+    #usersTable td:nth-child(1),
+    #usersTable th:nth-child(1),
+    #empresasTable td:nth-child(1),
+    #empresasTable th:nth-child(1) {
+        display: none;
+    }
+
+    /* Make action buttons smaller */
+    .action-btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.7rem;
+    }
+}
+
+/* ========== STATISTICS PAGE SPECIFIC ========== */
+@media (max-width: 768px) {
+    .title-statistics {
+        font-size: 1.5rem;
+    }
+
+    .stats-container {
+        padding: 15px;
+    }
+}
+
+/* ========== UTILITY CLASSES FOR MOBILE ========== */
+.mobile-stack {
+    flex-direction: column;
+}
+
+.mobile-full-width {
+    width: 100% !important;
+}
+
+.mobile-text-center {
+    text-align: center !important;
+}
+
+.mobile-mt-10 {
+    margin-top: 10px;
+}
+
+.mobile-hidden {
+    display: none !important;
+}
+
+/* ========== ANIMATIONS FOR MOBILE MENU ========== */
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.admin-sidebar.active {
+    animation: slideIn 0.3s ease forwards;
+}
+
+.mobile-menu-toggle.active {
+    animation: fadeIn 0.3s ease;
+}

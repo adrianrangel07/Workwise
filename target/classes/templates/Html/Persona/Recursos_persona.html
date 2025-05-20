@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recursos para buscar empleo</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="/Css/general/bootstrap.min.css">
+    <link rel="stylesheet" href="/Css/recursos.css">
+    <link rel="stylesheet" href="/Css/general/responsive.css">
+    <!-- PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark"
+            style="background: #0a1128">
+            <div class="container-fluid d-flex flex-column p-0">
+                <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
+                    th:href="@{/personas/pagina_principal}">
+                    <img src="/Imagenes/wwk_white.png" width="61" height="58" style="width: 50px; height: 50px" />
+                    <div class="sidebar-brand-text mx-3"><span>Workwise</span></div>
+                </a>
+                <hr class="sidebar-divider my-0" />
+                <ul class="navbar-nav text-light" id="accordionSidebar">
+                    <li class="nav-item">
+                        <a class="nav-link " th:href="@{/personas/pagina_principal}">
+                            <i class="fas fa-home"></i><span data-trad="sidebar.home">Inicio</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/perfil/persona}">
+                            <i class="far fa-user-circle"></i><span data-trad="sidebar.profile">Perfil</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/persona/Postulaciones}">
+                            <i class="fas fa-file-alt"></i><span data-trad="sidebar.applications">Mis
+                                postulaciones</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/persona/hdv}">
+                            <i class="fas fa-file-signature"></i><span data-trad="sidebar.cv">Crear Hoja de Vida</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/personas/recursos}">
+                            <i class="fas fa-file"></i><span data-trad="sidebar.resources">Como buscar empleo?</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/Estadisticas/personas}">
+                            <i class="fas fa-chart-bar"></i><span data-trad="sidebar.stats">Estadisticas</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout" onclick="cerrarSesionYRedirigir(event)">
+                            <i class="fas fa-building"></i><span data-trad="sidebar.company">Tienes una empresa?</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Contenido principal -->
+        <div class="d-flex flex-column" id="content-wrapper">
+            <!-- Barra de navegación superior -->
+            <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light"
+                style="background: var(--bs-body-bg)">
+                <div class="container-fluid">
+                    <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <ul class="navbar-nav flex-nowrap ms-auto">
+                        <li class="nav-item dropdown no-arrow">
+                            <div class="nav-item dropdown no-arrow" id="usuario-container">
+                                <!-- boton idioma -->
+                                <div class="language-selector d-flex align-items-center position-relative">
+                                    <span class="me-2 fw-bold" data-trad="idioma.etiqueta">Idioma:</span>
+
+                                    <!-- Botón que muestra icono y al hacer clic despliega selector -->
+                                    <div id="language-display" class="d-flex align-items-center"
+                                        style="cursor: pointer;">
+                                        <i class="fas fa-language" id="language-toggle"></i>
+                                    </div>
+
+                                    <!-- Menú desplegable -->
+                                    <div id="language-options" class="dropdown-menu show p-2"
+                                        style="display: none; position: absolute; top: 100%; left: 0; z-index: 1000;">
+                                        <div class="dropdown-item d-flex align-items-center"
+                                            onclick="selectLanguage('es')">
+                                            <img src="https://flagcdn.com/w20/es.png" alt="ES" class="me-2"> ES
+                                        </div>
+                                        <div class="dropdown-item d-flex align-items-center"
+                                            onclick="selectLanguage('en')">
+                                            <img src="https://flagcdn.com/w20/us.png" alt="EN" class="me-2"> ENG
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- fin boton idioma -->
+                                <img id="user-avatar" src="/imagen/perfil" alt="Persona Logo"
+                                    onerror="this.onerror=null;this.src='/Imagenes/imagenperfil.png';">
+
+                                <input type="hidden" id="subirFoto" accept="image/*"
+                                    style="display: block; margin-top: 10px;">
+
+                                <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
+                                    href="#">
+                                    <span id="usuario" th:text="${persona.nombre}">Account</span>
+                                </a>
+                                <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                                    <a class="dropdown-item" th:href="@{/perfil/persona}" style="color: #0a1128;">
+                                        <i class="fas fa-user fa-sm fa-fw me-2 "></i>&nbsp;Perfil
+                                    </a>
+                                    <a class="dropdown-item" th:href="@{/persona/Postulaciones}"
+                                        style="color: #0a1128;">
+                                        <i class="fas fa-file-alt fa-sm fa-fw me-2"></i>&nbsp;Postulaciones
+                                    </a>
+                                    <a class="dropdown-item" href="#" style="color: #0a1128;">
+                                        <i class="fas fa-briefcase fa-sm fa-fw me-2 "></i>&nbsp;Hoja de vida
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="/logout" id="logout" onclick="cerrarSesion(event)"
+                                        style="color: #0a1128;">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw me-2"></i>Cerrar sesión
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Contenido de recursos -->
+            <div class="content-area flex-grow-1 p-3">
+                <div class="recursos-container">
+                    <h1 data-trad="recursos.titulo">Recursos para buscar empleo</h1>
+                    <h1><strong data-trad="recursos.workwise">WorkWise</strong></h1>
+
+                    <!-- Pestañas -->
+                    <div class="tabs">
+                        <button class="tab-btn active" onclick="openTab('documentos')"
+                            data-trad="recursos.documentos">📄 Documentos</button>
+                        <button class="tab-btn" onclick="openTab('videos')" data-trad="recursos.videos">🎥
+                            Videos</button>
+                    </div>
+
+                    <!-- Documentos -->
+                    <div id="documentos" class="tab-content active">
+                        <div class="recurso-card">
+                            <h3 data-trad="recursos.tecnicasBusqueda">Técnicas de búsqueda de empleo</h3>
+                            <iframe
+                                src="https://drive.google.com/viewerng/viewer?embedded=true&url=https://www.bizkaia.eus/home2/archivos/dpto4/temas/pdf/monograficos/busqueda_empleo.pdf?hash=d9394ca6be71e9de88ed4fb0d5026394"
+                                width="100%" height="250px" frameborder="0"></iframe>
+                            <a href="https://www.bizkaia.eus/home2/archivos/dpto4/temas/pdf/monograficos/busqueda_empleo.pdf?hash=d9394ca6be71e9de88ed4fb0d5026394"
+                                class="btn" download="Tecnicas de busqueda de empleo" target="_blank"
+                                data-trad="recursos.descargar">
+                                Descargar PDF
+                            </a>
+                        </div>
+
+                        <div class="recurso-card">
+                            <h3 data-trad="recursos.moduloBusqueda">Módulo de búsqueda de empleo</h3>
+                            <iframe
+                                src="https://drive.google.com/viewerng/viewer?embedded=true&url=https://www.inmujeres.gob.es/areasTematicas/AreaProgInsercionSociolaboral/docs/Materiales/MABEMDinamizadores.pdf?"
+                                width="100%" height="250px" frameborder="0"></iframe>
+                            <a href="https://www.inmujeres.gob.es/areasTematicas/AreaProgInsercionSociolaboral/docs/Materiales/MABEMDinamizadores.pdf?"
+                                class="btn" download="Modulo de busqueda de empleo" target="_blank"
+                                data-trad="recursos.descargar">
+                                Descargar PDF
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Videos -->
+                    <div id="videos" class="tab-content">
+                        <div class="recurso-card">
+                            <h3 data-trad="recursos.preguntasEntrevista">Preguntas para entrevistas</h3>
+                            <div class="video-container">
+                                <iframe width="100%" src="https://www.youtube.com/embed/RHoUFgDEbIM?rel=0"
+                                    frameborder="0" allowfullscreen></iframe>
+                                <button class="expand-btn"
+                                    onclick="openModal('https://www.youtube.com/embed/RHoUFgDEbIM')"
+                                    data-trad="recursos.ampliar">
+                                    ⚡ Ampliar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="recurso-card">
+                            <h3 data-trad="recursos.preguntasFrecuentes">Preguntas frecuentes para entrevistas de
+                                trabajo</h3>
+                            <div class="video-container">
+                                <iframe width="100%" src="https://www.youtube.com/embed/iXs3ANkVft0?rel=0"
+                                    frameborder="0" allowfullscreen></iframe>
+                                <button class="expand-btn"
+                                    onclick="openModal('https://www.youtube.com/embed/iXs3ANkVft0')"
+                                    data-trad="recursos.ampliar">
+                                    ⚡ Ampliar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal para videos -->
+            <div id="video-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <iframe id="modal-iframe" width="100%" height="500" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="custom-footer bg-dark text-light text-center py-4 sticky-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <p class="mb-1" data-trad="footer.contacto">PBX: (605) 123-4567 | Email:
+                        contacto@workwise.com</p>
+                </div>
+                <div class="footer-center">
+                    <p class="mb-1" data-trad="footer.derechos">© 2024 WorkWise. Todos los derechos reservados.
+                    </p>
+                </div>
+                <div class="footer-right">
+                    <a href="https://www.facebook.com/profile.php?id=61558650706843" target="_blank">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+
+                    <a href="https://twitter.com" target="_blank">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+
+                    <a href="https://instagram.com" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/recursos.js"></script>
+    <script src="/js/idioma.js"></script>
+
+</body>
+
+</html>

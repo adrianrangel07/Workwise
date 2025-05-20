@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoja de Vida</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css?h=97380e22c8933e9aa79cbc2390b9f15a">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="../Css/general/bootstrap.min.css">
+    <link rel="stylesheet" href="../Css/general/Grid-and-List-view-V10-style.css">
+    <link rel="stylesheet" href="../Css/general/Grid-and-List-view-V10.css">
+    <link rel="stylesheet" href="../Css/general/Nunito.css">
+    <link rel="stylesheet" href="../Css/general/styles.min.css">
+    <link rel="stylesheet" href="../Css/persona/Hdv.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <!-- Flecha de regreso dentro del modal -->
+        <div class="container-back">
+            <a th:href="@{/personas/pagina_principal}" class="back_a">
+                <i class="fas fa-arrow-left back"></i>
+            </a>
+        </div>   
+        <h2 class="text-center" data-trad="hdv.titulo">Formulario de Hoja de Vida</h2>
+            
+        <!-- Sección 1: Datos Personales -->
+        <div class="seccion" id="seccion1">
+            <h4 data-trad="hdv.datos_personales">Datos Personales</h4>
+            <div class="form-group">
+                <input type="text" id="nombre" name="nombre" required>
+                <label for="nombre" data-trad="hdv.nombre">Nombre</label>
+            </div>
+            <div class="form-group">
+                <input type="text" id="apellido" name="apellido" required>
+                <label for="apellido" data-trad="hdv.apellido">Apellido</label>
+            </div>
+            <div class="form-group">
+                <input type="email" id="email" name="email" required>
+                <label for="email" data-trad="hdv.email">Email</label>
+            </div>
+            <div class="form-group">
+                <input type="text" id="telefono" name="telefono" required>
+                <label for="telefono" data-trad="hdv.telefono">Teléfono</label>
+            </div>
+            <div class="form-group">
+                <input type="text" id="direccion" name="direccion" required>
+                <label for="direccion" data-trad="hdv.direccion">Dirección</label>
+            </div>
+            <div class="form-group">
+                <input type="text" id="ciudad" name="ciudad" required>
+                <label for="ciudad" data-trad="hdv.ciudad">Ciudad</label>
+            </div>
+            <div class="form-group">
+                <input type="text" id="pais" name="pais" required>
+                <label for="pais" data-trad="hdv.pais">País</label>
+            </div>
+            <div class="form-group">
+                <textarea id="descripcion" name="descripcion" rows="3" required></textarea>
+                <label for="descripcion" data-trad="hdv.descripcion">Descripción</label>
+            </div>
+            <button type="button" class="btn btn-primary siguiente" data-trad="hdv.btn_siguiente">Siguiente</button>
+        </div>
+
+        <!-- Sección 2: Experiencia Laboral y Educación -->
+        <div class="seccion" id="seccion2" style="display: none;">
+            <h4 data-trad="hdv.experiencia_laboral">Experiencia Laboral</h4>
+            <div id="experiencias">
+                <div class="experiencia mb-3 form-group">
+                    <input type="text" name="nombre_de_empresa[]" class="form-control" required>
+                    <label for="nombre_de_empresa[]" data-trad="hdv.nombre_empresa">Nombre de la Empresa</label>
+                </div>
+            
+                <div class="experiencia mb-3 form-group">
+                    <select name="cargo[]" class="form-control" required>
+                        <option value=""></option>
+                    </select>
+                    <label for="cargo[]" data-trad="hdv.cargo">Cargo</label>
+                </div>
+            
+                <div class="experiencia mb-3">
+                    <label for="fecha_inicio_laboral[]" data-trad="hdv.fecha_inicio">Fecha Inicio</label>
+                    <input type="date" name="fecha_inicio_laboral[]" class="form-control" required>
+                </div>
+            
+                <div class="experiencia mb-3">
+                    <label for="fecha_fin_laboral[]" data-trad="hdv.fecha_fin">Fecha Fin</label>
+                    <input type="date" name="fecha_fin_laboral[]" class="form-control" required>
+                </div>
+            </div>
+            <button type="button" id="btnAgregarExperiencia" class="btn-agregar mt-2" data-trad="hdv.btn_agregar_experiencia">Agregar Experiencia</button>
+            <h4 data-trad="hdv.educacion">Educación</h4>
+            <div class="mb-3 form-group">
+                <input type="text" class="form-control" id="institucion" name="institucion" required>
+                <label for="institucion" data-trad="hdv.institucion">Institución</label>
+            </div>
+            <div class="mb-3 form-group">
+                <input type="text" class="form-control" id="titulo" name="titulo" required>
+                <label for="titulo" data-trad="hdv.titulo_educacion">Título</label>
+            </div>
+            <button type="button" class="btn btn-secondary anterior" data-trad="hdv.btn_anterior">Anterior</button>
+            <button type="button" class="btn btn-primary siguiente" data-trad="hdv.btn_siguiente">Siguiente</button>
+        </div>
+
+        <!-- Sección 3: Habilidades, Idiomas y Certificaciones -->
+        <div class="seccion" id="seccion3" style="display: none;">
+            <h4 data-trad="hdv.habilidades">Habilidades</h4>
+            <div class="mb-3 form-group">
+                <input type="text" class="form-control" id="habilidad" name="habilidad" required>
+                <label for="habilidad" data-trad="hdv.habilidad">Habilidad</label>
+            </div>
+            <h4 data-trad="hdv.idiomas">Idiomas</h4>
+            <div id="idiomas-container">
+                <div class="idioma-entry mb-3">
+                    <label for="idioma" data-trad="hdv.idioma">Idioma</label>
+                    <select name="idioma[]" class="form-control" id="selectIdioma">
+                        <option value="" disabled selected data-trad="hdv.seleccione_idioma">Seleccione un idioma</option>
+                    </select>
+                    <label for="nivel" data-trad="hdv.nivel">Nivel</label>
+                    <select name="nivel[]" class="form-control" id="selectNivel">
+                        <option value="" disabled selected data-trad="hdv.seleccione_nivel">Seleccione un nivel</option>
+                    </select>
+                </div>
+            </div>
+            <button type="button" id="btnAgregarIdioma" class="btn-agregar mt-2" data-trad="hdv.btn_agregar_idioma">Agregar Idioma</button>
+            <h4 data-trad="hdv.certificaciones">Certificaciones</h4>
+            <div class="mb-3">
+                <label for="cargar_certificado" class="form-label" data-trad="hdv.subir_certificado">Subir Certificado</label>
+                <input type="file" class="form-control" id="cargar_certificado" name="cargar_certificado">
+            </div>
+            <button type="button" class="btn btn-secondary anterior" data-trad="hdv.btn_anterior">Anterior</button>
+            <button type="submit" class="btn btn-primary" data-trad="hdv.btn_guardar">Guardar</button>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="../Js/persona/Hdv.js"></script>
+<script src="/js/idioma.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
