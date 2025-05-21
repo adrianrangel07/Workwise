@@ -452,7 +452,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         if (edad == null || edad < 18) {
-            labeloption.textContent = "Seleccione Su Nivel De Estudio";
+            labeloption.textContent = "Coloque una edad válida";
             estudioSelect.value = 6;
             estudioSelect.disabled = true;
         }

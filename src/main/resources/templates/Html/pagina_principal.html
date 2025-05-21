@@ -8,7 +8,8 @@
     <link rel="icon" type="image/png" href="../Imagenes/wknlogo2.png">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
     <link rel="stylesheet" href="/Css/general/bootstrap.min.css">
-    <link rel="stylesheet" href="/Css/inicio.css">
+    <link rel="stylesheet" href="/Css/persona/pagina_principal_persona.css">
+    <link rel="stylesheet" href="/Css/general/oferta.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
 </head>
@@ -16,7 +17,7 @@
 <body id="page-top">
     <div id="wrapper">
         <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark"
-            style="background: #0a1128; width: 100px;">
+            style="background: #0a1128; width: 150px;" id="navbar-responsive">
             <div class="container-fluid d-flex flex-column p-0"><a
                     class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
                     th:href="@{/}"><img src="/Imagenes/wwk_white.png" width="61" height="58"
@@ -56,11 +57,11 @@
                         </button>
                     </div>
                     <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search"
-                        id="formBusqueda">
+                        id="formBusqueda" style="margin-right: 0 !important;">
                         <div class="input-group"
-                            style="text-align: center;margin: 500px;border-color: var(--bs-emphasis-color);">
+                            style="text-align: center;border-color: var(--bs-emphasis-color);">
                             <input id="termino" name="termino" class=" bg-light form-control border-4 small" type="text"
-                                placeholder="Puesto o palabra clave.." data-trad="busqueda.placeholder">
+                                placeholder="Puesto o palabra clave.." data-trad="navbar.search.placeholder">
                             <button class="btn btn-primary py-0" type="submit"
                                 style="background: #0a1128; border: none;">
                                 <i class="fas fa-search"></i>
@@ -68,37 +69,37 @@
                         </div>
                     </form>
                     <!-- boton idioma -->
-                    <div class="language-selector d-flex align-items-center position-relative">
-                        <span class="me-2 fw-bold " data-trad="idioma.etiqueta">Idioma:</span>
+                    <div class="contenedor-botones"> 
+                        <div class="language-selector d-flex align-items-center position-relative">
+                            <span class="me-2 fw-bold " data-trad="idioma.etiqueta">Idioma:</span>
 
-                        <!-- Botón que muestra icono y al hacer clic despliega selector -->
-                        <div id="language-display" class="d-flex align-items-center" style="cursor: pointer;">
-                            <i class="fas fa-language" id="language-toggle"></i>
-                        </div>
-
-                        <!-- Menú desplegable -->
-                        <div id="language-options" class="dropdown-menu show p-2"
-                            style="display: none; position: absolute; top: 100%; left: 0; z-index: 1000;">
-                            <div class="dropdown-item d-flex align-items-center" onclick="selectLanguage('es')">
-                                <img src="https://flagcdn.com/w20/es.png" alt="ES" class="me-2"> ES
+                            <!-- Botón que muestra icono y al hacer clic despliega selector -->
+                            <div id="language-display" class="d-flex align-items-center" style="cursor: pointer;">
+                                <i class="fas fa-language" id="language-toggle"></i>
                             </div>
-                            <div class="dropdown-item d-flex align-items-center" onclick="selectLanguage('en')">
-                                <img src="https://flagcdn.com/w20/us.png" alt="EN" class="me-2"> ENG
+
+                            <!-- Menú desplegable -->
+                            <div id="language-options" class="dropdown-menu show p-2"
+                                style="display: none; position: absolute; top: 100%; left: 0; z-index: 1000;">
+                                <div class="dropdown-item d-flex align-items-center" onclick="selectLanguage('es')">
+                                    <img src="https://flagcdn.com/w20/es.png" alt="ES" class="me-2"> ES
+                                </div>
+                                <div class="dropdown-item d-flex align-items-center" onclick="selectLanguage('en')">
+                                    <img src="https://flagcdn.com/w20/us.png" alt="EN" class="me-2"> ENG
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <!-- fin boton idioma -->
 
-
-                    <!-- fin boton idioma -->
-
-                    <!-- boton barra lateral filtro -->
-                    <div class="btn-menu" title="Mostrar filtros">
-                        <label for="btn-menu" id="navbar-toggler" aria-label="Filtros">
-                            <i class="fa fa-filter"></i>
-                            <span class="sr-only" data-trad="filtros.etiqueta">Filtros</span>
-                        </label>
-                    </div>
-                    <!-- fin boton barra lateral filtro -->
+                        <!-- boton barra lateral filtro -->
+                        <div class="btn-menu" title="Mostrar filtros">
+                            <label for="btn-menu" id="navbar-toggler" aria-label="Filtros">
+                                <i class="fa fa-filter"></i>
+                                <span class="sr-only" data-trad="filtros.etiqueta">Filtros</span>
+                            </label>
+                        </div>
+                        <!-- fin boton barra lateral filtro -->
+                    </div> 
                 </div>
             </nav>
             <!-- barra lateral filtro -->
@@ -268,6 +269,15 @@
                                 <p class="tipo_contrato"><strong>Type of contract:</strong> <span
                                         th:text="${Oferta.tipo_contrato}"></span>
                                 </p>
+                                <p class="sector">
+                                    <span th:text="${Oferta.sector_oferta}"></span>
+                                </p>
+                                <p class="experiencia">
+                                    <span th:text="${Oferta.experiencia}"></span>
+                                </p>
+                                <p class="nivel_educativo">
+                                    <span th:text="${Oferta.nivel_educativo}"></span>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -277,25 +287,50 @@
                 <div id="modal" class="modal">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3 id="modal-title"></h3>
-                            <span class="close-btn" id="close-btn">&times;</span>
+                            <div class="modal-header-info">
+                                <h3 id="modal-title"></h3>
+                                <div class="modal-info-item" id="modal-empresa" style="padding: 0%;"></div>
+                            </div>
+                            <span onclick="cerrarModal()" class="close-btn" id="close-btn">&times;</span>
                         </div>
                         <div class="modal-body">
-                            <p id="modal-description"></p>
+                            <div class="pago">
+                                <div class="modal-info-item" id="modal-salary" style="display: flex; margin-right: 5px;"> </div>
+                                <div id="modal-currency" style="margin-right: 2px; ;"></div>
+                                <div class="modal-info-item" id="modal-period"></div>
+                            </div>
+                            <div class="time-contract">
+                                <div class="modal-info-item" id="modal-typeContract"></div>
+                                <div class="modal-info-item" id="modal-duration" style="margin-left: 3px;"></div>
+                            </div>
 
-
-                            <div class="modal-info-item" id="modal-salary"></div>
-                            <div class="modal-info-item" id="modal-currency"></div>
-                            <div class="modal-info-item" id="modal-duration"></div>
-                            <div class="modal-info-item" id="modal-period"></div>
-                            <div class="modal-info-item" id="modal-modalidad"></div>
                             <div class="modal-info-item" id="modal-type"></div>
-                            <div class="modal-info-item" id="modal-typeContract"></div>
-                            <div class="modal-info-item" id="modal-empresa"></div>
 
+                            <div class="modal-info-item" id="modal-modalidad"></div>
+
+                            <div class="contenedorDescripcion">
+                                <h4>Descripción</h4>
+                                <p id="modal-description"></p>
+                            </div>
+
+                            <div class="Requerimientos">
+                                <h4 data-trad="offer.requirements">Requerimientos</h4>
+                                <ul>
+                                    <li>
+                                        <div class="modal-info-item" id="modal-experience"></div>
+                                    </li>
+                                    <li>
+                                        <div class="modal-info-item" id="modal-studyLevel"></div>
+                                    </li>
+                                    <li>
+                                        <div class="modal-info-item" id="modal-sector"></div>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="modal-footer">
-                            <button class="apply-btn-modal" id="postularseBtn">Apply</button>
+                            <button class="apply-btn-modal" id="postularseBtn"
+                                data-trad="modal.applyBtn">Postularse</button>
                         </div>
                     </div>
                 </div>

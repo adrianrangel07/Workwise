@@ -3,12 +3,15 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Predicción de Compatibilidad</title>
     <link rel="icon" type="image/png" href="/Imagenes/wknlogo2.png">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
     <link rel="stylesheet" href="/Css/general/bootstrap.min.css">
     <link rel="stylesheet" href="/Css/general/styles.min.css">
     <link rel="stylesheet" href="/Css/weka.css">
+    <link rel="stylesheet" href="/Css/persona/pagina_principal_persona.css">
+    <link rel="stylesheet" href="/Css/general/oferta.css">
     <link rel="stylesheet" href="/Css/general/Grid-and-List-view-V10.css">
     <link rel="stylesheet" href="/Css/persona/pagina_principal_persona.css">
     <link rel="stylesheet" href="https://cdsn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
@@ -19,7 +22,7 @@
 <body>
     <div id="wrapper">
         <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark"
-            style="background: #0a1128; width: 100px;">
+            style="background: #0a1128; width: 150px;" id="navbar-responsive">
             <div class="container-fluid d-flex flex-column p-0"><a
                     class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
                     th:href="@{/personas/pagina_principal}"><img src="/Imagenes/wwk_white.png" width="61" height="58"
@@ -51,15 +54,13 @@
         </nav>
         <div class="d-flex flex-column" id="content-wrapper"> 
             <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light" style="background: var(--bs-body-bg);">
-                <div class="container-fluid">
+                <div class="container-fluid responsive" style="height: 100%; flex-wrap: nowrap;">
                     <div class="close-navbar">
                         <button class="btn btn-link d-md-none rounded-circle me-3" id="ocultarNavBar" type="button">
                             <i class="fas fa-bars"></i>
                         </button>
                     </div>
-    
                     <div class="nav-item dropdown no-arrow" id="usuario-container">
-    
                         <img id="user-avatar" src="/imagen/perfil" alt="Persona Logo"
                             onerror="this.onerror=null;this.src='/Imagenes/imagenperfil.png';">
     
@@ -282,31 +283,54 @@
                 </div>
 
                 <!-- modal que se abrira al presionar una tarjeta -->
-                <div id="modal" class="modal">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 id="modal-title"></h3>
-                            <span class="close-btn" id="close-btn">&times;</span>
-                        </div>
-                        <div class="modal-body">
-                            <p id="modal-description"></p>
+                <div class="contcontent-area flex-grow-1 p-3">
+                    <div id="modal" class="modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="modal-header-info">
+                                    <h3 id="modal-title"></h3>
+                                    <div class="modal-info-item" id="modal-empresa" style="padding: 0%;"></div>
+                                </div>
+                                <span onclick="cerrarModal()" class="close-btn" id="close-btn">&times;</span>
+                            </div>
+                            <div class="modal-body">
+                                <div class="pago">
+                                    <div class="modal-info-item" id="modal-salary" style="display: flex; margin-right: 5px;"> </div>
+                                    <div id="modal-currency" style="margin-right: 2px; ;"></div>
+                                    <div class="modal-info-item" id="modal-period"></div>
+                                </div>
+                                <div class="time-contract">
+                                    <div class="modal-info-item" id="modal-typeContract"></div>
+                                    <div class="modal-info-item" id="modal-duration" style="margin-left: 3px;"></div>
+                                </div>
 
+                                <div class="modal-info-item" id="modal-type"></div>
 
-                            <div class="modal-info-item" id="modal-salary"></div>
-                            <div class="modal-info-item" id="modal-currency"></div>
-                            <div class="modal-info-item" id="modal-duration"></div>
-                            <div class="modal-info-item" id="modal-period"></div>
-                            <div class="modal-info-item" id="modal-modalidad"></div>
-                            <div class="modal-info-item" id="modal-type"></div>
-                            <div class="modal-info-item" id="modal-typeContract"></div>
-                            <div class="modal-info-item" id="modal-experience"></div>
-                            <div class="modal-info-item" id="modal-sector"></div>
-                            <div class="modal-info-item" id="modal-education"></div>
-                            <div class="modal-info-item" id="modal-empresa"></div>
+                                <div class="modal-info-item" id="modal-modalidad"></div>
 
-                        </div>
-                        <div class="modal-footer">
-                            <button class="apply-btn-modal" id="postularse">Apply</button>
+                                <div class="contenedorDescripcion">
+                                    <h4>Descripción</h4>
+                                    <p id="modal-description"></p>
+                                </div>
+
+                                <div class="Requerimientos">
+                                    <h4 data-trad="offer.requirements">Requerimientos</h4>
+                                    <ul>
+                                        <li>
+                                            <div class="modal-info-item" id="modal-experience"></div>
+                                        </li>
+                                        <li>
+                                            <div class="modal-info-item" id="modal-education"></div>
+                                        </li>
+                                        <li>
+                                            <div class="modal-info-item" id="modal-sector"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="apply-btn-modal" id="postularseBtn" data-trad="modal.applyBtn">Postularse</button>
+                            </div>
                         </div>
                     </div>
                 </div>

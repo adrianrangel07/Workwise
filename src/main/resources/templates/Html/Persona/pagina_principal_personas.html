@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Workwise Navigator</title>
     <link rel="icon" type="image/png" href="/Imagenes/wknlogo2.png">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
@@ -19,7 +19,7 @@
 <body id="page-top">
     <div id="wrapper">
         <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark"
-            style="background: #0a1128; width: 100px;">
+            style="background: #0a1128; width: 150px;" id="navbar-responsive">
             <div class="container-fluid d-flex flex-column p-0"><a
                     class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
                     th:href="@{/personas/pagina_principal}"><img src="/Imagenes/wwk_white.png" width="61" height="58"
@@ -73,16 +73,16 @@
         <div class="d-flex flex-column" id="content-wrapper">
             <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light"
                 style="background: var(--bs-body-bg);">
-                <div class="container-fluid">
+                <div class="container-fluid responsive" style="height: 100%; flex-wrap: nowrap;">
                     <div class="close-navbar">
-                        <button class="btn btn-link d-md-none rounded-circle me-3" id="ocultarNavBar" type="button">
+                        <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button">
                             <i class="fas fa-bars"></i>
                         </button>
                     </div>
                     <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search"
-                        id="formBusqueda">
+                        id="formBusqueda" style="margin-right: 0 !important;">
                         <div class="input-group"
-                            style="text-align: center;margin: 500px;border-color: var(--bs-emphasis-color);">
+                            style="text-align: center;border-color: var(--bs-emphasis-color);">
                             <input id="termino" name="termino" class=" bg-light form-control border-4 small" type="text"
                                 placeholder="Puesto o palabra clave.." data-trad="navbar.search.placeholder">
                             <button class="btn btn-primary py-0" type="submit"
@@ -91,69 +91,70 @@
                             </button>
                         </div>
                     </form>
-                    <!-- boton idioma -->
-                    <div class="language-selector d-flex align-items-center position-relative">
-                        <span class="me-2 fw-bold" data-trad="idioma.etiqueta">Idioma:</span>
+                    <div class="contenedor-botones"> 
+                        <!-- boton idioma -->
+                        <div class="language-selector d-flex align-items-center position-relative">
+                            <span class="me-2 fw-bold" data-trad="idioma.etiqueta">Idioma:</span>
 
-                        <!-- Botón que muestra icono y al hacer clic despliega selector -->
-                        <div id="language-display" class="d-flex align-items-center" style="cursor: pointer;">
-                            <i class="fas fa-language" id="language-toggle"></i>
-                        </div>
-
-                        <!-- Menú desplegable -->
-                        <div id="language-options" class="dropdown-menu show p-2"
-                            style="display: none; position: absolute; top: 100%; left: 0; z-index: 1000;">
-                            <div class="dropdown-item d-flex align-items-center" onclick="selectLanguage('es')">
-                                <img src="https://flagcdn.com/w20/es.png" alt="ES" class="me-2"> ES
+                            <!-- Botón que muestra icono y al hacer clic despliega selector -->
+                            <div id="language-display" class="d-flex align-items-center" style="cursor: pointer;">
+                                <i class="fas fa-language" id="language-toggle"></i>
                             </div>
-                            <div class="dropdown-item d-flex align-items-center" onclick="selectLanguage('en')">
-                                <img src="https://flagcdn.com/w20/us.png" alt="EN" class="me-2"> ENG
+
+                            <!-- Menú desplegable -->
+                            <div id="language-options" class="dropdown-menu show p-2"
+                                style="display: none; position: absolute; top: 100%; left: 0; z-index: 1000;">
+                                <div class="dropdown-item d-flex align-items-center" onclick="selectLanguage('es')">
+                                    <img src="https://flagcdn.com/w20/es.png" alt="ES" class="me-2"> ES
+                                </div>
+                                <div class="dropdown-item d-flex align-items-center" onclick="selectLanguage('en')">
+                                    <img src="https://flagcdn.com/w20/us.png" alt="EN" class="me-2"> ENG
+                                </div>
+                            </div>
+                        </div>
+                        <!-- fin boton idioma -->
+
+                        <!-- boton barra lateral filtro -->
+                        <div class="btn-menu" title="Mostrar filtros">
+                            <label for="btn-menu" id="navbar-toggler" aria-label="Filtros">
+                                <i class="fa fa-filter"></i>
+                                <span class="sr-only">Filtros</span>
+                            </label>
+                        </div>
+                        <!-- fin boton barra lateral filtro -->
+
+                        <div class="nav-item dropdown no-arrow" id="usuario-container">
+
+                            <img id="user-avatar" src="/imagen/perfil" alt="Persona Logo"
+                                onerror="this.onerror=null;this.src='/Imagenes/imagenperfil.png';">
+
+                            <input type="hidden" id="subirFoto" accept="image/*" style="display: block; margin-top: 10px;">
+
+                            <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
+                                <span id="usuario" th:text="${persona.nombre}">Account</span>
+                            </a>
+                            <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                                <a class="dropdown-item" th:href="@{/perfil/persona}" style="color: #0a1128;">
+                                    <i class="fas fa-user fa-sm fa-fw me-2 "></i>&nbsp;<span
+                                        data-trad="navbar.profile">Perfil</span>
+                                </a>
+                                <a class="dropdown-item" th:href="@{/persona/Postulaciones}" style="color: #0a1128;">
+                                    <i class="fas fa-file-alt fa-sm fa-fw me-2"></i>&nbsp;<span
+                                        data-trad="navbar.applications">Postulaciones</span>
+                                </a>
+                                <a class="dropdown-item" href="#" style="color: #0a1128;">
+                                    <i class="fas fa-briefcase fa-sm fa-fw me-2 "></i>&nbsp;<span data-trad="navbar.cv">Hoja
+                                        de vida</span>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/logout" id="logout" onclick="cerrarSesion(event)"
+                                    style="color: #0a1128;">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw me-2"></i><span
+                                        data-trad="navbar.logout">Cerrar sesión</span>
+                                </a>
                             </div>
                         </div>
                     </div>
-                    <!-- fin boton idioma -->
-
-                    <!-- boton barra lateral filtro -->
-                    <div class="btn-menu" title="Mostrar filtros">
-                        <label for="btn-menu" id="navbar-toggler" aria-label="Filtros">
-                            <i class="fa fa-filter"></i>
-                            <span class="sr-only">Filtros</span>
-                        </label>
-                    </div>
-                    <!-- fin boton barra lateral filtro -->
-
-                    <div class="nav-item dropdown no-arrow" id="usuario-container">
-
-                        <img id="user-avatar" src="/imagen/perfil" alt="Persona Logo"
-                            onerror="this.onerror=null;this.src='/Imagenes/imagenperfil.png';">
-
-                        <input type="hidden" id="subirFoto" accept="image/*" style="display: block; margin-top: 10px;">
-
-                        <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
-                            <span id="usuario" th:text="${persona.nombre}">Account</span>
-                        </a>
-                        <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
-                            <a class="dropdown-item" th:href="@{/perfil/persona}" style="color: #0a1128;">
-                                <i class="fas fa-user fa-sm fa-fw me-2 "></i>&nbsp;<span
-                                    data-trad="navbar.profile">Perfil</span>
-                            </a>
-                            <a class="dropdown-item" th:href="@{/persona/Postulaciones}" style="color: #0a1128;">
-                                <i class="fas fa-file-alt fa-sm fa-fw me-2"></i>&nbsp;<span
-                                    data-trad="navbar.applications">Postulaciones</span>
-                            </a>
-                            <a class="dropdown-item" href="#" style="color: #0a1128;">
-                                <i class="fas fa-briefcase fa-sm fa-fw me-2 "></i>&nbsp;<span data-trad="navbar.cv">Hoja
-                                    de vida</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/logout" id="logout" onclick="cerrarSesion(event)"
-                                style="color: #0a1128;">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw me-2"></i><span
-                                    data-trad="navbar.logout">Cerrar sesión</span>
-                            </a>
-                        </div>
-                    </div>
-
                 </div>
             </nav>
             <!-- barra lateral filtro -->
@@ -409,10 +410,9 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <a href="#" id="btn-prediccion" data-trad="modal.predictionLink">¿Quieres conocer la
+                            <a href="#" id="btn-prediccion" class="btn-prediccion" data-trad="modal.predictionLink">¿Quieres conocer la
                                 probabilidad de ser aceptado?</a>
-                            <button class="apply-btn-modal" id="postularseBtn"
-                                data-trad="modal.applyBtn">Postularse</button>
+                            <button class="apply-btn-modal" id="postularseBtn" data-trad="modal.applyBtn">Postularse</button>
                         </div>
                     </div>
                 </div>
@@ -471,6 +471,9 @@
     <script src="/js/General/script.min.js"></script>
     <script src="/js/General/theme.js"></script>
     <script src="/js/persona/pagina_principal_persona.js"></script>
+    <script src="/js/persona/filtrar.js"></script>
+    <script src="/js/persona/postularse.js"></script>
+    <script src="/js/persona/inicioexitoso.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/js/notificaciones.js"></script>
     <script src="/js/idioma.js"></script>
