@@ -1,10 +1,6 @@
 package com.proyectodeaula.proyecto_de_aula.dto;
 
-import com.proyectodeaula.proyecto_de_aula.model.Empresas;
 import com.proyectodeaula.proyecto_de_aula.model.Ofertas;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 public class OfertaRecomendadaDTO {
     private Long idOferta;

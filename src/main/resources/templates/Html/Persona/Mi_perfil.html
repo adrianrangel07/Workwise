@@ -227,11 +227,25 @@
                                                                     name="email" th:value="${persona.email}" disabled>
                                                                 <button class="btn btn-verify" type="button"
                                                                     id="verifyEmailBtn"
+                                                                    th:if="${!persona.emailVerificado}"
                                                                     onclick="iniciarVerificacionEmail(event)">
-                                                                    <i class="fas fa-envelope me-1"></i> Verificar
+                                                                    <i class="fas fa-envelope me-1"></i> <span
+                                                                        data-trad="perfil.verificarCorreo">Verificar</span>
+                                                                </button>
+                                                                <button class="btn btn-success" type="button"
+                                                                    id="verifiedEmailBtn"
+                                                                    th:if="${persona.emailVerificado}" disabled>
+                                                                    <i class="fas fa-check-circle me-1"></i> <span
+                                                                        data-trad="perfil.correoVerificado">Verificado</span>
                                                                 </button>
                                                             </div>
-                                                            <small id="emailStatus" class="form-text"></small>
+                                                            <small id="emailStatus" class="form-text"
+                                                                th:if="${persona.emailVerificado}"
+                                                                style="color: green;">
+                                                                <i class="fas fa-check"></i> <span
+                                                                    data-trad="perfil.correoVerificado">Correo
+                                                                    verificado</span>
+                                                            </small>
                                                         </div>
                                                     </div>
                                                     <div class="col">

@@ -55,8 +55,11 @@ public class Personas {
 	@Column(name = "genero", columnDefinition = "VARCHAR(20)", nullable = false)
 	private String genero;
 
-	@Column(name = "activo")
-    private boolean activo = true; // Valor por defecto
+	@Column(name = "activo", columnDefinition = "TINYINT(1) DEFAULT 1")
+	private boolean activo = true;
+
+	@Column(name = "email_verificado", columnDefinition = "TINYINT(1) DEFAULT 0")
+	private boolean emailVerificado;
 
 	@Lob
 	@Column(name = "foto", columnDefinition = "LONGBLOB")
@@ -177,12 +180,19 @@ public class Personas {
 		this.hvd = hvd;
 	}
 
-    public boolean isActivo() {
-        return activo;
-    }
+	public boolean isActivo() {
+		return activo;
+	}
 
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
+
+	public boolean isEmailVerificado() {
+		return emailVerificado;
+	}
+
+	public void setEmailVerificado(boolean emailVerificado) {
+		this.emailVerificado = emailVerificado;
+	}
 }
-
