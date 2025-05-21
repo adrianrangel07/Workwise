@@ -196,7 +196,7 @@ form{
   position: absolute;
   padding: 3px !important;
   top: 50%;
-  left: 15px;
+  left: 16px;
   transform: translateY(-50%);
   color: rgba(0, 0, 0, 0.9);
   font-size: 15px;
@@ -383,3 +383,120 @@ button:hover {
   color: white;
 }
 /* fin footer */
+
+/* ========== MEDIA QUERIES PARA RESPONSIVE DESIGN ========== */
+@media (max-width: 1200px) {
+  .tarjeta {
+    width: 60%;
+  }
+
+  #resultado {
+    width: 40%;
+  }
+}
+
+@media (max-width: 992px) {
+  /* #wrapper {
+    flex-direction: column;
+  } */
+
+  .sidebar {
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+  }
+
+  .sidebar a {
+    flex: 1;
+    text-align: center;
+  }
+
+  .data {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tarjeta {
+    width: 80%;
+  }
+
+  #resultado {
+    width: 60%;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .footer-left,
+  .footer-center,
+  .footer-right {
+    text-align: center;
+  }
+
+  #formBusqueda .form-control {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .recommendations-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tarjeta {
+    width: 90%;
+  }
+
+  #resultado {
+    width: 80%;
+  }
+
+  #usuario-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .mb-3 input:focus ~ .label-active,
+  .mb-3 input:not(:placeholder-shown) ~ .label-active {
+    font-size: 12px;
+    left: 10px;
+  }
+
+  .mb-3:has(select:focus) label,
+  .mb-3:has(select option:checked:not([value="6"])) label {
+    font-size: 12px;
+    left: 10px;
+  }
+
+  .label-active {
+      font-size: 12px;
+  }
+
+  .label{
+      font-size: 12px;
+  }
+}
+
+@media (max-width: 576px) {
+  .sidebar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sidebar a {
+    font-size: 0.8rem !important;
+  }
+
+  #logo {
+    width: 120px;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 8px;
+  }
+}

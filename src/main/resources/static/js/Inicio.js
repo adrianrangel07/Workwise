@@ -17,34 +17,42 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalModalidad = document.getElementById('modal-modalidad');
     const modalTypeContract = document.getElementById('modal-typeContract');
     const modalEmpresa = document.getElementById('modal-empresa');
+    const modalSector = document.getElementById("modal-sector")
+    const modalExperiencia = document.getElementById("modal-experience")
+    const modalEstudio = document.getElementById("modal-studyLevel")
 
     // Función para abrir el modal
     const openModal = (card) => {
 
         // Obtener los datos de la tarjeta
-        const title = card.querySelector('h3').innerText;
-        const description = card.querySelector('p').innerText;
-        const salary = card.querySelector('.salario span').innerText;
-        const currency = card.querySelector('.moneda span').innerText;
-        const duration = card.querySelector('.duracion span').innerText;
-        const period = card.querySelector('.periodo span').innerText;
-        const type = card.querySelector('.tipo_empleo span').innerText;
-        const modalidad = card.querySelector('.modalidad span').innerText;
-        const typeContract = card.querySelector('.tipo_contrato span').innerText;
-        const empresa = card.querySelector('.empresa span').innerText;
-
+        const title = card.querySelector("h3").innerText;
+        const description = card.querySelector("p").innerText;
+        const salary = card.querySelector(".salario span").innerText;
+        const currency = card.querySelector(".moneda span").innerText;
+        const duration = card.querySelector(".duracion span").innerText;
+        const period = card.querySelector(".periodo span").innerText;
+        const type = card.querySelector(".tipo_empleo span").innerText;
+        const modalidad = card.querySelector(".modalidad span").innerText;
+        const typeContract = card.querySelector(".tipo_contrato span").innerText;
+        const empresa = card.querySelector(".empresa span").innerText;
+        const sector = card.querySelector(".sector span").innerText
+        const experience = card.querySelector(".experiencia span").innerText
+        const studyLevel = card.querySelector(".nivel_educativo span").innerText
 
         // Llenar el modal con los datos de la tarjeta
         modalTitle.innerText = title;
         modalDescription.innerText = description;
         modalSalary.innerHTML = `<strong>Salario: </strong> ${salary}`;
-        modalCurrency.innerHTML = `<strong>Moneda: </strong> ${currency}`;
-        modalDuration.innerHTML = `<strong>Duración: </strong> ${duration}`;
-        modalPeriod.innerHTML = `<strong>Periodo: </strong> ${period}`;
+        modalCurrency.innerHTML = `(${currency})`;
+        modalDuration.innerHTML = `(${duration})`;
+        modalPeriod.innerHTML = `(${period})`;
         modalType.innerHTML = `<strong>Tipo de empleo: </strong> ${type}`;
         modalModalidad.innerHTML = `<strong>Modalidad: </strong> ${modalidad}`;
         modalTypeContract.innerHTML = `<strong>Tipo de contrato: </strong> ${typeContract}`;
         modalEmpresa.innerHTML = `<strong>Empresa: </strong> ${empresa}`;
+        modalSector.innerHTML = `<strong>Sector:</strong>${sector}` || "No especificado";
+        modalExperiencia.innerHTML = `<strong>Experiencia:</strong>${experience}` || "No especificado";
+        modalEstudio.innerHTML = `<strong>Nivel de estudio:</strong>${studyLevel}` || "No especificado";
 
         // Mostrar el modal
         modal.style.display = 'flex';
@@ -68,6 +76,25 @@ document.addEventListener('DOMContentLoaded', function () {
             modal.style.display = 'none';
         }
     });
+    function applyResponsiveClass() {
+        const element = document.getElementById('navbar-responsive');
+
+        if (!element) {
+            console.log("Elemento no encontrado");
+            return;
+        }
+
+        if (window.matchMedia('(max-width: 768px)').matches) {
+            element.classList.add('toggled');
+            console.log("Clase 'toggled' agregada");
+        } else {
+            element.classList.remove('toggled');
+            console.log("Clase 'toggled' removida");
+        }
+    }
+
+    applyResponsiveClass();
+    window.addEventListener('resize', applyResponsiveClass);
 });
 
 //codigo para filtrador de busqueda por termino 
