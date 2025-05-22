@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     return "Indefinido";
                 case "Fijo":
                     return "Fijo";
-                case "Obra_labor":
+                case "Obra_Labor":
                     return "Obra labor";
                 case "Practicas":
                     return "Prácticas";

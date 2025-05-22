@@ -22,54 +22,44 @@ body {
     width: 80px;
 }
 
-/* Sidebar */
+
 .sidebar {
-    background: #343A40 !important;
-    color: white;
-    padding: 20px;
-    width: 250px;
-    height: 100vh;
-    position: fixed !important;
-    left: 0;
-    top: 0;
-    display: flex;
-    flex-direction: column;
+  background: #343a40;
+  color: white;
+  padding: 20px;
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-
 .sidebar a {
-    color: white;
-    text-decoration: none;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 5px;
-    transition: background 0.3s;
+  color: white;
+  text-decoration: none;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background 0.3s;
 }
 
 .sidebar .nav-link {
-    color: white;
+  color: white;
 }
 
 .sidebar a:hover {
-    background: #495057;
+  background: #495057;
 }
 
 .sidebar .nav-link.active {
-    background-color: #ffffff1a;
-    border-left: 4px solid #59625e;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-left: 4px solid #59625e;
 }
 
 /* Tarjeta contenedora */
 
-.main{
-    width: 84%;
-    height: 100vh;
-    overflow-y: hidden;
-    align-content: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-left: auto;
-}
 
 .form-container {
     width: 100%;
@@ -301,6 +291,13 @@ body {
 .select2{
     width: 100% !important;
 }
+
+select:disabled {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
 .label{
     position: absolute;
     padding: 3px !important;
@@ -426,3 +423,49 @@ body {
     background-color: #9fa4a9; ;
     border-radius: 20px;
 }
+
+/* ========== MEDIA QUERIES ========== */
+
+@media (max-width: 767.98px) {
+    .step-dot{
+        margin: 5px 12px; ;
+    }
+
+    .step-text{
+        margin: 0;
+    }
+
+    .step-indicator {
+        width: 100%;
+    }
+    
+    .step-line {
+        width: 70%;
+        left: none;
+    }
+
+    .content{
+        width: 90%;
+    }
+
+    .btn-containerSelectores button{
+        height: auto;
+        padding: 5px 10px;
+    }
+
+    .btn-containerVista{
+        width: 80px;
+    }
+
+    .editor-area{
+        min-width: 100%;
+    }
+
+    .custom-editor{
+        width: 100%;
+    }
+}
+
+
+
+

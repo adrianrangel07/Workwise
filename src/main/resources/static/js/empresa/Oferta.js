@@ -180,7 +180,7 @@ function updateStepIndicator() {
 }
 
 function abrirModal() {
-    document.getElementById('modal').style.display = 'block';
+    document.getElementById('modal').style.display = 'flex';
 }
 
 function cerrarModal() {
@@ -299,3 +299,62 @@ function llenarVistaPrevia() {
     document.getElementById("modal-description").innerHTML = descripcion || "<p>Descripción del puesto</p>";
     abrirModal();
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const contractTypeSelect = document.getElementById('contractType');
+    const jobDurationSelect = document.getElementById('jobDuration');
+
+    // Guardamos todas las opciones originales de duración
+    const originalDurationOptions = Array.from(jobDurationSelect.options);
+    const indefiniteOption = originalDurationOptions.find(opt => opt.value === 'Indefinido');
+
+    function updateDurationOptions() {
+        const selectedContractType = contractTypeSelect.value;
+
+        // Limpiamos el select de duración
+        jobDurationSelect.innerHTML = '';
+
+        if (selectedContractType === 'Indefinido') {
+            // Solo permitir "Indefinido" en duración
+            jobDurationSelect.add(indefiniteOption);
+            jobDurationSelect.value = 'Indefinido';
+        } else {
+            // Mostrar todas las opciones EXCEPTO "Indefinido"
+            originalDurationOptions.forEach(option => {
+                if (option.value !== 'Indefinido') {
+                    jobDurationSelect.add(option);
+                }
+            });
+        }
+    }
+
+    // Aplicar las reglas cuando cambie el tipo de contrato
+    contractTypeSelect.addEventListener('change', updateDurationOptions);
+
+    // Validación adicional al enviar el formulario
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', function (e) {
+            const errorMessages = [];
+
+            // Validación 1: Contrato Indefinido debe tener duración Indefinido
+            if (contractTypeSelect.value === 'Indefinido' && jobDurationSelect.value !== 'Indefinido') {
+                errorMessages.push('Para contrato Indefinido, la duración debe ser Indefinido');
+            }
+
+            // Validación 2: Otros contratos no pueden tener duración Indefinido
+            if (contractTypeSelect.value !== 'Indefinido' && jobDurationSelect.value === 'Indefinido') {
+                errorMessages.push('No puede seleccionar duración Indefinido para este tipo de contrato');
+            }
+
+            if (errorMessages.length > 0) {
+                e.preventDefault();
+                alert(errorMessages.join('\n'));
+                jobDurationSelect.focus();
+            }
+        });
+    }
+
+    // Aplicar las reglas al cargar la página (por si hay valores pre-seleccionados)
+    updateDurationOptions();
+});

@@ -9,14 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const datos = Object.fromEntries(formData.entries());
 
 
-        console.log(datos.tipo_empleo_deseado);
-        console.log(datos.modalidad_oferta);
-        console.log(datos.tipo_contrato_oferta);
-        console.log(datos.nivel_estudio_requerido);
-        console.log(datos.sector_oferta);
-        console.log(datos.experiencia_requerida);
-
-
         // Calcular coincidencias
         const coincidencias = {
             coincide_tipo_empleo: datos.tipo_empleo_deseado === datos.tipo_empleo_deseado ? "Si" : "No",
@@ -213,6 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const modalTitle = document.getElementById('modal-title');
                     const modalDescription = document.getElementById('modal-description');
 
+                    modal.setAttribute('data-oferta-id', oferta.idOferta);
                     // Llenar los campos del modal
                     modalTitle.textContent = oferta.titulo || 'Sin título';
                     modalDescription.textContent = oferta.descripcion || '';
@@ -313,18 +306,16 @@ document.addEventListener("DOMContentLoaded", () => {
                             modal.style.display = 'none';
                         }
                     }
-                    const postularseBtn = document.getElementById('postularse');
+                    const postularseBtn = document.getElementById('postularseBtn');
+                    const ofertaId = modal.dataset.ofertaId;
+                    const usuarioId = document.getElementById('usuarioId').value;
 
                     postularseBtn.addEventListener("click", function () {
-                        const ofertaId = oferta.idOferta
-                        const usuarioId = document.getElementById('usuarioId')?.value;
-
                         if (!ofertaId || !usuarioId) {
                             Swal.fire('Error', 'Faltan datos necesarios', 'error');
                             console.log('Faltan datos necesarios para postularse:', { ofertaId, usuarioId });
                             return;
                         }
-
                         Swal.fire({
                             title: '¿Estás seguro?',
                             text: "¿Quieres postularte a esta oferta?",
@@ -359,6 +350,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                         });
                                     } else {
                                         Swal.fire('Info', data.message || 'Ya estás postulado', 'info');
+                                        console.log('Faltan datos necesarios para postularse:', { ofertaId, usuarioId });
                                     }
                                 })
                                     .catch(error => {
