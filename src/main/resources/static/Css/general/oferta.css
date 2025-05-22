@@ -77,6 +77,14 @@
     max-height: 55vh; 
 }
 
+.valores div{
+  margin: 2px;
+}
+
+.modal-info-item strong{
+  margin-right: 4px;
+}
+
 .modal-body p {
     margin-bottom: 15px;
 }

@@ -112,7 +112,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 resultado.innerHTML = `
                 <div class="resultado">
                     <h3>${data.compatible === "Si" ? "✅ Compatible" : "❌ No Compatible"}</h3>
-                    <p style="margin: 0;"><strong>rango de error:</strong> ${result}%</p>
                 </div>
             `;
 
@@ -233,9 +232,10 @@ document.addEventListener("DOMContentLoaded", () => {
                             case 5:
                                 return "Más de 10 años";
                             default:
-                                return "No especificada";
+                                return "No especificado";
                         }
                     }
+
                     function convertirEducacion(nivelEducativo) {
                         switch (nivelEducativo) {
                             case "Sin_estudios":
@@ -257,21 +257,50 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     }
 
+                    function convertirTipoEmpleo(tipoEmpleo) {
+                        switch (tipoEmpleo) {
+                            case "Tiempo_Completo":
+                                return "Tiempo completo";
+                            case "Medio_Tiempo":
+                                return "Medio tiempo";
+                            case "Por_Horas":
+                                return "Por horas";
+                            case "Freelance":
+                                return "Freelance";
+                            default:
+                                return "No especificado";
+                        }
+                    }
+
+                    function convertirTipoContrato(tipoContrato) {
+                        switch (tipoContrato) {
+                            case "Indefinido":
+                                return "Indefinido";
+                            case "Fijo":
+                                return "Fijo";
+                            case "Obra_labor":
+                                return "Obra labor";
+                            case "Practicas":
+                                return "Prácticas";
+                            default:
+                                return "No espeficado";
+                        }
+                    }
                     // Llenar los demás campos (ajusta según tu DTO)
                     document.getElementById('modal-salary').textContent = `Salario: ${oferta.salario || 'No especificado'}`;
-                    document.getElementById('modal-currency').textContent = `Moneda: ${oferta.moneda || 'No especificada'}`;
+                    document.getElementById('modal-currency').textContent = `(${oferta.moneda || 'No especificada'})`;
                     document.getElementById('modal-duration').textContent = `Duración: ${oferta.duracion || 'No especificada'}`;
-                    document.getElementById('modal-period').textContent = `Periodo: ${oferta.periodo || 'No especificado'}`;
+                    document.getElementById('modal-period').textContent = `(${oferta.periodo || 'No especificado'})`;
                     document.getElementById('modal-modalidad').textContent = `Modalidad: ${oferta.modalidad || 'No especificada'}`;
-                    document.getElementById('modal-type').textContent = `Tipo: ${oferta.tipoEmpleo || 'No especificado'}`;
-                    document.getElementById('modal-typeContract').textContent = `Contrato: ${oferta.tipoContrato || 'No especificado'}`;
+                    document.getElementById('modal-type').textContent = `Tipo: ${convertirTipoEmpleo(oferta.tipoEmpleo) || 'No especificado'}`;
+                    document.getElementById('modal-typeContract').textContent = `Contrato: ${convertirTipoContrato(oferta.tipoContrato) || 'No especificado'}`;
                     document.getElementById('modal-sector').textContent = `Sector: ${oferta.sector || 'No especificado'}`;
                     document.getElementById('modal-experience').textContent = `Experiencia: ${convertirExperiencia(oferta.experiencia) || 'No especificada'}`;
                     document.getElementById('modal-education').textContent = `Educación: ${convertirEducacion(oferta.nivelEstudio) || 'No especificada'}`;
                     document.getElementById('modal-empresa').textContent = `Empresa: ${oferta.nombreEmpresa || 'No especificada'}`;
 
                     // Mostrar el modal
-                    modal.style.display = 'block';
+                    modal.style.display = 'flex';
 
                     // Configurar botón de cierre
                     document.getElementById('close-btn').onclick = function () {

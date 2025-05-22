@@ -24,6 +24,76 @@ document.addEventListener('DOMContentLoaded', function () {
     // Función para abrir el modal
     const openModal = (card) => {
 
+        function convertirExperiencia(experiencia) {
+            switch (experiencia) {
+                case "0":
+                    return "Sin experiencia";
+                case "1":
+                    return "Menos de 1 año";
+                case "2":
+                    return "Entre 1 y 3 años";
+                case "3":
+                    return "Entre 3 y 5 años";
+                case "4":
+                    return "Entre 5 y 10 años";
+                case "5":
+                    return "Más de 10 años";
+                default:
+                    return "No especificado";
+            }
+        }
+
+        function convertirEducacion(nivelEducativo) {
+            switch (nivelEducativo) {
+                case "Sin_estudios":
+                    return "Sin estudios";
+                case "Bachiller":
+                    return "Bachiller";
+                case "Tecnico_Tecnologo":
+                    return "Técnico/Tecnólogo";
+                case "Tecnologo_Universitario":
+                    return "Tecnólogo o Universitario";
+                case "Universitario":
+                    return "Universitario";
+                case "Master":
+                    return "Máster";
+                case "Doctorado":
+                    return "Doctorado";
+                default:
+                    return "No especificada";
+            }
+        }
+
+        function convertirTipoEmpleo(tipoEmpleo) {
+            switch (tipoEmpleo) {
+                case "Tiempo_Completo":
+                    return "Tiempo completo";
+                case "Medio_Tiempo":
+                    return "Medio tiempo";
+                case "Por_Horas":
+                    return "Por horas";
+                case "Freelance":
+                    return "Freelance";
+                default:
+                    return "No especificado";
+            }
+        }
+
+        function convertirTipoContrato(tipoContrato) {
+            switch (tipoContrato) {
+                case "Indefinido":
+                    return "Indefinido";
+                case "Fijo":
+                    return "Fijo";
+                case "Obra_labor":
+                    return "Obra labor";
+                case "Practicas":
+                    return "Prácticas";
+                default:
+                    return "No espeficado";
+            }
+        }
+
         // Obtener los datos de la tarjeta
         const title = card.querySelector("h3").innerText;
         const description = card.querySelector("p").innerText;
@@ -31,14 +101,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const currency = card.querySelector(".moneda span").innerText;
         const duration = card.querySelector(".duracion span").innerText;
         const period = card.querySelector(".periodo span").innerText;
-        const type = card.querySelector(".tipo_empleo span").innerText;
+        const type = convertirTipoEmpleo(card.querySelector(".tipo_empleo span").innerText);
         const modalidad = card.querySelector(".modalidad span").innerText;
-        const typeContract = card.querySelector(".tipo_contrato span").innerText;
+        const typeContract = convertirTipoContrato(card.querySelector(".tipo_contrato span").innerText);
         const empresa = card.querySelector(".empresa span").innerText;
         const sector = card.querySelector(".sector span").innerText
-        const experience = card.querySelector(".experiencia span").innerText
-        const studyLevel = card.querySelector(".nivel_educativo span").innerText
-
+        const experience = convertirExperiencia(card.querySelector(".experiencia span").innerText);
+        const studyLevel = convertirEducacion(card.querySelector(".nivel_educativo span").innerText);
         // Llenar el modal con los datos de la tarjeta
         modalTitle.innerText = title;
         modalDescription.innerText = description;
