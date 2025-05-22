@@ -442,3 +442,22 @@ function adjustFilterHeight() {
 
 window.addEventListener("resize", adjustFilterHeight);
 adjustFilterHeight(); // Ejecutar al cargar
+
+document.getElementById('formBusqueda').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const termino = document.getElementById('termino').value;
+    // Redirige a la página principal con el término de búsqueda
+    window.location.href = `/personas/pagina_principal?termino=${encodeURIComponent(termino)}`;
+});
+
+// Para la búsqueda en tiempo real (opcional)
+document.getElementById('termino').addEventListener('input', function() {
+    const termino = this.value;
+    if (termino.length > 2) {
+        fetch(`/buscar_ofertas?termino=${encodeURIComponent(termino)}`)
+            .then(response => response.json())
+            .then(data => {
+                // Mostrar sugerencias (opcional)
+            });
+    }
+});
