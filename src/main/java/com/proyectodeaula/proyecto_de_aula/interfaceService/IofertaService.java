@@ -19,7 +19,8 @@ public interface IofertaService {
     public Ofertas findById(long id);
     Page<Ofertas> listar_ofertas_paginadas(int page, int size);
     Page<Ofertas> listarOfertasPorEmpresaPaginado(Empresas empresa, Pageable pageable);
-
+    Page<Ofertas> buscarOfertasPorTerminoPaginado(String termino, int page, int size);
+    
     void toggleHabilitar(long id);
     List<Ofertas> listarTodasOfertasPorEmpresa(Empresas empresa);
     Page<Ofertas> listarTodasOfertasPorEmpresaPaginado(Empresas empresa, Pageable pageable);

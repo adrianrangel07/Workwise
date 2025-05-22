@@ -55,7 +55,7 @@ public class OfertaService implements IofertaService {
             O.setHabilitada(true);
         }
         int res = 0;
-        Ofertas Usu = oferr.save(O);  // Guardar oferta en la base de datos
+        Ofertas Usu = oferr.save(O); // Guardar oferta en la base de datos
         if (Usu != null) {
             res = 1;
         }
@@ -160,7 +160,7 @@ public class OfertaService implements IofertaService {
     }
 
     public long contarOfertasActivas() {
-        return ofertaRepository.countByHabilitada(true); 
+        return ofertaRepository.countByHabilitada(true);
     }
 
     public List<Ofertas> obtenerOfertasRecientes(int i) {
@@ -171,5 +171,12 @@ public class OfertaService implements IofertaService {
 
     public long contarPostulaciones() {
         return postulacionRepository.count();
+    }
+
+    @Override
+    public Page<Ofertas> buscarOfertasPorTerminoPaginado(String termino, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ofertaRepository.findByTituloPuestoContainingIgnoreCaseOrDescripcionContainingIgnoreCase(
+            termino, termino, pageable);
     }
 }

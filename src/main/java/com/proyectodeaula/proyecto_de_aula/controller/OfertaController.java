@@ -87,16 +87,27 @@ public class OfertaController {
     }
 
     @GetMapping("/pagina/inicio")
-    public String listar_ofertas(@RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "12") int size, Model model) {
+    public String listar_ofertas(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "12") int size,
+            @RequestParam(required = false) String termino,
+            Model model) {
 
-        Page<Ofertas> ofertasPage = offerService.listar_ofertas_paginadas(page, size);
+        Page<Ofertas> ofertasPage;
 
-        List<Ofertas> Ofertas = ofertasPage.getContent();
+        if (termino != null && !termino.isEmpty()) {
+            // Búsqueda paginada solo por término
+            ofertasPage = offerService.buscarOfertasPorTerminoPaginado(termino, page, size);
+        } else {
+            // Listado normal paginado
+            ofertasPage = offerService.listar_ofertas_paginadas(page, size);
+        }
 
+        model.addAttribute("Ofertas", ofertasPage.getContent());
         model.addAttribute("paginaActual", page);
         model.addAttribute("totalPaginas", ofertasPage.getTotalPages());
-        model.addAttribute("Ofertas", Ofertas);
+        model.addAttribute("terminoBusqueda", termino); // Mantener el término en la vista
+
         return "Html/pagina_principal";
     }
 
@@ -136,7 +147,8 @@ public class OfertaController {
 
     @PutMapping("/offers/edit/{id}")
     @Transactional
-    public ResponseEntity<?> updateOffer(@PathVariable long id, @RequestBody Ofertas updatedOffer, HttpSession session) {
+    public ResponseEntity<?> updateOffer(@PathVariable long id, @RequestBody Ofertas updatedOffer,
+            HttpSession session) {
         try {
             // Verificar sesión y empresa
             Empresas empresa = (Empresas) session.getAttribute("empresa");
@@ -167,8 +179,7 @@ public class OfertaController {
 
             return ResponseEntity.ok(Map.of(
                     "message", "Oferta actualizada correctamente",
-                    "id", existingOffer.getId()
-            ));
+                    "id", existingOffer.getId()));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Map.of("error", e.getMessage()));
