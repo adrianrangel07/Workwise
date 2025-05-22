@@ -97,19 +97,6 @@ h1 {
   color: #2c3e50;
 }
 
-.btn {
-  display: inline-block;
-  padding: 8px 15px;
-  background: #4caf50;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  margin-top: 10px;
-}
-
-.btn:hover {
-  background: #45a049;
-}
 
 iframe {
   border-radius: 5px;

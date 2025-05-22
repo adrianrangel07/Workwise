@@ -220,7 +220,6 @@
 
 /* Para que el texto y el ícono no se muevan */
 .sidebar .nav-item a {
-  display: flex;
   align-items: center;
   padding: 10px;
   text-decoration: none;
@@ -535,6 +534,9 @@ input:focus {
 }
 
 @media (max-width: 768px) {
+  .nav-link{
+    font-size: 13px !important;
+  }
   .navbar {
       padding: 0.5rem 0.5rem;
       flex-wrap: wrap;

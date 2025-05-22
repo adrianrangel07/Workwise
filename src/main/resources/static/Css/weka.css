@@ -498,5 +498,6 @@ button:hover {
   button {
     font-size: 14px;
     padding: 8px;
+    width: 150px;
   }
 }
