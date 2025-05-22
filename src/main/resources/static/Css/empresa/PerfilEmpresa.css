@@ -330,6 +330,12 @@ body {
     padding: 10px 12px;
   }
 
+  .sidebar {
+      transform: translateX(0);
+      width: 35%;
+      height: auto;
+  }
+
   .quick-icon {
     width: 35px;
     height: 35px;
