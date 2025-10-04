@@ -24,6 +24,5 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=dev
 
-
 volumes:
   mysql_data:
